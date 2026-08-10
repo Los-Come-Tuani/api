@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  BACKEND!
+  backend!
 </h3>
 
 <div align="center">
@@ -21,7 +21,7 @@
 [postgres-badge]: https://img.shields.io/badge/postgres-grey?style=for-the-badge&logo=postgresql&logoColor=white
 [postgres-docs]: https://www.postgresql.org/docs/
 [django-badge]: https://img.shields.io/badge/django-grey?style=for-the-badge&logo=django&logoColor=white
-[django-docs]: https://docs.djangoproject.com/en/6.0/
+[django-docs]: https://docs.djangoproject.com/en/
 [openapi-badge]: https://img.shields.io/badge/openapi-grey?style=for-the-badge&logo=openapiinitiative&logoColor=white
 [openapi-docs]: https://www.openapis.org/
 [ruff-badge]: https://img.shields.io/badge/ruff-grey?style=for-the-badge&logo=astral&logoColor=white
