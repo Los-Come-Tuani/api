@@ -1,0 +1,17 @@
+name: "setup-services"
+
+runs:
+  using: "composite"
+  steps:
+    - name: start services
+      shell: bash
+      run: docker compose up --detach --wait postgres redis
+
+    - name: export service env
+      shell: bash
+      run: |
+        {
+          echo "DATABASE_URL=postgresql://api:api@127.0.0.1:5432/api"
+          echo "REDIS_SECRET_KEY=api"
+          echo "REDIS_URL=redis://127.0.0.1:6379"
+        } >> "$GITHUB_ENV"

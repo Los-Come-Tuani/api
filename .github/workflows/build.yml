@@ -1,0 +1,53 @@
+name: build
+
+on:
+  push:
+    branches-ignore:
+      - "chore/deps"
+      - "dependabot/**"
+      - "**docs**"
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-docker-${{ github.ref }}
+
+env:
+  COMPOSE_BAKE: "true"
+  COMPOSE_FILE: compose.yml:compose.ci.yml
+
+permissions:
+  contents: read
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+
+      - name: setup buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: setup django env
+        uses: ./.github/actions/setup-django-env
+
+      - name: build image
+        run: docker compose --profile prod build api-prod
+
+      - name: run migrations
+        run: docker compose --profile prod run --rm migrate
+
+      - name: boot service
+        run: docker compose --profile prod up --detach --wait api-prod
+
+      - name: show logs
+        if: failure()
+        run: docker compose --profile prod logs --no-color
+
+      - name: tear down
+        if: always()
+        run: docker compose --profile prod down --remove-orphans --volumes

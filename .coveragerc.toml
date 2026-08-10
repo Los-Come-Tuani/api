@@ -1,0 +1,30 @@
+[report]
+  exclude_also = [
+    "def __str__",
+  ]
+
+  fail_under = 10
+
+  omit = [
+    "*/__init__.py",
+    "*/api_tests/*",
+    "*/apps.py",
+    "*/management/*",
+    "*/migrations/*",
+  ]
+
+  show_missing = true
+  skip_covered = true
+
+[run]
+  branch = true
+
+  omit = [
+    "*/__init__.py",
+    "*/api_tests/*",
+    "*/apps.py",
+    "*/management/*",
+    "*/migrations/*",
+  ]
+
+  source = ["src"]

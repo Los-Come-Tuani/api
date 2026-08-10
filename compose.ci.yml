@@ -1,0 +1,12 @@
+services:
+  migrate:
+    build:
+      cache_from:
+        - type=gha,scope=api-prod
+
+  api-prod:
+    build:
+      cache_from:
+        - type=gha,scope=api-prod
+      cache_to:
+        - type=gha,mode=max,scope=api-prod

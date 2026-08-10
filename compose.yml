@@ -1,0 +1,109 @@
+name: api
+
+x-api-build: &api-build
+  context: .
+  dockerfile: dockerfile
+
+x-api-env: &api-env
+  DATABASE_URL: postgresql://api:api@postgres:5432/api
+  DEPLOY: ${DEPLOY:-False}
+  JWT_SECRET_KEY: ${JWT_SECRET_KEY:?}
+  REDIS_SECRET_KEY: api
+  REDIS_URL: redis://redis:6379
+  SECRET_KEY: ${SECRET_KEY:?}
+  SKIP_SEEDERS: ${SKIP_SEEDERS:-False}
+
+x-api-healthcheck: &api-healthcheck
+  interval: 5s
+  retries: 10
+  start_period: 5s
+  test:
+    - CMD
+    - python
+    - -c
+    - import urllib.request as u; u.urlopen('http://127.0.0.1:8080/health/')
+  timeout: 5s
+
+services:
+  postgres:
+    environment:
+      POSTGRES_DB: api
+      POSTGRES_PASSWORD: api
+      POSTGRES_USER: api
+    healthcheck:
+      interval: 5s
+      retries: 10
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U api -d api"]
+      timeout: 5s
+    image: postgres:18
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+  redis:
+    command: ["redis-server", "--requirepass", "api", "--save", ""]
+    healthcheck:
+      interval: 5s
+      retries: 10
+      test: ["CMD", "redis-cli", "-a", "api", "ping"]
+      timeout: 5s
+    image: redis:8
+    ports:
+      - "6379:6379"
+
+  migrate:
+    build:
+      <<: *api-build
+      target: runtime-prod
+    command: ["python", "src/manage.py", "migrate", "--no-input"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      <<: *api-env
+      DEBUG: "False"
+    image: api:prod
+    profiles: ["dev", "prod"]
+    restart: "no"
+
+  api-dev:
+    build:
+      <<: *api-build
+      target: runtime-dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      <<: *api-env
+      DEBUG: ${DEBUG:-True}
+    healthcheck: *api-healthcheck
+    image: api:dev
+    ports:
+      - "8080:8080"
+    profiles: ["dev"]
+    volumes:
+      - ./src:/app/src
+
+  api-prod:
+    build:
+      <<: *api-build
+      target: runtime-prod
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      <<: *api-env
+      DEBUG: "False"
+    healthcheck: *api-healthcheck
+    image: api:prod
+    ports:
+      - "8080:8080"
+    profiles: ["prod"]
+
+volumes:
+  pgdata:

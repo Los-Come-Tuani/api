@@ -1,0 +1,38 @@
+name: lint
+
+on:
+  push:
+    branches-ignore:
+      - "chore/deps"
+      - "dependabot/**"
+      - "**docs**"
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: read
+
+jobs:
+  full-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v7
+
+      - name: setup tools
+        uses: ./.github/actions/setup-tools
+
+      - name: ty check
+        run: uv run --frozen ty check
+
+      - name: ruff check
+        run: uv run --frozen ruff check --unsafe-fixes
+
+      - name: ruff format
+        run: uv run --frozen ruff format --check
