@@ -44,4 +44,5 @@
     "schemathesis>=4.24.3",
     "tracecov>=0.23.4",
     "ty>=0.0.70",
+    "zensical>=0.0.53",
   ]
