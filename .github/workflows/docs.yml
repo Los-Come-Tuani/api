@@ -2,11 +2,6 @@ name: docs
 
 on:
   push:
-    paths:
-      - "**/docs"
-      - "uv.lock"
-      - "pyproject.toml"
-      - "zensical.toml"
     branches:
       - production
 
