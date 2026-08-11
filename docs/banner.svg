@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg viewBox="0 0 537 223" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    path { fill: black; }
+    @media (prefers-color-scheme: dark) { path { fill: white; } }
+  </style>
   <path
     clip-rule="evenodd"
     d="M61.267 128.679L60.8095 108.341L51.3101 98.4677L49.676 98.9065C49.676 98.9065 47.1486 101.342 47.1486 108.648C47.1486 115.954 49.8398 130.942 58.9575 129.316C59.8703 129.153 61.2453 128.679 61.2453 128.679H61.267Z"
