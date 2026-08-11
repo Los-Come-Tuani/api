@@ -1,3 +1,9 @@
+<div align="center">
+  <img src=docs/banner.svg width=300 height=125 />
+</div>
+
+<br>
+
 <h1 align="center">
   <code>kplan-api</code>
 </h1>

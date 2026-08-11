@@ -47,7 +47,7 @@
       "navigation.path",
     ]
 
-    favicon = "fav.svg"
+    favicon = "favicon.svg"
     logo    = "logo.svg"
     variant = "modern"
 
