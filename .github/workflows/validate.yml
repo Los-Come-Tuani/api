@@ -6,7 +6,18 @@ on:
       - "chore/deps"
       - "dependabot/**"
       - "**docs**"
+    paths: &validate-paths
+      - "src/**"
+      - "compose.yml"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".python-version"
+      - ".github/actions/setup-django-env/action.yml"
+      - ".github/actions/setup-services/action.yml"
+      - ".github/actions/setup-tools/action.yml"
+      - ".github/workflows/validate.yml"
   pull_request:
+    paths: *validate-paths
   workflow_dispatch:
 
 concurrency:

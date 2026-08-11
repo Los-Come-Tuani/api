@@ -2,13 +2,16 @@ name: docs
 
 on:
   push:
-    paths:
-      - "**/docs"
-      - "uv.lock"
-      - "pyproject.toml"
-      - "zensical.toml"
     branches:
       - main
+    paths:
+      - "docs/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "zensical.toml"
+      - ".github/actions/setup-tools/action.yml"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read

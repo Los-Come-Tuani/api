@@ -6,7 +6,16 @@ on:
       - "chore/deps"
       - "dependabot/**"
       - "**docs**"
+    paths: &lint-paths
+      - "src/**"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".python-version"
+      - ".ruff.toml"
+      - ".github/actions/setup-tools/action.yml"
+      - ".github/workflows/lint.yml"
   pull_request:
+    paths: *lint-paths
   workflow_dispatch:
 
 concurrency:
