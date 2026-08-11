@@ -1,13 +1,11 @@
 [project]
-  copyright = "&copy 2026, Joaquín Zúñiga"
-
-  edit_uri  = "edit/main/docs/"
-  repo_name = "jp-zuniga/backend-factory"
-  repo_url  = "https://github.com/jp-zuniga/backend-factory"
+  edit_uri  = "edit/staging/docs/"
+  repo_name = "Los-Come-Tuani/api"
+  repo_url  = "https://github.com/Los-Come-Tuani/api"
 
   site_author      = "Joaquín Zúñiga"
-  site_description = "backend factory!"
-  site_name        = "backend-factory"
+  site_description = "Microservicios para la aplicación móvil K'Plan."
+  site_name        = "kplan-api-docs"
 
   nav = [
     { "Home" = "index.md" },

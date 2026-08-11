@@ -45,15 +45,15 @@ ENV DJANGO_SETTINGS_MODULE=api_core.settings \
 RUN apt-get update && \
     apt-get install --no-install-recommends --yes ca-certificates && \
     rm -rf /var/lib/apt/lists/* && \
-    groupadd --system api && \
-    useradd --create-home --gid api --home-dir /app --system api
+    groupadd --system kplan && \
+    useradd --create-home --gid kplan --home-dir /app --system kplan
 
 WORKDIR /app
 
 COPY --from=base /opt/python /opt/python
 
-COPY --chown=api:api pyproject.toml ./
-COPY --chown=api:api src/ ./src/
+COPY --chown=kplan:kplan pyproject.toml ./
+COPY --chown=kplan:kplan src/ ./src/
 
 EXPOSE 8080
 
@@ -65,7 +65,7 @@ ENV GRANIAN_RELOAD_PATHS=$GRANIAN_WORKING_DIR
 
 COPY --from=deps-dev /opt/venv /opt/venv
 
-USER api
+USER kplan
 
 CMD ["granian", "api_core.asgi:application", "--access-log", "--reload"]
 
@@ -75,6 +75,6 @@ FROM runtime-base AS runtime-prod
 
 COPY --from=deps-prod /opt/venv /opt/venv
 
-USER api
+USER kplan
 
 CMD ["granian", "api_core.asgi:application", "--access-log"]

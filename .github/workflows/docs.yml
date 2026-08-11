@@ -8,7 +8,7 @@ on:
       - "pyproject.toml"
       - "zensical.toml"
     branches:
-      - main
+      - production
 
 permissions:
   contents: read

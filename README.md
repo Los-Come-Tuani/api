@@ -1,9 +1,9 @@
 <h1 align="center">
-  <code>api</code>
+  <code>kplan-api</code>
 </h1>
 
 <h3 align="center">
-  backend!
+  Microservicios para la aplicación móvil K'Plan.
 </h3>
 
 <div align="center">
@@ -17,19 +17,6 @@
 [![uv.][uv-badge]][uv-docs]
 
 </div>
-
-[postgres-badge]: https://img.shields.io/badge/postgres-grey?style=for-the-badge&logo=postgresql&logoColor=white
-[postgres-docs]: https://www.postgresql.org/docs/
-[django-badge]: https://img.shields.io/badge/django-grey?style=for-the-badge&logo=django&logoColor=white
-[django-docs]: https://docs.djangoproject.com/en/
-[openapi-badge]: https://img.shields.io/badge/openapi-grey?style=for-the-badge&logo=openapiinitiative&logoColor=white
-[openapi-docs]: https://www.openapis.org/
-[ruff-badge]: https://img.shields.io/badge/ruff-grey?style=for-the-badge&logo=astral&logoColor=white
-[ruff-docs]: https://docs.astral.sh/ruff
-[ty-badge]: https://img.shields.io/badge/ty-grey?style=for-the-badge&logo=astral&logoColor=white
-[ty-docs]: https://docs.astral.sh/ty
-[uv-badge]: https://img.shields.io/badge/uv-grey?style=for-the-badge&logo=astral&logoColor=white
-[uv-docs]: https://docs.astral.sh/uv
 
 ## Ejecución Local
 
@@ -242,3 +229,16 @@ Para ver todas las recetas disponibles:
 ```bash
 just
 ```
+
+[postgres-badge]: https://img.shields.io/badge/postgres-grey?style=for-the-badge&logo=postgresql&logoColor=white
+[postgres-docs]: https://www.postgresql.org/docs/
+[django-badge]: https://img.shields.io/badge/django-grey?style=for-the-badge&logo=django&logoColor=white
+[django-docs]: https://docs.djangoproject.com/en/
+[openapi-badge]: https://img.shields.io/badge/openapi-grey?style=for-the-badge&logo=openapiinitiative&logoColor=white
+[openapi-docs]: https://www.openapis.org/
+[ruff-badge]: https://img.shields.io/badge/ruff-grey?style=for-the-badge&logo=astral&logoColor=white
+[ruff-docs]: https://docs.astral.sh/ruff
+[ty-badge]: https://img.shields.io/badge/ty-grey?style=for-the-badge&logo=astral&logoColor=white
+[ty-docs]: https://docs.astral.sh/ty
+[uv-badge]: https://img.shields.io/badge/uv-grey?style=for-the-badge&logo=astral&logoColor=white
+[uv-docs]: https://docs.astral.sh/uv
