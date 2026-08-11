@@ -37,14 +37,6 @@ Debe tener estas herramientas previamente instaladas para configurar el proyecto
 
 No necesita instalar PostgreSQL ni Redis: ambos se levantan como contenedores definidos en `compose.yml`.
 
-Opcionalmente, si usa [Nix](https://nixos.org/download/) con [`direnv`](https://direnv.net/), el `flake.nix` del repositorio provee un shell con todas las herramientas necesarias (`docker-compose`, `jq`, `prettier`, `just`, `railway`, `uv`). Puede activar el cargado automático con el siguiente comando:
-
-```bash
-direnv allow
-```
-
-Algunas recetas de `just` requieren [`jq`](https://jqlang.org/download/) para consumir el API desde la terminal.
-
 ### Clonar repositorio
 
 ```bash
