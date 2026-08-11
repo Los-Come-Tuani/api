@@ -1,0 +1,12 @@
+[pytest]
+  DJANGO_SETTINGS_MODULE = "api_core.settings"
+
+  addopts = [
+    "--cov",
+    "--cov-report=term-missing",
+    "--quiet",
+    "--reuse-db",
+  ]
+
+  console_output_style = "count"
+  pythonpath           = ["src"]

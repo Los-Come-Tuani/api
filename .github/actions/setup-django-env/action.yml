@@ -1,0 +1,15 @@
+name: "setup-django-env"
+
+runs:
+  using: "composite"
+  steps:
+    - name: setup env vars
+      shell: bash
+      run: |
+        {
+          echo "DEBUG=False"
+          echo "DEPLOY=False"
+          echo "SKIP_SEEDERS=False"
+          echo "JWT_SECRET_KEY=$(openssl rand -hex 64)"
+          echo "SECRET_KEY=$(openssl rand -hex 64)"
+        } >> "$GITHUB_ENV"

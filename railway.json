@@ -1,0 +1,28 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "dockerfile",
+    "watchPatterns": [
+      "dockerfile",
+      "pyproject.toml",
+      "railway.json",
+      "uv.lock",
+      "src/**/*.py"
+    ]
+  },
+  "deploy": {
+    "cronSchedule": null,
+    "drainingSeconds": 10,
+    "healthcheckPath": "/health/",
+    "healthcheckTimeout": 60,
+    "numReplicas": 1,
+    "overlapSeconds": 20,
+    "preDeployCommand": "python src/manage.py migrate",
+    "restartPolicyMaxRetries": 3,
+    "restartPolicyType": "ON_FAILURE",
+    "runtime": "V2",
+    "sleepApplication": false,
+    "startCommand": "granian api_core.asgi:application --access-log"
+  }
+}

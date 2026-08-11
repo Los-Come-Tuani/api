@@ -1,0 +1,66 @@
+[project]
+  copyright = "&copy 2026, Joaquín Zúñiga"
+
+  edit_uri  = "edit/main/docs/"
+  repo_name = "jp-zuniga/backend-factory"
+  repo_url  = "https://github.com/jp-zuniga/backend-factory"
+
+  site_author      = "Joaquín Zúñiga"
+  site_description = "backend factory!"
+  site_name        = "backend-factory"
+
+  nav = [
+    { "Home" = "index.md" },
+  ]
+
+  markdown_extensions.abbr                    = {}
+  markdown_extensions.admonition              = {}
+  markdown_extensions.attr_list               = {}
+  markdown_extensions.def_list                = {}
+  markdown_extensions.md_in_html              = {}
+  markdown_extensions.pymdownx.blocks.caption = {}
+  markdown_extensions.pymdownx.caret          = {}
+  markdown_extensions.pymdownx.details        = {}
+  markdown_extensions.pymdownx.emoji          = {}
+  markdown_extensions.pymdownx.highlight      = {}
+  markdown_extensions.pymdownx.keys           = {}
+  markdown_extensions.pymdownx.mark           = {}
+  markdown_extensions.pymdownx.tabbed         = { alternate_style = true }
+  markdown_extensions.pymdownx.tasklist       = { custom_checkbox = true }
+
+  markdown_extensions.pymdownx.snippets = { auto_append = [
+    "docs/snippets/abbrs.md",
+    "docs/snippets/links.md",
+  ] }
+
+  markdown_extensions.pymdownx.superfences = {}
+  markdown_extensions.pymdownx.tilde       = {}
+  markdown_extensions.tables               = {}
+  markdown_extensions.toc                  = { permalink = true, toc_depth = 3 }
+
+  [project.theme]
+    features = [
+      "content.code.copy",
+      "content.tooltips",
+      "navigation.indexes",
+      "navigation.instant",
+      "navigation.instant.prefetch",
+      "navigation.instant.progress",
+      "navigation.path",
+    ]
+
+    favicon = "logo.svg"
+    logo    = "logo.svg"
+    variant = "modern"
+
+    [[project.theme.palette]]
+      media       = "(prefers-color-scheme: light)"
+      scheme      = "default"
+      toggle.icon = "lucide/sun"
+      toggle.name = "Go to dark mode!"
+
+    [[project.theme.palette]]
+      media       = "(prefers-color-scheme: dark)"
+      scheme      = "slate"
+      toggle.icon = "lucide/moon"
+      toggle.name = "Go to light mode!"

@@ -1,0 +1,48 @@
+[project]
+  authors = [
+    { name = "Joaquín Zúñiga", email = "jp.zuniga.dev@gmail.com" },
+  ]
+
+  dependencies = [
+    "django-cors-headers>=4.9.0",
+    "django-filter>=26.1",
+    "django-health-check>=4.5.0",
+    "django-modern-rest[jwt,msgspec,openapi,pydantic]>=0.13.0",
+    "django-pgbulk>=3.3.0",
+    "django-pghistory>=3.9.2",
+    "django-pglock>=1.8.0",
+    "django-pgtransaction>=2.1.0",
+    "django-pgtrigger>=4.17.0",
+    "django>=6.1.0",
+    "granian>=2.8.1",
+    "phonenumbers>=9.0.36",
+    "psycopg[binary,pool]>=3.3.4",
+    "pydantic-settings>=2.15.0",
+    "pydantic>=2.13.4",
+    "redis[hiredis]>=8.1.0",
+  ]
+
+  description     = "backend!"
+  license         = { file = "LICENSE.md" }
+  name            = "api"
+  readme          = { file = "README.md" }
+  requires-python = ">=3.14.0"
+  version         = "0.0.1"
+
+[dependency-groups]
+  dev = [
+    "faker>=40.36.0",
+    "granian[reload]>=2.8.1",
+    "hypothesis>=6.165.2",
+    "polyfactory>=3.3.0",
+    "prek>=0.4.13",
+    "pytest-cov>=7.1.0",
+    "pytest-django>=4.13.0",
+    "pytest>=9.1.1",
+    "rstr>=3.2.2",
+    "ruff>=0.16.2",
+    "schemathesis>=4.24.3",
+    "tracecov>=0.23.4",
+    "ty>=0.0.70",
+    "zensical>=0.0.53",
+  ]
