@@ -5,7 +5,7 @@
 
   site_author      = "Joaquín Zúñiga"
   site_description = "Microservicios para la aplicación móvil K'Plan."
-  site_name        = "kplan-api-docs"
+  site_name        = "api-docs"
 
   nav = [
     { "Home" = "index.md" },
@@ -47,7 +47,7 @@
       "navigation.path",
     ]
 
-    favicon = "logo.svg"
+    favicon = "fav.svg"
     logo    = "logo.svg"
     variant = "modern"
 
