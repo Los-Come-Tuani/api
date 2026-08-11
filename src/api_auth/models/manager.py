@@ -53,7 +53,7 @@ class ApiUserManager(UserManager):
             **extra_fields,
         )
 
-    @ignore("api_auth.ApiUser:trg_apiuser_protect_insert")
+    @ignore("apiauth.ApiUser:trg_apiuser_protect_insert")
     @override
     def _create_user(
         self,

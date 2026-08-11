@@ -39,7 +39,7 @@ WSGI_APPLICATION: Final[str] = "api_core.wsgi.application"
 ########################################################################################
 
 AUTHENTICATION_BACKENDS: Final[Sequence[str]] = ("api_auth.backends.ApiUserBackend",)
-AUTH_USER_MODEL: Final[str] = "api_auth.ApiUser"
+AUTH_USER_MODEL: Final[str] = "apiauth.ApiUser"
 
 ########################################################################################
 
