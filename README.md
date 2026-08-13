@@ -1,9 +1,18 @@
+<div align="center">
+  <img
+    src="docs/logo.svg"
+    width="100"
+    height="100"
+    style="padding: 10px;"
+  />
+</div>
+
 <h1 align="center">
-  <code>api</code>
+  <code>backend-factory</code>
 </h1>
 
 <h3 align="center">
-  backend!
+  backend factory!
 </h3>
 
 <div align="center">
@@ -11,7 +20,7 @@
 [![PostgreSQL.][postgres-badge]][postgres-docs]
 [![Django.][django-badge]][django-docs]
 [![OpenAPI.][openapi-badge]][openapi-docs]
-<br>
+<br/>
 [![ruff.][ruff-badge]][ruff-docs]
 [![ty.][ty-badge]][ty-docs]
 [![uv.][uv-badge]][uv-docs]
