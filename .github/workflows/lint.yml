@@ -45,3 +45,9 @@ jobs:
 
       - name: ruff format
         run: uv run --frozen ruff format --check
+
+      - name: tombi lint
+        run: uv run --frozen tombi lint --error-on-warnings
+
+      - name: tombi format
+        run: uv run --frozen tombi format --check
