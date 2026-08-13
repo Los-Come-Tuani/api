@@ -11,35 +11,57 @@
     { "Home" = "index.md" },
   ]
 
-  markdown_extensions.abbr                    = {}
-  markdown_extensions.admonition              = {}
-  markdown_extensions.attr_list               = {}
-  markdown_extensions.def_list                = {}
-  markdown_extensions.md_in_html              = {}
-  markdown_extensions.pymdownx.blocks.caption = {}
-  markdown_extensions.pymdownx.caret          = {}
-  markdown_extensions.pymdownx.details        = {}
-  markdown_extensions.pymdownx.emoji          = {}
-  markdown_extensions.pymdownx.highlight      = {}
-  markdown_extensions.pymdownx.keys           = {}
-  markdown_extensions.pymdownx.mark           = {}
-  markdown_extensions.pymdownx.tabbed         = { alternate_style = true }
-  markdown_extensions.pymdownx.tasklist       = { custom_checkbox = true }
+  [project.markdown_extensions]
+    abbr       = {}
+    admonition = {}
+    attr_list  = {}
+    def_list   = {}
+    md_in_html = {}
+    tables     = {}
 
-  markdown_extensions.pymdownx.snippets = { auto_append = [
-    "docs/snippets/abbrs.md",
-    "docs/snippets/links.md",
-  ] }
+    toc = {
+      permalink = true,
+      toc_depth = 3,
+    }
 
-  markdown_extensions.pymdownx.superfences = {}
-  markdown_extensions.pymdownx.tilde       = {}
-  markdown_extensions.tables               = {}
-  markdown_extensions.toc                  = { permalink = true, toc_depth = 3 }
+    [project.markdown_extensions.pymdownx]
+      blocks.caption = {}
+      caret          = {}
+      details        = {}
+      emoji          = {}
+      highlight      = {}
+      keys           = {}
+      mark           = {}
+      tilde          = {}
+
+      tasklist.custom_checkbox = true
+
+      snippets.auto_append = [
+        "docs/snippets/abbrs.md",
+        "docs/snippets/links.md",
+      ]
+
+      superfences.custom_fences = [
+        {
+          name   = "mermaid",
+          class  = "mermaid",
+          format = "pymdownx.superfences.fence_code_format",
+        },
+      ]
+
+      [project.markdown_extensions.pymdownx.tabbed]
+        alternate_style = true
+
+        slugify = {
+          kwds.case = "lower",
+          object    = "pymdownx.slugs.slugify",
+        }
 
   [project.theme]
     features = [
       "content.code.copy",
       "content.tooltips",
+      "navigation.footer",
       "navigation.indexes",
       "navigation.instant",
       "navigation.instant.prefetch",
@@ -62,3 +84,13 @@
       scheme      = "slate"
       toggle.icon = "lucide/moon"
       toggle.name = "Go to light mode!"
+
+  [project.validation]
+    invalid_link_anchors  = false
+    invalid_links         = false
+    shadowed_definitions  = false
+    shadowed_footnotes    = false
+    unresolved_footnotes  = false
+    unresolved_references = false
+    unused_definitions    = false
+    unused_footnotes      = false

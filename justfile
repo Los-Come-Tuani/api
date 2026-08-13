@@ -57,7 +57,7 @@ check-uv:
 
 [private]
 pre-commit $DEBUG="False":
-    @just fix
+    @just lint --fix
     @just fmt
     @just check
     @just validate --deploy --fail-level WARNING
@@ -79,7 +79,7 @@ full-check: check lint
 [group("uv")]
 full-fix:
     @just check --fix
-    @just fix
+    @just lint --fix
     @just fmt
 
 [group("uv")]
@@ -87,12 +87,15 @@ fix *args="":
     @just lint --fix {{ args }}
 
 [group("uv")]
-fmt *args="":
+fmt *args="": (check-dep "prettier")
     @just run-frozen ruff format {{ args }}
+    @just run-frozen tombi format
+    prettier --write .
 
 [group("uv")]
 lint *args="":
     @just run-frozen ruff check --unsafe-fixes {{ args }}
+    @just run-frozen tombi lint
 
 [group("uv")]
 prek *args:
@@ -110,6 +113,10 @@ sync: check-uv
 test *args="": services
     @just run-frozen pytest {{ args }}
 
+[group("uv")]
+zen:
+    @just run-frozen zensical serve
+
 ########################################################################################
 
 [group("docker")]
@@ -119,7 +126,7 @@ build profile="dev": check-docker
 
     SERVICE="api-{{ profile }}"
 
-    docker compose --profile {{profile}} build  }}
+    docker compose --profile {{ profile }} build  }}
 
 [group("docker")]
 services: check-docker
