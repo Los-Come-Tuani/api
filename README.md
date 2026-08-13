@@ -3,6 +3,7 @@
     src="docs/banner.svg"
     width="300"
     height="125"
+    style="padding: 10px;"
   />
 </div>
 
@@ -19,7 +20,7 @@
 [![PostgreSQL.][postgres-badge]][postgres-docs]
 [![Django.][django-badge]][django-docs]
 [![OpenAPI.][openapi-badge]][openapi-docs]
-<br>
+<br/>
 [![ruff.][ruff-badge]][ruff-docs]
 [![ty.][ty-badge]][ty-docs]
 [![uv.][uv-badge]][uv-docs]
