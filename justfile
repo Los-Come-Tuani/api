@@ -110,6 +110,10 @@ sync: check-uv
 test *args="": services
     @just run-frozen pytest {{ args }}
 
+[group("uv")]
+zen:
+    @just run-frozen zensical serve
+
 ########################################################################################
 
 [group("docker")]
@@ -119,7 +123,7 @@ build profile="dev": check-docker
 
     SERVICE="api-{{ profile }}"
 
-    docker compose --profile {{profile}} build  }}
+    docker compose --profile {{ profile }} build  }}
 
 [group("docker")]
 services: check-docker
