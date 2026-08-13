@@ -1,6 +1,13 @@
-[postgres-docs]: https://www.postgresql.org/docs/
+[django-badge]: https://img.shields.io/badge/django-grey?style=for-the-badge&logo=django&logoColor=white
 [django-docs]: https://docs.djangoproject.com/en/
 [dmr-docs]: https://django-modern-rest.readthedocs.io/en/latest/pages/core-concepts.html
+[openapi-badge]: https://img.shields.io/badge/openapi-grey?style=for-the-badge&logo=openapiinitiative&logoColor=white
+[openapi-docs]: https://www.openapis.org/
+[postgres-badge]: https://img.shields.io/badge/postgres-grey?style=for-the-badge&logo=postgresql&logoColor=white
+[postgres-docs]: https://www.postgresql.org/docs/
+[ruff-badge]: https://img.shields.io/badge/ruff-grey?style=for-the-badge&logo=astral&logoColor=white
 [ruff-docs]: https://docs.astral.sh/ruff
+[ty-badge]: https://img.shields.io/badge/ty-grey?style=for-the-badge&logo=astral&logoColor=white
 [ty-docs]: https://docs.astral.sh/ty
+[uv-badge]: https://img.shields.io/badge/uv-grey?style=for-the-badge&logo=astral&logoColor=white
 [uv-docs]: https://docs.astral.sh/uv
