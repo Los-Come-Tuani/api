@@ -48,13 +48,13 @@ jobs:
         uses: ./.github/actions/setup-django-env
 
       - name: build image
-        run: docker compose --profile prod build kplan-api-prod
+        run: docker compose --profile prod build kplanapi-prod
 
       - name: run migrations
         run: docker compose --profile prod run --rm migrate
 
       - name: boot service
-        run: docker compose --profile prod up --detach --wait kplan-api-prod
+        run: docker compose --profile prod up --detach --wait kplanapi-prod
 
       - name: show logs
         if: failure()

@@ -2,11 +2,11 @@ services:
   migrate:
     build:
       cache_from:
-        - type=gha,scope=kplan-api-prod
+        - type=gha,scope=kplanapi-prod
 
-  kplan-api-prod:
+  kplanapi-prod:
     build:
       cache_from:
-        - type=gha,scope=kplan-api-prod
+        - type=gha,scope=kplanapi-prod
       cache_to:
-        - type=gha,mode=max,scope=kplan-api-prod
+        - type=gha,mode=max,scope=kplanapi-prod
