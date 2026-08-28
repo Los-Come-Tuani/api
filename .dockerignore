@@ -4,6 +4,7 @@
 **/media
 **/site
 
+.cache/
 .direnv/
 .git/
 .github/
