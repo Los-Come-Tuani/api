@@ -18,6 +18,7 @@
 
   nav = [
     { "Inicio" = "index.md" },
+    "guia.md",
     {
       "Requerimientos" = [
         "requerimientos/index.md",

@@ -1,35 +1,10 @@
-<div align="center">
-  <img
-    src="docs/banner.svg"
-    width="300"
-    height="125"
-    style="padding: 10px;"
-  />
-</div>
+---
+icon: lucide/play
+---
 
-<h1 align="center">
-  <code>kplan-api</code>
-</h1>
+# Guía de ejecución local
 
-<h3 align="center">
-  Microservicios para la aplicación móvil K'Plan.
-</h3>
-
-<div align="center">
-
-[![PostgreSQL.][postgres-badge]][postgres-docs]
-[![Django.][django-badge]][django-docs]
-[![OpenAPI.][openapi-badge]][openapi-docs]
-<br/>
-[![ruff.][ruff-badge]][ruff-docs]
-[![ty.][ty-badge]][ty-docs]
-[![uv.][uv-badge]][uv-docs]
-
-</div>
-
-## Ejecución Local
-
-### Requisitos
+## Requisitos
 
 Debe tener estas herramientas previamente instaladas para configurar el proyecto.
 
@@ -45,14 +20,14 @@ Debe tener estas herramientas previamente instaladas para configurar el proyecto
 No necesita instalar PostgreSQL ni Redis: ambos se levantan
 como contenedores definidos en `compose.yml`.
 
-### Clonar repositorio
+## Clonar repositorio
 
 ```bash
 git clone https://github.com/Los-Come-Tuani/api kplan-api
 cd kplan-api
 ```
 
-### Setup automático
+## Setup automático
 
 La forma más rápida de dejar el proyecto listo es:
 
@@ -74,15 +49,15 @@ Esta receta hace todo el trabajo pesado:
 
 Si prefiere hacerlo paso a paso, continúe con las secciones siguientes.
 
-### Setup manual
+## Setup manual
 
-#### Instalación de dependencias
+### Instalación de dependencias
 
 ```bash
 just sync
 ```
 
-#### Variables de entorno
+### Variables de entorno
 
 El proyecto **exige** ciertas variables de entorno o fallará al iniciar.
 Para generar el `.env` con llaves secretas aleatorias:
@@ -139,7 +114,7 @@ just repl -c "from django.core.management.utils import get_random_secret_key; pr
 tr -dc 'a-zA-Z0-9-_' < /dev/urandom | head -c 128
 ```
 
-#### Levantar servicios
+### Levantar servicios
 
 ```bash
 just services
@@ -150,29 +125,29 @@ sus healthchecks pasen. Es una dependencia implícita de casi todas
 las recetas de Django (`migrate`, `run`, `serve`, `test`, `validate`),
 así que rara vez necesitará invocarla directamente.
 
-#### Migrar base de datos
+### Migrar base de datos
 
 ```bash
 just migrate
 ```
 
-#### Crear usuario admin
+### Crear usuario admin
 
 ```bash
 just mk-admin
 ```
 
-#### Sembrar datos iniciales
+### Sembrar datos iniciales
 
 ```bash
 just dj-man populate
 ```
 
-### Ejecutar el API
+## Ejecutar el API
 
 Hay dos modos de trabajo.
 
-#### Modo local (recomendado para desarrollo)
+### Modo local (recomendado para desarrollo)
 
 El API corre en su máquina con `uv`, contra PostgreSQL y Redis dockerizados.
 Esto le da recarga en caliente inmediata y acceso directo al debugger.
@@ -187,7 +162,7 @@ just serve
 
 El servidor queda disponible en `http://127.0.0.1:8080`.
 
-#### Modo Docker
+### Modo Docker
 
 El API corre dentro de un contenedor construido desde el `dockerfile`.
 El `compose.yml` define dos perfiles:
@@ -217,7 +192,7 @@ just build prod
 
 En ambos perfiles el API se expone en `http://127.0.0.1:8080`.
 
-### Comandos útiles
+## Comandos útiles
 
 ```bash
 # ejecutar cualquier comando de manage.py:
@@ -248,21 +223,3 @@ Para ver todas las recetas disponibles:
 ```bash
 just
 ```
-
-[django-badge]: https://img.shields.io/badge/django-white?style=for-the-badge&color=gray&logoColor=white&logo=django
-[django-docs]: https://docs.djangoproject.com/en/
-[docker]: https://docs.docker.com/get-started/get-docker/
-[git]: https://git-scm.com/install/
-[just]: https://github.com/casey/just
-[openapi-badge]: https://img.shields.io/badge/openapi-white?style=for-the-badge&color=gray&logoColor=white&logo=openapiinitiative
-[openapi-docs]: https://www.openapis.org/
-[postgres-badge]: https://img.shields.io/badge/postgresql-white?style=for-the-badge&color=gray&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOTQuNSA0MDgiPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0zODMuMiAyNTIuNWMtNTAuMyAxMC40LTUzLjgtNi42LTUzLjgtNi42QzM4Mi42IDE2NyA0MDQuOCA2NyAzODUuNiA0Mi42IDMzMy4zLTI0LjIgMjQyLjggNy40IDI0MS4zIDguMmgtLjVxLTE0LjgtMy0zMy41LTMuNGMtMjIuOC0uNC00MCA2LTUzLjEgMTUuOSAwIDAtMTYxLjUtNjYuNS0xNTQgODMuNkMyIDEzNi4zIDQ2IDM0NiA5OC44IDI4Mi42YzE5LjMtMjMuMiAzNy45LTQyLjcgMzcuOS00Mi43YTQ5IDQ5IDAgMCAwIDMxLjkgOC4xbC45LS44Yy0uMyAzLS4xIDUuNy40IDktMTMuNiAxNS4yLTkuNiAxNy45LTM2LjggMjMuNS0yNy40IDUuNi0xMS4zIDE1LjctLjggMTguMyAxMi44IDMuMiA0Mi40IDcuOCA2Mi4zLTIwLjJsLS44IDMuMmM1LjMgNC4zIDkgMjcuNyA4LjQgNDktLjYgMjEuMi0xIDM1LjggMy4yIDQ3LjJzOC40IDM3IDQ0IDI5LjRjMjkuOC02LjQgNDUuMy0yMyA0Ny40LTUwLjUgMS42LTE5LjYgNS0xNi43IDUuMi0zNC4zbDIuOC04LjNjMy4yLTI2LjYuNS0zNS4yIDE4LjktMzEuMmw0LjQuNGMxMy42LjYgMzEuMi0yLjIgNDEuNi03IDIyLjQtMTAuNCAzNS42LTI3LjcgMTMuNi0yMy4yIi8+PC9zdmc+Cg==
-[postgres-docs]: https://www.postgresql.org/docs/
-[rootless]: https://docs.docker.com/engine/security/rootless/
-[ruff-badge]: https://img.shields.io/badge/ruff-white?style=for-the-badge&color=gray&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNDAgNGE0IDQgMCAwIDAtNC00SDB2NDBoMTguNFYyOGgzLjJ2MTJINDBWMjQuOGgtOHYtMy4yaDRhNCA0IDAgMCAwIDQtNFpNMjQuOCAxNS4ydjMuMmgtOS42di0zLjJ6IiBjbGlwLXJ1bGU9ImV2ZW5vZGQiLz48L3N2Zz4K
-[ruff-docs]: https://docs.astral.sh/ruff
-[ty-badge]: https://img.shields.io/badge/ty-white?style=for-the-badge&color=gray&logoColor=white&logo=ty
-[ty-docs]: https://docs.astral.sh/ty
-[uv-badge]: https://img.shields.io/badge/uv-white?style=for-the-badge&color=gray&logoColor=white&logo=uv
-[uv-docs]: https://docs.astral.sh/uv
-[uv-install]: https://docs.astral.sh/uv/#installation
