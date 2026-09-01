@@ -85,6 +85,30 @@
         },
       ],
     },
+    {
+      "Diagramas de estados" = [
+        "diagramas/estados/index.md",
+        {
+          "Entidades" = [
+            "diagramas/estados/cuenta.md",
+            "diagramas/estados/prestador.md",
+            "diagramas/estados/circuito.md",
+            "diagramas/estados/itinerario.md",
+            "diagramas/estados/convocatoria.md",
+            "diagramas/estados/reserva.md",
+            "diagramas/estados/cupon.md",
+            "diagramas/estados/evento.md",
+          ],
+        },
+        {
+          "Eventos" = [
+            "diagramas/estados/verificacion.md",
+            "diagramas/estados/sancion.md",
+            "diagramas/estados/aviso.md",
+          ],
+        },
+      ],
+    },
   ]
 
   [project.markdown_extensions]
