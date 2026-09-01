@@ -265,14 +265,14 @@ Necesidades reconocidas cuyo valor concreto ninguna fuente establece. No se
 resolvieron por cuenta propia porque cada una condiciona decisiones de diseño
 que serían costosas de revertir.
 
-| Requerimiento | Qué falta decidir | Qué depende de ello |
-| --- | --- | --- |
-| [RNF-01](#rnf-01) | Versiones mínimas de sistema operativo y navegador | Alcance de las pruebas y de las funciones de mapa utilizables |
-| [RNF-03](#rnf-03) | Política de reintento y comportamiento de respaldo por servicio externo | Qué ocurre con un canje o un aviso cuando el proveedor no responde |
-| [RNF-05](#rnf-05) | Catálogo de idiomas y alcance de la traducción | Si el contenido que publican los actores locales debe traducirse |
-| [RNF-06](#rnf-06) | Moneda de referencia, fuente del tipo de cambio y momento de congelarlo | Cálculo de comisiones, saldos y umbral de retiro |
-| [RNF-14](#rnf-14) | Marco normativo de protección de datos aplicable | Plazos de borrado y excepciones por obligación contable |
-| [RNF-15](#rnf-15) | Objetivo de disponibilidad y ventana de mantenimiento | Arquitectura de despliegue y compromisos ante las alcaldías |
-| [RNF-16](#rnf-16) | Tiempos de respuesta objetivo | Estrategia de consulta geoespacial y de caché |
-| [RNF-17](#rnf-17) | Alcance del modo sin conexión | Qué se replica en el dispositivo y cómo se resuelven los conflictos |
-| [RNF-21](#rnf-21) | Volumen esperado por ciudad | Indexación, particionamiento y dimensionamiento |
+| Requerimiento     | Qué falta decidir                                                       | Qué depende de ello                                                 |
+| ----------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| [RNF-01](#rnf-01) | Versiones mínimas de sistema operativo y navegador                      | Alcance de las pruebas y de las funciones de mapa utilizables       |
+| [RNF-03](#rnf-03) | Política de reintento y comportamiento de respaldo por servicio externo | Qué ocurre con un canje o un aviso cuando el proveedor no responde  |
+| [RNF-05](#rnf-05) | Catálogo de idiomas y alcance de la traducción                          | Si el contenido que publican los actores locales debe traducirse    |
+| [RNF-06](#rnf-06) | Moneda de referencia, fuente del tipo de cambio y momento de congelarlo | Cálculo de comisiones, saldos y umbral de retiro                    |
+| [RNF-14](#rnf-14) | Marco normativo de protección de datos aplicable                        | Plazos de borrado y excepciones por obligación contable             |
+| [RNF-15](#rnf-15) | Objetivo de disponibilidad y ventana de mantenimiento                   | Arquitectura de despliegue y compromisos ante las alcaldías         |
+| [RNF-16](#rnf-16) | Tiempos de respuesta objetivo                                           | Estrategia de consulta geoespacial y de caché                       |
+| [RNF-17](#rnf-17) | Alcance del modo sin conexión                                           | Qué se replica en el dispositivo y cómo se resuelven los conflictos |
+| [RNF-21](#rnf-21) | Volumen esperado por ciudad                                             | Indexación, particionamiento y dimensionamiento                     |

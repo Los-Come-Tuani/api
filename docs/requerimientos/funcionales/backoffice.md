@@ -54,11 +54,18 @@ oculto hasta que se subsane.
 
 ### RF-B-05
 
-> **Verificación de comercios**
+> **Verificación de organizaciones**
 
-Los comercios registrados llegan a la misma cola con su declaración de RUC y sus
-datos de ubicación, y se resuelven con la misma mecánica de aprobación o rechazo
-motivado. Un comercio no verificado no aparece en el mapa del turista.
+Comercios, alcaldías e instituciones culturales se registran por su cuenta y
+llegan a la misma cola, con la misma mecánica de aprobación o rechazo motivado.
+Ninguna existe para el turista antes de la aprobación: el comercio no aparece en
+el mapa, la institución no puede programar eventos y la alcaldía no puede
+publicar circuitos.
+
+Lo que cambia entre las tres es el documento que se exige y la severidad de la
+revisión. Aprobar una alcaldía falsa entrega el sello de contenido oficial de una
+ciudad entera, así que su verificación no se resuelve solo con los datos del
+formulario.
 
 ---
 

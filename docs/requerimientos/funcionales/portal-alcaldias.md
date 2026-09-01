@@ -11,7 +11,7 @@ portal habilita, en cadena, a los comercios, prestadores e instituciones de su
 territorio.
 
 - **Módulos:** 3
-- **Total:** 10
+- **Total:** 11
 
 ---
 
@@ -24,6 +24,20 @@ territorio.
 Solo las alcaldías crean y publican circuitos oficiales. Ningún otro actor puede
 producir contenido con esa condición, que es precisamente lo que hace confiable
 la oferta base frente a las rutas que arma el turista.
+
+### RF-A-11
+
+> **Alta de la alcaldía**
+
+La alcaldía se registra por un formulario público declarando su ciudad, su nombre
+oficial, el correo y teléfono de contacto, y adjuntando el documento que acredita
+la representación de quien solicita. El alta no publica nada: deja la
+organización y su primer operador en espera, y solo la aprobación del moderador
+habilita la potestad de publicar circuitos.
+
+La verificación es más estricta que la de un comercio porque de ella depende
+[RF-A-01][rf-a-01]: quien apruebe una alcaldía falsa entrega el sello de
+contenido oficial de una ciudad entera.
 
 ### RF-A-02
 

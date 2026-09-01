@@ -3,6 +3,15 @@
   repo_name = "Los-Come-Tuani/api"
   repo_url  = "https://github.com/Los-Come-Tuani/api"
 
+  extra_css = [
+    "stylesheets/theme.css",
+    "stylesheets/width.css",
+  ]
+
+  extra_javascript = [
+    "scripts/elk.mjs",
+  ]
+
   site_author      = "Joaquín Zúñiga"
   site_description = "Microservicios para la aplicación móvil K'Plan."
   site_name        = "api-docs"
@@ -15,8 +24,8 @@
         {
           "Funcionales" = [
             "requerimientos/funcionales/plataforma.md",
-            "requerimientos/funcionales/app-movil.md",
-            "requerimientos/funcionales/portal-prestadores.md",
+            "requerimientos/funcionales/app-turista.md",
+            "requerimientos/funcionales/app-prestadores.md",
             "requerimientos/funcionales/portal-comercios.md",
             "requerimientos/funcionales/portal-alcaldias.md",
             "requerimientos/funcionales/portal-instituciones.md",
@@ -24,6 +33,56 @@
           ],
         },
         "requerimientos/no-funcionales.md",
+      ],
+    },
+    {
+      "Actores del sistema" = [
+        "actores/index.md",
+        "actores/app-movil.md",
+        "actores/portales.md",
+        "actores/backoffice.md",
+      ],
+    },
+    {
+      "Modelo de dominio" = [
+        "modelo-dominio/index.md",
+        "modelo-dominio/decisiones.md",
+        "modelo-dominio/convenciones.md",
+      ],
+    },
+    {
+      "Diagramas entidad-relación" = [
+        "diagramas/entidad-relacion/index.md",
+        {
+          "Modelo conceptual" = [
+            "diagramas/entidad-relacion/conceptual/catalogos.md",
+            "diagramas/entidad-relacion/conceptual/identidad.md",
+            "diagramas/entidad-relacion/conceptual/roles.md",
+            "diagramas/entidad-relacion/conceptual/perfiles.md",
+            "diagramas/entidad-relacion/conceptual/territorio.md",
+            "diagramas/entidad-relacion/conceptual/itinerarios.md",
+            "diagramas/entidad-relacion/conceptual/organizaciones.md",
+            "diagramas/entidad-relacion/conceptual/agenda.md",
+            "diagramas/entidad-relacion/conceptual/servicios.md",
+            "diagramas/entidad-relacion/conceptual/mensajeria.md",
+            "diagramas/entidad-relacion/conceptual/reputacion.md",
+            "diagramas/entidad-relacion/conceptual/insignias.md",
+            "diagramas/entidad-relacion/conceptual/finanzas.md",
+            "diagramas/entidad-relacion/conceptual/moderacion.md",
+            "diagramas/entidad-relacion/conceptual/notificaciones.md",
+            "diagramas/entidad-relacion/conceptual/auditoria.md",
+          ],
+        },
+        {
+          "Modelo físico" = [
+            "diagramas/entidad-relacion/fisico/catalogos.md",
+            "diagramas/entidad-relacion/fisico/identidad.md",
+            "diagramas/entidad-relacion/fisico/roles.md",
+            "diagramas/entidad-relacion/fisico/perfiles.md",
+            "diagramas/entidad-relacion/fisico/territorio.md",
+            "diagramas/entidad-relacion/fisico/itinerarios.md",
+          ],
+        },
       ],
     },
   ]
@@ -84,23 +143,33 @@
       "navigation.instant.prefetch",
       "navigation.instant.progress",
       "navigation.path",
+      "navigation.pruning",
+      "navigation.sections",
+      "navigation.tabs",
+      "navigation.tabs.sticky",
+      "navigation.top",
     ]
 
-    favicon = "favicon.svg"
-    logo    = "logo.svg"
-    variant = "modern"
+    favicon  = "favicon.svg"
+    language = "es"
+    logo     = "logo.svg"
+    variant  = "modern"
 
     [[project.theme.palette]]
+      accent      = "custom"
       media       = "(prefers-color-scheme: light)"
+      primary     = "custom"
       scheme      = "default"
       toggle.icon = "lucide/sun"
-      toggle.name = "Go to dark mode!"
+      toggle.name = "Ir a modo oscuro"
 
     [[project.theme.palette]]
+      accent      = "custom"
       media       = "(prefers-color-scheme: dark)"
+      primary     = "custom"
       scheme      = "slate"
       toggle.icon = "lucide/moon"
-      toggle.name = "Go to light mode!"
+      toggle.name = "Ir a modo claro"
 
   [project.validation]
     invalid_link_anchors  = false

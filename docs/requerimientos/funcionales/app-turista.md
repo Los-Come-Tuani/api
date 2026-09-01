@@ -2,9 +2,10 @@
 icon: lucide/smartphone
 ---
 
-# Aplicación móvil
+# App del turista
 
-La superficie del turista nacional y extranjero. Es el único punto donde la
+El papel del turista nacional y extranjero dentro de la aplicación móvil, que
+comparte con guías y traductores. Es el único punto donde la
 oferta dispersa —circuitos oficiales, comercios, agenda cultural y talento
 local— se presenta como una sola experiencia, y el orden de sus módulos refleja
 el recorrido real del visitante: primero descubre, luego arma su ruta, después
@@ -12,7 +13,7 @@ contrata acompañamiento y finalmente convierte lo explorado en un beneficio
 tangible.
 
 - **Módulos:** 5
-- **Total:** 27
+- **Total:** 30
 
 ---
 
@@ -78,7 +79,7 @@ entienda qué ocurrió.
 
 ---
 
-## Rutas personalizadas
+## Itinerarios
 
 ### RF-T-07
 
@@ -149,6 +150,18 @@ rutas que los turistas ya habían clonado a partir de él: la copia sobrevive al
 original. De igual forma, la eliminación de un punto de interés no reduce el
 saldo de insignias que ese punto ya había otorgado.
 
+### RF-T-28
+
+> **Seguir un circuito oficial sin modificarlo**
+
+El turista inicia el recorrido de un circuito oficial tal como lo publicó la
+alcaldía, sin clonarlo ni ajustar ninguna parada. El sistema registra ese inicio
+—hace falta para acreditar visitas, contratar acompañamiento y alimentar las
+métricas del circuito— y el recorrido refleja siempre la versión vigente del
+circuito, de modo que una corrección municipal posterior le llega. En el momento
+en que el turista agrega, quita o reordena una parada, el recorrido pasa a ser una
+copia propia y deja de recibir esos cambios.
+
 ---
 
 ## Contratación
@@ -188,6 +201,23 @@ Como alternativa a publicar una solicitud, el turista reserva directamente un
 recorrido que el guía ya tiene cargado en su catálogo, con la tarifa y los cupos
 publicados en ese momento. Los cambios de tarifa posteriores no afectan a una
 reserva ya creada.
+
+### RF-T-29
+
+> **Filtro del mapa por pilar cultural**
+
+El turista filtra los puntos de interés del mapa por los pilares que articulan
+los circuitos creativos: patrimonio, gastronomía, artesanía y saberes populares.
+Un punto puede pertenecer a más de uno —una casona colonial que además es taller
+de artesanía— y aparece en cualquiera de los filtros que le apliquen.
+
+### RF-T-30
+
+> **Contratación separada de guía y traductor**
+
+Sobre un mismo itinerario el turista puede contratar a un guía y a un traductor
+a la vez, como dos servicios independientes. Cada uno tiene su tarifa, su sala de
+chat, su cierre y su evaluación; cancelar uno no afecta al otro.
 
 ---
 

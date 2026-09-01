@@ -11,11 +11,21 @@ agenda cultural cambia por temporada y es la razón por la que una misma ciudad
 resulta distinta según la semana en que se visita.
 
 - **Módulos:** 2
-- **Total:** 6
+- **Total:** 7
 
 ---
 
 ## Programación
+
+### RF-I-07
+
+> **Alta de la institución cultural**
+
+La casa de cultura, fundación, ticketera o teatro se registra por un formulario
+público declarando su nombre, su ciudad, el tipo de institución y sus datos de
+contacto, y adjuntando el documento que acredita su existencia legal. Queda en
+espera hasta que el moderador la apruebe; hasta entonces no puede programar
+eventos ni aparecer en la agenda.
 
 ### RF-I-01
 

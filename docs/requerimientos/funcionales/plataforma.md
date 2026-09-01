@@ -12,7 +12,7 @@ evaluación de un servicio se emite en dos direcciones. Documentarlos una sola v
 evita que dos superficies mantengan copias divergentes de la misma regla.
 
 - **Módulos:** 6
-- **Total:** 25
+- **Total:** 26
 
 ---
 
@@ -22,11 +22,17 @@ evita que dos superficies mantengan copias divergentes de la misma regla.
 
 > **Superficies del sistema**
 
-El sistema se compone de una aplicación móvil dirigida al turista y cinco
-superficies web: portal de alcaldías, portal de comercios, portal de prestadores
-de servicio, portal de instituciones culturales y backoffice de administración.
-Una credencial habilita exactamente la superficie que corresponde a su rol; el
-sistema no ofrece una vista única con secciones ocultas por permisos.
+El sistema se compone de una aplicación móvil y cuatro superficies web. La
+aplicación móvil atiende a los tres papeles que operan en la calle: el turista,
+el guía turístico y el traductor. Las superficies web atienden a los que
+administran una organización desde un escritorio: portal de alcaldías, portal de
+comercios, portal de instituciones culturales y backoffice de administración.
+
+El reparto no es arbitrario. Quien recorre la ciudad necesita ubicación, cámara y
+avisos en segundo plano; quien administra una ficha o publica una agenda trabaja
+con formularios largos, carga de archivos y tablas. Una credencial habilita
+exactamente la superficie que corresponde a su rol: el sistema no ofrece una
+vista única con secciones ocultas por permisos.
 
 ### RF-S-02
 
@@ -134,6 +140,19 @@ queda revocada y se envía confirmación por correo. La baja se rechaza mientras
 existan servicios contratados y pagados que aún no se hayan prestado: primero hay
 que concluirlos o cancelarlos.
 
+### RF-S-26
+
+> **Un solo papel por cuenta**
+
+Una cuenta ejerce exactamente un papel. Quien se acredita como guía o traductor
+no puede además viajar como turista con la misma cuenta, y quien opera un
+comercio no acumula ningún otro perfil. Para ejercer dos papeles hacen falta dos
+cuentas con correos distintos.
+
+La restricción evita el conflicto de interés más obvio —postularse a la propia
+solicitud— y mantiene una sola respuesta a la pregunta «¿desde qué papel hizo
+esto esta persona?» en cada registro de auditoría.
+
 ---
 
 ## Contenido
@@ -149,12 +168,12 @@ para los listados y conserva la original para la vista de detalle.
 
 ### RF-S-13
 
-> **Carga de documentos de credencial**
+> **Carga de documentos de acreditación**
 
 Las licencias del INTUR, los certificados de idiomas y los permisos que acompañan
 a una solicitud se cargan en PDF legible de hasta diez megabytes. El documento
 queda asociado a las fechas de emisión y de vencimiento declaradas, que son los
-datos que gobiernan la vigencia del perfil al que respalda.
+datos que gobiernan la vigencia del perfil al que acredita.
 
 ---
 

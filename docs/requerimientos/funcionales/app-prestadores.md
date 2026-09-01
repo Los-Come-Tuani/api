@@ -2,16 +2,20 @@
 icon: lucide/compass
 ---
 
-# Portal de prestadores
+# App de prestadores
 
-La superficie de los guías turísticos certificados por el INTUR y de los
-traductores e intérpretes. Ambos comparten el mismo portal porque su ciclo es el
-mismo —acreditarse, publicar lo que ofrecen, recibir trabajo y cobrar— y solo
-difieren en el documento que respalda su credencial: licencia del INTUR en el
-caso del guía, certificado de idiomas en el del traductor.
+La superficie móvil de los guías turísticos certificados por el INTUR y de los
+traductores e intérpretes. Comparten aplicación porque su ciclo es el mismo
+—acreditarse, recibir trabajo, prestarlo y cobrar— y porque ambos operan en la
+calle, junto al turista y no frente a un escritorio.
+
+Difieren en dos cosas. En el documento que los acredita: licencia del INTUR el
+guía, certificado de idiomas el traductor. Y en lo que pueden ofrecer: **solo el
+guía publica recorridos**; el traductor no tiene catálogo propio y trabaja
+únicamente postulándose a lo que el turista publica.
 
 - **Módulos:** 4
-- **Total:** 18
+- **Total:** 20
 
 ---
 
@@ -79,6 +83,25 @@ pagos. El dato se almacena cifrado y su modificación no surte efecto de
 inmediato: entra en un periodo de espera de veinticuatro horas antes de
 habilitarse, de modo que un acceso no autorizado no pueda desviar un retiro en la
 misma sesión en que cambia la cuenta.
+
+### RF-P-19
+
+> **El traductor no publica catálogo**
+
+Solo el guía turístico crea recorridos con ruta, tarifa y cupos. El traductor no
+tiene catálogo propio: su único camino de trabajo es postularse a las solicitudes
+que publican los turistas. La distinción es de fondo y no de permisos: un
+recorrido es una propuesta de itinerario, y quien la propone es quien conoce el
+territorio.
+
+### RF-P-20
+
+> **Alta y acreditación desde el dispositivo**
+
+El prestador se registra, carga sus credenciales y las renueva desde la propia
+aplicación móvil, fotografiando el documento o adjuntando el archivo. No existe
+un portal web alternativo: el mismo dispositivo con el que atiende al turista es
+con el que se acredita.
 
 ---
 

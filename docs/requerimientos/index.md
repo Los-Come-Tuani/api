@@ -18,7 +18,7 @@ casos de uso y las decisiones de diseño sin ambigüedad. Los identificadores no
 se reutilizan: si un requerimiento se retira, su número queda vacante.
 
 - **Ámbitos:** 7
-- **Funcionales:** 108
+- **Funcionales:** 116
 - **No funcionales:** 25
 
 ---
@@ -27,20 +27,21 @@ se reutilizan: si un requerimiento se retira, su número queda vacante.
 
 K'plan no es una aplicación sino un ecosistema de dos lados. El turista consume
 la experiencia desde una aplicación móvil; los actores que producen la oferta
-—alcaldías, comercios, guías, traductores e instituciones culturales— la
-alimentan desde portales web distintos, y un equipo interno modera lo que se
-publica. Los requerimientos se agrupan por superficie porque es la partición que
+—alcaldías, comercios e instituciones culturales— la alimentan desde portales
+web, y un equipo interno modera lo que se publica. Guías y traductores no tienen
+portal: comparten la aplicación móvil con el turista, porque como él trabajan en
+la calle. Los requerimientos se agrupan por superficie porque es la partición que
 determina quién puede ejecutar cada comportamiento.
 
-| Documento | Prefijo | Superficie | Total |
-| --- | --- | --- | --- |
-| [Plataforma](funcionales/plataforma.md) | `RF-S` | Servicios transversales a todas las superficies | 25 |
-| [Aplicación móvil](funcionales/app-movil.md) | `RF-T` | Turista nacional y extranjero | 27 |
-| [Portal de prestadores](funcionales/portal-prestadores.md) | `RF-P` | Guías turísticos y traductores | 18 |
-| [Portal de comercios](funcionales/portal-comercios.md) | `RF-C` | MiPymes y emprendimientos | 12 |
-| [Portal de alcaldías](funcionales/portal-alcaldias.md) | `RF-A` | Gobiernos locales de las Ciudades Creativas | 10 |
-| [Portal de instituciones](funcionales/portal-instituciones.md) | `RF-I` | Casas de cultura, teatros y ticketeras | 6 |
-| [Backoffice](funcionales/backoffice.md) | `RF-B` | Moderación y supervisión internas | 10 |
+| Documento | Prefijo | Superficie | Actores | Total |
+| --- | --- | --- | --- | --- |
+| [Plataforma](funcionales/plataforma.md) | `RF-S` | Transversal | todos | 26 |
+| [App del turista](funcionales/app-turista.md) | `RF-T` | App móvil | Turista | 30 |
+| [App de prestadores](funcionales/app-prestadores.md) | `RF-P` | App móvil | Guía, Traductor | 20 |
+| [Portal de comercios](funcionales/portal-comercios.md) | `RF-C` | Web | Operador de comercio | 12 |
+| [Portal de alcaldías](funcionales/portal-alcaldias.md) | `RF-A` | Web | Operador de alcaldía | 11 |
+| [Portal de instituciones](funcionales/portal-instituciones.md) | `RF-I` | Web | Operador de institución | 7 |
+| [Backoffice](funcionales/backoffice.md) | `RF-B` | Web | Moderador, Supervisor | 10 |
 
 El documento de plataforma existe porque hay comportamientos que ninguna
 superficie posee en exclusiva. La identidad, la mensajería, las valoraciones y
@@ -60,4 +61,3 @@ fuentes; cuando existe la necesidad pero no el valor, el requerimiento la nombra
 y remite el número concreto a definición posterior.
 
 ---
-
