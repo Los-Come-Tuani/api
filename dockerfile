@@ -20,13 +20,13 @@ COPY pyproject.toml uv.lock ./
 
 FROM base AS deps-dev
 
-RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --all-groups
+RUN --mount=type=cache,id=s/5a2be4b5-053b-4d04-b9be-57d2e3be4f68,target=/root/.cache/uv uv sync --frozen --all-groups
 
 ########################################################################################
 
 FROM base AS deps-prod
 
-RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-dev
+RUN --mount=type=cache,id=s/5a2be4b5-053b-4d04-b9be-57d2e3be4f68,target=/root/.cache/uv uv sync --frozen --no-dev
 
 ########################################################################################
 
