@@ -5,6 +5,8 @@ from urllib.parse import unquote
 
 from psycopg import IsolationLevel
 from pydantic import (
+    NonNegativeInt,
+    PositiveInt,
     PostgresDsn,
     RedisDsn,
     SecretStr,
@@ -50,7 +52,20 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     JWT_ALGORITHM: Literal["HS256", "HS384", "HS512"] = "HS256"
 
     JWT_ACCESS_LIFETIME: timedelta = timedelta(hours=3)
+    JWT_CHALLENGE_LIFETIME: timedelta = timedelta(minutes=5)
     JWT_REFRESH_LIFETIME: timedelta = timedelta(days=1)
+
+    TOTP_DIGITS: Literal[6, 8] = 6
+    TOTP_ISSUER: Annotated[
+        str,
+        StringConstraints(max_length=64, min_length=1),
+    ] = "K'Plan"
+
+    TOTP_LOCKOUT: timedelta = timedelta(minutes=15)
+    TOTP_MAX_FAILURES: PositiveInt = 5
+    TOTP_PERIOD: PositiveInt = 30
+    TOTP_RECOVERY_CODES: PositiveInt = 10
+    TOTP_TOLERANCE: NonNegativeInt = 1
 
     DATABASE_URL: PostgresDsn
     REDIS_URL: RedisDsn
