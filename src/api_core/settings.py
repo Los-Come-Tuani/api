@@ -55,6 +55,8 @@ ALLOWED_HOSTS: Final[Sequence[str]] = (
     "127.0.0.1",
     "localhost",
     "healthcheck.railway.app",
+    "kplan-api.up.railway.app",
+    "staging-kplan-api.up.railway.app",
 )
 
 CORS_ALLOW_ALL_ORIGINS: Final[bool] = False
@@ -62,6 +64,8 @@ CORS_ALLOW_CREDENTIALS: Final[bool] = True
 CORS_ALLOWED_ORIGINS: Final[Sequence[str]] = (
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://kplan-api.up.railway.app",
+    "https://staging-kplan-api.up.railway.app",
 )
 
 CORS_EXPOSE_HEADERS: Final[Sequence[str]] = (CONFIG.csrf_header,)
@@ -73,6 +77,8 @@ CSRF_COOKIE_SECURE: Final[bool] = CONFIG.cookie_secure
 CSRF_TRUSTED_ORIGINS: Final[Sequence[str]] = (
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://kplan-api.up.railway.app",
+    "https://staging-kplan-api.up.railway.app",
 )
 
 FILE_UPLOAD_MAX_MEMORY_SIZE: Final[int] = 2_621_440
