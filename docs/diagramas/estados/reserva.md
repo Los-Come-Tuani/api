@@ -18,7 +18,11 @@ motivo y cuenta en la reputación de quien cancela.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -40,15 +44,15 @@ stateDiagram-v2
 
 </div>
 
-| Estado | Dónde está el dinero | `admite_cancelacion` | `es_terminal` |
-| --- | --- | :-: | :-: |
-| `pendiente_pago` | En tránsito, de nadie | no | no |
-| `confirmada` | Retenido por la plataforma | **sí** | no |
-| `en_curso` | Retenido por la plataforma | no | no |
-| `prestada` | Retenido por la plataforma | no | no |
-| `cerrada` | Liberado al prestador, menos comisión | no | **sí** |
-| `cancelada` | Reembolsado al turista | no | **sí** |
-| `expirada` | Nunca se cobró | no | **sí** |
+| Estado           | Dónde está el dinero                  | `admite_cancelacion` | `es_terminal` |
+| ---------------- | ------------------------------------- | :------------------: | :-----------: |
+| `pendiente_pago` | En tránsito, de nadie                 |          no          |      no       |
+| `confirmada`     | Retenido por la plataforma            |        **sí**        |      no       |
+| `en_curso`       | Retenido por la plataforma            |          no          |      no       |
+| `prestada`       | Retenido por la plataforma            |          no          |      no       |
+| `cerrada`        | Liberado al prestador, menos comisión |          no          |    **sí**     |
+| `cancelada`      | Reembolsado al turista                |          no          |    **sí**     |
+| `expirada`       | Nunca se cobró                        |          no          |    **sí**     |
 
 La tarifa se congela al crear la reserva: un ajuste posterior del prestador no la
 toca. La comisión se calcula al liberar, con el porcentaje vigente en ese
@@ -57,12 +61,12 @@ verificar la resta.
 
 ## Quién puede cancelar
 
-| Situación | Motivo | Reputación | Reembolso |
-| --- | :-: | :-: | :-: |
-| Turista o prestador, con más de 24 h | opcional | no cuenta | íntegro |
-| Turista o prestador, con menos de 24 h | **obligatorio** | cuenta | íntegro |
-| Expulsión permanente del prestador | automático | ya sancionado | íntegro |
-| Acreditación del prestador vencida | automático | no cuenta | íntegro |
+| Situación                              |     Motivo      |  Reputación   | Reembolso |
+| -------------------------------------- | :-------------: | :-----------: | :-------: |
+| Turista o prestador, con más de 24 h   |    opcional     |   no cuenta   |  íntegro  |
+| Turista o prestador, con menos de 24 h | **obligatorio** |    cuenta     |  íntegro  |
+| Expulsión permanente del prestador     |   automático    | ya sancionado |  íntegro  |
+| Acreditación del prestador vencida     |   automático    |   no cuenta   |  íntegro  |
 
 Las dos últimas filas no las dispara una persona: las dispara el proceso
 programado, y el turista recibe el aviso con tiempo para buscar otro prestador.

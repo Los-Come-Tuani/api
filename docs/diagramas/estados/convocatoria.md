@@ -18,7 +18,11 @@ declarada. No hace falta un plazo aparte: la fecha ya está en la convocatoria.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -37,12 +41,12 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `admite_postulacion` | `es_terminal` |
-| --- | :-: | :-: |
-| `publicada` | **sí** | no |
-| `adjudicada` | no | **sí** |
-| `cancelada` | no | **sí** |
-| `expirada` | no | **sí** |
+| Estado       | `admite_postulacion` | `es_terminal` |
+| ------------ | :------------------: | :-----------: |
+| `publicada`  |        **sí**        |      no       |
+| `adjudicada` |          no          |    **sí**     |
+| `cancelada`  |          no          |    **sí**     |
+| `expirada`   |          no          |    **sí**     |
 
 Una convocatoria adjudicada produce **una** reserva. Contratar guía y traductor a
 la vez son dos convocatorias, nunca una adjudicación doble.

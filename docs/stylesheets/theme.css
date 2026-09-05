@@ -1,29 +1,8 @@
-/*
- * Paleta de K'plan.
- *
- * Conexion   #2D6A4F  primario  — cabecera y navegacion
- * Cultura    #D95D39  acento    — enlaces, codigo y bordes de entidad en Mermaid
- * Modernidad #1E2022  fondo oscuro
- *
- * El acento se ajusta por esquema para no bajar del contraste 4.5:1 sobre el
- * fondo: #D95D39 puro queda en 3.77:1 sobre blanco y en 4.40:1 sobre el fondo
- * oscuro, ambos por debajo del umbral para texto. Las variantes conservan el
- * mismo tono y solo mueven la luminosidad.
- */
-
 [data-md-color-scheme="default"] {
-  --md-accent-fg-color: #c8502c;
-  --md-primary-fg-color: #2d6a4f;
-  --md-primary-fg-color--dark: #1f4c39;
-  --md-primary-fg-color--light: #3f8a68;
   --md-typeset-code-color: var(--md-accent-fg-color);
 }
 
 [data-md-color-scheme="slate"] {
-  --md-accent-fg-color: #e4795a;
-  --md-primary-fg-color: #2d6a4f;
-  --md-primary-fg-color--dark: #1f4c39;
-  --md-primary-fg-color--light: #3f8a68;
   --md-typeset-code-color: var(--md-accent-fg-color);
 }
 
@@ -32,8 +11,6 @@
   color: var(--md-accent-fg-color);
 }
 
-/* Los diagramas anchos se desplazan dentro de su contenedor
-   en lugar de desbordar la pagina. */
 .md-typeset .mermaid {
   overflow-x: auto;
 }

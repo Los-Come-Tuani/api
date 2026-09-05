@@ -18,7 +18,11 @@ ejecutada por el proceso programado.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -40,13 +44,13 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `permite_operar` | `revoca_sesion` | `es_terminal` |
-| --- | :-: | :-: | :-: |
-| `pendiente` | no | no | no |
-| `activa` | **sí** | no | no |
-| `suspendida` | no | **sí** | no |
-| `expulsada` | no | **sí** | **sí** |
-| `en_baja` | no | **sí** | no |
+| Estado       | `permite_operar` | `revoca_sesion` | `es_terminal` |
+| ------------ | :--------------: | :-------------: | :-----------: |
+| `pendiente`  |        no        |       no        |      no       |
+| `activa`     |      **sí**      |       no        |      no       |
+| `suspendida` |        no        |     **sí**      |      no       |
+| `expulsada`  |        no        |     **sí**      |    **sí**     |
+| `en_baja`    |        no        |     **sí**      |      no       |
 
 La baja se rechaza mientras existan servicios contratados y pagados sin prestar:
 la transición a `en_baja` no ocurre, no es que ocurra y se revierta.

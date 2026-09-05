@@ -30,6 +30,7 @@ config:
   layout: elk
 ---
 erDiagram
+    direction LR
     Ciudad ||--o| Alcaldia : "es operada por"
     PuntoInteres }o--o{ PilarCultural : "se clasifica en"
     Ciudad ||--o{ PuntoInteres : "contiene"

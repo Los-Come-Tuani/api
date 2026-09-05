@@ -4,16 +4,15 @@ icon: lucide/smartphone
 
 # App del turista
 
+- **Módulos:** 5
+- **Total:** 30
+
 El papel del turista nacional y extranjero dentro de la aplicación móvil, que
-comparte con guías y traductores. Es el único punto donde la
-oferta dispersa —circuitos oficiales, comercios, agenda cultural y talento
-local— se presenta como una sola experiencia, y el orden de sus módulos refleja
+comparte con guías y traductores. Es el único punto donde la oferta dispersa
+se presenta como una sola experiencia, y el orden de sus módulos refleja
 el recorrido real del visitante: primero descubre, luego arma su ruta, después
 contrata acompañamiento y finalmente convierte lo explorado en un beneficio
 tangible.
-
-- **Módulos:** 5
-- **Total:** 30
 
 ---
 
@@ -61,7 +60,7 @@ resuelve como recurso inexistente.
 
 > **Ficha de comercio**
 
-La ficha de una MiPyme muestra su nombre, ubicación, contacto, fotografías, el
+La ficha de una MIPYME muestra su nombre, ubicación, contacto, fotografías, el
 platillo estrella con su precio de referencia y el horario declarado. A partir de
 ese horario y del reloj autoritativo, la aplicación indica si el local está
 abierto o cerrado en ese instante, para no enviar al turista a un negocio que ya
@@ -156,10 +155,9 @@ saldo de insignias que ese punto ya había otorgado.
 
 El turista inicia el recorrido de un circuito oficial tal como lo publicó la
 alcaldía, sin clonarlo ni ajustar ninguna parada. El sistema registra ese inicio
-—hace falta para acreditar visitas, contratar acompañamiento y alimentar las
-métricas del circuito— y el recorrido refleja siempre la versión vigente del
-circuito, de modo que una corrección municipal posterior le llega. En el momento
-en que el turista agrega, quita o reordena una parada, el recorrido pasa a ser una
+y el recorrido refleja siempre la versión vigente del circuito, de modo que
+una corrección municipal posterior le llega. En el momento en que el turista
+agrega, quita o reordena una parada, el recorrido pasa a ser una
 copia propia y deja de recibir esos cambios.
 
 ---
@@ -208,8 +206,8 @@ reserva ya creada.
 
 El turista filtra los puntos de interés del mapa por los pilares que articulan
 los circuitos creativos: patrimonio, gastronomía, artesanía y saberes populares.
-Un punto puede pertenecer a más de uno —una casona colonial que además es taller
-de artesanía— y aparece en cualquiera de los filtros que le apliquen.
+Un punto puede pertenecer a más de uno y aparece en cualquiera de los filtros
+que le apliquen.
 
 ### RF-T-30
 

@@ -1,5 +1,6 @@
 ---
 icon: lucide/gauge
+title: No funcionales
 ---
 
 # Requerimientos no funcionales
@@ -67,9 +68,8 @@ repositorio.
 > **Contenido multilingüe**
 
 El turista declara un idioma preferido y la interfaz lo respeta cuando existe
-traducción. El catálogo de idiomas soportados y el alcance de la traducción
-—interfaz solamente, o también el contenido que publican alcaldías, comercios e
-instituciones— no están definidos.
+traducción. El catálogo de idiomas soportados y el alcance de
+la traducción no están definidos.
 
 ### RNF-06
 
@@ -95,10 +95,9 @@ menos ocho caracteres, una mayúscula y un número.
 
 > **Sesión y revocación**
 
-Las sesiones se sostienen con credenciales firmadas y de vigencia acotada —tres
-horas para el acceso y un día para la renovación— y el sistema puede revocarlas
-antes de su expiración natural. Sin esa capacidad, una suspensión no tendría
-efecto sobre el dispositivo en el que el infractor ya estaba dentro.
+Las sesiones se sostienen con credenciales firmadas y de vigencia acotada y el sistema
+puede revocarlas antes de su expiración natural. Sin esa capacidad, una suspensión
+no tendría efecto sobre el dispositivo en el que el infractor ya estaba dentro.
 
 ### RNF-09
 
@@ -180,7 +179,7 @@ cliente. Ningún tiempo de respuesta objetivo está definido.
 
 La colección de rutas del turista se consulta sin conexión y se sincroniza con el
 servidor cuando esta se restablece. El alcance del modo sin conexión para el
-resto de la aplicación —exploración, agenda y billetera— no está definido.
+resto de la aplicación no está definido.
 
 ---
 
@@ -256,23 +255,3 @@ debe poder verificar la operación, no solo su resultado.
 Los historiales de viajes, pagos, reseñas y sanciones se conservan como registro
 consultable. El periodo de retención de cada uno y la política de purga no están
 definidos.
-
----
-
-## Pendientes de definición
-
-Necesidades reconocidas cuyo valor concreto ninguna fuente establece. No se
-resolvieron por cuenta propia porque cada una condiciona decisiones de diseño
-que serían costosas de revertir.
-
-| Requerimiento     | Qué falta decidir                                                       | Qué depende de ello                                                 |
-| ----------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| [RNF-01](#rnf-01) | Versiones mínimas de sistema operativo y navegador                      | Alcance de las pruebas y de las funciones de mapa utilizables       |
-| [RNF-03](#rnf-03) | Política de reintento y comportamiento de respaldo por servicio externo | Qué ocurre con un canje o un aviso cuando el proveedor no responde  |
-| [RNF-05](#rnf-05) | Catálogo de idiomas y alcance de la traducción                          | Si el contenido que publican los actores locales debe traducirse    |
-| [RNF-06](#rnf-06) | Moneda de referencia, fuente del tipo de cambio y momento de congelarlo | Cálculo de comisiones, saldos y umbral de retiro                    |
-| [RNF-14](#rnf-14) | Marco normativo de protección de datos aplicable                        | Plazos de borrado y excepciones por obligación contable             |
-| [RNF-15](#rnf-15) | Objetivo de disponibilidad y ventana de mantenimiento                   | Arquitectura de despliegue y compromisos ante las alcaldías         |
-| [RNF-16](#rnf-16) | Tiempos de respuesta objetivo                                           | Estrategia de consulta geoespacial y de caché                       |
-| [RNF-17](#rnf-17) | Alcance del modo sin conexión                                           | Qué se replica en el dispositivo y cómo se resuelven los conflictos |
-| [RNF-21](#rnf-21) | Volumen esperado por ciudad                                             | Indexación, particionamiento y dimensionamiento                     |

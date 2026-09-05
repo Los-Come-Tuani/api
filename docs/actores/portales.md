@@ -38,7 +38,7 @@ nada más.
 
 ## Operador de comercio
 
-> **Quien mantiene visible a la MiPyme**
+> **Quien mantiene visible a la MIPYME**
 
 Dueño o encargado de un negocio ubicado dentro de un circuito, con prioridad en
 los gastronómicos. Se registra por su cuenta desde la web y no necesita saber de
@@ -74,17 +74,17 @@ sistema dirige al turista al evento, no le cobra el boleto.
 
 ## Qué los separa
 
-| | Alcaldía | Comercio | Institución |
-| --- | :-: | :-: | :-: |
-| Ámbito de su rol | una ciudad | un comercio | una institución |
-| Cómo se da de alta | pendiente de definir | se registra solo por la web | pendiente de definir |
-| Necesita verificación humana | pendiente de definir | sí | pendiente de definir |
-| Publica contenido oficial | ● | | |
-| Publica oferta comercial | | ● | |
-| Publica agenda con fechas | | | ● |
-| Aparece en el mapa del turista | como circuito | como ficha | como evento |
-| Paga por visibilidad | | ● | |
-| Consulta métricas de su ámbito | ● | ● | ● |
+|                                |       Alcaldía       |          Comercio           |     Institución      |
+| ------------------------------ | :------------------: | :-------------------------: | :------------------: |
+| Ámbito de su rol               |      una ciudad      |         un comercio         |   una institución    |
+| Cómo se da de alta             | pendiente de definir | se registra solo por la web | pendiente de definir |
+| Necesita verificación humana   | pendiente de definir |             sí              | pendiente de definir |
+| Publica contenido oficial      |          ●           |                             |                      |
+| Publica oferta comercial       |                      |              ●              |                      |
+| Publica agenda con fechas      |                      |                             |          ●           |
+| Aparece en el mapa del turista |    como circuito     |         como ficha          |     como evento      |
+| Paga por visibilidad           |                      |              ●              |                      |
+| Consulta métricas de su ámbito |          ●           |              ●              |          ●           |
 
 Las tres celdas pendientes son el mismo vacío: ninguna fuente dice cómo se
 incorporan una alcaldía y una institución cultural. El comercio se registra solo

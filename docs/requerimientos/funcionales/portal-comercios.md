@@ -4,14 +4,14 @@ icon: lucide/utensils-crossed
 
 # Portal de comercios
 
-La superficie de las MiPymes y emprendimientos ubicados dentro de los circuitos,
-con las gastronómicas como segmento prioritario del piloto. Es la superficie
-diseñada para el usuario con menor familiaridad tecnológica del ecosistema: el
-comercio no mantiene una página propia, y todo lo que necesita para existir en el
-mapa —su ficha, su horario y su platillo estrella— se administra desde aquí.
-
 - **Módulos:** 3
 - **Total:** 12
+
+La superficie de las MIPYMES y emprendimientos ubicados dentro de los circuitos,
+con las gastronómicas como segmento prioritario del piloto. Es la superficie
+diseñada para el usuario con menor familiaridad tecnológica del ecosistema:
+el comercio no mantiene una página propia, y todo lo que necesita para
+existir en el mapa se administra desde aquí.
 
 ---
 
@@ -71,9 +71,9 @@ gancho del segmento gastronómico.
 
 > **Emisión de cupones**
 
-El comercio crea campañas promocionales definiendo el beneficio —descuento
-porcentual, monto fijo o producto—, la cantidad de cupones disponibles, la fecha
-de expiración de la campaña y cuántas insignias cuesta obtener uno. Tanto el
+El comercio crea campañas promocionales definiendo el beneficio,
+la cantidad de cupones disponibles, la fecha de expiración de la
+campaña y cuántas insignias cuesta obtener uno. Tanto el
 costo en insignias como el stock deben ser mayores que cero.
 
 ### RF-C-07

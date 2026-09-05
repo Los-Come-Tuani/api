@@ -20,7 +20,11 @@ propio ciclo. Es lo que permite conservar el historial de licencias de un guía.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -39,12 +43,12 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `es_visible` | `acepta_reservas` |
-| --- | :-: | :-: |
-| `sin_acreditar` | no | no |
-| `en_revision` | no | no |
-| `activo` | **sí** | **sí** |
-| `suspendido` | no | no |
+| Estado          | `es_visible` | `acepta_reservas` |
+| --------------- | :----------: | :---------------: |
+| `sin_acreditar` |      no      |        no         |
+| `en_revision`   |      no      |        no         |
+| `activo`        |    **sí**    |      **sí**       |
+| `suspendido`    |      no      |        no         |
 
 `suspendido` conserva el acceso: el prestador entra a la aplicación para
 regularizar sus papeles y atender los servicios ya comprometidos, pero no aparece
@@ -57,7 +61,11 @@ en búsquedas ni recibe contrataciones nuevas.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB

@@ -4,18 +4,22 @@ icon: lucide/compass
 
 # App de prestadores
 
-La superficie móvil de los guías turísticos certificados por el INTUR y de los
-traductores e intérpretes. Comparten aplicación porque su ciclo es el mismo
-—acreditarse, recibir trabajo, prestarlo y cobrar— y porque ambos operan en la
-calle, junto al turista y no frente a un escritorio.
-
-Difieren en dos cosas. En el documento que los acredita: licencia del INTUR el
-guía, certificado de idiomas el traductor. Y en lo que pueden ofrecer: **solo el
-guía publica recorridos**; el traductor no tiene catálogo propio y trabaja
-únicamente postulándose a lo que el turista publica.
-
 - **Módulos:** 4
 - **Total:** 20
+
+La superficie móvil de los guías turísticos certificados por el INTUR y de los
+traductores e intérpretes. Comparten aplicación porque su ciclo es el mismo
+y porque ambos operan en la calle, junto al turista y no frente a un escritorio.
+
+Difieren en dos cosas:
+
+- El documento que los acredita
+  - Licencia del INTUR para el guía
+  - Certificado de idiomas para el traductor
+- Lo que pueden ofrecer:
+  - Solo el guía publica recorridos
+  - El traductor no tiene catálogo propio y trabaja
+  - únicamente postulándose a lo que el turista publica.
 
 ---
 
@@ -25,10 +29,9 @@ guía publica recorridos**; el traductor no tiene catálogo propio y trabaja
 
 > **Alta del prestador**
 
-El prestador crea su cuenta declarando el tipo de servicio que ofrece —guía,
-traducción o ambos—, su ciudad de operación y los idiomas que domina. El alta no
-lo hace visible: lo deja en condición de aportar los documentos que respaldan lo
-declarado.
+El prestador crea su cuenta declarando el tipo de servicio que ofrece,
+su ciudad de operación y los idiomas que domina. El alta no lo hace visible:
+lo deja en condición de aportar los documentos que respaldan lo declarado.
 
 ### RF-P-02
 
@@ -121,8 +124,8 @@ cuanto se publica.
 
 > **Listado del catálogo**
 
-El portal presenta al prestador todos sus recorridos con su estado —publicado,
-pausado o sin cupos— y acceso directo a las acciones sobre cada uno.
+El portal presenta al prestador todos sus recorridos con su estado
+y acceso directo a las acciones sobre cada uno.
 
 ### RF-P-10
 

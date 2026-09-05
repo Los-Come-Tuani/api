@@ -19,7 +19,11 @@ esta máquina sin alterarla. Un itinerario puede ajustarse estando `planificado`
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -42,16 +46,16 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `admite_edicion` | `admite_reserva` | `es_terminal` |
-| --- | :-: | :-: | :-: |
-| `planificado` | **sí** | **sí** | no |
-| `en_curso` | **sí** | no | no |
-| `completado` | no | no | no |
-| `eliminado` | no | no | **sí** |
+| Estado        | `admite_edicion` | `admite_reserva` | `es_terminal` |
+| ------------- | :--------------: | :--------------: | :-----------: |
+| `planificado` |      **sí**      |      **sí**      |      no       |
+| `en_curso`    |      **sí**      |        no        |      no       |
+| `completado`  |        no        |        no        |      no       |
+| `eliminado`   |        no        |        no        |    **sí**     |
 
 `en_curso` no tiene salida a `eliminado`: el turista no descarta un recorrido que
-está haciendo. Tampoco la tiene si existe una reserva viva sobre él —la llave
-foránea restringe—, así que primero se cierra o cancela el servicio.
+está haciendo. Tampoco la tiene si existe una reserva viva sobre él,
+así que primero se cierra o cancela el servicio.
 
 De estas tres marcas temporales salen, sin cálculos adicionales, las tres cifras
 que la alcaldía mide por separado: **iniciaron** son los itinerarios con

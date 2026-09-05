@@ -4,14 +4,14 @@ icon: lucide/landmark
 
 # Portal de alcaldías
 
+- **Módulos:** 3
+- **Total:** 11
+
 La superficie del actor ancla del ecosistema. Las alcaldías de las Ciudades
 Creativas son las únicas autorizadas a publicar circuitos oficiales, y sin ese
 contenido base la aplicación no tiene qué mostrar: cada ciudad que adopta el
 portal habilita, en cadena, a los comercios, prestadores e instituciones de su
 territorio.
-
-- **Módulos:** 3
-- **Total:** 11
 
 ---
 
@@ -114,8 +114,7 @@ copias que los turistas ya habían clonado siguen existiendo en sus colecciones.
 La alcaldía retira de forma permanente un circuito descatalogado. Por tratarse de
 una acción irreversible, exige una confirmación reforzada en la que el operador
 teclee el nombre exacto del circuito. El alcance de esa eliminación sobre el
-historial derivado —copias de turistas, insignias otorgadas y registros de
-auditoría— no está resuelto y se documenta como contradicción entre fuentes.
+historial derivado no está resuelto y se documenta como contradicción entre fuentes.
 
 ### RF-A-10
 

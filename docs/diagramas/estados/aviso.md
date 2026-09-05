@@ -19,7 +19,11 @@ entrega es un segundo evento y puede no llegar nunca.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -39,19 +43,18 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `cuenta_para_limite` | `admite_reintento` | `es_terminal` |
-| --- | :-: | :-: | :-: |
-| `encolado` | no | no | no |
-| `descartado` | no | no | **sí** |
-| `enviado` | **sí** | no | no |
-| `entregado` | **sí** | no | **sí** |
-| `fallido` | no | **sí** | **sí** |
+| Estado       | `cuenta_para_limite` | `admite_reintento` | `es_terminal` |
+| ------------ | :------------------: | :----------------: | :-----------: |
+| `encolado`   |          no          |         no         |      no       |
+| `descartado` |          no          |         no         |    **sí**     |
+| `enviado`    |        **sí**        |         no         |      no       |
+| `entregado`  |        **sí**        |         no         |    **sí**     |
+| `fallido`    |          no          |       **sí**       |    **sí**     |
 
 Solo `enviado` y `entregado` cuentan para el límite: un aviso descartado o
 fallido no consume la cuota de la hora. El límite se evalúa contando las filas de
 los últimos sesenta minutos, porque la ventana es deslizante y un contador por
 hora dejaría pasar seis avisos entre las 10:59 y las 11:01.
 
-Los avisos transaccionales —la cancelación de un evento al que el turista se
-vinculó, el resultado de una verificación— no pasan por `descartado`: su
-categoría los marca como no desactivables.
+Los avisos transaccionales no pasan por `descartado`:
+su categoría los marca como no desactivables.

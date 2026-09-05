@@ -19,7 +19,11 @@ Lo que sí se corta de inmediato son sus avisos por cercanía.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -43,12 +47,12 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `es_visible` | `admite_edicion` | `genera_avisos` | `es_terminal` |
-| --- | :-: | :-: | :-: | :-: |
-| `programado` | no | **sí** | no | no |
-| `publicado` | **sí** | **sí** | **sí** | no |
-| `finalizado` | no | no | no | **sí** |
-| `cancelado` | **sí** | no | no | **sí** |
+| Estado       | `es_visible` | `admite_edicion` | `genera_avisos` | `es_terminal` |
+| ------------ | :----------: | :--------------: | :-------------: | :-----------: |
+| `programado` |      no      |      **sí**      |       no        |      no       |
+| `publicado`  |    **sí**    |      **sí**      |     **sí**      |      no       |
+| `finalizado` |      no      |        no        |       no        |    **sí**     |
+| `cancelado`  |    **sí**    |        no        |       no        |    **sí**     |
 
 Clonar un evento no es una transición: crea una fila nueva en `programado` con la
 descripción, el recinto y el precio copiados y las fechas vacías. Cancelar el

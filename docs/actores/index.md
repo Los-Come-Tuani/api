@@ -18,16 +18,16 @@ de uno de León no es su cargo, sino sobre qué ciudad escribe.
 
 ## Quién es quién
 
-| Actor | Superficie | En una línea |
-| --- | --- | --- |
-| [Turista](app-movil.md#turista) | App móvil | Explora, arma su itinerario, contrata acompañamiento y canjea insignias |
-| [Guía turístico](app-movil.md#guia-turistico) | App móvil | Publica recorridos, se postula y presta el servicio en el territorio |
-| [Traductor](app-movil.md#traductor) | App móvil | Se postula a solicitudes de turistas; no publica catálogo propio |
-| [Operador de alcaldía](portales.md#operador-de-alcaldia) | Portal web | Publica y mantiene los circuitos oficiales de su ciudad |
-| [Operador de comercio](portales.md#operador-de-comercio) | Portal web | Mantiene la ficha del negocio, emite cupones y los valida en mostrador |
-| [Operador de institución](portales.md#operador-de-institucion) | Portal web | Programa la agenda cultural que aparece en la app |
-| [Moderador](backoffice.md#moderador) | Backoffice | Verifica acreditaciones y organizaciones antes de que sean visibles |
-| [Supervisor](backoffice.md#supervisor) | Backoffice | Resuelve reportes y sanciona |
+| Actor                                                          | Superficie | En una línea                                                            |
+| -------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------- |
+| [Turista](app-movil.md#turista)                                | App móvil  | Explora, arma su itinerario, contrata acompañamiento y canjea insignias |
+| [Guía turístico](app-movil.md#guia-turistico)                  | App móvil  | Publica recorridos, se postula y presta el servicio en el territorio    |
+| [Traductor](app-movil.md#traductor)                            | App móvil  | Se postula a solicitudes de turistas; no publica catálogo propio        |
+| [Operador de alcaldía](portales.md#operador-de-alcaldia)       | Portal web | Publica y mantiene los circuitos oficiales de su ciudad                 |
+| [Operador de comercio](portales.md#operador-de-comercio)       | Portal web | Mantiene la ficha del negocio, emite cupones y los valida en mostrador  |
+| [Operador de institución](portales.md#operador-de-institucion) | Portal web | Programa la agenda cultural que aparece en la app                       |
+| [Moderador](backoffice.md#moderador)                           | Backoffice | Verifica acreditaciones y organizaciones antes de que sean visibles     |
+| [Supervisor](backoffice.md#supervisor)                         | Backoffice | Resuelve reportes y sanciona                                            |
 
 El reparto entre móvil y web sigue dónde trabaja cada uno. Turista, guía y
 traductor operan en la calle: necesitan ubicación, cámara y avisos en segundo
@@ -38,37 +38,36 @@ formularios largos, carga de archivos y tablas.
 
 ## Matriz de capacidades
 
-Quién puede ejecutar cada acción. **●** es capacidad plena; **◐** es capacidad
-acotada a un ámbito —su ciudad, su comercio, su institución— o condicionada a
-una verificación previa.
+Quién puede ejecutar cada acción. **●** es capacidad plena; **◐** es
+capacidad acotada a un ámbito o condicionada a una verificación previa.
 
-| Acción | Tur | Guía | Trad | Alc | Com | Inst | Mod | Sup |
-| --- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-| Publicar circuito oficial | | | | ◐ | | | | |
-| Editar o retirar un circuito | | | | ◐ | | | | |
-| Crear puntos de interés | | | | ◐ | | | | |
-| Consultar circuitos y mapa | ● | ● | ● | ● | | | ● | ● |
-| Seguir un circuito tal cual | ● | | | | | | | |
-| Ajustar, combinar o crear itinerario | ● | | | | | | | |
-| Publicar solicitud de acompañamiento | ● | | | | | | | |
-| Publicar recorrido con tarifa | | ◐ | | | | | | |
-| Postularse a una solicitud | | ◐ | ◐ | | | | | |
-| Aceptar una postulación | ● | | | | | | | |
-| Reservar un recorrido publicado | ● | | | | | | | |
-| Cerrar el servicio prestado | | ● | ● | | | | | |
-| Registrar un comercio | | | | | ● | | | |
-| Editar ficha, horarios y platillo | | | | | ◐ | | | |
-| Emitir campaña de cupones | | | | | ◐ | | | |
-| Validar un cupón en mostrador | | | | | ◐ | | | |
-| Contratar visibilidad destacada | | | | | ◐ | | | |
-| Programar o cancelar eventos | | | | | | ◐ | | |
-| Canjear insignias por cupones | ● | | | | | | | |
-| Emitir reseña al cerrar el servicio | ● | ● | ● | | | | | |
-| Impugnar una reseña recibida | | ● | ● | | | | | |
-| Consultar balance y solicitar retiro | | ● | ● | | | | | |
-| Verificar credenciales y comercios | | | | | | | ● | |
-| Resolver reportes y sancionar | | | | | | | | ● |
-| Consultar métricas de su ámbito | | | | ◐ | ◐ | ◐ | | ● |
+| Acción                               | Tur | Guía | Trad | Alc | Com | Inst | Mod | Sup |
+| ------------------------------------ | :-: | :--: | :--: | :-: | :-: | :--: | :-: | :-: |
+| Publicar circuito oficial            |     |      |      |  ◐  |     |      |     |     |
+| Editar o retirar un circuito         |     |      |      |  ◐  |     |      |     |     |
+| Crear puntos de interés              |     |      |      |  ◐  |     |      |     |     |
+| Consultar circuitos y mapa           |  ●  |  ●   |  ●   |  ●  |     |      |  ●  |  ●  |
+| Seguir un circuito tal cual          |  ●  |      |      |     |     |      |     |     |
+| Ajustar, combinar o crear itinerario |  ●  |      |      |     |     |      |     |     |
+| Publicar solicitud de acompañamiento |  ●  |      |      |     |     |      |     |     |
+| Publicar recorrido con tarifa        |     |  ◐   |      |     |     |      |     |     |
+| Postularse a una solicitud           |     |  ◐   |  ◐   |     |     |      |     |     |
+| Aceptar una postulación              |  ●  |      |      |     |     |      |     |     |
+| Reservar un recorrido publicado      |  ●  |      |      |     |     |      |     |     |
+| Cerrar el servicio prestado          |     |  ●   |  ●   |     |     |      |     |     |
+| Registrar un comercio                |     |      |      |     |  ●  |      |     |     |
+| Editar ficha, horarios y platillo    |     |      |      |     |  ◐  |      |     |     |
+| Emitir campaña de cupones            |     |      |      |     |  ◐  |      |     |     |
+| Validar un cupón en mostrador        |     |      |      |     |  ◐  |      |     |     |
+| Contratar visibilidad destacada      |     |      |      |     |  ◐  |      |     |     |
+| Programar o cancelar eventos         |     |      |      |     |     |  ◐   |     |     |
+| Canjear insignias por cupones        |  ●  |      |      |     |     |      |     |     |
+| Emitir reseña al cerrar el servicio  |  ●  |  ●   |  ●   |     |     |      |     |     |
+| Impugnar una reseña recibida         |     |  ●   |  ●   |     |     |      |     |     |
+| Consultar balance y solicitar retiro |     |  ●   |  ●   |     |     |      |     |     |
+| Verificar credenciales y comercios   |     |      |      |     |     |      |  ●  |     |
+| Resolver reportes y sancionar        |     |      |      |     |     |      |     |  ●  |
+| Consultar métricas de su ámbito      |     |      |      |  ◐  |  ◐  |  ◐   |     |  ●  |
 
 Ninguna casilla vacía es un olvido: es una restricción que el modelo debe
 sostener. Que la columna del guía esté vacía en «ajustar itinerario» significa

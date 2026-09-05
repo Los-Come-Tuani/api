@@ -4,14 +4,14 @@ icon: lucide/shield-check
 
 # Backoffice
 
-La superficie del equipo interno de K'plan. Concentra las dos funciones que
+- **Módulos:** 2
+- **Total:** 10
+
+La superficie del equipo interno de `k'plan`. Concentra las dos funciones que
 sostienen la confianza del ecosistema: verificar que quien se presenta como guía
 o traductor lo es de verdad, y sancionar a quien rompe las reglas. Ambas son
 decisiones humanas y ninguna se automatiza, porque las dos determinan si un
 turista puede confiar en la persona con la que va a recorrer una ciudad.
-
-- **Módulos:** 2
-- **Total:** 10
 
 ---
 

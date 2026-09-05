@@ -4,15 +4,15 @@ icon: lucide/layers
 
 # Plataforma
 
+- **Módulos:** 6
+- **Total:** 26
+
 Comportamientos que ninguna superficie posee en exclusiva. La identidad, el
 tiempo, la mensajería, las valoraciones y los avisos por cercanía atraviesan la
 aplicación móvil y los portales por igual, y varios de ellos son bilaterales por
 naturaleza: la misma sala de chat pertenece al turista y al prestador, y la
 evaluación de un servicio se emite en dos direcciones. Documentarlos una sola vez
 evita que dos superficies mantengan copias divergentes de la misma regla.
-
-- **Módulos:** 6
-- **Total:** 26
 
 ---
 
@@ -149,9 +149,8 @@ no puede además viajar como turista con la misma cuenta, y quien opera un
 comercio no acumula ningún otro perfil. Para ejercer dos papeles hacen falta dos
 cuentas con correos distintos.
 
-La restricción evita el conflicto de interés más obvio —postularse a la propia
-solicitud— y mantiene una sola respuesta a la pregunta «¿desde qué papel hizo
-esto esta persona?» en cada registro de auditoría.
+La restricción evita el conflicto de interés más obvio y mantiene una sola respuesta
+a la pregunta «¿desde qué papel hizo esto esta persona?» en cada registro de auditoría.
 
 ---
 
@@ -161,8 +160,7 @@ esto esta persona?» en cada registro de auditoría.
 
 > **Carga de imágenes**
 
-Las imágenes que aporta el usuario —foto de perfil, fachada del negocio, platillo
-estrella, portada de circuito— se admiten en formato JPG o PNG con un tamaño
+Las imágenes que aporta el usuario se admiten en formato JPG o PNG con un tamaño
 máximo de cinco megabytes por archivo. El sistema deriva una versión reducida
 para los listados y conserva la original para la vista de detalle.
 
@@ -231,9 +229,8 @@ siga siendo consultable cuando surge una discrepancia posterior.
 
 Mientras la reserva no esté confirmada, el sistema impide el envío de números de
 teléfono y direcciones de correo dentro de la sala. La restricción existe para
-que la negociación —y con ella la comisión que sostiene la plataforma— no se
-desplace fuera del sistema. El envío se bloquea y se informa el motivo al
-remitente.
+que la negociación no se desplace fuera del sistema. El envío se bloquea y
+se informa el motivo al remitente.
 
 ### RF-S-19
 

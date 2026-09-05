@@ -17,8 +17,8 @@ icon: lucide/home
 
 ---
 
-<h3 align="center">
-  Microservicios para la aplicación móvil K'Plan.
+<h3 align="center" markdown>
+  Documentación de microservicios para la aplicación móvil `k'plan`
 </h3>
 
 <div align="center" markdown>

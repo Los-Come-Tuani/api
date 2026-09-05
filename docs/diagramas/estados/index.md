@@ -19,35 +19,35 @@ verificación, no una máquina propia.
 
 ## Entidades
 
-| Entidad | Estados | Terminal | Quién dispara la mayoría |
-| --- | :-: | --- | --- |
-| [Cuenta](cuenta.md) | 5 | `expulsada`, destrucción | Titular y supervisor |
-| [Prestador](prestador.md) | 4 + 4 | `rechazada`, `vencida` | Moderador y proceso programado |
-| [Circuito oficial](circuito.md) | 4 | `retirado` | Operador de alcaldía |
-| [Itinerario](itinerario.md) | 4 | `eliminado` | Turista y sus visitas |
-| [Convocatoria](convocatoria.md) | 4 | `adjudicada`, `cancelada`, `expirada` | Turista y calendario |
-| [Reserva](reserva.md) | 7 | `cerrada`, `cancelada`, `expirada` | Turista, prestador y pasarela |
-| [Cupón](cupon.md) | 3 + 4 | `consumido`, `expirado` | Comercio y turista |
-| [Evento cultural](evento.md) | 4 | `finalizado`, `cancelado` | Institución y calendario |
+| Entidad                         | Estados | Terminal                              | Quién dispara la mayoría       |
+| ------------------------------- | :-----: | ------------------------------------- | ------------------------------ |
+| [Cuenta](cuenta.md)             |    5    | `expulsada`, destrucción              | Titular y supervisor           |
+| [Prestador](prestador.md)       |  4 + 4  | `rechazada`, `vencida`                | Moderador y proceso programado |
+| [Circuito oficial](circuito.md) |    4    | `retirado`                            | Operador de alcaldía           |
+| [Itinerario](itinerario.md)     |    4    | `eliminado`                           | Turista y sus visitas          |
+| [Convocatoria](convocatoria.md) |    4    | `adjudicada`, `cancelada`, `expirada` | Turista y calendario           |
+| [Reserva](reserva.md)           |    7    | `cerrada`, `cancelada`, `expirada`    | Turista, prestador y pasarela  |
+| [Cupón](cupon.md)               |  3 + 4  | `consumido`, `expirado`               | Comercio y turista             |
+| [Evento cultural](evento.md)    |    4    | `finalizado`, `cancelado`             | Institución y calendario       |
 
 ## Eventos
 
-| Proceso | Estados | Corre en paralelo a |
-| --- | :-: | --- |
-| [Verificación](verificacion.md) | 4 | Acreditación y organizaciones |
-| [Sanción](sancion.md) | 2 | Cuenta |
-| [Aviso](aviso.md) | 5 | Nada: es su propio ciclo |
+| Proceso                         | Estados | Corre en paralelo a           |
+| ------------------------------- | :-----: | ----------------------------- |
+| [Verificación](verificacion.md) |    4    | Acreditación y organizaciones |
+| [Sanción](sancion.md)           |    2    | Cuenta                        |
+| [Aviso](aviso.md)               |    5    | Nada: es su propio ciclo      |
 
 ---
 
 ## Cómo se lee un diagrama
 
-| Símbolo | Significa |
-| --- | --- |
-| ● | Dónde nace la fila |
-| ◎ | Dónde termina su ciclo |
-| Borde continuo | Estado del que se puede salir |
-| Borde punteado | Estado terminal |
+| Símbolo               | Significa                         |
+| --------------------- | --------------------------------- |
+| ●                     | Dónde nace la fila                |
+| ◎                     | Dónde termina su ciclo            |
+| Borde continuo        | Estado del que se puede salir     |
+| Borde punteado        | Estado terminal                   |
 | Etiqueta de la flecha | Quién o qué dispara la transición |
 
 Una nota al costado señala una regla que el grafo no puede mostrar: que publicar
@@ -62,13 +62,13 @@ Todas las tablas `estado_<entidad>` comparten columnas. Los atributos booleanos
 son las preguntas que el sistema hace sobre el estado, para que agregar uno sea
 insertar una fila y no repartir condicionales por el código.
 
-| Columna | Tipo | Qué responde |
-| --- | --- | --- |
-| `codigo` | `varchar UK` | Cómo lo referencia el código |
-| `etiqueta` | `varchar` | Cómo se muestra |
-| `es_inicial` | `bool` | Con cuál nace la fila |
-| `es_terminal` | `bool` | Desde cuál no se sale |
-| `orden` | `smallint` | Cómo se ordena en un listado |
+| Columna       | Tipo         | Qué responde                 |
+| ------------- | ------------ | ---------------------------- |
+| `codigo`      | `varchar UK` | Cómo lo referencia el código |
+| `etiqueta`    | `varchar`    | Cómo se muestra              |
+| `es_inicial`  | `bool`       | Con cuál nace la fila        |
+| `es_terminal` | `bool`       | Desde cuál no se sale        |
+| `orden`       | `smallint`   | Cómo se ordena en un listado |
 
 A esas cinco cada entidad suma las suyas: `estado_usuario.revoca_sesion`,
 `estado_circuito.es_visible`, `estado_reserva.admite_cancelacion`.

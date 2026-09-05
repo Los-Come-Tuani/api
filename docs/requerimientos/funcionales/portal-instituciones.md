@@ -79,8 +79,7 @@ tal en lugar de desaparecer.
 
 > **Clonación de un evento**
 
-Para la programación recurrente —una función semanal, un taller que se repite—,
-la institución duplica un evento anterior conservando su descripción, ubicación y
-precio, y dejando las fechas vacías. Es un atajo de captura: el evento clonado no
-existe hasta que se le asignan fechas válidas y se guarda como registro
-independiente.
+Para la programación recurrente, la institución duplica un evento anterior conservando
+su descripción, ubicación y precio, y dejando las fechas vacías. Es un atajo de captura:
+el evento clonado no existe hasta que se le asignan fechas válidas y
+se guarda como registro independiente.

@@ -19,7 +19,11 @@ en el bolsillo.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction TB
@@ -43,12 +47,12 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `es_visible` | `admite_edicion` | `es_terminal` |
-| --- | :-: | :-: | :-: |
-| `borrador` | no | **sí** | no |
-| `publicado` | **sí** | **sí** | no |
-| `oculto` | no | **sí** | no |
-| `retirado` | no | no | **sí** |
+| Estado      | `es_visible` | `admite_edicion` | `es_terminal` |
+| ----------- | :----------: | :--------------: | :-----------: |
+| `borrador`  |      no      |      **sí**      |      no       |
+| `publicado` |    **sí**    |      **sí**      |      no       |
+| `oculto`    |      no      |      **sí**      |      no       |
+| `retirado`  |      no      |        no        |    **sí**     |
 
 Editar la geometría en `publicado` incrementa `version`, y eso es lo que hace que
 la aplicación redibuje el trazado. Editar el título no la mueve.

@@ -12,7 +12,7 @@
 </h1>
 
 <h3 align="center">
-  Microservicios para la aplicación móvil K'Plan.
+  Microservicios para la aplicación móvil <code>k'plan</code>
 </h3>
 
 <div align="center">

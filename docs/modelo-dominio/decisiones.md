@@ -8,10 +8,6 @@ Decisiones de modelado que afectan a más de un módulo y que no son evidentes a
 partir del requerimiento que las exige. Cada una enuncia la decisión, el
 requerimiento que la origina y, cuando hubo alternativa, por qué se descartó.
 
-Una decisión numerada es una decisión cerrada. Lo que sigue abierto vive en
-[riesgos](riesgos.md) y no aquí, para que nadie confunda una elección con una
-suposición.
-
 - **Total:** 33
 
 ---
@@ -43,10 +39,10 @@ esa misma fila vista desde el lado del acceso.
 > **El papel se asigna con un ámbito, no solo con un nombre**
 
 Saber que una cuenta tiene el rol de operador de circuitos no basta: hay que
-saber de qué ciudad. La asignación de rol lleva un ámbito tipado —ciudad,
-comercio, institución o global— y toda escritura lo exige. Sin esto,
-[RF-A-03][rf-a-03] depende de que ninguna consulta olvide filtrar por ciudad, y
-basta una sola omisión para que Granada pueda reescribir el circuito de León.
+saber de qué ciudad. La asignación de rol lleva un ámbito tipado y toda escritura
+lo exige. Sin esto, [RF-A-03][rf-a-03] depende de que ninguna consulta olvide filtrar
+por ciudad, y basta una sola omisión para que Granada pueda
+reescribir el circuito de León.
 
 ### D-03
 
@@ -147,8 +143,7 @@ La prueba: si agregar un valor nuevo obliga a agregar columnas que solo aplican 
 ese valor, no es un estado sino un discriminador, y entonces corresponde una
 tabla propia. Guía y traductor comparten columnas y proceso, así que son un
 catálogo de tipo de servicio sobre una misma tabla de prestador. Alcaldía,
-comercio e institución cultural no comparten casi nada —el comercio tiene RUC,
-horarios y platillo; la alcaldía tiene ciudad y potestad de publicación—, así que
+comercio e institución cultural no comparten casi nada, así que
 son tres tablas y no una con banderas.
 
 ### D-13
@@ -192,8 +187,7 @@ punto de interés del que se derivó, usada solo para trazabilidad. Si la
 referencia fuera la única fuente, retirar un punto de un circuito oficial dejaría
 un hueco en el itinerario que el turista lleva abierto a mitad de recorrido. Es
 la aplicación directa de que lo ya otorgado no se destruye, y el precio es una
-denormalización deliberada. El caso en que no hay copia —seguir el circuito tal
-cual— está en [D-33](#d-33).
+denormalización deliberada. El caso en que no hay copia está en [D-33](#d-33).
 
 ### D-17
 

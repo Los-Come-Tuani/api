@@ -19,7 +19,11 @@ llegada.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction LR
@@ -38,12 +42,12 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `en_bandeja` | `es_terminal` |
-| --- | :-: | :-: |
-| `enviada` | **sí** | no |
-| `en_revision` | **sí** | no |
-| `aprobada` | no | **sí** |
-| `rechazada` | no | **sí** |
+| Estado        | `en_bandeja` | `es_terminal` |
+| ------------- | :----------: | :-----------: |
+| `enviada`     |    **sí**    |      no       |
+| `en_revision` |    **sí**    |      no       |
+| `aprobada`    |      no      |    **sí**     |
+| `rechazada`   |      no      |    **sí**     |
 
 Una misma máquina cubre cuatro objetos mutuamente excluyentes: la acreditación de
 un prestador, o el registro de un comercio, una alcaldía o una institución

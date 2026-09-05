@@ -6,7 +6,7 @@ icon: lucide/shield-check
 
 # Actores del backoffice
 
-Dos papeles del equipo interno de K'plan. Concentran las decisiones que sostienen
+Dos papeles del equipo interno de `k'plan`. Concentran las decisiones que sostienen
 la confianza del ecosistema, y ninguna de las dos se automatiza: las dos
 determinan si un turista puede fiarse de la persona con la que va a recorrer una
 ciudad.
@@ -54,18 +54,18 @@ reversible del sistema.
 
 ## Qué los separa
 
-| | Moderador | Supervisor |
-| --- | :-: | :-: |
-| Ámbito | global | global |
-| Segundo factor obligatorio | ● | ● |
-| Verifica acreditaciones de prestadores | ● | |
-| Verifica registros de comercios | ● | |
-| Rechaza con motivo obligatorio | ● | |
-| Resuelve reportes de la comunidad | | ● |
-| Suspende temporalmente | | ● |
-| Expulsa de forma permanente | | ● |
-| Retira una reseña impugnada | | ● |
-| Consulta el historial de sanciones | | ● |
+|                                        | Moderador | Supervisor |
+| -------------------------------------- | :-------: | :--------: |
+| Ámbito                                 |  global   |   global   |
+| Segundo factor obligatorio             |     ●     |     ●      |
+| Verifica acreditaciones de prestadores |     ●     |            |
+| Verifica registros de comercios        |     ●     |            |
+| Rechaza con motivo obligatorio         |     ●     |            |
+| Resuelve reportes de la comunidad      |           |     ●      |
+| Suspende temporalmente                 |           |     ●      |
+| Expulsa de forma permanente            |           |     ●      |
+| Retira una reseña impugnada            |           |     ●      |
+| Consulta el historial de sanciones     |           |     ●      |
 
 Se documentan como papeles distintos porque ninguna fuente los jerarquiza. Si en
 la práctica una misma persona hace las dos cosas, eso es asignarle dos roles y no

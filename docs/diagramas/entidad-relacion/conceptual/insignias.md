@@ -6,17 +6,6 @@ icon: lucide/award
 
 # Insignias y cupones
 
-El saldo de insignias no es una columna: es la suma de `MovimientoInsignia`, una
-tabla de solo inserción con signo, motivo y origen. Con una columna, dos canjes
-simultáneos del mismo turista podrían leer el mismo saldo, ambos superar la
-comprobación de suficiencia y dejarlo en negativo. Con el libro, el segundo ve el
-movimiento del primero.
-
-`Cupon` copia el beneficio, el comercio y la fecha límite en el momento del
-canje. Si los leyera de la campaña, retirarla anticipadamente cambiaría el valor
-de lo ya entregado; con la copia, el retiro corta la emisión y nunca lo ya
-emitido.
-
 <div align="center" markdown>
 
 ```mermaid
@@ -43,6 +32,17 @@ erDiagram
 ```
 
 </div>
+
+El saldo de insignias no es una columna: es la suma de `MovimientoInsignia`, una
+tabla de solo inserción con signo, motivo y origen. Con una columna, dos canjes
+simultáneos del mismo turista podrían leer el mismo saldo, ambos superar la
+comprobación de suficiencia y dejarlo en negativo. Con el libro, el segundo ve el
+movimiento del primero.
+
+`Cupon` copia el beneficio, el comercio y la fecha límite en el momento del
+canje. Si los leyera de la campaña, retirarla anticipadamente cambiaría el valor
+de lo ya entregado; con la copia, el retiro corta la emisión y nunca lo ya
+emitido.
 
 `VisitaAcreditada` es un hecho inmutable: no se corrige ni se borra, porque es lo
 que justifica el movimiento que la acompaña. La regla de una visita por

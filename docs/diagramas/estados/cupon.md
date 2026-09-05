@@ -21,7 +21,11 @@ canje, y no los lee de la campaña.
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction LR
@@ -40,12 +44,12 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `admite_canje` | `es_terminal` |
-| --- | :-: | :-: |
-| `activa` | **sí** | no |
-| `agotada` | no | **sí** |
-| `retirada` | no | **sí** |
-| `expirada` | no | **sí** |
+| Estado     | `admite_canje` | `es_terminal` |
+| ---------- | :------------: | :-----------: |
+| `activa`   |     **sí**     |      no       |
+| `agotada`  |       no       |    **sí**     |
+| `retirada` |       no       |    **sí**     |
+| `expirada` |       no       |    **sí**     |
 
 ## Cupón
 
@@ -54,7 +58,11 @@ stateDiagram-v2
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction LR
@@ -76,11 +84,11 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `admite_validacion` | `es_terminal` |
-| --- | :-: | :-: |
-| `vigente` | **sí** | no |
-| `consumido` | no | **sí** |
-| `expirado` | no | **sí** |
+| Estado      | `admite_validacion` | `es_terminal` |
+| ----------- | :-----------------: | :-----------: |
+| `vigente`   |       **sí**        |      no       |
+| `consumido` |         no          |    **sí**     |
+| `expirado`  |         no          |    **sí**     |
 
 El canje descuenta el saldo de insignias y emite el código en la misma
 transacción: no existe un estado intermedio en el que se haya cobrado el saldo

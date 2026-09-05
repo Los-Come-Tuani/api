@@ -1,27 +1,24 @@
 [project]
-  edit_uri  = "edit/staging/docs/"
-  repo_name = "Los-Come-Tuani/api"
-  repo_url  = "https://github.com/Los-Come-Tuani/api"
-
   extra_css = [
     "stylesheets/theme.css",
     "stylesheets/width.css",
   ]
 
-  extra_javascript = [
-    "scripts/elk.mjs",
-  ]
+  extra_javascript = ["scripts/elk.mjs"]
+
+  repo_name = "Los-Come-Tuani/api"
+  repo_url  = "https://github.com/Los-Come-Tuani/api"
 
   site_author      = "Joaquín Zúñiga"
-  site_description = "Microservicios para la aplicación móvil K'Plan."
+  site_description = "Documentación de microservicios para la aplicación móvil k'plan"
   site_name        = "api-docs"
 
   nav = [
     { "Inicio" = "index.md" },
-    "guia.md",
     {
       "Requerimientos" = [
         "requerimientos/index.md",
+        "requerimientos/no-funcionales.md",
         {
           "Funcionales" = [
             "requerimientos/funcionales/plataforma.md",
@@ -33,7 +30,6 @@
             "requerimientos/funcionales/backoffice.md",
           ],
         },
-        "requerimientos/no-funcionales.md",
       ],
     },
     {
@@ -49,6 +45,26 @@
         "modelo-dominio/index.md",
         "modelo-dominio/decisiones.md",
         "modelo-dominio/convenciones.md",
+        {
+          "Módulos" = [
+            "modelo-dominio/modulos/catalogos.md",
+            "modelo-dominio/modulos/identidad.md",
+            "modelo-dominio/modulos/roles.md",
+            "modelo-dominio/modulos/perfiles.md",
+            "modelo-dominio/modulos/territorio.md",
+            "modelo-dominio/modulos/itinerarios.md",
+            "modelo-dominio/modulos/organizaciones.md",
+            "modelo-dominio/modulos/agenda.md",
+            "modelo-dominio/modulos/servicios.md",
+            "modelo-dominio/modulos/mensajeria.md",
+            "modelo-dominio/modulos/reputacion.md",
+            "modelo-dominio/modulos/insignias.md",
+            "modelo-dominio/modulos/finanzas.md",
+            "modelo-dominio/modulos/moderacion.md",
+            "modelo-dominio/modulos/notificaciones.md",
+            "modelo-dominio/modulos/auditoria.md",
+          ],
+        },
       ],
     },
     {
@@ -82,6 +98,40 @@
             "diagramas/entidad-relacion/fisico/perfiles.md",
             "diagramas/entidad-relacion/fisico/territorio.md",
             "diagramas/entidad-relacion/fisico/itinerarios.md",
+            "diagramas/entidad-relacion/fisico/organizaciones.md",
+            "diagramas/entidad-relacion/fisico/agenda.md",
+            "diagramas/entidad-relacion/fisico/servicios.md",
+            "diagramas/entidad-relacion/fisico/mensajeria.md",
+            "diagramas/entidad-relacion/fisico/reputacion.md",
+            "diagramas/entidad-relacion/fisico/insignias.md",
+            "diagramas/entidad-relacion/fisico/finanzas.md",
+            "diagramas/entidad-relacion/fisico/moderacion.md",
+            "diagramas/entidad-relacion/fisico/notificaciones.md",
+            "diagramas/entidad-relacion/fisico/auditoria.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Diagramas de casos de uso" = [
+        "diagramas/casos-de-uso/index.md",
+        {
+          "Cortes" = [
+            "diagramas/casos-de-uso/contratacion.md",
+            "diagramas/casos-de-uso/descubrimiento.md",
+            "diagramas/casos-de-uso/moderacion.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Diagramas de actividades" = [
+        "diagramas/actividades/index.md",
+        {
+          "Flujos" = [
+            "diagramas/actividades/contratacion.md",
+            "diagramas/actividades/acreditacion.md",
+            "diagramas/actividades/insignias-y-cupones.md",
           ],
         },
       ],
@@ -110,7 +160,16 @@
         },
       ],
     },
+    "guia.md",
   ]
+
+  [[project.extra.social]]
+    icon = "fontawesome/brands/github"
+    link = "https://github.com/Los-Come-Tuani"
+
+  [[project.extra.social]]
+    icon = "fontawesome/brands/instagram"
+    link = "https://instagram.com/kplan.nic"
 
   [project.markdown_extensions]
     abbr       = {}
@@ -197,11 +256,11 @@
       toggle.name = "Ir a modo claro"
 
   [project.validation]
-    invalid_link_anchors  = false
-    invalid_links         = false
-    shadowed_definitions  = false
-    shadowed_footnotes    = false
-    unresolved_footnotes  = false
+    invalid_link_anchors  = true
+    invalid_links         = true
+    shadowed_definitions  = true
+    shadowed_footnotes    = true
+    unresolved_footnotes  = true
     unresolved_references = false
     unused_definitions    = false
-    unused_footnotes      = false
+    unused_footnotes      = true

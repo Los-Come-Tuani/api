@@ -78,21 +78,20 @@ trabajo es postularse a lo que el turista publica. Tampoco puede ser contratado
 de forma directa, porque no hay ficha suya que reservar.
 
 **Relaciones.** Idénticas a las del guía frente al moderador y al turista. La
-diferencia es el punto de entrada al trabajo: el guía tiene dos —su catálogo y
-las solicitudes—, el traductor uno.
+diferencia es el punto de entrada al trabajo: el guía tiene dos; el traductor uno.
 
 ---
 
 ## Qué los separa
 
-| | Turista | Guía | Traductor |
-| --- | :-: | :-: | :-: |
-| Documento que lo acredita | ninguno | Licencia del INTUR | Certificado de idiomas |
-| Necesita verificación humana | no | sí | sí |
-| Arma itinerarios | ● | | |
-| Publica recorridos con tarifa | | ● | |
-| Se postula a solicitudes | | ● | ● |
-| Recibe contratación directa | | ● | |
-| Cobra y retira fondos | | ● | ● |
-| Acumula y canjea insignias | ● | | |
-| Sus reseñas recibidas son públicas | no | sí | sí |
+|                                    | Turista |        Guía        |       Traductor        |
+| ---------------------------------- | :-----: | :----------------: | :--------------------: |
+| Documento que lo acredita          | ninguno | Licencia del INTUR | Certificado de idiomas |
+| Necesita verificación humana       |   no    |         sí         |           sí           |
+| Arma itinerarios                   |    ●    |                    |                        |
+| Publica recorridos con tarifa      |         |         ●          |                        |
+| Se postula a solicitudes           |         |         ●          |           ●            |
+| Recibe contratación directa        |         |         ●          |                        |
+| Cobra y retira fondos              |         |         ●          |           ●            |
+| Acumula y canjea insignias         |    ●    |                    |                        |
+| Sus reseñas recibidas son públicas |   no    |         sí         |           sí           |

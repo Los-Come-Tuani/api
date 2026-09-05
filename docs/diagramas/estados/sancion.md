@@ -19,7 +19,11 @@ terminal cuando el tipo es permanente, y el catálogo lo distingue con
 ```mermaid
 ---
 config:
+  elk:
+    mergeEdges: false
+    nodePlacementStrategy: NETWORK_SIMPLEX
   fontFamily: monospace
+  layout: elk
 ---
 stateDiagram-v2
     direction LR
@@ -39,18 +43,18 @@ stateDiagram-v2
 
 </div>
 
-| Estado | `restringe_acceso` | `es_terminal` |
-| --- | :-: | :-: |
-| `vigente` | **sí** | solo si es permanente |
-| `cumplida` | no | **sí** |
+| Estado     | `restringe_acceso` |     `es_terminal`     |
+| ---------- | :----------------: | :-------------------: |
+| `vigente`  |       **sí**       | solo si es permanente |
+| `cumplida` |         no         |        **sí**         |
 
-| Efecto | Suspensión | Expulsión |
-| --- | :-: | :-: |
-| Revoca las sesiones vivas | ● | ● |
-| Vence sola al cumplirse el plazo | ● | |
-| Cancela las reservas confirmadas | | ● |
-| Veta el dispositivo de origen | | ● |
-| Exige segundo factor para aplicarla | | ● |
+| Efecto                              | Suspensión | Expulsión |
+| ----------------------------------- | :--------: | :-------: |
+| Revoca las sesiones vivas           |     ●      |     ●     |
+| Vence sola al cumplirse el plazo    |     ●      |           |
+| Cancela las reservas confirmadas    |            |     ●     |
+| Veta el dispositivo de origen       |            |     ●     |
+| Exige segundo factor para aplicarla |            |     ●     |
 
 El motivo interno es obligatorio en las dos. Es lo que sostiene el historial de
 reincidencia: sin la tabla, una segunda suspensión borraría el rastro de la

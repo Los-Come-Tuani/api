@@ -78,21 +78,21 @@ que gana explorándola.
 | Entidad           | Qué representa                                                                                                                                                                                                                                                                 |
 | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `Usuario`         | Una persona registrada en el sistema, sea quien sea. Es una sola entidad para todos los papeles: el turista, el guía, el traductor y el operador de una alcaldía o de un comercio son todos usuarios. Lo que los diferencia es el perfil que tienen y el rol que se les asignó |
-| `PerfilTurista`         | El perfil de quien viaja: su nacionalidad, su idioma preferido y su nivel de exploración. Solo lo tienen los usuarios que usan la aplicación móvil                                                                                                                             |
-| `PerfilPrestador`       | El perfil profesional de un guía certificado por el INTUR o de un traductor, con sus acreditaciones verificadas, sus idiomas y sus tarifas                                                                                                                                       |
+| `PerfilTurista`   | El perfil de quien viaja: su nacionalidad, su idioma preferido y su nivel de exploración. Solo lo tienen los usuarios que usan la aplicación móvil                                                                                                                             |
+| `PerfilPrestador` | El perfil profesional de un guía certificado por el INTUR o de un traductor, con sus acreditaciones verificadas, sus idiomas y sus tarifas                                                                                                                                     |
 | `Ciudad`          | Una de las diez Ciudades Creativas de la Red Nacional. Es el territorio, no el gobierno                                                                                                                                                                                        |
 | `Alcaldia`        | El gobierno local de esa ciudad, dado de alta en la plataforma. Es la única autoridad que puede publicar contenido oficial                                                                                                                                                     |
 | `CircuitoOficial` | El recorrido que la alcaldía publica y respalda: una secuencia ordenada de puntos de interés de su ciudad                                                                                                                                                                      |
 | `PuntoInteres`    | Un lugar concreto del territorio —un mirador, un taller de artesanía, una iglesia— con su ubicación. Existe por sí mismo, aunque ningún circuito lo incluya                                                                                                                    |
 | `Itinerario`      | Lo que un turista concreto se propone recorrer. Puede ser un circuito oficial seguido tal cual, una versión ajustada de él, la combinación de circuitos de varias ciudades o un recorrido armado desde cero                                                                    |
 | `Reserva`         | El servicio contratado entre un turista y un prestador para recorrer un itinerario en una fecha concreta                                                                                                                                                                       |
-| `Comercio`        | Una MiPyme registrada en el mapa, con su ficha, su horario y su platillo estrella                                                                                                                                                                                              |
+| `Comercio`        | Una MIPYME registrada en el mapa, con su ficha, su horario y su platillo estrella                                                                                                                                                                                              |
 | `Cupon`           | El descuento concreto que un turista obtuvo al canjear sus insignias, con su código de un solo uso                                                                                                                                                                             |
 
-En los requerimientos aparece con frecuencia la palabra **cuenta** —«estados de
-la cuenta», «baja de la cuenta»—. No es una entidad distinta de `Usuario`: es la
-misma fila vista desde el lado del acceso. El modelo usa `Usuario` porque es
-quien realiza las acciones del diagrama, y reserva «cuenta» para hablar de su
+En los requerimientos aparece con frecuencia la palabra **cuenta**.
+No es una entidad distinta de `Usuario`: es la misma fila vista
+desde el lado del acceso. El modelo usa `Usuario` porque es quien
+realiza las acciones del diagrama, y reserva «cuenta» para hablar de su
 estado y de sus credenciales de sesión.
 
 <div align="center" markdown>
@@ -128,16 +128,14 @@ erDiagram
 **Una persona es una fila, y sus papeles son perfiles aparte.** El turista y el
 prestador no son dos tipos de usuario: son dos perfiles que un mismo usuario
 puede tener, ninguno o uno de cada uno. Se separan porque sus datos no se
-solapan —la nacionalidad y el nivel de exploración solo aplican al turista; las
-acreditaciones del INTUR y la cuenta de desembolso solo al prestador—, y guardarlos
+solapan: la nacionalidad y el nivel de exploración solo aplican al turista; las
+acreditaciones del INTUR y la cuenta de desembolso solo al prestador. Guardarlos
 todos en una misma fila dejaría la mitad de las columnas sin sentido para cada
 persona. El acceso, en cambio, es idéntico para todos y por eso vive una sola vez
 en `Usuario` ([D-01](../../modelo-dominio/decisiones.md#d-01)).
 
 **La ciudad es territorio; la alcaldía es autoridad.** No son la misma entidad y
-confundirlas rompe dos reglas a la vez. El circuito lo publica la alcaldía
-—[RF-A-01][rf-a-01] se lo reserva en exclusiva y el ámbito de
-[D-02](../../modelo-dominio/decisiones.md#d-02) se apoya en esa pertenencia—,
+confundirlas rompe dos reglas a la vez. El circuito lo publica la alcaldía,
 mientras que el comercio y el punto de interés solo están _situados_ en la
 ciudad: nadie los gobierna. Colgar el comercio de la alcaldía habría insinuado
 una potestad municipal sobre negocios privados que ninguna fuente respalda.
@@ -174,8 +172,7 @@ tocar ninguna reserva viva. El itinerario es opcional porque existe un segundo
 camino: contratar directamente un recorrido publicado por el guía, cuyo trazado
 es suyo.
 
-Fuera de este nivel quedan la agenda cultural —una vertical paralela que no
-participa de la cadena circuito → itinerario → reserva— y los módulos
+Fuera de este nivel quedan la agenda cultural y los módulos
 consumidores: mensajería, reputación, finanzas, notificaciones, moderación y
 auditoría. Todos aparecen en el diagrama conceptual de su módulo.
 
