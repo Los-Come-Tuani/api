@@ -1,4 +1,7 @@
 ---
+hide:
+  - toc
+  - navigation
 icon: lucide/home
 ---
 

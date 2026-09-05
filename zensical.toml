@@ -137,6 +137,31 @@
       ],
     },
     {
+      "Diagramas de clases" = [
+        "diagramas/clases/index.md",
+        {
+          "Módulos" = [
+            "diagramas/clases/catalogos.md",
+            "diagramas/clases/identidad.md",
+            "diagramas/clases/roles.md",
+            "diagramas/clases/perfiles.md",
+            "diagramas/clases/territorio.md",
+            "diagramas/clases/itinerarios.md",
+            "diagramas/clases/organizaciones.md",
+            "diagramas/clases/agenda.md",
+            "diagramas/clases/servicios.md",
+            "diagramas/clases/mensajeria.md",
+            "diagramas/clases/reputacion.md",
+            "diagramas/clases/insignias.md",
+            "diagramas/clases/finanzas.md",
+            "diagramas/clases/moderacion.md",
+            "diagramas/clases/notificaciones.md",
+            "diagramas/clases/auditoria.md",
+          ],
+        },
+      ],
+    },
+    {
       "Diagramas de estados" = [
         "diagramas/estados/index.md",
         {
