@@ -28,7 +28,7 @@ permissions:
   contents: read
 
 jobs:
-  validate-kplan-api:
+  validate-kplanapi:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 

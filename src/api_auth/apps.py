@@ -21,9 +21,8 @@ def apiauth_seedcaller(*args, **kwargs) -> None:  # ruff: ignore[missing-type-ar
 
 class ApiAuth(AppConfig):
     name = "api_auth"
+    label = "apiauth"
 
     @override
     def ready(self) -> None:
-        import api_auth.models  # ruff: ignore[import-outside-top-level, unused-import]
-
         post_migrate.connect(receiver=apiauth_seedcaller, sender=self)

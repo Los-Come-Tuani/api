@@ -9,7 +9,7 @@ from django.db.transaction import get_connection
 from pghistory import track
 
 if TYPE_CHECKING:
-    from collections.abc import Callable
+    from collections.abc import Callable, Sequence
 
     from django.db.models.options import Options
 
@@ -62,6 +62,7 @@ def set_immediate_constraints() -> None:
 
 def track_table[Table: type[DatabaseModel]](
     meta: dict | None = None,
+    exclude: Sequence[str] | None = None,
 ) -> Callable[[Table], Table]:
     meta: dict = meta or {}
     meta: dict = meta | {
@@ -107,6 +108,7 @@ def track_table[Table: type[DatabaseModel]](
             context_field=None,  # ty: ignore[invalid-argument-type]
             context_id_field=None,  # ty: ignore[invalid-argument-type]
             append_only=True,
+            exclude=exclude,  # ty: ignore[invalid-argument-type]
             model_name=f"{model.__name__}Event",
             meta=meta,
         )(model)

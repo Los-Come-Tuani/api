@@ -2,10 +2,9 @@
 .env
 .request.json
 
-!.vscode/extensions.json
-
 __pycache__/
 
+.cache/
 .direnv/
 .hypothesis/
 .idea
@@ -14,6 +13,7 @@ __pycache__/
 .ruff_cache/
 .venv/
 .vscode/*
+!.vscode/extensions.json
 
 media
 site

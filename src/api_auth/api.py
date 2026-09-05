@@ -18,6 +18,15 @@ from api_auth.controllers.permission import (
 from api_auth.controllers.profile import ProfileController
 from api_auth.controllers.refresh import MobileRefreshController, WebRefreshController
 from api_auth.controllers.register import RegisterController
+from api_auth.controllers.two_factor import (
+    MobileTwoFactorController,
+    TwoFactorConfirmController,
+    TwoFactorController,
+    TwoFactorDisableController,
+    TwoFactorRecoveryController,
+    TwoFactorSetupController,
+    WebTwoFactorController,
+)
 from api_auth.controllers.user import (
     ApiUserDetailController,
     ApiUserGroupsController,
@@ -54,15 +63,22 @@ router: Final[Router] = Router(
             MobileLoginController,
             MobileLogoutController,
             MobileRefreshController,
+            MobileTwoFactorController,
             MobileVerifyController,
             PermissionDetailController,
             PermissionListController,
             PermissionListAllController,
             ProfileController,
             RegisterController,
+            TwoFactorConfirmController,
+            TwoFactorController,
+            TwoFactorDisableController,
+            TwoFactorRecoveryController,
+            TwoFactorSetupController,
             WebLoginController,
             WebLogoutController,
             WebRefreshController,
+            WebTwoFactorController,
             WebVerifyController,
             prefix="auth",
         ),

@@ -1,14 +1,14 @@
-name: kplan-api
+name: kplanapi
 
 x-api-build: &api-build
   context: .
   dockerfile: dockerfile
 
 x-api-env: &api-env
-  DATABASE_URL: postgresql://kplan-api:kplan-api@postgres:5432/kplan-api
+  DATABASE_URL: postgresql://kplanapi:kplanapi@postgres:5432/kplanapi
   DEPLOY: ${DEPLOY:-False}
   JWT_SECRET_KEY: ${JWT_SECRET_KEY:?}
-  REDIS_SECRET_KEY: kplan-api
+  REDIS_SECRET_KEY: kplanapi
   REDIS_URL: redis://redis:6379
   SECRET_KEY: ${SECRET_KEY:?}
   SKIP_SEEDERS: ${SKIP_SEEDERS:-False}
@@ -27,13 +27,13 @@ x-api-healthcheck: &api-healthcheck
 services:
   postgres:
     environment:
-      POSTGRES_DB: kplan-api
-      POSTGRES_PASSWORD: kplan-api
-      POSTGRES_USER: kplan-api
+      POSTGRES_DB: kplanapi
+      POSTGRES_PASSWORD: kplanapi
+      POSTGRES_USER: kplanapi
     healthcheck:
       interval: 5s
       retries: 10
-      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U kplan-api -d kplan-api"]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U kplanapi -d kplanapi"]
       timeout: 5s
     image: postgres:18
     ports:
@@ -42,11 +42,11 @@ services:
       - pgdata:/var/lib/postgresql
 
   redis:
-    command: ["redis-server", "--requirepass", "kplan-api", "--save", ""]
+    command: ["redis-server", "--requirepass", "kplanapi", "--save", ""]
     healthcheck:
       interval: 5s
       retries: 10
-      test: ["CMD", "redis-cli", "-a", "kplan-api", "ping"]
+      test: ["CMD", "redis-cli", "-a", "kplanapi", "ping"]
       timeout: 5s
     image: redis:8
     ports:
@@ -63,11 +63,11 @@ services:
     environment:
       <<: *api-env
       DEBUG: "False"
-    image: kplan-api:prod
+    image: kplanapi:prod
     profiles: ["dev", "prod"]
     restart: "no"
 
-  kplan-api-dev:
+  kplanapi-dev:
     build:
       <<: *api-build
       target: runtime-dev
@@ -80,14 +80,14 @@ services:
       <<: *api-env
       DEBUG: ${DEBUG:-True}
     healthcheck: *api-healthcheck
-    image: kplan-api:dev
+    image: kplanapi:dev
     ports:
       - "8080:8080"
     profiles: ["dev"]
     volumes:
       - ./src:/app/src
 
-  kplan-api-prod:
+  kplanapi-prod:
     build:
       <<: *api-build
       target: runtime-prod
@@ -100,7 +100,7 @@ services:
       <<: *api-env
       DEBUG: "False"
     healthcheck: *api-healthcheck
-    image: kplan-api:prod
+    image: kplanapi:prod
     ports:
       - "8080:8080"
     profiles: ["prod"]

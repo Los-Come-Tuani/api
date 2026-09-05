@@ -1,64 +1,291 @@
 [project]
-  edit_uri  = "edit/staging/docs/"
+  extra_css = [
+    "stylesheets/theme.css",
+    "stylesheets/width.css",
+  ]
+
+  extra_javascript = ["scripts/elk.mjs"]
+
   repo_name = "Los-Come-Tuani/api"
   repo_url  = "https://github.com/Los-Come-Tuani/api"
 
   site_author      = "Joaquín Zúñiga"
-  site_description = "Microservicios para la aplicación móvil K'Plan."
+  site_description = "Documentación de microservicios para la aplicación móvil k'plan"
   site_name        = "api-docs"
 
   nav = [
-    { "Home" = "index.md" },
+    { "Inicio" = "index.md" },
+    {
+      "Requerimientos" = [
+        "requerimientos/index.md",
+        "requerimientos/no-funcionales.md",
+        {
+          "Funcionales" = [
+            "requerimientos/funcionales/plataforma.md",
+            "requerimientos/funcionales/app-turista.md",
+            "requerimientos/funcionales/app-prestadores.md",
+            "requerimientos/funcionales/portal-comercios.md",
+            "requerimientos/funcionales/portal-alcaldias.md",
+            "requerimientos/funcionales/portal-instituciones.md",
+            "requerimientos/funcionales/backoffice.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Actores del sistema" = [
+        "actores/index.md",
+        "actores/app-movil.md",
+        "actores/portales.md",
+        "actores/backoffice.md",
+      ],
+    },
+    {
+      "Modelo de dominio" = [
+        "modelo-dominio/index.md",
+        "modelo-dominio/decisiones.md",
+        "modelo-dominio/convenciones.md",
+        {
+          "Módulos" = [
+            "modelo-dominio/modulos/catalogos.md",
+            "modelo-dominio/modulos/identidad.md",
+            "modelo-dominio/modulos/roles.md",
+            "modelo-dominio/modulos/perfiles.md",
+            "modelo-dominio/modulos/territorio.md",
+            "modelo-dominio/modulos/itinerarios.md",
+            "modelo-dominio/modulos/organizaciones.md",
+            "modelo-dominio/modulos/agenda.md",
+            "modelo-dominio/modulos/servicios.md",
+            "modelo-dominio/modulos/mensajeria.md",
+            "modelo-dominio/modulos/reputacion.md",
+            "modelo-dominio/modulos/insignias.md",
+            "modelo-dominio/modulos/finanzas.md",
+            "modelo-dominio/modulos/moderacion.md",
+            "modelo-dominio/modulos/notificaciones.md",
+            "modelo-dominio/modulos/auditoria.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Diagramas entidad-relación" = [
+        "diagramas/entidad-relacion/index.md",
+        {
+          "Modelo conceptual" = [
+            "diagramas/entidad-relacion/conceptual/catalogos.md",
+            "diagramas/entidad-relacion/conceptual/identidad.md",
+            "diagramas/entidad-relacion/conceptual/roles.md",
+            "diagramas/entidad-relacion/conceptual/perfiles.md",
+            "diagramas/entidad-relacion/conceptual/territorio.md",
+            "diagramas/entidad-relacion/conceptual/itinerarios.md",
+            "diagramas/entidad-relacion/conceptual/organizaciones.md",
+            "diagramas/entidad-relacion/conceptual/agenda.md",
+            "diagramas/entidad-relacion/conceptual/servicios.md",
+            "diagramas/entidad-relacion/conceptual/mensajeria.md",
+            "diagramas/entidad-relacion/conceptual/reputacion.md",
+            "diagramas/entidad-relacion/conceptual/insignias.md",
+            "diagramas/entidad-relacion/conceptual/finanzas.md",
+            "diagramas/entidad-relacion/conceptual/moderacion.md",
+            "diagramas/entidad-relacion/conceptual/notificaciones.md",
+            "diagramas/entidad-relacion/conceptual/auditoria.md",
+          ],
+        },
+        {
+          "Modelo físico" = [
+            "diagramas/entidad-relacion/fisico/catalogos.md",
+            "diagramas/entidad-relacion/fisico/identidad.md",
+            "diagramas/entidad-relacion/fisico/roles.md",
+            "diagramas/entidad-relacion/fisico/perfiles.md",
+            "diagramas/entidad-relacion/fisico/territorio.md",
+            "diagramas/entidad-relacion/fisico/itinerarios.md",
+            "diagramas/entidad-relacion/fisico/organizaciones.md",
+            "diagramas/entidad-relacion/fisico/agenda.md",
+            "diagramas/entidad-relacion/fisico/servicios.md",
+            "diagramas/entidad-relacion/fisico/mensajeria.md",
+            "diagramas/entidad-relacion/fisico/reputacion.md",
+            "diagramas/entidad-relacion/fisico/insignias.md",
+            "diagramas/entidad-relacion/fisico/finanzas.md",
+            "diagramas/entidad-relacion/fisico/moderacion.md",
+            "diagramas/entidad-relacion/fisico/notificaciones.md",
+            "diagramas/entidad-relacion/fisico/auditoria.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Diagramas de casos de uso" = [
+        "diagramas/casos-de-uso/index.md",
+        {
+          "Cortes" = [
+            "diagramas/casos-de-uso/contratacion.md",
+            "diagramas/casos-de-uso/descubrimiento.md",
+            "diagramas/casos-de-uso/moderacion.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Diagramas de actividades" = [
+        "diagramas/actividades/index.md",
+        {
+          "Flujos" = [
+            "diagramas/actividades/contratacion.md",
+            "diagramas/actividades/acreditacion.md",
+            "diagramas/actividades/insignias-y-cupones.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Diagramas de clases" = [
+        "diagramas/clases/index.md",
+        {
+          "Módulos" = [
+            "diagramas/clases/catalogos.md",
+            "diagramas/clases/identidad.md",
+            "diagramas/clases/roles.md",
+            "diagramas/clases/perfiles.md",
+            "diagramas/clases/territorio.md",
+            "diagramas/clases/itinerarios.md",
+            "diagramas/clases/organizaciones.md",
+            "diagramas/clases/agenda.md",
+            "diagramas/clases/servicios.md",
+            "diagramas/clases/mensajeria.md",
+            "diagramas/clases/reputacion.md",
+            "diagramas/clases/insignias.md",
+            "diagramas/clases/finanzas.md",
+            "diagramas/clases/moderacion.md",
+            "diagramas/clases/notificaciones.md",
+            "diagramas/clases/auditoria.md",
+          ],
+        },
+      ],
+    },
+    {
+      "Diagramas de estados" = [
+        "diagramas/estados/index.md",
+        {
+          "Entidades" = [
+            "diagramas/estados/cuenta.md",
+            "diagramas/estados/prestador.md",
+            "diagramas/estados/circuito.md",
+            "diagramas/estados/itinerario.md",
+            "diagramas/estados/convocatoria.md",
+            "diagramas/estados/reserva.md",
+            "diagramas/estados/cupon.md",
+            "diagramas/estados/evento.md",
+          ],
+        },
+        {
+          "Eventos" = [
+            "diagramas/estados/verificacion.md",
+            "diagramas/estados/sancion.md",
+            "diagramas/estados/aviso.md",
+          ],
+        },
+      ],
+    },
+    "guia.md",
   ]
 
-  markdown_extensions.abbr                    = {}
-  markdown_extensions.admonition              = {}
-  markdown_extensions.attr_list               = {}
-  markdown_extensions.def_list                = {}
-  markdown_extensions.md_in_html              = {}
-  markdown_extensions.pymdownx.blocks.caption = {}
-  markdown_extensions.pymdownx.caret          = {}
-  markdown_extensions.pymdownx.details        = {}
-  markdown_extensions.pymdownx.emoji          = {}
-  markdown_extensions.pymdownx.highlight      = {}
-  markdown_extensions.pymdownx.keys           = {}
-  markdown_extensions.pymdownx.mark           = {}
-  markdown_extensions.pymdownx.tabbed         = { alternate_style = true }
-  markdown_extensions.pymdownx.tasklist       = { custom_checkbox = true }
+  [[project.extra.social]]
+    icon = "fontawesome/brands/github"
+    link = "https://github.com/Los-Come-Tuani"
 
-  markdown_extensions.pymdownx.snippets = { auto_append = [
-    "docs/snippets/abbrs.md",
-    "docs/snippets/links.md",
-  ] }
+  [[project.extra.social]]
+    icon = "fontawesome/brands/instagram"
+    link = "https://instagram.com/kplan.nic"
 
-  markdown_extensions.pymdownx.superfences = {}
-  markdown_extensions.pymdownx.tilde       = {}
-  markdown_extensions.tables               = {}
-  markdown_extensions.toc                  = { permalink = true, toc_depth = 3 }
+  [project.markdown_extensions]
+    abbr       = {}
+    admonition = {}
+    attr_list  = {}
+    def_list   = {}
+    md_in_html = {}
+    tables     = {}
+
+    toc = {
+      permalink = true,
+      toc_depth = 3,
+    }
+
+    [project.markdown_extensions.pymdownx]
+      blocks.caption = {}
+      caret          = {}
+      details        = {}
+      emoji          = {}
+      highlight      = {}
+      keys           = {}
+      mark           = {}
+      tilde          = {}
+
+      tasklist.custom_checkbox = true
+
+      snippets.auto_append = [
+        "docs/snippets/abbrs.md",
+        "docs/snippets/links.md",
+      ]
+
+      superfences.custom_fences = [
+        {
+          name   = "mermaid",
+          class  = "mermaid",
+          format = "pymdownx.superfences.fence_code_format",
+        },
+      ]
+
+      [project.markdown_extensions.pymdownx.tabbed]
+        alternate_style = true
+
+        slugify = {
+          kwds.case = "lower",
+          object    = "pymdownx.slugs.slugify",
+        }
 
   [project.theme]
     features = [
       "content.code.copy",
       "content.tooltips",
+      "navigation.footer",
       "navigation.indexes",
       "navigation.instant",
       "navigation.instant.prefetch",
       "navigation.instant.progress",
       "navigation.path",
+      "navigation.pruning",
+      "navigation.sections",
+      "navigation.tabs",
+      "navigation.tabs.sticky",
+      "navigation.top",
     ]
 
-    favicon = "favicon.svg"
-    logo    = "logo.svg"
-    variant = "modern"
+    favicon  = "favicon.svg"
+    language = "es"
+    logo     = "logo.svg"
+    variant  = "modern"
 
     [[project.theme.palette]]
+      accent      = "custom"
       media       = "(prefers-color-scheme: light)"
+      primary     = "custom"
       scheme      = "default"
       toggle.icon = "lucide/sun"
-      toggle.name = "Go to dark mode!"
+      toggle.name = "Ir a modo oscuro"
 
     [[project.theme.palette]]
+      accent      = "custom"
       media       = "(prefers-color-scheme: dark)"
+      primary     = "custom"
       scheme      = "slate"
       toggle.icon = "lucide/moon"
-      toggle.name = "Go to light mode!"
+      toggle.name = "Ir a modo claro"
+
+  [project.validation]
+    invalid_link_anchors  = true
+    invalid_links         = true
+    shadowed_definitions  = true
+    shadowed_footnotes    = true
+    unresolved_footnotes  = true
+    unresolved_references = false
+    unused_definitions    = false
+    unused_footnotes      = true

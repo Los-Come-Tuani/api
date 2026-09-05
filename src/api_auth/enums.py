@@ -14,6 +14,7 @@ class ApiUserTypes(TextChoices):
 
 class TokenTypes(TextChoices):
     ACCESS = "access"
+    CHALLENGE = "challenge"
     REFRESH = "refresh"
 
 
