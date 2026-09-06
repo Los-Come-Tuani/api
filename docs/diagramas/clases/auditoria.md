@@ -114,19 +114,19 @@ llegó; la entidad responde dónde está.
 
 ## Las once instancias del patrón
 
-| Especialización de `Estado` | Lo que agrega                                              |
-| --------------------------- | ---------------------------------------------------------- |
-| `EstadoUsuario`             | `permite_operar`, `revoca_sesion`                          |
-| `EstadoPrestador`           | `es_visible`, `acepta_reservas`                            |
-| `EstadoAcreditacion`        | `acredita`                                                 |
-| `EstadoCircuito`            | `es_visible`, `admite_edicion`                             |
-| `EstadoConvocatoria`        | `admite_postulacion`                                       |
-| `EstadoReserva`             | `admite_cancelacion`, `retiene_fondos`                     |
-| `EstadoCampania`            | `admite_canje`                                             |
-| `EstadoCupon`               | `admite_validacion`                                        |
-| `EstadoEvento`              | `es_visible`, `admite_edicion`, `genera_avisos`            |
-| `EstadoVerificacion`        | `en_bandeja`                                               |
-| `EstadoAviso`               | `cuenta_para_limite`, `admite_reintento`                   |
+| Especialización de `Estado` | Lo que agrega                                   |
+| --------------------------- | ----------------------------------------------- |
+| `EstadoUsuario`             | `permite_operar`, `revoca_sesion`               |
+| `EstadoPrestador`           | `es_visible`, `acepta_reservas`                 |
+| `EstadoAcreditacion`        | `acredita`                                      |
+| `EstadoCircuito`            | `es_visible`, `admite_edicion`                  |
+| `EstadoConvocatoria`        | `admite_postulacion`                            |
+| `EstadoReserva`             | `admite_cancelacion`, `retiene_fondos`          |
+| `EstadoCampania`            | `admite_canje`                                  |
+| `EstadoCupon`               | `admite_validacion`                             |
+| `EstadoEvento`              | `es_visible`, `admite_edicion`, `genera_avisos` |
+| `EstadoVerificacion`        | `en_bandeja`                                    |
+| `EstadoAviso`               | `cuenta_para_limite`, `admite_reintento`        |
 
 Las cinco columnas heredadas —`codigo`, `etiqueta`, `es_inicial`, `es_terminal`,
 `orden`— no se repiten en ninguna. Los diagramas de cada módulo las omiten por la
@@ -140,7 +140,7 @@ clases sostienen.
 | -------------------- | :----: | ------------------------------------------------------------ |
 | `<<solo insercion>>` |   18   | Movimientos, visitas, transiciones, avisos, bitácora         |
 | `<<rastreada>>`      |   18   | Usuario, perfiles, comercios, circuitos, eventos, recorridos |
-| `<<protegida>>`      |    2   | `Reserva` y `Cupon`                                          |
+| `<<protegida>>`      |   2    | `Reserva` y `Cupon`                                          |
 
 Las dos clases protegidas son las que congelan un valor económico: la tarifa de
 la reserva y el beneficio del cupón. Ninguna de las dos se puede reescribir

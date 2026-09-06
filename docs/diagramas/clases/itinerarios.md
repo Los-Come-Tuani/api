@@ -112,10 +112,10 @@ acordó el servicio.
 
 | Modo                | `sigue` | `ItinerarioCircuito` | `ItinerarioParada` | `ajustado` |
 | ------------------- | :-----: | :------------------: | :----------------: | :--------: |
-| Seguir tal cual     |  una    |     una fila         |      ninguna       |    no      |
-| Ajustar un circuito | ninguna |     una fila         |       varias       |   **sí**   |
-| Combinar ciudades   | ninguna |    varias filas      |       varias       |   **sí**   |
-| Armar desde cero    | ninguna |      ninguna         |       varias       |    no      |
+| Seguir tal cual     |   una   |       una fila       |      ninguna       |     no     |
+| Ajustar un circuito | ninguna |       una fila       |       varias       |   **sí**   |
+| Combinar ciudades   | ninguna |     varias filas     |       varias       |   **sí**   |
+| Armar desde cero    | ninguna |       ninguna        |       varias       |     no     |
 
 De ahí salen las tres cifras que la alcaldía mide por separado
 ([RF-A-10][rf-a-10]): **iniciaron** son los que siguen el circuito, **modificaron**

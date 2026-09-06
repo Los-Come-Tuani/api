@@ -156,9 +156,9 @@ veinticuatro horas se resuelve contra esa misma clase
 
 ## Las dos formas de mover el libro
 
-| Operación                     | `cantidad` | `origen()`         |
-| ----------------------------- | :--------: | ------------------ |
-| Acreditar una visita          |  positiva  | `VisitaAcreditada` |
+| Operación                      | `cantidad` | `origen()`         |
+| ------------------------------ | :--------: | ------------------ |
+| Acreditar una visita           |  positiva  | `VisitaAcreditada` |
 | Canjear insignias por un cupón |  negativa  | `Cupon`            |
 
 `MovimientoInsignia.origen()` devuelve uno u otro, nunca los dos ni ninguno. Es

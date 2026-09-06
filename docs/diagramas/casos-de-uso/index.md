@@ -21,11 +21,11 @@ Partir por superficie habría separado lo que ocurre junto.
 
 ## Los tres cortes
 
-| Diagrama                             | Actores | Casos | Qué responde                                                    |
-| ------------------------------------ | :-----: | :---: | --------------------------------------------------------------- |
-| [Contratación](contratacion.md)      |    5    |  13   | Cómo un turista termina acompañado por alguien a quien pagó     |
-| [Descubrimiento](descubrimiento.md)  |    5    |  18   | De dónde sale el contenido que se recorre y qué hace el turista con él |
-| [Moderación](moderacion.md)          |    6    |  18   | Quién decide que un prestador existe y quién lo saca del sistema |
+| Diagrama                            | Actores | Casos | Qué responde                                                           |
+| ----------------------------------- | :-----: | :---: | ---------------------------------------------------------------------- |
+| [Contratación](contratacion.md)     |    5    |  13   | Cómo un turista termina acompañado por alguien a quien pagó            |
+| [Descubrimiento](descubrimiento.md) |    5    |  18   | De dónde sale el contenido que se recorre y qué hace el turista con él |
+| [Moderación](moderacion.md)         |    6    |  18   | Quién decide que un prestador existe y quién lo saca del sistema       |
 
 Lo que no está en ninguno de los tres es deliberado. La mensajería, la
 billetera, el balance de ingresos y la exportación de reportes son casos de uso
@@ -36,15 +36,15 @@ incluidos dentro de los casos que sí aparecen.
 
 ## Cómo se lee un diagrama
 
-| Símbolo                | Significa                                              |
-| ---------------------- | ------------------------------------------------------ |
-| Caja                   | Un actor: un papel, no una persona                     |
-| Caja de borde punteado | Un actor no humano: proceso programado o servicio externo |
-| Óvalo                  | Un caso de uso: algo que el sistema hace y que vale por sí solo |
-| Recuadro que los agrupa | La frontera del sistema                               |
-| Línea continua         | Asociación: ese actor puede iniciar ese caso de uso     |
-| Flecha punteada `«include»` | El caso de origen **siempre** ejecuta el de destino |
-| Flecha punteada `«extend»`  | El caso de origen ocurre **a veces** sobre el de destino |
+| Símbolo                     | Significa                                                       |
+| --------------------------- | --------------------------------------------------------------- |
+| Caja                        | Un actor: un papel, no una persona                              |
+| Caja de borde punteado      | Un actor no humano: proceso programado o servicio externo       |
+| Óvalo                       | Un caso de uso: algo que el sistema hace y que vale por sí solo |
+| Recuadro que los agrupa     | La frontera del sistema                                         |
+| Línea continua              | Asociación: ese actor puede iniciar ese caso de uso             |
+| Flecha punteada `«include»` | El caso de origen **siempre** ejecuta el de destino             |
+| Flecha punteada `«extend»`  | El caso de origen ocurre **a veces** sobre el de destino        |
 
 La distinción entre las dos flechas punteadas es la que más se equivoca al leer.
 `«include»` va de lo que obliga hacia lo obligado: cerrar un servicio incluye

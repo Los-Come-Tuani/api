@@ -100,8 +100,8 @@ flowchart TB
 
 ## Quién ejecuta cada paso
 
-| Partición        | Pasos | Qué le corresponde                                                   |
-| ---------------- | :---: | -------------------------------------------------------------------- |
+| Partición        | Pasos | Qué le corresponde                                                    |
+| ---------------- | :---: | --------------------------------------------------------------------- |
 | Turista          |   4   | Publicar lo que necesita, elegir con quién y evaluar al terminar      |
 | `k'plan`         |  11   | Validar, difundir sin identidad, adjudicar, congelar precio y liberar |
 | Guía o traductor |   4   | Buscar trabajo, postularse, prestar y evaluar                         |

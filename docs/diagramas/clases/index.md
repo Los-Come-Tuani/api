@@ -24,15 +24,15 @@ movimientos.
 Las cuatro reglas son mecánicas. Aplicadas al revés reconstruyen el modelo
 físico, que es lo que garantiza que las dos vistas no se separen.
 
-| En el modelo físico              | En el diagrama de clases                        |
-| -------------------------------- | ----------------------------------------------- |
-| Tabla                            | Clase                                           |
-| Columna de dato                  | Atributo, con el tipo del programa              |
-| Columna `<algo>_id` de llave     | Asociación con su rol y su multiplicidad        |
-| Tabla intermedia sin datos propios | Asociación de varios a varios, sin clase       |
-| Tabla intermedia con datos propios | Clase de asociación                            |
-| Catálogo `estado_<entidad>`      | Especialización de `Estado`                     |
-| Catálogo `tipo_<algo>`           | `<<enumeration>>` cuando el piloto lo cierra    |
+| En el modelo físico                | En el diagrama de clases                     |
+| ---------------------------------- | -------------------------------------------- |
+| Tabla                              | Clase                                        |
+| Columna de dato                    | Atributo, con el tipo del programa           |
+| Columna `<algo>_id` de llave       | Asociación con su rol y su multiplicidad     |
+| Tabla intermedia sin datos propios | Asociación de varios a varios, sin clase     |
+| Tabla intermedia con datos propios | Clase de asociación                          |
+| Catálogo `estado_<entidad>`        | Especialización de `Estado`                  |
+| Catálogo `tipo_<algo>`             | `<<enumeration>>` cuando el piloto lo cierra |
 
 Las columnas `_id` desaparecen. Es la diferencia más visible entre las dos
 vistas y también la más útil: `reserva.perfil_prestador_id` no dice nada sobre
@@ -44,10 +44,10 @@ navegable con multiplicidad `1` sí.
 El tipo de rombo no se elige por intuición. Sale directo de la
 [regla de llaves foráneas](../../modelo-dominio/convenciones.md#llaves-foraneas):
 
-| `ON DELETE` | Relación UML             | Se lee                                        |
-| ----------- | ------------------------ | --------------------------------------------- |
-| `CASCADE`   | Composición (rombo lleno) | La parte no existe sin el todo y muere con él |
-| `RESTRICT`  | Asociación simple        | El referenciado no se borra mientras lo usen  |
+| `ON DELETE` | Relación UML              | Se lee                                             |
+| ----------- | ------------------------- | -------------------------------------------------- |
+| `CASCADE`   | Composición (rombo lleno) | La parte no existe sin el todo y muere con él      |
+| `RESTRICT`  | Asociación simple         | El referenciado no se borra mientras lo usen       |
 | `SET NULL`  | Agregación (rombo hueco)  | La parte sobrevive; la referencia era trazabilidad |
 
 `CircuitoOficial *-- CircuitoParada` es composición porque borrar el circuito
@@ -57,17 +57,17 @@ el punto sigue en el mapa y sigue otorgando insignias
 
 ### De tipo de columna a tipo de programa
 
-| Tipo físico       | Tipo de la clase | Por qué cambia                                      |
-| ----------------- | ---------------- | ---------------------------------------------------- |
-| `uuid`            | `UUID`           | —                                                    |
-| `varchar`, `text` | `str`            | El límite es restricción, no tipo                    |
-| `citext`          | `str`            | La insensibilidad vive en la comparación             |
-| `numeric(12,2)`   | `Decimal`        | Nunca coma flotante                                  |
-| `timestamptz`     | `datetime`       | Con zona; el almacenamiento es en tiempo universal   |
-| `date`            | `date`           | Sin hora, por decisión del negocio                   |
-| `bytea`           | `bytes`          | Cifrado en la aplicación                             |
-| `jsonb`           | `dict`           | —                                                    |
-| `inet`            | `str`            | —                                                    |
+| Tipo físico       | Tipo de la clase | Por qué cambia                                     |
+| ----------------- | ---------------- | -------------------------------------------------- |
+| `uuid`            | `UUID`           | —                                                  |
+| `varchar`, `text` | `str`            | El límite es restricción, no tipo                  |
+| `citext`          | `str`            | La insensibilidad vive en la comparación           |
+| `numeric(12,2)`   | `Decimal`        | Nunca coma flotante                                |
+| `timestamptz`     | `datetime`       | Con zona; el almacenamiento es en tiempo universal |
+| `date`            | `date`           | Sin hora, por decisión del negocio                 |
+| `bytea`           | `bytes`          | Cifrado en la aplicación                           |
+| `jsonb`           | `dict`           | —                                                  |
+| `inet`            | `str`            | —                                                  |
 
 ---
 
@@ -191,11 +191,11 @@ Cada clase lleva el régimen que declara su tabla
 ([D-31](../../modelo-dominio/decisiones.md#d-31)). En los diagramas aparece como
 anotación, y es lo que dice de antemano qué operaciones **no** existen.
 
-| Estereotipo         | Qué permite                                   | Qué no tiene           |
-| ------------------- | --------------------------------------------- | ---------------------- |
-| `<<solo insercion>>` | Insertar                                     | Ni `editar` ni `borrar` |
-| `<<rastreada>>`     | Todo, con historial completo de versiones     | —                      |
-| `<<protegida>>`     | Todo salvo columnas congeladas por disparador | `editar` parcial        |
+| Estereotipo          | Qué permite                                   | Qué no tiene            |
+| -------------------- | --------------------------------------------- | ----------------------- |
+| `<<solo insercion>>` | Insertar                                      | Ni `editar` ni `borrar` |
+| `<<rastreada>>`      | Todo, con historial completo de versiones     | —                       |
+| `<<protegida>>`      | Todo salvo columnas congeladas por disparador | `editar` parcial        |
 
 Una clase `<<solo insercion>>` sin operaciones de escritura no está incompleta:
 está diciendo que un movimiento de insignias no se corrige, se compensa con otro
@@ -215,13 +215,13 @@ Los nombres de clase van en mayúscula inicial, como en el modelo conceptual. Lo
 atributos y las operaciones van en minúscula con guion bajo, como las columnas
 del modelo físico y como el código que las va a implementar.
 
-| Marca            | Significa                                                    |
-| ---------------- | ------------------------------------------------------------ |
-| `+`              | Visible desde fuera del módulo                               |
-| `#`              | Visible para las clases del módulo                           |
-| `-`              | Privado: cifrado, o secreto que nunca sale de la clase       |
-| `operacion()*`   | Abstracta: la implementa cada especialización                |
-| `operacion()$`   | De clase: no necesita instancia                              |
+| Marca          | Significa                                              |
+| -------------- | ------------------------------------------------------ |
+| `+`            | Visible desde fuera del módulo                         |
+| `#`            | Visible para las clases del módulo                     |
+| `-`            | Privado: cifrado, o secreto que nunca sale de la clase |
+| `operacion()*` | Abstracta: la implementa cada especialización          |
+| `operacion()$` | De clase: no necesita instancia                        |
 
 Un valor calculado se escribe como operación y no como atributo. `saldo()` es una
 suma sobre el libro; `promedio_valoracion` es un atributo porque está

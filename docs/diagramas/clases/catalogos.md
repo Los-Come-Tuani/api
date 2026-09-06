@@ -119,17 +119,17 @@ valor no debe exigir desplegar nada.
 
 ## Los parámetros como configuración, no como constantes
 
-| Parámetro                             | Valor de partida | Quién lo lee                      |
-| ------------------------------------- | ---------------- | --------------------------------- |
-| Radio de la geocerca                  | 500 m            | `Geocerca`                        |
-| Distancia para acreditar una visita   | 50 m             | `VisitaAcreditada`                |
-| Espera entre visitas al mismo local   | 24 h             | `VisitaAcreditada`                |
-| Avisos promocionales por hora         | 3                | `AvisoEmitido`                    |
-| Intentos fallidos antes de bloquear   | 5                | `BloqueoAcceso`                   |
-| Ventana para corregir una reseña      | 24 h             | `Resena`                          |
-| Cuarentena al cambiar cuenta bancaria | 24 h             | `CuentaBancariaCambio`            |
-| Retiro mínimo acumulado               | 20 USD           | `SolicitudRetiro`                 |
-| Comisión de la plataforma             | sin definir      | `Comision`                        |
+| Parámetro                             | Valor de partida | Quién lo lee           |
+| ------------------------------------- | ---------------- | ---------------------- |
+| Radio de la geocerca                  | 500 m            | `Geocerca`             |
+| Distancia para acreditar una visita   | 50 m             | `VisitaAcreditada`     |
+| Espera entre visitas al mismo local   | 24 h             | `VisitaAcreditada`     |
+| Avisos promocionales por hora         | 3                | `AvisoEmitido`         |
+| Intentos fallidos antes de bloquear   | 5                | `BloqueoAcceso`        |
+| Ventana para corregir una reseña      | 24 h             | `Resena`               |
+| Cuarentena al cambiar cuenta bancaria | 24 h             | `CuentaBancariaCambio` |
+| Retiro mínimo acumulado               | 20 USD           | `SolicitudRetiro`      |
+| Comisión de la plataforma             | sin definir      | `Comision`             |
 
 Ninguna de esas clases guarda el umbral como atributo. Lo consulta, y por eso
 cambiarlo no obliga a migrar filas ya escritas: solo cambia lo que se evalúe de
