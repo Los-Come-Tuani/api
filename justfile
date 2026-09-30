@@ -124,9 +124,9 @@ build profile="dev": check-docker
     #!/usr/bin/env bash
     set -euo pipefail
 
-    SERVICE="api-{{ profile }}"
+    SERVICE="kplanapi-{{ profile }}"
 
-    docker compose --profile {{ profile }} build  }}
+    docker compose --profile {{ profile }} build "$SERVICE"
 
 [group("docker")]
 services: check-docker
@@ -142,7 +142,7 @@ up profile="dev": check-docker
     #!/usr/bin/env bash
     set -euo pipefail
 
-    SERVICE="api-{{ profile }}"
+    SERVICE="kplanapi-{{ profile }}"
 
     docker compose --profile {{ profile }} build "$SERVICE"
     docker compose --profile {{ profile }} run --rm migrate
