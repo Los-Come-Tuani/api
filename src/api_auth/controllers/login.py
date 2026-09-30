@@ -36,6 +36,7 @@ class MobileLoginController(MobileAuthController[CustomPydanticFastSerializer]):
             return_type=MobileChallengeResponse,
             status_code=HTTPStatus.ACCEPTED,
         ),
+        validate_responses=False,
     )
     async def post(self, parsed_body: Body[MobileLoginPost]) -> HttpResponse:
         user: ApiUser = await authenticate_user(parsed_body, self.request)
