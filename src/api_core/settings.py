@@ -29,7 +29,10 @@ USE_X_FORWARDED_HOST: Final[bool] = CONFIG.DEPLOY
 ########################################################################################
 
 BASE_DIR: Final[Path] = ROOT / "src"
-MEDIA_ROOT: Final[Path] = BASE_DIR / "media"
+
+# outside `src` so the hot reload (which watches `src`) does not restart
+# the worker on every temporary write made by the `Storage` health check.
+MEDIA_ROOT: Final[Path] = ROOT / "media"
 
 ########################################################################################
 
