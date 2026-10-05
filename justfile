@@ -11,7 +11,7 @@ django_host := env("DJANGO_HOST", "127.0.0.1")
 django_pass := env("DJANGO_SUPERUSER_PASSWORD", "")
 django_port := env("DJANGO_PORT", "8080")
 django_remote := env("DJANGO_REMOTE", "")
-django_user := env("DJANGO_SUPERUSER_USERNAME", "")
+django_user := env("DJANGO_SUPERUSER_EMAIL", "")
 
 ########################################################################################
 
@@ -159,6 +159,10 @@ dj-repl *args="":
     @just run-frozen {{ quote(manage_py) }} shell {{ args }}
 
 [group("django")]
+fernet-key:
+    @just run-frozen python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+
+[group("django")]
 init-env:
     #!/usr/bin/env bash
     set -eu
@@ -192,7 +196,7 @@ init-local: init-env
     set -euo pipefail
 
     PASS_VAR="DJANGO_SUPERUSER_PASSWORD"
-    USER_VAR="DJANGO_SUPERUSER_USERNAME"
+    USER_VAR="DJANGO_SUPERUSER_EMAIL"
 
     read -srp "$PASS_VAR=" PASS_ANS
     echo
@@ -206,7 +210,7 @@ init-local: init-env
     echo
 
     if [[ -z "$USER_ANS" ]]; then
-      echo "Debe ingresar un usuario para el superuser local." >&2
+      echo "Debe ingresar un correo para el superuser local." >&2
       exit 1
     fi
 
@@ -300,7 +304,7 @@ get-token target:
 
     CT="Content-Type: application/json"
 
-    JSON=$(jq -nc --arg u {{ quote(django_user) }} --arg p {{ quote(django_pass) }} '{username: $u, password: $p}')
+    JSON=$(jq -nc --arg u {{ quote(django_user) }} --arg p {{ quote(django_pass) }} '{email: $u, password: $p}')
 
     RESPONSE=$(curl -s -X "POST" "$LOGIN" -H "$CT" -d "$JSON")
 

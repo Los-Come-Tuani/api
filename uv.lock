@@ -772,6 +772,7 @@ name = "kplan-api"
 version = "0.0.1"
 source = { virtual = "." }
 dependencies = [
+    { name = "cryptography" },
     { name = "django" },
     { name = "django-cors-headers" },
     { name = "django-filter" },
@@ -787,6 +788,7 @@ dependencies = [
     { name = "psycopg", extra = ["binary", "pool"] },
     { name = "pydantic" },
     { name = "pydantic-settings" },
+    { name = "pyjwt" },
     { name = "redis", extra = ["hiredis"] },
 ]
 
@@ -811,6 +813,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "cryptography", specifier = ">=46.0.0" },
     { name = "django", specifier = ">=6.1.0" },
     { name = "django-cors-headers", specifier = ">=4.9.0" },
     { name = "django-filter", specifier = ">=26.1" },
@@ -826,6 +829,7 @@ requires-dist = [
     { name = "psycopg", extras = ["binary", "pool"], specifier = ">=3.3.4" },
     { name = "pydantic", specifier = ">=2.13.4" },
     { name = "pydantic-settings", specifier = ">=2.15.0" },
+    { name = "pyjwt", specifier = ">=2.10.0" },
     { name = "redis", extras = ["hiredis"], specifier = ">=8.1.0" },
 ]
 

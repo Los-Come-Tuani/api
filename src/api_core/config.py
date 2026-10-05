@@ -1,10 +1,15 @@
+from base64 import urlsafe_b64encode
 from datetime import timedelta
 from functools import cached_property
 from typing import Annotated, Final, Literal, Self
-from urllib.parse import unquote
+from urllib.parse import unquote, urlsplit
 
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives.hashes import SHA256
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from psycopg import IsolationLevel
 from pydantic import (
+    BeforeValidator,
     NonNegativeInt,
     PositiveInt,
     PostgresDsn,
@@ -36,12 +41,81 @@ type OptionalSecret = Annotated[
 
 ########################################################################################
 
+# - desarrollo local: `localhost`/`127.0.0.1`, el portal (Vite, `:5173`) y el
+#   emulador de Android, que llega al `localhost` de la máquina como `10.0.2.2`
+DEV_ALLOWED_HOSTS: Final[tuple[str, ...]] = ("localhost", "127.0.0.1", "10.0.2.2")
+
+DEV_ORIGINS: Final[tuple[str, ...]] = (
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+)
+
+# - Railway consulta `/health/` con este host; no depende del dominio del servicio
+RAILWAY_HEALTHCHECK_HOST: Final[str] = "healthcheck.railway.app"
+
+# - valores que estaban escritos a mano en `settings.py`. Se conservan solo mientras
+#   el despliegue no defina `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` y
+#   `CSRF_TRUSTED_ORIGINS` como variables de entorno; después se pueden borrar.
+LEGACY_DEPLOY_HOSTS: Final[tuple[str, ...]] = (
+    "127.0.0.1",
+    "localhost",
+    RAILWAY_HEALTHCHECK_HOST,
+    "kplan-web.up.railway.app",
+    "staging-kplan-web.up.railway.app",
+)
+
+LEGACY_DEPLOY_ORIGINS: Final[tuple[str, ...]] = (
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://kplan-web.up.railway.app",
+    "https://staging-kplan-web.up.railway.app",
+)
+
+LOCAL_HOSTNAMES: Final[frozenset[str]] = frozenset({"localhost", "127.0.0.1"})
+
+########################################################################################
+
+
+def split_csv(value: object) -> object:
+    # `"a, b"` -> `("a", "b")`; cualquier otro valor pasa intacto
+    if isinstance(value, str):
+        return tuple(item.strip() for item in value.split(",") if item.strip())
+
+    return value
+
+
+type CsvList = Annotated[tuple[str, ...], BeforeValidator(split_csv)]
+
+type SecretCsv = Annotated[tuple[SecretStr, ...], BeforeValidator(split_csv)]
+
+########################################################################################
+
+
+def derive_fernet_key(secret: str) -> bytes:
+    # solo para desarrollo y pruebas, donde no hay `TOTP_ENCRYPTION_KEYS`
+    key: bytes = HKDF(
+        algorithm=SHA256(),
+        info=b"kplan:totp-encryption",
+        length=32,
+        salt=None,
+    ).derive(secret.encode())
+
+    return urlsafe_b64encode(key)
+
+
+########################################################################################
+
 
 class ApiConfig(BaseSettings, PermissiveDTO):
     model_config = SettingsConfigDict(
         enable_decoding=False,
         env_file=(ROOT / ".env"),
         env_file_encoding="utf-8",
+        # un error de configuración no debe volcar en los logs las claves ni la URL
+        # de la base de datos que venían en la entrada
+        hide_input_in_errors=True,
         validate_default=True,
     )
 
@@ -67,6 +141,43 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     TOTP_RECOVERY_CODES: PositiveInt = 10
     TOTP_TOLERANCE: NonNegativeInt = 1
 
+    # - cinco intentos fallidos seguidos sobre el mismo identificador bloquean el acceso
+    #   quince minutos (RF-S-06)
+    LOGIN_LOCKOUT: timedelta = timedelta(minutes=15)
+    LOGIN_MAX_FAILURES: PositiveInt = 5
+
+    # - códigos de un solo uso por correo: alta de cuenta, invitación y recuperación
+    VERIFICATION_LIFETIME: timedelta = timedelta(minutes=15)
+    VERIFICATION_MAX_ATTEMPTS: PositiveInt = 5
+    VERIFICATION_RESEND_AFTER: timedelta = timedelta(seconds=60)
+
+    # - plazo entre pedir la baja de la cuenta y destruir sus datos (RF-S-11)
+    ACCOUNT_CLOSING_DELAY: timedelta = timedelta(days=30)
+
+    # - inicio de sesión con Google. Son los Client ID de OAuth que pueden aparecer como
+    #   `aud` del token de identidad (el de tipo "Web" que usan la app y el portal).
+    #   Son públicos; no se necesita ningún secreto. Vacío = Google deshabilitado.
+    GOOGLE_OAUTH_CLIENT_IDS: CsvList = ()
+
+    # - correo saliente. Sin `EMAIL_HOST` los correos salen por consola en desarrollo y
+    #   se descartan con `DEPLOY=True`, para que ningún código de verificación quede
+    #   escrito en los logs de producción.
+    DEFAULT_FROM_EMAIL: Annotated[
+        str,
+        StringConstraints(max_length=254, min_length=3),
+    ] = "K'Plan <no-reply@localhost>"
+    EMAIL_HOST: str = ""
+    EMAIL_HOST_PASSWORD: OptionalSecret = SecretStr(secret_value="")
+    EMAIL_HOST_USER: str = ""
+    EMAIL_PORT: PositiveInt = 587
+    EMAIL_USE_TLS: bool = True
+
+    # - llaves Fernet con las que se cifra el secreto TOTP en la base, separadas por
+    #   comas y la más nueva primero: rotar es anteponer una llave nueva y correr
+    #   `rotatetotpkeys`. Obligatoria con `DEPLOY=True`; en desarrollo y pruebas, si se
+    #   omite, se deriva de `SECRET_KEY`. Se genera con `just fernet-key`.
+    TOTP_ENCRYPTION_KEYS: SecretCsv = ()
+
     DATABASE_URL: PostgresDsn
     REDIS_URL: RedisDsn
 
@@ -74,6 +185,52 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     SECRET_KEY: LongSecret
 
     REDIS_SECRET_KEY: OptionalSecret = SecretStr(secret_value="")
+
+    # - listas separadas por comas. Vacías = valores de desarrollo; en producción se
+    #   definen como variables del servicio, nunca en el repositorio.
+    ALLOWED_HOSTS: CsvList = ()
+    CORS_ALLOWED_ORIGINS: CsvList = ()
+    CSRF_TRUSTED_ORIGINS: CsvList = ()
+
+    @model_validator(mode="after")
+    def check_allowed_hosts(self) -> Self:
+        for host in self.ALLOWED_HOSTS:
+            if "/" in host:
+                raise ValueError(
+                    f"`ALLOWED_HOSTS` solo admite nombres de host, no '{host}'.",
+                )
+            if host == "*" and self.DEPLOY:
+                raise ValueError("`ALLOWED_HOSTS` no admite `*` si `DEPLOY=True`.")
+
+        return self
+
+    @model_validator(mode="after")
+    def check_origins(self) -> Self:
+        for name in ("CORS_ALLOWED_ORIGINS", "CSRF_TRUSTED_ORIGINS"):
+            for origin in getattr(self, name):
+                parts = urlsplit(origin)
+
+                if (
+                    parts.scheme not in {"http", "https"}
+                    or not parts.hostname
+                    or origin != f"{parts.scheme}://{parts.netloc}"
+                ):
+                    raise ValueError(
+                        f"`{name}` solo admite orígenes `esquema://host[:puerto]`, "
+                        f"sin ruta ni `/` final; recibió '{origin}'.",
+                    )
+
+                if (
+                    self.DEPLOY
+                    and parts.scheme == "http"
+                    and parts.hostname not in LOCAL_HOSTNAMES
+                ):
+                    raise ValueError(
+                        f"`{name}` exige `https://` si `DEPLOY=True`; "
+                        f"recibió '{origin}'.",
+                    )
+
+        return self
 
     @model_validator(mode="after")
     def check_cookie_policy(self) -> Self:
@@ -103,6 +260,25 @@ class ApiConfig(BaseSettings, PermissiveDTO):
         return self
 
     @model_validator(mode="after")
+    def check_totp_encryption_keys(self) -> Self:
+        if self.DEPLOY and not self.TOTP_ENCRYPTION_KEYS:
+            raise ValueError(
+                "`TOTP_ENCRYPTION_KEYS` es obligatorio cuando `DEPLOY=True`; "
+                "genere una llave con `just fernet-key`.",
+            )
+
+        for key in self.TOTP_ENCRYPTION_KEYS:
+            try:
+                Fernet(key.get_secret_value())
+            except ValueError as e:
+                raise ValueError(
+                    "`TOTP_ENCRYPTION_KEYS` solo admite llaves Fernet "
+                    "(32 bytes en base64 url-safe); genere una con `just fernet-key`.",
+                ) from e
+
+        return self
+
+    @model_validator(mode="after")
     def check_redis_secret_key(self) -> Self:
         if (
             self.DEPLOY
@@ -115,6 +291,50 @@ class ApiConfig(BaseSettings, PermissiveDTO):
             )
 
         return self
+
+    @cached_property
+    def allowed_hosts(self) -> tuple[str, ...]:
+        if self.ALLOWED_HOSTS:
+            hosts = self.ALLOWED_HOSTS
+        elif self.DEPLOY:
+            hosts = LEGACY_DEPLOY_HOSTS
+        else:
+            hosts = DEV_ALLOWED_HOSTS
+
+        if self.DEPLOY and RAILWAY_HEALTHCHECK_HOST not in hosts:
+            hosts = (*hosts, RAILWAY_HEALTHCHECK_HOST)
+
+        return hosts
+
+    @cached_property
+    def email_backend(self) -> str:
+        if self.EMAIL_HOST:
+            return "django.core.mail.backends.smtp.EmailBackend"
+
+        if self.DEPLOY:
+            return "django.core.mail.backends.dummy.EmailBackend"
+
+        return "django.core.mail.backends.console.EmailBackend"
+
+    @cached_property
+    def totp_fernet_keys(self) -> tuple[bytes, ...]:
+        if self.TOTP_ENCRYPTION_KEYS:
+            return tuple(
+                key.get_secret_value().encode() for key in self.TOTP_ENCRYPTION_KEYS
+            )
+
+        return (derive_fernet_key(self.SECRET_KEY.get_secret_value()),)
+
+    @cached_property
+    def cors_allowed_origins(self) -> tuple[str, ...]:
+        if self.CORS_ALLOWED_ORIGINS:
+            return self.CORS_ALLOWED_ORIGINS
+
+        return LEGACY_DEPLOY_ORIGINS if self.DEPLOY else DEV_ORIGINS
+
+    @cached_property
+    def csrf_trusted_origins(self) -> tuple[str, ...]:
+        return self.CSRF_TRUSTED_ORIGINS or self.cors_allowed_origins
 
     @cached_property
     def cookie_samesite(self) -> Literal["Lax", "None"]:

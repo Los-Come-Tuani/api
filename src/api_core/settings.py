@@ -46,6 +46,15 @@ AUTH_USER_MODEL: Final[str] = "apiauth.ApiUser"
 
 ########################################################################################
 
+DEFAULT_FROM_EMAIL: Final[str] = CONFIG.DEFAULT_FROM_EMAIL
+EMAIL_BACKEND: Final[str] = CONFIG.email_backend
+EMAIL_HOST: Final[str] = CONFIG.EMAIL_HOST
+EMAIL_HOST_PASSWORD: Final[str] = CONFIG.EMAIL_HOST_PASSWORD.get_secret_value()
+EMAIL_HOST_USER: Final[str] = CONFIG.EMAIL_HOST_USER
+EMAIL_PORT: Final[int] = CONFIG.EMAIL_PORT
+EMAIL_TIMEOUT: Final[int] = 10
+EMAIL_USE_TLS: Final[bool] = CONFIG.EMAIL_USE_TLS
+
 LANGUAGE_CODE: Final[str] = "es-ni"
 ROOT_URLCONF: Final[str] = "api_core.urls"
 TIME_ZONE: Final[str] = "America/Managua"
@@ -54,22 +63,13 @@ USE_TZ: Final[bool] = True
 
 ########################################################################################
 
-ALLOWED_HOSTS: Final[Sequence[str]] = (
-    "127.0.0.1",
-    "localhost",
-    "healthcheck.railway.app",
-    "kplan-web.up.railway.app",
-    "staging-kplan-web.up.railway.app",
-)
+# hosts y orígenes salen de las variables `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` y
+# `CSRF_TRUSTED_ORIGINS` (ver `api_core.config`); el repositorio no fija dominios.
+ALLOWED_HOSTS: Final[Sequence[str]] = CONFIG.allowed_hosts
 
 CORS_ALLOW_ALL_ORIGINS: Final[bool] = False
 CORS_ALLOW_CREDENTIALS: Final[bool] = True
-CORS_ALLOWED_ORIGINS: Final[Sequence[str]] = (
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://kplan-web.up.railway.app",
-    "https://staging-kplan-web.up.railway.app",
-)
+CORS_ALLOWED_ORIGINS: Final[Sequence[str]] = CONFIG.cors_allowed_origins
 
 CORS_EXPOSE_HEADERS: Final[Sequence[str]] = (CONFIG.csrf_header,)
 
@@ -77,12 +77,7 @@ CSRF_COOKIE_HTTPONLY: Final[bool] = True
 CSRF_COOKIE_NAME: Final[str] = CONFIG.csrf_cookie_name
 CSRF_COOKIE_SAMESITE: Final[str] = CONFIG.cookie_samesite
 CSRF_COOKIE_SECURE: Final[bool] = CONFIG.cookie_secure
-CSRF_TRUSTED_ORIGINS: Final[Sequence[str]] = (
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "https://kplan-web.up.railway.app",
-    "https://staging-kplan-web.up.railway.app",
-)
+CSRF_TRUSTED_ORIGINS: Final[Sequence[str]] = CONFIG.csrf_trusted_origins
 
 FILE_UPLOAD_MAX_MEMORY_SIZE: Final[int] = 2_621_440
 DATA_UPLOAD_MAX_MEMORY_SIZE: Final[int] = 2_621_440
@@ -126,6 +121,9 @@ MIDDLEWARE: Final[Sequence[str]] = (
 ########################################################################################
 
 AUTH_PASSWORD_VALIDATORS: Final[Sequence[dict[str, str]]] = (
+    {
+        "NAME": "api_auth.validators.ComplexityPasswordValidator",
+    },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
