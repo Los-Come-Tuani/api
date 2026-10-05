@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from django_filters.filters import OrderingFilter
 from django_filters.filterset import FilterSet
 
-from api_auth.enums import ApiUserTypes
+from api_auth.enums import ApiUserStatus, ApiUserTypes
 from api_auth.models import ApiUser
 from api_core.filters import (
     IntFilter,
@@ -30,6 +30,7 @@ class ApiUserFilterSet(FilterSet):
     permission_id = IntFilter(field_name="permissions__id")
 
     group = TypedChoiceFilter(enum=ApiUserTypes, field_name="groups__name")
+    status = TypedChoiceFilter(enum=ApiUserStatus, field_name="status")
 
     search = LoweredSearchFilter("username", "email", "first_name", "last_name")
 

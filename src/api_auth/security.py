@@ -7,7 +7,7 @@ from dmr.security.jwt import JWTAsyncAuth
 from api_auth.enums import TokenTypes
 from api_auth.services.blocklist import find_blocklisted_jtis
 from api_auth.services.csrf import ensure_csrf
-from api_auth.services.jwt import jwt_lookup_keys
+from api_auth.services.jwt import is_revoked_for_user, jwt_lookup_keys
 from api_auth.services.permissions import ensure_model_permissions
 from api_core.config import CONFIG
 from api_middlewares.history import build_user_context
@@ -57,8 +57,10 @@ class JwtRbacAsyncAuth(JWTAsyncAuth):
     ) -> None:
         await super().check_auth(user, token)
 
-        if token.extras.get("type") != TokenTypes.ACCESS or await find_blocklisted_jtis(
-            jtis=jwt_lookup_keys(token),
+        if (
+            token.extras.get("type") != TokenTypes.ACCESS
+            or is_revoked_for_user(user, token)  # ty: ignore[invalid-argument-type]
+            or await find_blocklisted_jtis(jtis=jwt_lookup_keys(token))
         ):
             raise NotAuthenticatedError
 

@@ -2,7 +2,13 @@ from typing import TYPE_CHECKING
 
 from dmr.routing import Router
 
+from api_auth.controllers.account import (
+    AccountCloseController,
+    AccountRestoreController,
+    SessionRevokeController,
+)
 from api_auth.controllers.csrf import CsrfController
+from api_auth.controllers.google import MobileGoogleController, WebGoogleController
 from api_auth.controllers.group import (
     GroupDetailController,
     GroupListAllController,
@@ -10,6 +16,11 @@ from api_auth.controllers.group import (
 )
 from api_auth.controllers.login import MobileLoginController, WebLoginController
 from api_auth.controllers.logout import MobileLogoutController, WebLogoutController
+from api_auth.controllers.password import (
+    PasswordChangeController,
+    PasswordForgotController,
+    PasswordResetController,
+)
 from api_auth.controllers.permission import (
     PermissionDetailController,
     PermissionListAllController,
@@ -17,7 +28,11 @@ from api_auth.controllers.permission import (
 )
 from api_auth.controllers.profile import ProfileController
 from api_auth.controllers.refresh import MobileRefreshController, WebRefreshController
-from api_auth.controllers.register import RegisterController
+from api_auth.controllers.register import (
+    RegisterCodeController,
+    RegisterController,
+    RegisterVerifyController,
+)
 from api_auth.controllers.two_factor import (
     MobileTwoFactorController,
     TwoFactorConfirmController,
@@ -53,6 +68,8 @@ router: Final[Router] = Router(
     tags=["auth"],
     urls=(
         *route_controllers(
+            AccountCloseController,
+            AccountRestoreController,
             ApiUserDetailController,
             ApiUserListController,
             ApiUserListAllController,
@@ -60,21 +77,29 @@ router: Final[Router] = Router(
             GroupDetailController,
             GroupListController,
             GroupListAllController,
+            MobileGoogleController,
             MobileLoginController,
             MobileLogoutController,
             MobileRefreshController,
             MobileTwoFactorController,
             MobileVerifyController,
+            PasswordChangeController,
+            PasswordForgotController,
+            PasswordResetController,
             PermissionDetailController,
             PermissionListController,
             PermissionListAllController,
             ProfileController,
+            RegisterCodeController,
             RegisterController,
+            RegisterVerifyController,
+            SessionRevokeController,
             TwoFactorConfirmController,
             TwoFactorController,
             TwoFactorDisableController,
             TwoFactorRecoveryController,
             TwoFactorSetupController,
+            WebGoogleController,
             WebLoginController,
             WebLogoutController,
             WebRefreshController,

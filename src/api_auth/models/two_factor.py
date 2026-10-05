@@ -41,7 +41,9 @@ class ApiUserTotpDevice(ApiModel):
         to=ApiUser,
     )
 
-    secret = CharField(max_length=64)
+    # token Fernet con el secreto TOTP (ver `api_auth.services.crypto`); nunca el
+    # secreto en claro. 255 sobra: un token de un secreto de 32 caracteres mide ~140.
+    secret = CharField(max_length=255)
 
     created_at = DateTimeField(db_default=Now(), default=now)
     confirmed_at = DateTimeField(db_default=None, default=None, null=True)

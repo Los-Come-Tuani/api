@@ -16,6 +16,7 @@ from .jwt import (
     ParsedJwtPair,
     build_challenge_jwt,
     build_jwt_pair,
+    is_revoked_for_user,
     parse_jwt,
     parse_jwt_pair,
     resolve_jwt_subject,
@@ -103,6 +104,9 @@ async def rotate_session(access: str | None, refresh: str | None) -> JwtSession:
     )
 
     user: ApiUser = await resolve_jwt_subject(pair.subject())
+
+    if is_revoked_for_user(user, refresh_token):
+        raise UnauthorizedError(detail=REVOKED_DETAIL)
 
     if not await consume_jwt(refresh_token, user):
         raise UnauthorizedError(detail=REVOKED_DETAIL)

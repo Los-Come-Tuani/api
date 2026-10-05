@@ -1,29 +1,25 @@
-from collections.abc import Sequence
-from http import HTTPMethod
-from typing import ClassVar
+from http import HTTPStatus
 
-from api_auth.models import ApiUser
-from api_auth.schemas.user import ApiUserGet
-from api_core.controllers.models import ModelController
+from dmr import Body, modify
+
+from api_auth.schemas.account import ProfilePatch
+from api_auth.schemas.session import SessionUserGet
+from api_auth.services.account import update_profile
+from api_auth.services.session_user import build_session_user
 from api_core.controllers.serializers import CustomPydanticFastSerializer
-from api_core.schemas.path import UuidInstancePath
-from api_core.services.operations import FlatRetrieveOperation, RetrieveOperation
+
+from .base import PrivateAuthController
 
 ########################################################################################
 
 
-class ProfileController(
-    ModelController[
-        CustomPydanticFastSerializer,
-        ApiUser,
-        ApiUserGet,
-    ]
-):
-    permissions: ClassVar[dict[HTTPMethod, Sequence[str]]] = {HTTPMethod.GET: ()}
+class ProfileController(PrivateAuthController[CustomPydanticFastSerializer]):
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> SessionUserGet:
+        return await build_session_user(self.request.user)
 
-    retrieve_operation: ClassVar[type[RetrieveOperation]] = FlatRetrieveOperation
-
-    async def get(self) -> ApiUserGet:
-        return await self.build_operation(self.retrieve_operation).run(
-            path=UuidInstancePath(id=self.request.user.pk),
+    @modify(status_code=HTTPStatus.OK)
+    async def patch(self, parsed_body: Body[ProfilePatch]) -> SessionUserGet:
+        return await build_session_user(
+            await update_profile(self.request.user, parsed_body),
         )

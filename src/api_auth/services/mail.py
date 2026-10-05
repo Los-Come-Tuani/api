@@ -1,0 +1,103 @@
+import logging
+
+from typing import TYPE_CHECKING
+
+from asgiref.sync import sync_to_async
+from django.core.mail import send_mail
+
+from api_core.config import CONFIG
+
+if TYPE_CHECKING:
+    from datetime import timedelta
+    from typing import Final
+
+########################################################################################
+
+logger: Final[logging.Logger] = logging.getLogger("api_auth.mail")
+
+########################################################################################
+
+
+def minutes(delta: timedelta) -> int:
+    return max(1, int(delta.total_seconds() // 60))
+
+
+def lifetime_line() -> str:
+    return (
+        f"Vence en {minutes(CONFIG.VERIFICATION_LIFETIME)} minutos "
+        "y sirve una sola vez."
+    )
+
+
+async def send_email(*, body: str, kind: str, subject: str, to: str) -> bool:
+    # Manda un correo sin dejar que un fallo del proveedor rompa la petición. El cuerpo
+    # trae códigos de un solo uso: jamás se registra, y del destinatario solo se deja
+    # constancia del tipo de correo.
+    try:
+        sent: int = await sync_to_async(send_mail)(
+            subject,
+            body,
+            CONFIG.DEFAULT_FROM_EMAIL,
+            [to],
+        )
+    except Exception:
+        logger.exception("No se pudo enviar el correo de tipo '%s'.", kind)
+
+        return False
+
+    return sent > 0
+
+
+########################################################################################
+
+
+async def send_verification_code(*, code: str, to: str) -> bool:
+    return await send_email(
+        body=(
+            f"Tu código para crear tu cuenta de K'Plan es: {code}\n\n"
+            f"{lifetime_line()} Si no lo pediste, ignora este mensaje.\n"
+        ),
+        kind="email",
+        subject="Tu código de verificación de K'Plan",
+        to=to,
+    )
+
+
+async def send_password_reset_code(*, code: str, to: str) -> bool:
+    return await send_email(
+        body=(
+            f"Tu código para crear una contraseña nueva es: {code}\n\n"
+            f"{lifetime_line()} Si no lo pediste, ignora este mensaje: tu contraseña "
+            "actual sigue siendo la misma.\n"
+        ),
+        kind="password_reset",
+        subject="Recupera tu contraseña de K'Plan",
+        to=to,
+    )
+
+
+async def send_invitation_code(*, code: str, name: str, to: str) -> bool:
+    return await send_email(
+        body=(
+            f"Hola {name}, te invitaron a formar parte del equipo de K'Plan.\n\n"
+            f"Tu código para activar tu cuenta y elegir tu contraseña es: {code}\n\n"
+            f"{lifetime_line()}\n"
+        ),
+        kind="invitation",
+        subject="Te invitaron al equipo de K'Plan",
+        to=to,
+    )
+
+
+async def send_closing_notice(*, days: int, to: str) -> bool:
+    return await send_email(
+        body=(
+            "Recibimos tu solicitud para dar de baja tu cuenta de K'Plan.\n\n"
+            f"Tu cuenta quedó inactiva y dentro de {days} días eliminaremos tu "
+            "información. Si te arrepientes antes de ese plazo, vuelve a iniciar "
+            "sesión desde la opción 'Reactivar mi cuenta'.\n"
+        ),
+        kind="closing",
+        subject="Tu cuenta de K'Plan está en proceso de baja",
+        to=to,
+    )

@@ -19,10 +19,10 @@ from api_auth.schemas.two_factor import (
     WebChallengeCookies,
     WebTwoFactorPost,
 )
-from api_auth.schemas.user import ApiUserInlineGet
 from api_auth.services.cookies import build_cookied_response, unset_jwt_cookie
 from api_auth.services.jwt import JwtSession
 from api_auth.services.session import resolve_challenge
+from api_auth.services.session_user import build_session_user
 from api_auth.services.two_factor import (
     TotpEnrollment,
     confirm_enrollment,
@@ -33,7 +33,6 @@ from api_auth.services.two_factor import (
     start_enrollment,
 )
 from api_core.controllers.serializers import CustomPydanticFastSerializer
-from api_core.services.mappers import instance_mapper
 
 from .base import MobileAuthController, PrivateAuthController, WebAuthController
 
@@ -54,7 +53,7 @@ class MobileTwoFactorController(MobileAuthController[CustomPydanticFastSerialize
         return MobileLoginResponse(
             access=session.tokens.access,
             refresh=session.tokens.refresh,
-            user=instance_mapper(session.user, ApiUserInlineGet),
+            user=await build_session_user(session.user),
         )
 
 
@@ -91,9 +90,7 @@ class WebTwoFactorController(WebAuthController[CustomPydanticFastSerializer]):
 
         response: HttpResponse = build_cookied_response(
             ctrl=self,
-            data=WebLoginResponse(
-                user=instance_mapper(session.user, ApiUserInlineGet),
-            ),
+            data=WebLoginResponse(user=await build_session_user(session.user)),
             tokens=session.tokens,
         )
 

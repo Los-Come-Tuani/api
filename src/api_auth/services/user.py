@@ -2,17 +2,18 @@ from typing import TYPE_CHECKING, override
 
 from asgiref.sync import sync_to_async
 from django.contrib.auth import aauthenticate, get_user_model
-from django.contrib.auth.models import Group
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.views.decorators.debug import sensitive_variables
 from dmr.security.jwt.auth import set_request_attrs
 
-from api_auth.schemas.user import ApiClientPost
 from api_core.services.operations import ManyToManyCreateOperation
 from api_core.services.operations.m2m import exec_m2m_post
 from api_exceptions.enums import BadRequestErrorTypes, RequestScopes
 from api_exceptions.errors import BadRequestError, UnauthorizedError
+
+from .account import ensure_can_operate
+from .login_guard import ensure_unlocked, record_attempt
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -22,7 +23,7 @@ if TYPE_CHECKING:
 
     from api_auth.models import ApiUser
     from api_auth.schemas.login import LoginPost
-    from api_auth.schemas.user import ApiUserGet, ApiUserPost
+    from api_auth.schemas.user import ApiStaffPost, ApiUserGet, ApiUserPost
     from api_utils.types import DatabaseModel
 
 ########################################################################################
@@ -30,16 +31,27 @@ if TYPE_CHECKING:
 
 @sensitive_variables()
 async def authenticate_user(data: LoginPost, request: HttpRequest) -> ApiUser:
+    # tras cinco fallos seguidos el identificador queda bloqueado, exista o no la cuenta
+    await ensure_unlocked(data.email)
+
     user: ApiUser | None = await aauthenticate(
         request,
+        email=get_user_model().objects.normalize_email(data.email),
         password=data.password,
-        username=data.username,
     )
 
     if user is None:
+        await record_attempt(identifier=data.email, request=request, succeeded=False)
+
         raise UnauthorizedError(
             detail="Las credenciales proporcionadas no son válidas.",
         )
+
+    # la contraseña era correcta, aunque la cuenta no pueda operar
+    await record_attempt(identifier=data.email, request=request, succeeded=True)
+
+    # recién ahora se explica por qué no entra: a quien tantea no se le dice nada
+    ensure_can_operate(user)
 
     set_request_attrs(request, user)
 
@@ -91,18 +103,10 @@ def check_password_strength(data: ApiUserPost, user: ApiUser | None = None) -> N
 
 
 @sensitive_variables()
-def dump_user_post_data(data: ApiUserPost) -> dict:
-    groups: Sequence[PositiveInt] = (
-        Group.objects.filter(name=data.group.value).values_list("id", flat=True)
-        if isinstance(data, ApiClientPost)
-        else (data.groups or ())
-    )
+def dump_user_post_data(data: ApiStaffPost) -> dict:
+    groups: Sequence[PositiveInt] = data.groups or ()
 
-    exclude: set[str] = {
-        "password1",
-        "password2",
-        "group" if isinstance(data, ApiClientPost) else "groups",
-    }
+    exclude: set[str] = {"password1", "password2", "groups"}
 
     return data.model_dump(exclude=exclude) | {
         "password": data.password1,

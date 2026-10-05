@@ -119,6 +119,16 @@ async def find_jwt_subject(sub: str | None) -> ApiUser | None:
 ########################################################################################
 
 
+def is_revoked_for_user(user: ApiUser, token: JWToken) -> bool:
+    # Revocar todas las sesiones de una persona (suspensión, baja, cambio de contraseña)
+    # es escribir `sessions_revoked_at`: toda credencial emitida hasta ese instante deja
+    # de servir. El `iat` del token solo llega al segundo, así que se compara a ese
+    # nivel; una credencial emitida en el mismo segundo de la revocación también cae.
+    revoked_at: datetime | None = user.sessions_revoked_at  # ty: ignore[invalid-assignment]
+
+    return revoked_at is not None and token.iat <= revoked_at.replace(microsecond=0)
+
+
 def jwt_lookup_keys(token: JWToken) -> frozenset[str | None]:
     session: str | None = jwt_session_key(token)
 
