@@ -44,6 +44,15 @@
     id = "trailing-whitespace"
 
 [[repos]]
+  repo = "https://github.com/gitleaks/gitleaks"
+  rev  = "v8.30.1"
+
+  # escanea lo que está por commitearse (toma `.gitleaks.toml` de la raíz); la
+  # historia completa se revisa en CI (`.github/workflows/secrets.yml`).
+  [[repos.hooks]]
+    id = "gitleaks"
+
+[[repos]]
   repo = "local"
 
   [[repos.hooks]]

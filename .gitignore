@@ -1,6 +1,31 @@
 .coverage
-.env
 .request.json
+
+# Variables de entorno: solo `.env.example` se versiona, y sin valores reales.
+.env
+.env.*
+!.env.example
+
+# Llaves, certificados y credenciales de proveedores (Google, Firebase, Apple,
+# firma de apps, cuentas de servicio). Nunca se versionan.
+*.jks
+*.key
+*.keystore
+*.p12
+*.p8
+*.pem
+*.pfx
+*-firebase-adminsdk-*.json
+*service-account*.json
+GoogleService-Info.plist
+client_secret*.json
+google-services.json
+secrets/
+
+# Volcados y respaldos de base de datos.
+*.dump
+*.pgdump
+*.sql.gz
 
 __pycache__/
 

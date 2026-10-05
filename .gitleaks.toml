@@ -1,0 +1,11 @@
+title = "kplan-api"
+
+[extend]
+  useDefault = true
+
+# Claves de desarrollo local que se versionan a propósito (`.env.example`,
+# `compose.yml`, CI, README). Se ignoran por su contenido y no por archivo, de modo
+# que un secreto real pegado en esos mismos archivos siga detectándose.
+[[allowlists]]
+  description = "Credenciales de desarrollo local"
+  stopwords   = ["kplanapi", "superuser-data", "SECRET!!!"]
