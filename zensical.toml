@@ -186,6 +186,8 @@
       ],
     },
     "guia.md",
+    "autenticacion.md",
+    "google.md",
   ]
 
   [[project.extra.social]]

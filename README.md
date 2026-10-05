@@ -74,7 +74,7 @@ just init-local
 Esta receta hace todo el trabajo pesado:
 
 1. Genera el archivo `.env` a partir de `.env.example`.
-1. Solicita interactivamente username y contraseña del
+1. Solicita interactivamente el correo y la contraseña del
    superuser local, y los escribe en el `.env`.
 1. Instala las dependencias con `uv sync --frozen`.
 1. Instala los hooks de `prek`.
@@ -117,6 +117,11 @@ SECRET_KEY="SECRET!!!"
 
 REDIS_SECRET_KEY="kplanapi"
 
+# Listas separadas por comas. Vacías = valores de desarrollo.
+ALLOWED_HOSTS=""
+CORS_ALLOWED_ORIGINS=""
+CSRF_TRUSTED_ORIGINS=""
+
 GRANIAN_HOST="127.0.0.1"
 GRANIAN_INTERFACE="asginl"
 GRANIAN_LOG_ACCESS_ENABLED="1"
@@ -126,8 +131,8 @@ GRANIAN_WORKERS="1"
 GRANIAN_WORKING_DIR="src"
 GRANIAN_WS="0"
 
-DJANGO_SUPERUSER_PASSWORD="superuser-data"
-DJANGO_SUPERUSER_USERNAME="superuser-data"
+DJANGO_SUPERUSER_EMAIL="admin@example.com"
+DJANGO_SUPERUSER_PASSWORD="Superuser-Data-2026"
 ```
 
 Notas importantes:
@@ -140,11 +145,30 @@ Notas importantes:
   (o el puerto libre que prefiera) y use ese mismo puerto en `DATABASE_URL`.
   Solo cambia el puerto publicado en su máquina: dentro de Docker el API sigue
   conectándose a `postgres:5432`.
-- `DJANGO_SUPERUSER_USERNAME` y `DJANGO_SUPERUSER_PASSWORD` deben estar definidas
-  para poder usar `just mk-admin`, que crea el superuser sin interacción.
+- `DJANGO_SUPERUSER_EMAIL` y `DJANGO_SUPERUSER_PASSWORD` deben estar definidas
+  para poder usar `just mk-admin`, que crea el superuser sin interacción. Todas las
+  cuentas, el superuser incluido, inician sesión con el correo.
+- Los correos (códigos de verificación y de recuperación de contraseña) salen por
+  la consola del API mientras no se defina `EMAIL_HOST`; con `DEPLOY=True` y sin
+  `EMAIL_HOST` se descartan, para que ningún código quede en los logs. En
+  producción define `EMAIL_HOST`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD` y
+  `DEFAULT_FROM_EMAIL` en el servicio.
 - `JWT_SECRET_KEY` y `SECRET_KEY` son obligatorias también para los
   perfiles de Docker (`compose.yml` las declara como
   requeridas con `${VAR:?}`).
+- `TOTP_ENCRYPTION_KEYS` son las llaves Fernet con las que se cifra en la base el
+  secreto del 2FA. Vacía, en desarrollo se deriva de `SECRET_KEY`; con
+  `DEPLOY=True` es obligatoria (genere una con `just fernet-key`). Para rotarlas,
+  anteponga la llave nueva, corra `just dj-man rotatetotpkeys` y retire la vieja.
+- `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` y `CSRF_TRUSTED_ORIGINS` son listas
+  separadas por comas. Vacías, el API acepta `localhost`, `127.0.0.1`, `10.0.2.2`
+  (el emulador de Android) y los orígenes `http://localhost:3000` y
+  `http://localhost:5173` (el portal). En producción se definen como variables del
+  servicio (Railway), nunca en el repositorio; los orígenes deben ser `https` y
+  sin `/` final, y `ALLOWED_HOSTS` no admite `*` con `DEPLOY=True`.
+- Use `localhost` y no `127.0.0.1` al abrir el portal y el API: son del mismo
+  sitio solo si comparten el nombre de host, y sin eso las cookies de sesión no
+  viajan.
 
 Si quiere regenerar solo una llave:
 
@@ -259,8 +283,15 @@ just full-fix
 # local, `--deploy` siempre advierte sobre HSTS, cookies y `DEBUG`):
 DEBUG=False just validate --deploy --fail-level WARNING
 
-# correr las pruebas:
+# correr las pruebas (incluye las de contrato con schemathesis, que recorren
+# todas las rutas del OpenAPI con una sesión de superusuario):
 just test
+
+# generar una llave Fernet para TOTP_ENCRYPTION_KEYS:
+just fernet-key
+
+# volver a cifrar los secretos del 2FA con la llave primaria (tras rotar llaves):
+just dj-man rotatetotpkeys
 
 # todo lo anterior:
 just pre-commit
