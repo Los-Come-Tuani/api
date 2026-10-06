@@ -16,13 +16,13 @@ from api_core.controllers.base import BaseController
 from api_core.controllers.serializers import CustomPydanticFastSerializer
 from api_exceptions.errors import ForbiddenError
 from api_organizations.schemas.application import (
-    ApplicationGet,
     ApplicationSessionResponse,
     BusinessApplicationPost,
     InstitutionApplicationPost,
     MunicipalityApplicationPost,
     ResubmitPost,
 )
+from api_organizations.schemas.mine import MineApplicationGet
 from api_organizations.services.application import (
     Registered,
     application_payload,
@@ -32,6 +32,7 @@ from api_organizations.services.application import (
     register_municipality,
     resubmit_sync,
 )
+from api_organizations.services.mine import mine_payload
 
 ########################################################################################
 
@@ -119,20 +120,20 @@ class MunicipalityApplicationController(
 
 
 # La solicitud de quien entró: el estado, y si ya se resolvió, cómo (con el motivo si
-# se rechazó).
+# se rechazó), junto con los datos que mandó.
 class MineApplicationController(BaseController[CustomPydanticFastSerializer]):
     @modify(status_code=HTTPStatus.OK)
-    async def get(self) -> ApplicationGet:
+    async def get(self) -> MineApplicationGet:
         request = await sync_to_async(latest_application_sync)(self.request.user)
 
-        return await sync_to_async(application_payload)(request)
+        return await sync_to_async(mine_payload)(request)
 
 
 # Corregir lo que el equipo rechazó y volver a enviarlo: abre otro expediente. Responde
 # `201` con la solicitud nueva, que vuelve a la bandeja.
 class MineResubmitController(BaseController[CustomPydanticFastSerializer]):
     @modify(status_code=HTTPStatus.CREATED)
-    async def post(self, parsed_body: Body[ResubmitPost]) -> ApplicationGet:
+    async def post(self, parsed_body: Body[ResubmitPost]) -> MineApplicationGet:
         request = await sync_to_async(resubmit_sync)(self.request.user, parsed_body)
 
-        return await sync_to_async(application_payload)(request)
+        return await sync_to_async(mine_payload)(request)

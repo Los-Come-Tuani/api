@@ -34,7 +34,9 @@ quien se postula ──► alta (cuenta + organización + expediente) ──► 
 Cuatro pasos del cliente, todos sin sesión salvo el último, que la deja abierta:
 
 1. `GET /catalog/city/`, `/catalog/business-type/` y `/catalog/institution-type/`: las
-   listas de los formularios, públicas.
+   listas de los formularios, públicas. Cada ciudad trae su `latitude` y `longitude` (el
+   centro, para encuadrar el mapa donde se ubica el comercio) y `active` (ninguna lo está
+   hasta que se incorpora a la plataforma: el formulario las ofrece todas).
 2. `POST /auth/register-code/` con `{ "email" }`: manda el código de seis dígitos al
    correo (el mismo del registro de la app; ver [Autenticación](autenticacion.md)).
 3. `POST /upload/` por cada archivo y subirlo con la URL firmada (ver [Archivos](archivos.md)):
@@ -80,9 +82,16 @@ servir.
 - `GET /organization-application/mine/` devuelve la solicitud más reciente: `status`
   (`submitted`, `in_review`, `approved` o `rejected`) y, si se resolvió, `resolution` con
   el motivo (`reason`) y la nota del equipo. `404` para quien no es de una organización.
+- Con ella viene `submitted`: **lo que se mandó**, con la misma forma de lo que se manda al
+  corregir (`kind`, `city_id`, el tipo, `name`, `phone`... y, en el comercio, `hours` y
+  `signature_dish`), de modo que el formulario de corrección se llena con esto y no hay
+  que escribir todo otra vez. Los archivos salen como `{ "key", "url" }`: la clave se
+  manda de vuelta tal cual (en `photo_key` o `document_key`) si no se cambia el archivo,
+  y la `url` de lectura vence en minutos (es nula si el almacenamiento no está
+  configurado).
 - `POST /organization-application/mine/resubmit/` corrige lo rechazado y lo manda de nuevo.
   Recibe los mismos datos del alta, sin la cuenta y con `kind` (`business`, `institution`
-  o `municipality`). Responde `201` con la solicitud nueva.
+  o `municipality`). Responde `201` con la solicitud nueva, con la misma forma que `mine/`.
   - Solo se puede cuando el último expediente se rechazó: en revisión (`409`) y aprobada
     (`409`) no se toca.
   - Corrige la misma ficha, que sigue sin verificar. En el comercio se reemplazan los

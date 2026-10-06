@@ -7,7 +7,7 @@ from django.db.models import TextChoices
 from api_core.config import CONFIG
 from api_core.services.storage import get_storage
 from api_exceptions.enums import BadRequestErrorTypes, RequestScopes
-from api_exceptions.errors import BadRequestError
+from api_exceptions.errors import BadRequestError, ServiceUnavailableError
 
 if TYPE_CHECKING:
     from typing import Final
@@ -109,3 +109,15 @@ def verify_upload(kind: str, key: str, *, field: str) -> StoredObject:
         raise fail(field, "El archivo no es del tipo o del tamaño permitidos.")
 
     return stored
+
+
+# Una URL para ver un archivo del almacenamiento privado; vence en minutos. Es nula si
+# el almacenamiento no está configurado: la solicitud se lee igual, sin el enlace.
+def read_url(key: str) -> str | None:
+    try:
+        return get_storage().presign_download(
+            key,
+            expires_in=int(CONFIG.STORAGE_DOWNLOAD_EXPIRES.total_seconds()),
+        )
+    except ServiceUnavailableError:
+        return None

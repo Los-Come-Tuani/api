@@ -29,6 +29,8 @@ class CityListController(
                 active=bool(city.active),
                 code=str(city.code),
                 id=str(city.pk),
+                latitude=float(city.latitude),
+                longitude=float(city.longitude),
                 name=str(city.name),
             )
             for city in rows

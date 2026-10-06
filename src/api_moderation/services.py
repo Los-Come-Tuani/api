@@ -9,16 +9,14 @@ from django.utils.timezone import now
 from api_auth.services.mail import send_application_decision
 from api_catalogs.models import Reason, ReasonContext
 from api_catalogs.seeder import CONTEXT_VERIFICATION_REJECTION
-from api_core.config import CONFIG
 from api_core.schemas.pagination import Paginated
-from api_core.services.storage import get_storage
+from api_core.services.uploads import read_url
 from api_exceptions.enums import BadRequestErrorTypes, RequestScopes
 from api_exceptions.errors import (
     BadRequestError,
     ConflictError,
     ForbiddenError,
     NotFoundError,
-    ServiceUnavailableError,
 )
 from api_moderation.enums import API_STATUS, VerificationStates
 from api_moderation.models import (
@@ -155,16 +153,6 @@ def queue_sync(query: VerificationQuery) -> Paginated[VerificationRequestInlineG
     )
 
 
-def download_url(key: str) -> str | None:
-    try:
-        return get_storage().presign_download(
-            key,
-            expires_in=int(CONFIG.STORAGE_DOWNLOAD_EXPIRES.total_seconds()),
-        )
-    except ServiceUnavailableError:
-        return None
-
-
 def applicant_of_sync(request: VerificationRequest) -> ApiUser | None:
     kind, record = organization_record(request)
 
@@ -196,7 +184,7 @@ def business_detail(record: Business) -> tuple[BusinessDetailGet, list[DocumentG
         documents.append(
             DocumentGet(
                 kind="signature_dish_photo",
-                url=download_url(str(dish.photo.file_key)),
+                url=read_url(str(dish.photo.file_key)),
             )
         )
 
@@ -314,9 +302,7 @@ def detail_sync(request_id: UUID) -> VerificationRequestGet:
             phone=str(record.phone),
         )
         documents = [
-            DocumentGet(
-                kind="legal_document", url=download_url(str(record.document_key))
-            )
+            DocumentGet(kind="legal_document", url=read_url(str(record.document_key)))
         ]
     else:
         municipality = MunicipalityDetailGet(
@@ -324,9 +310,7 @@ def detail_sync(request_id: UUID) -> VerificationRequestGet:
             phone=str(record.phone),
         )
         documents = [
-            DocumentGet(
-                kind="legal_document", url=download_url(str(record.document_key))
-            )
+            DocumentGet(kind="legal_document", url=read_url(str(record.document_key)))
         ]
 
     resolution: Any = (

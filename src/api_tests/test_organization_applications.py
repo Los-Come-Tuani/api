@@ -10,7 +10,7 @@ from api_auth.enums import ApiUserStatus
 from api_auth.models import ApiUser, ApiUserGroups
 from api_catalogs.models import BusinessType, InstitutionType
 from api_core.services import storage as storage_module
-from api_core.services.storage import MemoryStorage
+from api_core.services.storage import DisabledStorage, MemoryStorage
 from api_moderation.models import VerificationRequest
 from api_organizations.models import (
     Business,
@@ -565,7 +565,13 @@ def test_the_form_lists_are_public(client: DMRClient) -> None:
 
     assert len(cities) == 10
     assert {city["code"] for city in cities} >= {"leon", "granada", "bluefields"}
-    assert all(set(city) == {"active", "code", "id", "name"} for city in cities)
+    assert all(
+        set(city) == {"active", "code", "id", "latitude", "longitude", "name"}
+        for city in cities
+    )
+    # el centro de cada ciudad, para encuadrar el mapa donde se ubica el comercio
+    leon = next(city for city in cities if city["code"] == "leon")
+    assert (leon["latitude"], leon["longitude"]) == (12.4379, -86.878)
     assert {item["code"] for item in types} >= {"restaurante", "cafeteria"}
     assert {item["code"] for item in institutions} == {
         "casa_cultura",
@@ -846,3 +852,153 @@ def test_resubmitting_needs_a_session_and_an_organization(
 
     assert anonymous.status_code == HTTPStatus.UNAUTHORIZED
     assert nobody.status_code == HTTPStatus.NOT_FOUND
+
+
+########################################################################################
+# Lo que mandó
+
+
+def test_the_application_comes_with_what_the_business_sent(
+    csrf_client: DMRClient,
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    post(csrf_client, "business", business_payload(code_for(csrf_client)))
+
+    business = Business.objects.get()
+    submitted = body(csrf_client.get("/organization-application/mine/"))["submitted"]
+
+    assert submitted["kind"] == "business"
+    assert submitted["city_id"] == str(business.city_id)
+    assert submitted["business_type_id"] == str(business.business_type_id)
+    assert (submitted["name"], submitted["ruc"]) == ("El Sacuanjoche", "J0310000000001")
+    assert (submitted["latitude"], submitted["longitude"]) == (12.4379, -86.878)
+
+    # los horarios salen por día, del domingo al sábado
+    assert [(row["weekday"], row["closed"]) for row in submitted["hours"]] == [
+        (0, True),
+        (1, False),
+    ]
+    assert (submitted["hours"][1]["opens"], submitted["hours"][1]["closes"]) == (
+        "08:00:00",
+        "17:00:00",
+    )
+
+    # el platillo vigente, con la foto: su clave y una URL de lectura
+    dish = submitted["signature_dish"]
+    assert (dish["name"], dish["reference_price"], dish["currency"]) == (
+        "Vigorón",
+        120.0,
+        "NIO",
+    )
+    assert dish["photo"]["key"] == PHOTO_KEY
+    assert dish["photo"]["url"].startswith("https://storage.example/bucket/")
+
+
+def test_the_application_comes_with_the_document_of_an_institution_or_a_municipality(
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    for kind, payload in (
+        ("institution", institution_payload),
+        ("municipality", municipality_payload),
+    ):
+        client = DMRClient(enforce_csrf_checks=True)
+        email = f"{kind}@example.com"
+        post(client, kind, {**payload(code_for(client, email)), "email": email})
+
+        submitted = body(client.get("/organization-application/mine/"))["submitted"]
+
+        assert submitted["kind"] == kind
+        assert submitted["city_id"] == str(City.objects.get(code="leon").pk)
+        assert submitted["document"]["key"] == DOCUMENT_KEY
+        assert submitted["document"]["url"].endswith(f"{DOCUMENT_KEY}?expires=300")
+
+    institution = CulturalInstitution.objects.get()
+    municipality = Municipality.objects.get()
+    assert institution.contact_email == "teatro@example.com"
+    assert municipality.contact_email == "alcaldia@example.com"
+
+
+def test_without_storage_the_files_keep_their_key_but_lose_the_link(
+    csrf_client: DMRClient,
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    post(csrf_client, "business", business_payload(code_for(csrf_client)))
+
+    # el almacenamiento se apaga después: la solicitud se lee igual
+    monkeypatch.setattr(storage_module, "current", DisabledStorage())
+    response = csrf_client.get("/organization-application/mine/")
+
+    assert response.status_code == HTTPStatus.OK, response.content
+    photo = body(response)["submitted"]["signature_dish"]["photo"]
+    assert photo == {"key": PHOTO_KEY, "url": None}
+
+
+def test_what_the_application_returns_is_what_the_correction_form_sends_back(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    apply_and_get_rejected(csrf_client, make_member)
+    first = body(csrf_client.get("/organization-application/mine/"))
+    submitted = first["submitted"]
+
+    # el formulario de corrección se llena con lo que ya mandó: solo cambia el platillo
+    # a la forma que recibe el API (la foto, por su clave)
+    dish = submitted["signature_dish"]
+    corrected = {
+        **submitted,
+        "signature_dish": {
+            "currency": dish["currency"],
+            "description": dish["description"],
+            "name": "Nacatamal",
+            "photo_key": dish["photo"]["key"],
+            "reference_price": dish["reference_price"],
+        },
+    }
+    response = resubmit(csrf_client, corrected)
+
+    assert response.status_code == HTTPStatus.CREATED, response.content
+    data = body(response)
+    assert data["status"] == "submitted"
+    assert data["id"] != first["id"]
+    assert data["submitted"]["signature_dish"]["name"] == "Nacatamal"
+    assert data["submitted"]["signature_dish"]["photo"]["key"] == PHOTO_KEY
+    assert data["submitted"]["hours"] == submitted["hours"]
+
+
+def test_an_institution_and_a_municipality_correct_with_the_document_they_already_sent(
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    for kind, payload in (
+        ("institution", institution_payload),
+        ("municipality", municipality_payload),
+    ):
+        client = DMRClient(enforce_csrf_checks=True)
+        email = f"{kind}@example.com"
+        registered = post(
+            client, kind, {**payload(code_for(client, email)), "email": email}
+        )
+
+        reviewer = DMRClient()
+        web_login(
+            reviewer, make_member(f"rev-{kind}@example.com", "organizations.review")
+        )
+        reviewer.post(
+            f"/verification-request/{body(registered)['application']['id']}/reject/",
+            {"reason": "documento_ilegible"},
+        )
+
+        submitted = body(client.get("/organization-application/mine/"))["submitted"]
+        # el documento se manda de vuelta por su clave, sin subirlo otra vez
+        corrected = {
+            **{key: value for key, value in submitted.items() if key != "document"},
+            "document_key": submitted["document"]["key"],
+            "name": f"{submitted['name']} (corregido)",
+        }
+        response = resubmit(client, corrected)
+
+        assert response.status_code == HTTPStatus.CREATED, response.content
+        assert body(response)["submitted"]["name"].endswith("(corregido)")
+        assert body(response)["submitted"]["document"]["key"] == DOCUMENT_KEY
