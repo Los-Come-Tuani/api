@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from http import HTTPMethod
 from typing import ClassVar
 
+from api_auth.catalog import FunctionalPermissions
 from api_auth.models import ApiUser
 from api_auth.models.through import ApiUserGroups, ApiUserPermissions
 from api_auth.services.permissions import (
@@ -16,7 +17,14 @@ from api_utils.db import model_permission
 ########################################################################################
 
 
-class ApiUserRelationsMixin:
+class ApiUserFunctionalMixin:
+    # ver a las personas lo da `users.view` (o `users.manage`), sin los del modelo
+    functional_permissions: ClassVar[dict[HTTPMethod, Sequence[str]]] = {
+        HTTPMethod.GET: (FunctionalPermissions.USERS_VIEW,),
+    }
+
+
+class ApiUserRelationsMixin(ApiUserFunctionalMixin):
     permissions: ClassVar[dict[HTTPMethod, Sequence[str]]] = DEFAULT_PERMISSIONS | {
         HTTPMethod.GET: (
             T_VIEW_PERM,

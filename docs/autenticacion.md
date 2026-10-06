@@ -34,7 +34,10 @@ es de un solo uso y presentarlo dos veces falla.
   cookie `challenge`). Se completa con `POST .../two-factor/` y `{ "code" }` (y
   `challenge` en móvil). El código es el TOTP de seis dígitos o un código de
   recuperación.
-- **`401`**: credenciales inválidas. El mensaje es el mismo exista o no el correo.
+- **`401`**: credenciales inválidas. El mensaje es el mismo exista o no el correo, y
+  también cuando el rol de la cuenta no entra por esa superficie (el equipo y los
+  negocios entran por el portal; turistas, guías y traductores, por la app). Ver
+  [Roles y permisos](roles.md).
 - **`403`**: la contraseña era correcta pero la cuenta no puede operar (pendiente,
   suspendida, expulsada o en baja). El mensaje dice por qué. Solo se revela con la
   contraseña correcta.
@@ -114,6 +117,11 @@ país de dos letras (`NI`, `US`). Una contraseña débil no gasta el código.
 
 `status` es `pending`, `active`, `suspended`, `expelled` o `closing`. `role` es
 `admin`, `alcaldia`, `guia`, `institucion`, `negocio`, `traductor`, `turista` o `null`.
+
+`permissions` son los permisos funcionales que le dan sus roles, ya con los que se
+deducen (`guides.decide` trae `guides.view`), por ejemplo `["guides.decide",
+"guides.view", "users.view"]`. `two_factor.required` es `true` cuando algún rol de la
+cuenta exige el segundo factor. Detalle en [Roles y permisos](roles.md).
 
 ## Segundo factor (TOTP)
 

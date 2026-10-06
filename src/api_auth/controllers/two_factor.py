@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import override
+from typing import ClassVar, override
 
 from django.http import HttpResponse
 from django.views.decorators.debug import sensitive_variables
@@ -21,6 +21,7 @@ from api_auth.schemas.two_factor import (
 )
 from api_auth.services.cookies import build_cookied_response, unset_jwt_cookie
 from api_auth.services.jwt import JwtSession
+from api_auth.services.roles import requires_two_factor
 from api_auth.services.session import resolve_challenge
 from api_auth.services.session_user import build_session_user
 from api_auth.services.two_factor import (
@@ -33,6 +34,7 @@ from api_auth.services.two_factor import (
     start_enrollment,
 )
 from api_core.controllers.serializers import CustomPydanticFastSerializer
+from api_exceptions.errors import ForbiddenError
 
 from .base import MobileAuthController, PrivateAuthController, WebAuthController
 
@@ -103,6 +105,8 @@ class WebTwoFactorController(WebAuthController[CustomPydanticFastSerializer]):
 
 
 class TwoFactorController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.OK)
     async def get(self) -> TwoFactorStatusGet:
         device: ApiUserTotpDevice | None = await find_device(self.request.user)
@@ -119,6 +123,8 @@ class TwoFactorController(PrivateAuthController[CustomPydanticFastSerializer]):
 
 
 class TwoFactorSetupController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.CREATED)
     @sensitive_variables()
     async def post(self) -> TwoFactorSetupResponse:
@@ -131,6 +137,8 @@ class TwoFactorSetupController(PrivateAuthController[CustomPydanticFastSerialize
 
 
 class TwoFactorConfirmController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.CREATED)
     @sensitive_variables()
     async def post(
@@ -146,6 +154,8 @@ class TwoFactorConfirmController(PrivateAuthController[CustomPydanticFastSeriali
 
 
 class TwoFactorRecoveryController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.CREATED)
     @sensitive_variables()
     async def post(
@@ -163,9 +173,19 @@ class TwoFactorRecoveryController(PrivateAuthController[CustomPydanticFastSerial
 
 
 class TwoFactorDisableController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.NO_CONTENT)
     @sensitive_variables()
     async def post(self, parsed_body: Body[TwoFactorDisablePost]) -> None:
+        # quien tiene un rol que exige el segundo factor no puede quitárselo
+        if await requires_two_factor(self.request.user):
+            raise ForbiddenError(
+                detail=(
+                    "Tu rol exige la verificación en dos pasos: no se puede desactivar."
+                ),
+            )
+
         await disable_two_factor(
             code=parsed_body.code,
             password=parsed_body.password,

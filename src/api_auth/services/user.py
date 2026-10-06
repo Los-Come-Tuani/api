@@ -14,6 +14,7 @@ from api_exceptions.errors import BadRequestError, UnauthorizedError
 
 from .account import ensure_can_operate
 from .login_guard import ensure_unlocked, record_attempt
+from .roles import surface_allows
 
 if TYPE_CHECKING:
     from collections.abc import Sequence
@@ -21,6 +22,7 @@ if TYPE_CHECKING:
     from django.http import HttpRequest
     from pydantic import PositiveInt
 
+    from api_auth.enums import Surfaces
     from api_auth.models import ApiUser
     from api_auth.schemas.login import LoginPost
     from api_auth.schemas.user import ApiStaffPost, ApiUserGet, ApiUserPost
@@ -30,7 +32,11 @@ if TYPE_CHECKING:
 
 
 @sensitive_variables()
-async def authenticate_user(data: LoginPost, request: HttpRequest) -> ApiUser:
+async def authenticate_user(
+    data: LoginPost,
+    request: HttpRequest,
+    surface: Surfaces,
+) -> ApiUser:
     # tras cinco fallos seguidos el identificador queda bloqueado, exista o no la cuenta
     await ensure_unlocked(data.email)
 
@@ -40,7 +46,9 @@ async def authenticate_user(data: LoginPost, request: HttpRequest) -> ApiUser:
         password=data.password,
     )
 
-    if user is None:
+    # una cuenta que no entra por esta superficie (un turista en el portal, alguien del
+    # equipo en la app) recibe el mismo error que una contraseña mala (RF-S-08)
+    if user is None or not await surface_allows(user, surface):
         await record_attempt(identifier=data.email, request=request, succeeded=False)
 
         raise UnauthorizedError(

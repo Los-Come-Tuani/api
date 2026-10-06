@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING
 
 from api_exceptions.errors import ForbiddenError
 
+from .roles import has_any_permission
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
     from typing import Final
@@ -38,6 +40,14 @@ async def ensure_model_permissions(
         return
 
     if request.user.is_active and request.user.is_superuser:
+        return
+
+    # un permiso funcional (de un rol del equipo) basta, sin los permisos del modelo
+    functional: Sequence[str] = getattr(controller, "functional_permissions", {}).get(
+        request.method, ()
+    )
+
+    if functional and await has_any_permission(request.user, *functional):
         return
 
     perms: dict[str, Sequence[str]] = getattr(

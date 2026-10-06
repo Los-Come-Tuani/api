@@ -60,11 +60,14 @@ preview = true
     "**/settings.py" = ["line-too-long"]
 
     # las pruebas comparan contra números y cadenas concretos (códigos de recuperación,
-    # pasos TOTP, vectores del RFC) y usan contraseñas de mentira
+    # pasos TOTP, vectores del RFC) y usan contraseñas de mentira; además, cada fixture
+    # que piden es un argumento
     "**/api_tests/**" = [
       "assert",
       "hardcoded-password-func-arg",
       "hardcoded-password-string",
       "magic-value-comparison",
       "pytest-incorrect-pytest-import",
+      "too-many-arguments",
+      "too-many-positional-arguments",
     ]

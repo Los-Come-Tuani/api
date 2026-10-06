@@ -26,7 +26,7 @@ from api_exceptions.errors import (
 )
 
 from .account import ensure_can_operate
-from .session_user import PUBLIC_ROLES, resolve_role
+from .roles import PUBLIC_ROLES, role_of_sync
 
 if TYPE_CHECKING:
     from typing import Final
@@ -213,7 +213,7 @@ def resolve_account_sync(profile: GoogleProfile, data: GooglePost) -> ApiUser:
 def ensure_public_role_sync(user: ApiUser) -> None:
     # Google es para turistas, guías y traductores. El equipo y las organizaciones
     # entran con correo, contraseña y segundo factor.
-    if resolve_role(user, list(user.groups.all())) in PUBLIC_ROLES:  # ty: ignore[unresolved-attribute]
+    if role_of_sync(user) in PUBLIC_ROLES:
         return
 
     raise ForbiddenError(

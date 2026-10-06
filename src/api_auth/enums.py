@@ -26,6 +26,29 @@ class IdentityProviders(TextChoices):
     GOOGLE = "google"
 
 
+class GroupKinds(TextChoices):
+    # de dónde es un grupo: decide por cuál superficie entra quien lo tiene (RF-S-08)
+    OPERATOR = "operator"  # negocios, alcaldías e instituciones: portal
+    PUBLIC = "public"  # turistas, guías y traductores: app móvil
+    STAFF = "staff"  # el equipo de K'Plan: portal
+
+
+class Surfaces(TextChoices):
+    MOBILE = "mobile"
+    WEB = "web"
+
+
+class AccountRoles(TextChoices):
+    # el papel que ven los clientes (`role` del usuario de la sesión)
+    ADMIN = "admin"
+    ALCALDIA = "alcaldia"
+    GUIA = "guia"
+    INSTITUCION = "institucion"
+    NEGOCIO = "negocio"
+    TRADUCTOR = "traductor"
+    TURISTA = "turista"
+
+
 class VerificationPurposes(TextChoices):
     EMAIL = "email"  # alta de una cuenta nueva
     INVITATION = "invitation"  # una persona del equipo acepta su invitación

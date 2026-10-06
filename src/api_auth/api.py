@@ -33,6 +33,16 @@ from api_auth.controllers.register import (
     RegisterController,
     RegisterVerifyController,
 )
+from api_auth.controllers.team import (
+    StaffAcceptController,
+    StaffInviteController,
+    StaffPermissionController,
+    StaffRoleController,
+    StaffRoleDetailController,
+    UserPasswordResetController,
+    UserRoleController,
+    UserStatusController,
+)
 from api_auth.controllers.two_factor import (
     MobileTwoFactorController,
     TwoFactorConfirmController,
@@ -53,6 +63,7 @@ from api_auth.controllers.user import (
 )
 from api_auth.controllers.verify import MobileVerifyController, WebVerifyController
 from api_core.controllers.routers import (
+    route_controller,
     route_controllers,
     route_inferred_controller,
     route_link_controller,
@@ -94,11 +105,18 @@ router: Final[Router] = Router(
             RegisterController,
             RegisterVerifyController,
             SessionRevokeController,
+            StaffAcceptController,
+            StaffInviteController,
+            StaffPermissionController,
+            StaffRoleController,
             TwoFactorConfirmController,
             TwoFactorController,
             TwoFactorDisableController,
             TwoFactorRecoveryController,
             TwoFactorSetupController,
+            UserPasswordResetController,
+            UserRoleController,
+            UserStatusController,
             WebGoogleController,
             WebLoginController,
             WebLogoutController,
@@ -121,5 +139,11 @@ router: Final[Router] = Router(
         ),
         route_link_controller(ApiUserGroupsLinkController, "auth"),
         route_link_controller(ApiUserPermissionsLinkController, "auth"),
+        route_controller(
+            ctrl=StaffRoleDetailController,
+            endpoint="auth/staff-role",
+            instance_param=("int", "id"),
+            suffix="detail",
+        ),
     ),
 )

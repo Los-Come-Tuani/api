@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING
 
+from .role import ApiGroupProfile
 from .security import (
     ApiExternalIdentity,
     ApiLoginAttempt,
@@ -17,6 +18,7 @@ if TYPE_CHECKING:
 
 __all__: Sequence[str] = (
     "ApiExternalIdentity",
+    "ApiGroupProfile",
     "ApiLoginAttempt",
     "ApiLoginLock",
     "ApiUser",

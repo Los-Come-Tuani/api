@@ -9,6 +9,7 @@ from api_auth.services.blocklist import find_blocklisted_jtis
 from api_auth.services.csrf import ensure_csrf
 from api_auth.services.jwt import is_revoked_for_user, jwt_lookup_keys
 from api_auth.services.permissions import ensure_model_permissions
+from api_auth.services.roles import ensure_two_factor_enrolled
 from api_core.config import CONFIG
 from api_middlewares.history import build_user_context
 
@@ -44,6 +45,7 @@ class JwtRbacAsyncAuth(JWTAsyncAuth):
 
         # user has been authenticated or rejected by now,
         # `controller.request` should be "usable" (see `api_utils.types`)
+        await ensure_two_factor_enrolled(controller, controller.request)  # ty: ignore[invalid-argument-type]
         await ensure_model_permissions(controller, controller.request)  # ty: ignore[invalid-argument-type]
         await build_user_context(controller.request)  # ty: ignore[invalid-argument-type]
 

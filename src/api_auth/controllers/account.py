@@ -1,5 +1,6 @@
 from datetime import datetime
 from http import HTTPStatus
+from typing import ClassVar
 
 from django.views.decorators.debug import sensitive_variables
 from dmr import Body, modify
@@ -15,6 +16,8 @@ from .base import AuthController, PrivateAuthController
 
 
 class AccountCloseController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.OK)
     @sensitive_variables()
     async def post(self, parsed_body: Body[AccountClosePost]) -> AccountClosingGet:
@@ -38,6 +41,8 @@ class AccountRestoreController(AuthController[CustomPydanticFastSerializer]):
 
 
 class SessionRevokeController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.NO_CONTENT)
     async def post(self) -> None:
         # cierra la sesión en todos los dispositivos, incluido este

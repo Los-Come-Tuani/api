@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import ClassVar
 
 from dmr import Body, modify
 
@@ -14,6 +15,8 @@ from .base import PrivateAuthController
 
 
 class ProfileController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.OK)
     async def get(self) -> SessionUserGet:
         return await build_session_user(self.request.user)

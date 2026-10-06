@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.views.decorators.debug import sensitive_variables
 from dmr import Body, CookieSpec, ResponseSpec, validate
 
-from api_auth.enums import TokenTypes
+from api_auth.enums import Surfaces, TokenTypes
 from api_auth.models import ApiUser
 from api_auth.schemas.login import (
     MobileLoginPost,
@@ -109,7 +109,9 @@ class MobileLoginController(MobileAuthController[CustomPydanticFastSerializer]):
     @sensitive_variables()
     @validate(*MOBILE_SESSION_RESPONSES, validate_responses=False)
     async def post(self, parsed_body: Body[MobileLoginPost]) -> HttpResponse:
-        user: ApiUser = await authenticate_user(parsed_body, self.request)
+        user: ApiUser = await authenticate_user(
+            parsed_body, self.request, Surfaces.MOBILE
+        )
 
         return await mobile_session_response(self, user)
 
@@ -124,6 +126,6 @@ class WebLoginController(WebAuthController[CustomPydanticFastSerializer]):
     async def post(self, parsed_body: Body[WebLoginPost]) -> HttpResponse:
         await super().post()
 
-        user: ApiUser = await authenticate_user(parsed_body, self.request)
+        user: ApiUser = await authenticate_user(parsed_body, self.request, Surfaces.WEB)
 
         return await web_session_response(self, user)

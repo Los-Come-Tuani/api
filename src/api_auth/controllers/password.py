@@ -1,4 +1,5 @@
 from http import HTTPStatus
+from typing import ClassVar
 
 from django.views.decorators.debug import sensitive_variables
 from dmr import Body, modify
@@ -39,6 +40,8 @@ class PasswordResetController(AuthController[CustomPydanticFastSerializer]):
 
 
 class PasswordChangeController(PrivateAuthController[CustomPydanticFastSerializer]):
+    allows_pending_two_factor: ClassVar[bool] = True
+
     @modify(status_code=HTTPStatus.NO_CONTENT)
     @sensitive_variables()
     async def post(self, parsed_body: Body[PasswordChangePost]) -> None:

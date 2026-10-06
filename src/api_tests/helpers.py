@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from re import search
 from typing import TYPE_CHECKING
 
@@ -10,6 +11,7 @@ if TYPE_CHECKING:
 
     from django.core.mail import EmailMessage
     from django.http import HttpResponse
+    from dmr.test import DMRClient
 
     from api_auth.models import ApiUser
 
@@ -57,6 +59,15 @@ def body(response: HttpResponse) -> dict:
     data: dict = response.json()  # ty: ignore[unresolved-attribute]
 
     return data
+
+
+def web_login(client: DMRClient, user: ApiUser, password: str = PASSWORD) -> dict:
+    # como el portal: la sesión queda en las cookies del cliente
+    response = client.post("/auth/web/login/", credentials(user, password))
+
+    assert response.status_code == HTTPStatus.OK, response.content
+
+    return body(response)
 
 
 def build_config(**overrides: object) -> ApiConfig:

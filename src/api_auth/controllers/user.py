@@ -34,6 +34,7 @@ from api_core.schemas.pagination import Paginated
 from api_core.services.operations import CreateOperation
 
 from .mixins import (
+    ApiUserFunctionalMixin,
     ApiUserGroupsLinkMixin,
     ApiUserGroupsMixin,
     ApiUserPermissionsLinkMixin,
@@ -148,6 +149,7 @@ class ApiUserListController(
 
 
 class ApiUserListAllController(
+    ApiUserFunctionalMixin,
     ModelListAllController[
         CustomPydanticFastSerializer,
         ApiUser,

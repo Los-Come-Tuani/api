@@ -2,11 +2,14 @@ from typing import TYPE_CHECKING
 
 import pytest
 
+from django.contrib.auth.models import Group, Permission
 from django.core.cache import cache
 from dmr.test import DMRClient
 from pgtransaction.transaction import Atomic
 
-from api_auth.models import ApiUser
+from api_auth.enums import AccountRoles, GroupKinds
+from api_auth.models import ApiGroupProfile, ApiUser, ApiUserGroups
+from api_auth.seeder import seed_permissions
 from api_auth.services import totp
 from api_tests.helpers import PASSWORD
 
@@ -91,3 +94,58 @@ def make_user(db: None) -> Callable[..., ApiUser]:  # ruff: ignore[unused-functi
 @pytest.fixture
 def user(make_user: Callable[..., ApiUser]) -> ApiUser:
     return make_user()
+
+
+@pytest.fixture
+def make_role(db: None) -> Callable[..., Group]:  # ruff: ignore[unused-function-argument]
+    # los permisos funcionales existen una vez sembrado el catálogo
+    functional: dict[str, Permission] = seed_permissions()
+
+    def factory(
+        name: str,
+        *permissions: str,
+        kind: str = GroupKinds.STAFF,
+        requires_two_factor: bool = False,
+        role: str = AccountRoles.ADMIN,
+    ) -> Group:
+        group = Group.objects.create(name=name)
+
+        ApiGroupProfile.objects.create(
+            group=group,
+            kind=kind,
+            requires_two_factor=requires_two_factor,
+            role=role,
+        )
+
+        group.permissions.add(*(functional[codename] for codename in permissions))
+
+        return group
+
+    return factory
+
+
+@pytest.fixture
+def make_member(
+    make_role: Callable[..., Group],
+    make_user: Callable[..., ApiUser],
+) -> Callable[..., ApiUser]:
+    # una persona del equipo con un rol que da exactamente esos permisos
+    def factory(
+        email: str = "equipo@example.com",
+        *permissions: str,
+        requires_two_factor: bool = False,
+    ) -> ApiUser:
+        member = make_user(email=email)
+
+        ApiUserGroups.objects.create(
+            api_user=member,
+            group=make_role(
+                f"Rol de {email}",
+                *permissions,
+                requires_two_factor=requires_two_factor,
+            ),
+        )
+
+        return member
+
+    return factory
