@@ -1,4 +1,9 @@
+from typing import TYPE_CHECKING
+
 from django.db.models import TextChoices
+
+if TYPE_CHECKING:
+    from typing import Final
 
 ########################################################################################
 
@@ -10,6 +15,16 @@ class VerificationStates(TextChoices):
     IN_REVIEW = "en_revision"
     APPROVED = "aprobada"
     REJECTED = "rechazada"
+
+
+# - cómo se llaman los estados hacia afuera: el API habla en inglés, y los códigos del
+#   catálogo son los del modelo de dominio
+API_STATUS: Final[dict[str, str]] = {
+    VerificationStates.APPROVED: "approved",
+    VerificationStates.IN_REVIEW: "in_review",
+    VerificationStates.REJECTED: "rejected",
+    VerificationStates.SUBMITTED: "submitted",
+}
 
 
 class VerificationKinds(TextChoices):

@@ -3,7 +3,8 @@ from typing import TYPE_CHECKING, Any
 from asgiref.sync import sync_to_async
 
 from api_auth.schemas.group import GroupInlineGet
-from api_auth.schemas.session import SessionUserGet, TwoFactorState
+from api_auth.schemas.session import OrganizationRefGet, SessionUserGet, TwoFactorState
+from api_roles.services import organization_of_sync
 
 from .roles import (
     functional_permissions,
@@ -32,6 +33,9 @@ async def build_session_user(user: ApiUser) -> SessionUserGet:
     profiles = await sync_to_async(profiles_of_sync)(user)
     permissions = await functional_permissions(user)
 
+    # la organización viene de la asignación de rol con ámbito vigente
+    organization = await sync_to_async(organization_of_sync)(user)
+
     return SessionUserGet(
         birth_date=account.birth_date,
         created_at=account.created_at,
@@ -42,7 +46,17 @@ async def build_session_user(user: ApiUser) -> SessionUserGet:
         last_name=account.last_name,
         name=account.display_name,
         nationality=account.nationality,
-        organization_id=None,
+        organization=(
+            None
+            if organization is None
+            else OrganizationRefGet(
+                id=organization.id,
+                kind=organization.kind,  # ty: ignore[invalid-argument-type]
+                name=organization.name,
+                verified=organization.verified_at is not None,
+            )
+        ),
+        organization_id=None if organization is None else organization.id,
         permissions=tuple(sorted(permissions)),
         role=role_of(user, profiles),  # ty: ignore[invalid-argument-type]
         status=account.status,

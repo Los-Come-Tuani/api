@@ -89,6 +89,40 @@ async def send_invitation_code(*, code: str, name: str, to: str) -> bool:
     )
 
 
+async def send_application_decision(  # ruff: ignore[too-many-arguments]
+    *,
+    approved: bool,
+    name: str,
+    note: str,
+    organization: str,
+    reason: str,
+    to: str,
+) -> bool:
+    # lo que el equipo decidió sobre la solicitud de una organización, con el motivo y
+    # la nota si se rechazó: sin saber por qué, quien se postuló reintenta a ciegas
+    if approved:
+        body = (
+            f"Hola {name}, aprobamos la solicitud de {organization}.\n\n"
+            "Ya puedes entrar al portal de K'Plan con tu correo y tu contraseña.\n"
+        )
+        subject = "Aprobamos tu solicitud en K'Plan"
+    else:
+        detail = f"\nNota del equipo: {note}\n" if note else ""
+        body = (
+            f"Hola {name}, no pudimos aprobar la solicitud de {organization}.\n\n"
+            f"Motivo: {reason}.\n{detail}\n"
+            "Entra al portal de K'Plan para ver qué corregir y volver a enviarla.\n"
+        )
+        subject = "Sobre tu solicitud en K'Plan"
+
+    return await send_email(
+        body=body,
+        kind="application_decision",
+        subject=subject,
+        to=to,
+    )
+
+
 async def send_closing_notice(*, days: int, to: str) -> bool:
     return await send_email(
         body=(

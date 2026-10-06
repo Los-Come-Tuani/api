@@ -29,6 +29,14 @@ class TwoFactorState(DTO):
     required: bool
 
 
+class OrganizationRefGet(DTO):
+    id: UUID
+    kind: Literal["business", "institution", "municipality"]
+    name: str
+    # la verificó el equipo; hasta entonces solo ve su solicitud
+    verified: bool
+
+
 class SessionUserGet(BaseGet):
     """La persona de la sesión, con todo lo que un cliente necesita para arrancar."""
 
@@ -46,7 +54,8 @@ class SessionUserGet(BaseGet):
     role: Role | None
     groups: tuple[GroupInlineGet, ...]
     permissions: tuple[str, ...]
-    # el negocio, la alcaldía o la institución a la que pertenece; llega con las
-    # organizaciones
+    # el negocio, la alcaldía o la institución sobre la que actúa (su asignación de rol
+    # vigente); nulo para quien no es de una organización
     organization_id: UUID | None
+    organization: OrganizationRefGet | None
     two_factor: TwoFactorState
