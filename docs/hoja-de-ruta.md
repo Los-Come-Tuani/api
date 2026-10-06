@@ -22,7 +22,7 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 | F0   | Secretos fuera de git (gitleaks), configuración por entorno, 2FA cifrado y probado               | M2          |
 | F1   | Identidad: correo, registro con código, contraseña, perfil, baja, Google; portal y app enlazados | M2          |
 | F2   | Roles y permisos funcionales, superficies por rol, 2FA obligatorio, equipo e invitaciones        | M3 (parte)  |
-| F3   | **API hecha**: alta pública de comercios, instituciones y alcaldías, cola de verificación, roles con ámbito y archivos. Falta adaptar el portal ([guía](organizaciones.md)) | M1, M3, M5, M7, M14 |
+| F3   | **Hecha** (API y portal): alta pública de comercios, instituciones y alcaldías, cola de verificación del equipo, roles con ámbito y archivos ([guía](organizaciones.md)). Falta crear el bucket real | M1, M3, M5, M7, M14 |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 

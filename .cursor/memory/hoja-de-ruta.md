@@ -43,10 +43,10 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | f1-app-link             | Hecha (app, rama `feat/hoja-de-ruta-api`). Ver `mobile-1/.cursor/memory`            |
 | f2-roles-permissions    | **API hecha** (sección 7). Falta el lado del portal                                 |
 | f3-f8-roadmap           | Hecha (documentación: `docs/hoja-de-ruta.md`); cada fase de dominio se confirma antes |
-| F3 (organizaciones)     | **API hecha** y **portal hecho para quien se postula** (alta, estado, corregir). Falta la cola del equipo en el portal (sección 7b) |
+| F3 (organizaciones)     | **Hecha** en el API y en el portal (alta, estado, corregir y la cola del equipo). Falta crear el bucket real (sección 7b) |
 
-Siguiente paso recomendado: la cola del equipo en el portal (sección 7b) y lo que falta de F2
-en el portal (sección 7); después, que el usuario elija la fase de dominio que sigue (F4 en
+Siguiente paso recomendado: lo que falta de F2 en el portal (sección 7: equipo, roles y usuarios
+contra el API real); después, que el usuario elija la fase de dominio que sigue (F4 en
 adelante).
 
 ## 3. Qué hay hecho en el API
@@ -227,12 +227,11 @@ en inglés.
 
 **Falta de F3** (en este orden):
 
-1. **Portal, la cola del equipo.** El alta, el estado y la corrección de quien se postula
-   **ya están** en el portal (ver su memoria). Falta que las pantallas del equipo
-   (`AdmissionsPage`, `AdmissionPage`, contadores, `OrganizationDetailPage`) dejen el
-   modelo de demo anterior (revisión por documento, etapas, asignar a un revisor) y usen la
-   cola (`GET /verification-request/`, detalle, tomar, devolver, aprobar, rechazar con
-   motivo); después se retira ese modelo.
+1. **Portal: hecho.** El alta, el estado y la corrección de quien se postula, y la cola del
+   equipo (`/solicitudes`: bandeja, tomar, devolver, aprobar, rechazar con motivo), están en
+   el portal contra el API real (ver su memoria). Se retiró el alta asistida y la revisión
+   por documento de la demo. Lo que dejó de la demo anterior sigue en `db.organizationApplications`
+   solo para los estados de cuenta y la propiedad de los lugares, hasta F4.
 2. **Bucket real.** Falta crear el bucket y las variables `STORAGE_*` (guía en
    `docs/archivos.md`, con el CORS del portal: `PUT` y `Content-Type`). Se probó el flujo
    completo en un navegador contra un servidor S3 local (moto), con el mismo código de
