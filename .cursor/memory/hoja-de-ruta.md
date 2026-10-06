@@ -41,13 +41,13 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | f1-google-login         | Hecha en el API y en la app, con guía (`docs/google.md`). El portal no lo usa: Google es solo para roles públicos |
 | f1-portal-link          | Hecha (portal, rama `feat/hoja-de-ruta-api`). Ver `portal/.cursor/memory`           |
 | f1-app-link             | Hecha (app, rama `feat/hoja-de-ruta-api`). Ver `mobile-1/.cursor/memory`            |
-| f2-roles-permissions    | **API hecha** (sección 7). Falta el lado del portal                                 |
+| f2-roles-permissions    | **Hecha** en el API, el portal (permisos, invitación, equipo y roles) y la app (modo guía según el rol). "Todos los usuarios" del portal sigue en demo (sección 7) |
 | f3-f8-roadmap           | Hecha (documentación: `docs/hoja-de-ruta.md`); cada fase de dominio se confirma antes |
 | F3 (organizaciones)     | **Hecha** en el API y en el portal (alta, estado, corregir y la cola del equipo). Falta crear el bucket real (sección 7b) |
 
-Siguiente paso recomendado: lo que falta de F2 en el portal (sección 7: equipo, roles y usuarios
-contra el API real); después, que el usuario elija la fase de dominio que sigue (F4 en
-adelante).
+Siguiente paso recomendado: que el usuario elija la fase de dominio que sigue (F4 en adelante,
+`docs/hoja-de-ruta.md`). Pendientes chicos que no dependen de una fase: el directorio de
+cuentas para "Todos los usuarios" del portal (sección 7) y crear el bucket real (sección 7b).
 
 ## 3. Qué hay hecho en el API
 
@@ -116,7 +116,8 @@ Todas sin prefijo `/api`, con barra final:
   `POST /auth/two-factor-confirm/` (201 `{codes}`), `POST /auth/two-factor-recovery/`
   (201 `{codes}`), `POST /auth/two-factor-disable/` (204; `{code, password}`).
 - Equipo (F2): `GET /auth/staff-permission/`, `GET|POST /auth/staff-role/`,
-  `GET|PUT|DELETE /auth/staff-role/{id}/`, `POST /auth/staff-invite/`,
+  `GET|PUT|DELETE /auth/staff-role/{id}/`, `GET /auth/staff-member/` (el equipo con su rol;
+  los superusuarios con `role: null`), `POST /auth/staff-invite/`,
   `POST /auth/staff-accept/` (pública), `POST /auth/user-role/`, `POST /auth/user-status/`,
   `POST /auth/user-password-reset/`. Detalle y permisos en `docs/roles.md`.
 - Organizaciones (F3): `GET /catalog/city|business-type|institution-type/` (públicas; la
@@ -180,15 +181,28 @@ inicio de sesión con Apple en iOS.
   `test_team.py` (matriz rol x endpoint, CRUD de roles, invitación, estado, rol y
   recuperación).
 
+- `GET /auth/staff-member/` (`StaffMemberController`, `staff_members_sync`): el equipo para
+  la pantalla "Equipo interno" del portal; pide `staff.manage` o `users.view`. Sin ella el
+  portal no tenía cómo listar al equipo (`/auth/user/` no filtra por clase de rol).
+
+**Portal: hecho** (ver su memoria). Permisos `*.view` en el menú y las rutas, 2FA obligatorio
+que lleva a Seguridad, `/invitacion`, y las pantallas "Equipo interno" y "Roles y permisos"
+contra `/auth/staff-*` (reinvitar respeta `sent: false`; quitar el acceso pide `users.manage`).
+
+**App: hecho.** El modo guía sigue al `role` de la sesión: `guia` y `traductor` lo tienen,
+`turista` no. Con el API configurado, la postulación desde la app queda cerrada con un aviso
+(no hay ruta todavía: llega con F5); la demo conserva el flujo simulado.
+
 **Falta de F2**:
 
-- **Portal** (no empezado): agregar los IDs `*.view` a `src/data/models/access.ts`
-  (`PERMISSIONS`, `PERMISSION_GROUPS`) y usarlos en `navigation.ts`/`routes.tsx`; mostrar
-  `two_factor.required` (llevar a Seguridad); página de aceptar invitación (por ejemplo
-  `/invitacion`: correo + código + contraseña -> `POST /auth/staff-accept/`); y, si se
-  quiere, conectar las páginas de equipo, usuarios y roles con los endpoints nuevos
-  (hoy siguen siendo demo). Respetar `sent: false` al reinvitar.
-- **App**: nada obligatorio. El inicio de sesión móvil ya solo admite roles públicos.
+- **Todos los usuarios** (portal): sigue en demo. Hace falta un directorio de cuentas con el
+  rol derivado (`role_of`), filtros por rol y estado y búsqueda, para que el portal deje
+  `/api/users`. Con eso pasa también "Mandar código para nueva contraseña"
+  (`POST /auth/user-password-reset/`, que ya existe).
+- Dar o quitar el rol de guía o traductor no tiene ruta hasta F5: no hay admin de Django,
+  `user-role/` solo acepta roles del equipo y las rutas genéricas de grupos responden 400
+  (aviso 10 de la sección 9). Para probar la app como guía hoy: `manage.py shell` y agregar
+  a la cuenta al grupo "Guía".
 - Los operadores externos (negocio, alcaldía, institución) llegan con F3 (tabla de
   asignación con ámbito y `revocada_en`); hoy existen como roles de sistema sin personas.
 - Matriz de pruebas de los endpoints de dominio: se amplía en cada fase (un objeto de otro
@@ -338,7 +352,9 @@ uv run --frozen python src/manage.py makemigrations --check --dry-run
   ocupado. `manage.py migrate` aplica las migraciones y siembra los roles.
 - Pruebas en el navegador (todo en `%LOCALAPPDATA%\Temp\kplan-dev`, fuera del repo):
   `e2e\run-e2e-f3.ps1` (F3: alta, rechazo, corrección, aprobación, 41 comprobaciones),
-  `e2e\e2e-f3-demo.mjs` (modo demo), `run-e2e-f2.ps1` (F2) y `run-e2e.ps1` (F1). Se corren
+  `e2e\run-e2e-f3-queue.ps1` (la cola del equipo), `e2e\e2e-f3-demo.mjs` (modo demo),
+  `e2e\e2e-f2-team.mjs` (equipo y roles; `E2E_EMAIL`, `E2E_PASSWORD`, y `E2E_PORTAL`,
+  `E2E_ROLE_A`, `E2E_ROLE_B` para la demo), `run-e2e-f2.ps1` (F2) y `run-e2e.ps1` (F1). Se corren
   con Edge (`playwright-core`). Para F3 hace falta un servidor S3 local: `moto-env\Scripts\
   moto_server.exe -p 9444` (el 9100 lo usa el servicio de impresión), `e2e\make-bucket.py`
   (bucket `kplan-dev` con CORS) y el API con `e2e\start-api.ps1`, que le pone las `STORAGE_*`
