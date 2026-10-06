@@ -4,6 +4,7 @@
   ]
 
   dependencies = [
+    "boto3>=1.43.108",
     "cryptography>=46.0.0",
     "django>=6.1.0",
     "django-cors-headers>=4.9.0",

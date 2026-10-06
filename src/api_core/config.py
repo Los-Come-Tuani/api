@@ -172,6 +172,18 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     EMAIL_PORT: PositiveInt = 587
     EMAIL_USE_TLS: bool = True
 
+    # - almacenamiento de archivos (documentos legales y fotos): un bucket compatible
+    #   con S3, por ejemplo Cloudflare R2. Se sube directo desde el cliente con una URL
+    #   firmada; el API nunca recibe el archivo. Vacío = sin almacenamiento (subir
+    #   responde 503). `STORAGE_ENDPOINT_URL` vacío usa el de AWS; en R2 lleva la URL
+    #   de la cuenta. Ver `docs/archivos.md`.
+    STORAGE_ACCESS_KEY_ID: str = ""
+    STORAGE_BUCKET: str = ""
+    STORAGE_DOWNLOAD_EXPIRES: timedelta = timedelta(minutes=5)
+    STORAGE_ENDPOINT_URL: str = ""
+    STORAGE_REGION: str = "auto"
+    STORAGE_SECRET_ACCESS_KEY: OptionalSecret = SecretStr(secret_value="")
+    STORAGE_UPLOAD_EXPIRES: timedelta = timedelta(minutes=10)
     # - llaves Fernet con las que se cifra el secreto TOTP en la base, separadas por
     #   comas y la más nueva primero: rotar es anteponer una llave nueva y correr
     #   `rotatetotpkeys`. Obligatoria con `DEPLOY=True`; en desarrollo y pruebas, si se
@@ -277,6 +289,38 @@ class ApiConfig(BaseSettings, PermissiveDTO):
                 ) from e
 
         return self
+
+    @model_validator(mode="after")
+    def check_storage(self) -> Self:
+        # o está completo, o no está: a medias nunca funcionaría y fallaría al subir
+        given = {
+            "STORAGE_ACCESS_KEY_ID": bool(self.STORAGE_ACCESS_KEY_ID),
+            "STORAGE_BUCKET": bool(self.STORAGE_BUCKET),
+            "STORAGE_SECRET_ACCESS_KEY": bool(
+                self.STORAGE_SECRET_ACCESS_KEY.get_secret_value()
+            ),
+        }
+
+        if any(given.values()) and not all(given.values()):
+            missing = ", ".join(name for name, value in given.items() if not value)
+
+            raise ValueError(
+                f"El almacenamiento está a medias: falta {missing}. "
+                "Defina las tres variables o ninguna."
+            )
+
+        endpoint = self.STORAGE_ENDPOINT_URL
+
+        if endpoint and not endpoint.startswith("https://") and self.DEPLOY:
+            raise ValueError(
+                "`STORAGE_ENDPOINT_URL` debe ser `https` cuando `DEPLOY=True`."
+            )
+
+        return self
+
+    @property
+    def storage_enabled(self) -> bool:
+        return bool(self.STORAGE_BUCKET)
 
     @model_validator(mode="after")
     def check_redis_secret_key(self) -> Self:

@@ -10,6 +10,7 @@ from .errors import (
     ContentTooLargeError,
     ForbiddenError,
     NotFoundError,
+    ServiceUnavailableError,
     ThrottleExceededError,
     UnacceptableHeaderError,
     UnauthorizedError,
@@ -59,6 +60,13 @@ NotFoundSpec = ResponseSpec(
     status_code=NotFoundError.default_http_status,
 )
 
+
+# no está en `ERROR_SPECS`: el chequeo de salud ya documenta su propio 503, y cada
+# endpoint que pueda responder uno lo declara con `extra_responses`.
+ServiceUnavailableSpec = ResponseSpec(
+    return_type=ApiErrorResponse.from_exc(ServiceUnavailableError),
+    status_code=ServiceUnavailableError.default_http_status,
+)
 
 ThrottleExceededSpec = ResponseSpec(
     headers={

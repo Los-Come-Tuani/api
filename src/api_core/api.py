@@ -5,7 +5,8 @@ from dmr.routing import Router
 
 import api_auth.api
 
-from api_core.controllers.routers import sort_urls
+from api_core.controllers.routers import route_controllers, sort_urls
+from api_core.controllers.upload import UploadController
 
 if TYPE_CHECKING:
     from typing import Final
@@ -16,7 +17,10 @@ if TYPE_CHECKING:
 
 router: Final[Router] = Router(
     prefix="",
-    urls=sort_urls((*api_auth.api.router.urls,)),
+    urls=sort_urls((
+        *api_auth.api.router.urls,
+        *route_controllers(UploadController),
+    )),
 )
 
 schema: Final[OpenAPI] = build_schema(router)

@@ -6,6 +6,7 @@ from .conflict import ConflictError
 from .content_too_large import ContentTooLargeError
 from .forbidden import ForbiddenError
 from .not_found import NotFoundError
+from .service_unavailable import ServiceUnavailableError
 from .throttle_exceeded import ThrottleExceededError
 from .unacceptable_header import UnacceptableHeaderError
 from .unauthorized import UnauthorizedError
@@ -23,6 +24,7 @@ __all__: Sequence[str] = (
     "ContentTooLargeError",
     "ForbiddenError",
     "NotFoundError",
+    "ServiceUnavailableError",
     "ThrottleExceededError",
     "UnacceptableHeaderError",
     "UnauthorizedError",
