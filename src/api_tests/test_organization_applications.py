@@ -20,7 +20,7 @@ from api_organizations.models import (
 )
 from api_roles.models import RoleAssignment
 from api_territory.models import City, Municipality
-from api_tests.helpers import PASSWORD, body, credentials, extract_code
+from api_tests.helpers import PASSWORD, body, credentials, extract_code, web_login
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -582,3 +582,267 @@ def test_an_inactive_type_is_not_offered(client: DMRClient) -> None:
 
     assert "panaderia" not in codes
     assert "restaurante" in codes
+
+
+########################################################################################
+# Corregir y volver a enviar
+
+
+def apply_and_get_rejected(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    reason: str = "ruc_invalido",
+) -> str:
+    # se postula, y el equipo rechaza con un motivo; devuelve el id del expediente
+    registered = post(csrf_client, "business", business_payload(code_for(csrf_client)))
+    request_id: str = body(registered)["application"]["id"]
+
+    reviewer = DMRClient()
+    web_login(reviewer, make_member("revisora@example.com", "organizations.review"))
+    rejected = reviewer.post(
+        f"/verification-request/{request_id}/reject/",
+        {"note": "Revisa el número.", "reason": reason},
+    )
+    assert rejected.status_code == HTTPStatus.OK, rejected.content
+
+    return request_id
+
+
+def resubmit(client: DMRClient, payload: dict) -> HttpResponse:
+    return client.post(
+        "/organization-application/mine/resubmit/",
+        payload,
+        headers=csrf(client),
+    )
+
+
+def corrected_business(**override: object) -> dict:
+    data = business_payload("000000", ruc="J0310000000009", name="El Sacuanjoche")
+    # lo mismo del alta, sin la cuenta y con `kind`
+    for field in ("code", "email", "first_name", "last_name", "password"):
+        data.pop(field)
+
+    return {**data, "kind": "business", **override}
+
+
+def test_a_rejected_business_corrects_and_goes_back_to_the_queue(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,
+) -> None:
+    rejected_id = apply_and_get_rejected(csrf_client, make_member)
+    memory.put("signature-dish-photo/nueva.jpg", content_type="image/jpeg")
+    dish = business_payload("000000")["signature_dish"]
+
+    response = resubmit(
+        csrf_client,
+        corrected_business(
+            hours=[{"closed": True, "weekday": 3}],
+            signature_dish={
+                **dish,
+                "name": "Nacatamal",
+                "photo_key": "signature-dish-photo/nueva.jpg",
+            },
+        ),
+    )
+
+    assert response.status_code == HTTPStatus.CREATED, response.content
+    data = body(response)
+    assert data["status"] == "submitted"
+    assert data["id"] != rejected_id
+    assert data["resolution"] is None
+
+    # los datos se corrigieron en la misma ficha, que sigue sin verificar
+    business = Business.objects.get()
+    assert business.ruc == "J0310000000009"
+    assert business.verified_at is None
+    assert list(
+        BusinessHours.objects.filter(business=business).values_list(
+            "weekday", flat=True
+        )
+    ) == [3]
+
+    # el platillo se reemplazó: el anterior se retiró y queda el nuevo
+    dishes = SignatureDish.objects.filter(business=business)
+    assert dishes.count() == 2
+    assert dishes.get(withdrawn_at__isnull=True).name == "Nacatamal"
+
+    # el expediente rechazado se conserva y hay otro abierto
+    requests = VerificationRequest.objects.filter(business=business).order_by(
+        "submitted_at"
+    )
+    assert [item.status.code for item in requests] == ["rechazada", "enviada"]
+    assert body(csrf_client.get("/organization-application/mine/"))["id"] == data["id"]
+
+
+def test_the_corrected_request_shows_the_earlier_rejection_to_the_moderator(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    rejected_id = apply_and_get_rejected(
+        csrf_client, make_member, "ubicacion_incorrecta"
+    )
+    new_id = body(resubmit(csrf_client, corrected_business()))["id"]
+
+    reviewer = DMRClient()
+    web_login(reviewer, ApiUser.objects.get(email="revisora@example.com"))
+    queue = body(reviewer.get("/verification-request/"))
+    detail = body(reviewer.get(f"/verification-request/{new_id}/"))
+
+    assert [item["id"] for item in queue["results"]] == [new_id]
+    assert [item["id"] for item in detail["history"]] == [rejected_id]
+    assert detail["history"][0]["reason"]["code"] == "ubicacion_incorrecta"
+    assert detail["history"][0]["note"] == "Revisa el número."
+
+
+def test_a_request_still_under_review_cannot_be_resubmitted(
+    csrf_client: DMRClient,
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    post(csrf_client, "business", business_payload(code_for(csrf_client)))
+
+    response = resubmit(csrf_client, corrected_business())
+
+    assert response.status_code == HTTPStatus.CONFLICT, response.content
+    assert VerificationRequest.objects.count() == 1
+
+
+def test_an_approved_organization_is_not_edited_through_a_resubmission(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    registered = post(csrf_client, "business", business_payload(code_for(csrf_client)))
+    reviewer = DMRClient()
+    web_login(reviewer, make_member("revisora@example.com", "organizations.review"))
+    reviewer.post(
+        f"/verification-request/{body(registered)['application']['id']}/approve/", {}
+    )
+
+    response = resubmit(csrf_client, corrected_business())
+
+    assert response.status_code == HTTPStatus.CONFLICT, response.content
+    assert Business.objects.get().ruc == "J0310000000001"
+
+
+def test_the_corrected_data_must_be_of_the_applicants_own_kind(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    apply_and_get_rejected(csrf_client, make_member)
+    wrong = institution_payload("000000")
+    for field in ("code", "email", "first_name", "last_name", "password"):
+        wrong.pop(field)
+
+    response = resubmit(csrf_client, {**wrong, "kind": "institution"})
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST, response.content
+    assert "body.kind" in body(response)["field_errors"]
+
+
+def test_a_corrected_ruc_cannot_be_one_already_taken_by_another_business(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,
+) -> None:
+
+    apply_and_get_rejected(csrf_client, make_member)
+    first = Business.objects.get()
+    Business.objects.create(
+        address="Otra calle",
+        business_type=first.business_type,
+        city=first.city,
+        latitude=first.latitude,
+        longitude=first.longitude,
+        name="Otro comercio",
+        phone="2222-2222",
+        ruc="J0310000000009",
+    )
+
+    response = resubmit(csrf_client, corrected_business())
+
+    assert response.status_code == HTTPStatus.CONFLICT, response.content
+    assert "body.ruc" in body(response)["field_errors"]
+    assert memory.objects
+
+
+def test_a_corrected_dish_photo_must_be_uploaded(
+    csrf_client: DMRClient,
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,  # ruff: ignore[unused-function-argument]
+) -> None:
+    apply_and_get_rejected(csrf_client, make_member)
+    dish = business_payload("000000")["signature_dish"]
+
+    response = resubmit(
+        csrf_client,
+        corrected_business(
+            signature_dish={**dish, "photo_key": "signature-dish-photo/falta.jpg"}
+        ),
+    )
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST, response.content
+    assert "body.signature_dish.photo_key" in body(response)["field_errors"]
+
+
+def test_a_rejected_institution_and_municipality_replace_their_document(
+    make_member: Callable[..., ApiUser],
+    memory: MemoryStorage,
+) -> None:
+    memory.put("legal-document/nuevo.pdf", content_type="application/pdf")
+
+    for kind, payload in (
+        ("institution", institution_payload),
+        ("municipality", municipality_payload),
+    ):
+        client = DMRClient(enforce_csrf_checks=True)
+        email = f"{kind}@example.com"
+        registered = post(
+            client, kind, {**payload(code_for(client, email)), "email": email}
+        )
+        request_id = body(registered)["application"]["id"]
+
+        reviewer = DMRClient()
+        web_login(
+            reviewer, make_member(f"rev-{kind}@example.com", "organizations.review")
+        )
+        reviewer.post(
+            f"/verification-request/{request_id}/reject/",
+            {"reason": "documento_ilegible"},
+        )
+
+        data = payload("000000")
+        for field in ("code", "email", "first_name", "last_name", "password"):
+            data.pop(field)
+        response = resubmit(
+            client,
+            {**data, "document_key": "legal-document/nuevo.pdf", "kind": kind},
+        )
+
+        assert response.status_code == HTTPStatus.CREATED, response.content
+        assert body(response)["status"] == "submitted"
+        assert body(response)["id"] != request_id
+
+    assert CulturalInstitution.objects.get().document_key == "legal-document/nuevo.pdf"
+    assert Municipality.objects.get().document_key == "legal-document/nuevo.pdf"
+
+
+def test_resubmitting_needs_a_session_and_an_organization(
+    client: DMRClient,
+    user: ApiUser,
+) -> None:
+    anonymous = client.post(
+        "/organization-application/mine/resubmit/", corrected_business()
+    )
+
+    tokens = body(client.post("/auth/mobile/login/", credentials(user)))
+    nobody = client.post(
+        "/organization-application/mine/resubmit/",
+        corrected_business(),
+        headers={"Authorization": f"Bearer {tokens['access']}"},
+    )
+
+    assert anonymous.status_code == HTTPStatus.UNAUTHORIZED
+    assert nobody.status_code == HTTPStatus.NOT_FOUND

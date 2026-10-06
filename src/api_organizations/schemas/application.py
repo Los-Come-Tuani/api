@@ -180,6 +180,25 @@ class MunicipalityApplicationPost(ApplicantPost, MunicipalityData):
     pass
 
 
+# Corregir y volver a enviar: los mismos datos del alta, sin la cuenta, con `kind` para
+# saber de qué organización son. Genera otro expediente; el rechazado se conserva.
+class BusinessResubmitPost(BusinessData):
+    kind: Literal["business"]
+
+
+class InstitutionResubmitPost(InstitutionData):
+    kind: Literal["institution"]
+
+
+class MunicipalityResubmitPost(MunicipalityData):
+    kind: Literal["municipality"]
+
+
+type ResubmitPost = Annotated[
+    BusinessResubmitPost | InstitutionResubmitPost | MunicipalityResubmitPost,
+    Field(discriminator="kind"),
+]
+
 ########################################################################################
 # Lo que recibe
 

@@ -7,6 +7,7 @@ from api_organizations.controllers.application import (
     BusinessApplicationController,
     InstitutionApplicationController,
     MineApplicationController,
+    MineResubmitController,
     MunicipalityApplicationController,
 )
 
@@ -30,6 +31,10 @@ router: Final[Router] = Router(
         route_controller(
             ctrl=MineApplicationController,
             endpoint="organization-application/mine",
+        ),
+        route_controller(
+            ctrl=MineResubmitController,
+            endpoint="organization-application/mine/resubmit",
         ),
         route_controller(
             ctrl=MunicipalityApplicationController,

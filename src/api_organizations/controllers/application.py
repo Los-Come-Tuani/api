@@ -21,6 +21,7 @@ from api_organizations.schemas.application import (
     BusinessApplicationPost,
     InstitutionApplicationPost,
     MunicipalityApplicationPost,
+    ResubmitPost,
 )
 from api_organizations.services.application import (
     Registered,
@@ -29,6 +30,7 @@ from api_organizations.services.application import (
     register_business,
     register_institution,
     register_municipality,
+    resubmit_sync,
 )
 
 ########################################################################################
@@ -122,5 +124,15 @@ class MineApplicationController(BaseController[CustomPydanticFastSerializer]):
     @modify(status_code=HTTPStatus.OK)
     async def get(self) -> ApplicationGet:
         request = await sync_to_async(latest_application_sync)(self.request.user)
+
+        return await sync_to_async(application_payload)(request)
+
+
+# Corregir lo que el equipo rechazó y volver a enviarlo: abre otro expediente. Responde
+# `201` con la solicitud nueva, que vuelve a la bandeja.
+class MineResubmitController(BaseController[CustomPydanticFastSerializer]):
+    @modify(status_code=HTTPStatus.CREATED)
+    async def post(self, parsed_body: Body[ResubmitPost]) -> ApplicationGet:
+        request = await sync_to_async(resubmit_sync)(self.request.user, parsed_body)
 
         return await sync_to_async(application_payload)(request)

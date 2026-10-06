@@ -6,6 +6,7 @@ from django.contrib.auth.models import Group
 from django.db import IntegrityError
 from django.db.models.functions import Lower
 from django.db.transaction import atomic
+from django.utils.timezone import now
 from django.views.decorators.debug import sensitive_variables
 
 from api_auth.enums import VerificationPurposes
@@ -31,6 +32,9 @@ from api_organizations.models import (
 )
 from api_organizations.schemas.application import (
     ApplicationGet,
+    BusinessResubmitPost,
+    InstitutionResubmitPost,
+    MunicipalityResubmitPost,
     ReasonGet,
     ResolutionGet,
 )
@@ -47,6 +51,7 @@ if TYPE_CHECKING:
         BusinessApplicationPost,
         InstitutionApplicationPost,
         MunicipalityApplicationPost,
+        ResubmitPost,
     )
 
 ########################################################################################
@@ -431,3 +436,189 @@ def latest_application_sync(user: ApiUser) -> VerificationRequest:
         raise NotFoundError(detail="Tu cuenta no tiene una solicitud de organización.")
 
     return request
+
+
+########################################################################################
+# Corregir y volver a enviar
+
+
+def start_new_request(
+    record: Business | CulturalInstitution | Municipality,
+    kind: str,
+) -> VerificationRequest:
+    # el expediente rechazado se conserva; corregir abre otro, que vuelve a la bandeja
+    return VerificationRequest.objects.create(
+        status=VerificationStatus.objects.get(code=VerificationStates.SUBMITTED),
+        **{REQUEST_FIELDS[kind]: record},
+    )
+
+
+def resubmit_business(
+    record: Business, data: BusinessResubmitPost
+) -> VerificationRequest:
+    city: City = find_city(data.city_id)
+    business_type: BusinessType = find_active(
+        BusinessType,
+        data.business_type_id,
+        "business_type_id",
+    )
+    currency: Currency | None = Currency.objects.filter(
+        code=data.signature_dish.currency
+    ).first()
+
+    if currency is None:
+        raise field_error("signature_dish.currency", "Esa moneda no existe.")
+
+    if Business.objects.filter(ruc=data.ruc).exclude(pk=record.pk).exists():
+        raise taken("ruc", "Ya hay un comercio registrado con ese RUC.")
+
+    verify_upload(
+        UploadKinds.SIGNATURE_DISH_PHOTO,
+        data.signature_dish.photo_key,
+        field="signature_dish.photo_key",
+    )
+
+    def persist() -> VerificationRequest:
+        with atomic():
+            target: Any = record
+            target.address = data.address
+            target.alternate_phone = data.alternate_phone
+            target.business_type = business_type
+            target.city = city
+            target.latitude = data.latitude
+            target.longitude = data.longitude
+            target.name = data.name
+            target.phone = data.phone
+            # el RUC se corrige mientras la ficha no está verificada
+            target.ruc = data.ruc
+            target.save()
+
+            BusinessHours.objects.filter(business=record).delete()
+            BusinessHours.objects.bulk_create(
+                BusinessHours(
+                    business=record,
+                    closed=row.closed,
+                    closes=row.closes,
+                    opens=row.opens,
+                    weekday=row.weekday,
+                )
+                for row in data.hours
+            )
+
+            # reemplazar el platillo es retirar el vigente e insertar el nuevo
+            SignatureDish.objects.filter(
+                business=record,
+                withdrawn_at__isnull=True,
+            ).update(withdrawn_at=now())
+
+            photo: Photo = Photo.objects.create(
+                business=record,
+                file_key=data.signature_dish.photo_key,
+            )
+            SignatureDish.objects.create(
+                business=record,
+                currency=currency,
+                description=data.signature_dish.description,
+                name=data.signature_dish.name,
+                photo=photo,
+                reference_price=data.signature_dish.reference_price,
+            )
+
+            return start_new_request(record, "business")
+
+    return persist()
+
+
+def resubmit_institution(
+    record: CulturalInstitution,
+    data: InstitutionResubmitPost,
+) -> VerificationRequest:
+    city: City = find_city(data.city_id)
+    institution_type: InstitutionType = find_active(
+        InstitutionType,
+        data.institution_type_id,
+        "institution_type_id",
+    )
+
+    if (
+        CulturalInstitution.objects
+        .filter(city=city)
+        .annotate(lowered=Lower("name"))
+        .filter(lowered=data.name.lower())
+        .exclude(pk=record.pk)
+        .exists()
+    ):
+        raise taken("name", "Ya hay una institución con ese nombre en esa ciudad.")
+
+    verify_upload(UploadKinds.LEGAL_DOCUMENT, data.document_key, field="document_key")
+
+    def persist() -> VerificationRequest:
+        with atomic():
+            target: Any = record
+            target.city = city
+            target.contact_email = data.contact_email
+            target.document_key = data.document_key
+            target.institution_type = institution_type
+            target.name = data.name
+            target.phone = data.phone
+            target.save()
+
+            return start_new_request(record, "institution")
+
+    return persist()
+
+
+def resubmit_municipality(
+    record: Municipality,
+    data: MunicipalityResubmitPost,
+) -> VerificationRequest:
+    city: City = find_city(data.city_id)
+
+    if Municipality.objects.filter(city=city).exclude(pk=record.pk).exists():
+        raise taken("city_id", "Esa ciudad ya tiene una alcaldía registrada.")
+
+    verify_upload(UploadKinds.LEGAL_DOCUMENT, data.document_key, field="document_key")
+
+    def persist() -> VerificationRequest:
+        with atomic():
+            target: Any = record
+            target.city = city
+            target.contact_email = data.contact_email
+            target.document_key = data.document_key
+            target.name = data.name
+            target.phone = data.phone
+            target.save()
+
+            return start_new_request(record, "municipality")
+
+    return persist()
+
+
+# Quien se postuló corrige lo que el equipo rechazó y lo manda de nuevo. Solo se puede
+# cuando el último expediente se rechazó: mientras está en revisión no se toca, y una
+# organización aprobada ya no se edita por aquí.
+def resubmit_sync(user: ApiUser, data: ResubmitPost) -> VerificationRequest:
+    latest: VerificationRequest = latest_application_sync(user)
+    kind, record = organization_record(latest)
+
+    if latest.resolved_at is None:
+        raise ConflictError(detail="Tu solicitud todavía está en revisión.")
+
+    resolution: Any = VerificationResolution.objects.filter(request=latest).first()
+
+    if resolution is None or resolution.approved:
+        raise ConflictError(detail="Tu solicitud ya fue aprobada.")
+
+    if data.kind != kind:
+        raise field_error("kind", "Esos datos no son de tu tipo de organización.")
+
+    try:
+        match data:
+            case BusinessResubmitPost():
+                return resubmit_business(record, data)
+            case InstitutionResubmitPost():
+                return resubmit_institution(record, data)
+            case MunicipalityResubmitPost():
+                return resubmit_municipality(record, data)
+    except IntegrityError as i:
+        raise ConflictError.from_integrity_error(i).scoped(RequestScopes.BODY) from i
