@@ -80,9 +80,19 @@ class ApiUserPermissionsMixin:
         ),
     }
 
+    # los permisos se dan por rol: los sueltos solo los asigna un superusuario
+    superuser_only: ClassVar[frozenset[HTTPMethod]] = frozenset({
+        HTTPMethod.PATCH,
+        HTTPMethod.PUT,
+    })
+
 
 ########################################################################################
 
 
 class ApiUserPermissionsLinkMixin(ApiUserGroupsLinkMixin):
-    pass
+    # igual que arriba: dar o quitar un permiso suelto es cosa de un superusuario
+    superuser_only: ClassVar[frozenset[HTTPMethod]] = frozenset({
+        HTTPMethod.DELETE,
+        HTTPMethod.PUT,
+    })

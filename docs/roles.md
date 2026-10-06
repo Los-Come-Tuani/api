@@ -116,6 +116,8 @@ Reglas que protegen al equipo:
 - La última persona activa con el rol Administrador no se suspende ni se cambia de rol
   (`409`).
 - Una cuenta de superusuario solo la administra otro superusuario (`403`).
+- Los permisos se dan por rol. Escribir permisos sueltos de una persona
+  (`/auth/user/{id}/permissions/`, y sus enlaces) es solo de un superusuario (`403`).
 - Una persona del equipo tiene un solo rol del equipo; sus grupos de otra clase no se
   tocan.
 

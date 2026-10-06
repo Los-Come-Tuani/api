@@ -19,6 +19,10 @@ T_CHANGE_PERM: Final[str] = "{app}.change_{model}"
 T_DELETE_PERM: Final[str] = "{app}.delete_{model}"
 T_VIEW_PERM: Final[str] = "{app}.view_{model}"
 
+SUPERUSER_ONLY_DETAIL: Final[str] = (
+    "Los permisos se asignan por rol. Solo un superusuario puede dar permisos sueltos."
+)
+
 DEFAULT_PERMISSIONS: Final[dict[HTTPMethod, Sequence[str]]] = {
     HTTPMethod.GET: (T_VIEW_PERM,),
     HTTPMethod.POST: (T_ADD_PERM,),
@@ -41,6 +45,9 @@ async def ensure_model_permissions(
 
     if request.user.is_active and request.user.is_superuser:
         return
+
+    if request.method in getattr(controller, "superuser_only", ()):
+        raise ForbiddenError(detail=SUPERUSER_ONLY_DETAIL)
 
     # un permiso funcional (de un rol del equipo) basta, sin los permisos del modelo
     functional: Sequence[str] = getattr(controller, "functional_permissions", {}).get(

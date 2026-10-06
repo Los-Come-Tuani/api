@@ -16,6 +16,7 @@ from api_auth.models import (
 )
 from api_auth.seeder import EXAMPLE_ROLES, SYSTEM_ROLES, execute
 from api_auth.services import totp
+from api_auth.services.permissions import SUPERUSER_ONLY_DETAIL
 from api_auth.services.roles import (
     TWO_FACTOR_REQUIRED_DETAIL,
     functional_permissions_sync,
@@ -229,6 +230,40 @@ def test_an_account_that_cannot_operate_has_no_permissions(
     member.refresh_from_db()
 
     assert functional_permissions_sync(member) == frozenset()
+
+
+########################################################################################
+# Permisos sueltos: solo un superusuario
+
+
+def test_loose_permissions_are_given_only_by_a_superuser(
+    client: DMRClient,
+    make_user: Callable[..., ApiUser],
+) -> None:
+    execute()
+    admins = Group.objects.get(name="Administrador")
+    # el Administrador tiene todos los permisos del modelo, también los de estas rutas
+    ApiGroupProfile.objects.filter(group=admins).update(requires_two_factor=False)
+    admin = make_user(email="admin@example.com")
+    ApiUserGroups.objects.create(api_user=admin, group=admins)
+    target = make_user(email="objetivo@example.com")
+    permission = Permission.objects.get(codename="staff.manage")
+    web_login(client, admin)
+
+    base = f"/auth/user/{target.pk}/permissions/"
+    writes = (
+        client.put(base, {"permissions": [permission.pk]}),
+        client.patch(base, {"permissions": [permission.pk]}),
+        client.put(f"{base}{permission.pk}/"),
+        client.delete(f"{base}{permission.pk}/"),
+    )
+
+    for response in writes:
+        assert response.status_code == HTTPStatus.FORBIDDEN, response.content
+        assert body(response)["detail"] == SUPERUSER_ONLY_DETAIL
+
+    # mirarlos sí se puede
+    assert client.get(base).status_code == HTTPStatus.OK
 
 
 ########################################################################################
