@@ -75,11 +75,14 @@ al usuario que elija la fase de dominio (F3 en adelante).
   registro, contraseña, perfil, baja, bloqueo, modelos, Google, roles, equipo y
   `schemathesis` contra `/openapi/`.
 - **Docs**: `docs/autenticacion.md` (contrato de identidad para portal y app),
-  `docs/roles.md` (roles, permisos y equipo), `docs/google.md`, `docs/guia.md` y
+  `docs/roles.md` (roles, permisos y equipo), `docs/google.md`, `docs/guia.md`,
+  `docs/hoja-de-ruta.md` (F3 a F8 con rutas propuestas y decisiones pendientes) y
   `README.md` (secretos y ejecución local).
 
 Contrato completo y vigente: `docs/autenticacion.md`, `docs/roles.md` y el OpenAPI en
-`/openapi/`.
+`/openapi/`. **El diseño de fondo del dominio ya existe** en `docs/modelo-dominio/` (módulos
+M1 a M16 y decisiones D-01 a D-33), `docs/requerimientos/` y `docs/diagramas/`: cada fase de
+dominio parte de ahí, no de los modelos del portal ni de la app.
 
 `organization_id` del usuario de la sesión sigue siendo `null` hasta F3 (organizaciones).
 
@@ -151,6 +154,9 @@ inicio de sesión con Apple en iOS.
   contraseña de otra persona; con las protecciones de `docs/roles.md`.
 - `users.view` abre `GET /auth/user/`, `/auth/user/all/` y `/auth/user/{id}/`
   (`ApiUserFunctionalMixin`); los permisos de modelo de Django siguen valiendo.
+- D-03 (el permiso solo se da por rol): los permisos sueltos que escriben
+  `/auth/user/{id}/permissions/` (PUT, PATCH) y su enlace (PUT, DELETE) son solo de
+  superusuario (`superuser_only`, `SUPERUSER_ONLY_DETAIL`).
 - Pruebas: `test_roles.py` (catálogo, siembra, sesión, superficies, 2FA, `users.view`) y
   `test_team.py` (matriz rol x endpoint, CRUD de roles, invitación, estado, rol y
   recuperación).
@@ -171,14 +177,27 @@ inicio de sesión con Apple en iOS.
 
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
-F3 organizaciones y admisión (+ `uploads`) -> F4 territorio y circuitos -> F5 guías y
+El mapa completo, con módulos del modelo de dominio, rutas propuestas, permisos y las
+preguntas que hay que contestar antes de cada fase, está en `docs/hoja-de-ruta.md`. En corto:
+F3 organizaciones y admisión (+ `upload/`) -> F4 territorio y circuitos -> F5 guías y
 traductores -> F6 eventos, cupones e insignias -> F7 contratación, chat y reseñas -> F8
-finanzas y notificaciones. El mejor checklist de endpoints es
+finanzas y notificaciones. El checklist de endpoints del portal es
 `portal/src/data/api/endpoints.ts` (unos 90). El API manda el contrato: rutas con la
 convención del router actual (recurso en singular, kebab-case); portal y app adaptan sus
 repositorios. Versionar con `/v1/` antes de publicar la app. Cada fase nueva protege sus
 endpoints con `ensure_permission` o `functional_permissions` y agrega su fila a la matriz
 de `test_team.py` (o a una propia).
+
+Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
+
+- El portal usa una sola `Organization`; el modelo (D-12) tiene `comercio`,
+  `institucion_cultural` y `alcaldia` por separado.
+- F2 usa Groups + `ApiGroupProfile` y permisos funcionales. M3 pide `rol` con
+  `ambito_requerido`, `asignacion_rol` con ámbito (alcaldía, comercio o institución),
+  `otorgada_por` y `revocada_en`. Esa asignación con ámbito es lo que permite que
+  `organization_id` de la sesión deje de ser `null` y que un objeto ajeno dé 404.
+- Estados: D-13 pide una fila de transición por cambio (quién y por qué). Hoy solo hay el
+  historial de `pghistory`.
 
 ## 9. Avisos para el usuario (no los pierdas; díselos al terminar)
 
@@ -202,6 +221,12 @@ de `test_team.py` (o a una propia).
    perfil y no aparece en los roles del equipo.
 9. Una cuenta de equipo o de operador ya no puede entrar por la app, y una de turista,
    guía o traductor ya no puede entrar por el portal.
+10. Los endpoints genéricos de relaciones de usuario (`PUT/PATCH /auth/user/{id}/groups/` y
+    `/permissions/`, sus enlaces `/{related}/` y `POST /auth/user/` con `groups` o
+    `permissions`) responden 400 aunque el cuerpo sea correcto: los DTO piden `tuple` en
+    modo estricto y el JSON trae listas (y el `related` de la ruta de enlace tampoco valida).
+    Venían así; no se tocaron porque el equipo se gestiona con las rutas de `docs/roles.md`.
+    Conviene arreglarlos o retirarlos antes de exponerlos a alguien.
 
 ## 10. Cómo trabajar en esta máquina (Windows, PowerShell)
 
