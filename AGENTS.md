@@ -6,8 +6,9 @@ portal web (`C:\development\kplan\portal`) y la app móvil (`C:\development\mobi
 ## Léelo primero
 
 Hay una hoja de ruta en curso. F0 a F2 (secretos y configuración, identidad, Google, enlace
-del portal y de la app, roles y permisos) están hechas; F3 a F8 (el dominio) se confirman con
-el usuario una por una y están en `docs/hoja-de-ruta.md`. Antes de trabajar lee
+del portal y de la app, roles y permisos) están hechas, y F3 (organizaciones y verificación)
+está hecha en el API (falta adaptar el portal); F4 a F8 (el resto del dominio) se confirman
+con el usuario una por una y están en `docs/hoja-de-ruta.md`. Antes de trabajar lee
 `.cursor/memory/hoja-de-ruta.md`: dice qué está hecho, qué falta, cómo correr todo en esta
 máquina y qué avisos hay para el usuario. El portal y la app tienen su propia memoria en
 `.cursor/memory/hoja-de-ruta.md`. El diseño de fondo del dominio está en `docs/modelo-dominio/`.

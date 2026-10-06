@@ -73,6 +73,10 @@ deja el catálogo y estos roles:
 Un grupo creado a mano con `/auth/group/` no tiene perfil y por eso no aparece como rol
 del equipo: el portal solo administra grupos con perfil `staff`.
 
+Negocio, Alcaldía e Institución son roles de **operador** con ámbito: se dan sobre una
+organización concreta con `asignacion_rol`, no solo por pertenecer al grupo. Ver
+[Organizaciones y verificación](organizaciones.md#roles-con-ambito).
+
 ## Segundo factor obligatorio
 
 Quien tiene un rol con `requires_two_factor` entra, pero mientras no active el 2FA solo

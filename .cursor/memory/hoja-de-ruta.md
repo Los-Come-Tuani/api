@@ -42,10 +42,12 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | f1-portal-link          | Hecha (portal, rama `feat/hoja-de-ruta-api`). Ver `portal/.cursor/memory`           |
 | f1-app-link             | Hecha (app, rama `feat/hoja-de-ruta-api`). Ver `mobile-1/.cursor/memory`            |
 | f2-roles-permissions    | **API hecha** (sección 7). Falta el lado del portal                                 |
-| f3-f8-roadmap           | Pendiente (documentación; el dominio se confirma fase por fase)                     |
+| f3-f8-roadmap           | Hecha (documentación: `docs/hoja-de-ruta.md`); cada fase de dominio se confirma antes |
+| F3 (organizaciones)     | **API hecha** (sección 7b). Falta adaptar el portal                                 |
 
-Siguiente paso recomendado: lo que falta de F2 en el portal (sección 7), y después pedirle
-al usuario que elija la fase de dominio (F3 en adelante).
+Siguiente paso recomendado: adaptar el portal a F3 (sección 7b) y lo que falta de F2 en el
+portal (sección 7); después, que el usuario elija la fase de dominio que sigue (F4 en
+adelante).
 
 ## 3. Qué hay hecho en el API
 
@@ -72,13 +74,17 @@ al usuario que elija la fase de dominio (F3 en adelante).
   identidad externa en `ApiExternalIdentity`; solo roles públicos; solo se vincula a cuentas
   con correo verificado; `GOOGLE_OAUTH_CLIENT_IDS`. Guía paso a paso: `docs/google.md`.
 - **Roles y permisos (F2)**: ver sección 7 y `docs/roles.md`.
+- **Organizaciones (F3)**: alta pública de comercio, institución cultural y alcaldía, cola
+  de verificación del equipo, roles con ámbito y archivos en un bucket S3. Ver sección 7b y
+  `docs/organizaciones.md`.
 - **Modelos nuevos**: `ApiLoginAttempt`, `ApiLoginLock`, `ApiVerificationCode` y
   `ApiExternalIdentity` (`models/security.py`), y `ApiGroupProfile` (`models/role.py`).
   Migraciones `0004_identity` (con relleno de datos), `0005_external_identity` y
   `0006_group_profile`.
-- **Pruebas**: 390 casos (≈3 min con la cobertura). Cubren config, TOTP, cifrado, login, 2FA,
-  registro, contraseña, perfil, baja, bloqueo, modelos, Google, roles, equipo y
-  `schemathesis` contra `/openapi/`.
+- **Pruebas**: 507, más los casos que genera `schemathesis` contra `/openapi/` (la suite
+  completa tarda unos 3 a 5 minutos si nada más usa la base). Cubren config, TOTP, cifrado,
+  login, 2FA, registro, contraseña, perfil, baja, bloqueo, modelos, Google, roles, equipo,
+  organizaciones, archivos y la cola de verificación.
 - **Docs**: `docs/autenticacion.md` (contrato de identidad para portal y app),
   `docs/roles.md` (roles, permisos y equipo), `docs/google.md`, `docs/guia.md`,
   `docs/hoja-de-ruta.md` (F3 a F8 con rutas propuestas y decisiones pendientes) y
@@ -113,6 +119,12 @@ Todas sin prefijo `/api`, con barra final:
   `GET|PUT|DELETE /auth/staff-role/{id}/`, `POST /auth/staff-invite/`,
   `POST /auth/staff-accept/` (pública), `POST /auth/user-role/`, `POST /auth/user-status/`,
   `POST /auth/user-password-reset/`. Detalle y permisos en `docs/roles.md`.
+- Organizaciones (F3): `GET /catalog/city|business-type|institution-type/` (públicas),
+  `POST /upload/` (pública, URL firmada), `POST /organization-application/business|
+  institution|municipality/` (portal: cookies y CSRF; deja la sesión abierta),
+  `GET /organization-application/mine/`, `POST /organization-application/mine/resubmit/`.
+  Cola del equipo: `GET /verification-request/`, `.../reason/`, `.../{id}/` y
+  `POST .../{id}/take|release|approve|reject/`. Detalle en `docs/organizaciones.md`.
 - Errores: `{ "detail": "...", "field_errors": { "body.campo": "..." } }`. El 429 trae
   `Retry-After`.
 - Local: API en `http://localhost:8080`, portal en `http://localhost:5173` (usar `localhost`
@@ -180,6 +192,47 @@ inicio de sesión con Apple en iOS.
 - Matriz de pruebas de los endpoints de dominio: se amplía en cada fase (un objeto de otro
   ámbito responde 404).
 
+## 7b. F3 organizaciones y verificación
+
+**Hecho en el API** (commits `feat(organizaciones)...` y `feat(archivos)...`). Decisiones
+que tomó el usuario: manda el modelo de dominio (comercio, institución cultural y alcaldía
+por separado, una sola cola); alcance de núcleo (sin solicitud asistida ni pedir otro
+lugar); archivos en un bucket S3 con URLs firmadas; quien se postula entra con acceso
+limitado; **base de datos en español** (`db_table` y `db_column`) y código, rutas y JSON
+en inglés.
+
+- Apps nuevas: `api_catalogs` (tipos, motivos, monedas), `api_territory` (diez ciudades,
+  alcaldía), `api_organizations` (comercio, horario, platillo, foto, institución),
+  `api_moderation` (estados, solicitud y resolución de verificación, cola) y `api_roles`
+  (`asignacion_rol` con ámbito y servicios de asignar y revocar). `api_utils.seeding`
+  siembra tras cada `migrate`.
+- `ApiGroupProfile.scope` (migración `api_auth.0007`): el ámbito que exige cada rol;
+  Negocio, Alcaldía e Institución lo traen. La asignación se comprueba en la base.
+- La sesión trae `organization` (`{id, kind, name, verified}`) y `organization_id`.
+- Archivos: `api_core.services.storage` (S3, deshabilitado y en memoria para pruebas) y
+  `api_core.services.uploads` (tipos y tamaños por clase). Variables `STORAGE_*`; sin ellas,
+  `POST /upload/` responde 503. Dependencia nueva: boto3. Guía: `docs/archivos.md`.
+- Pruebas: `test_organizations_models`, `test_moderation_models`, `test_role_assignments`,
+  `test_upload`, `test_organization_applications` y `test_verification_queue`.
+
+**Falta de F3** (en este orden):
+
+1. **Portal.** Las pantallas de postular, de estado de la solicitud y de admisiones siguen
+   siendo demo (`/api/organization-applications...`), con un modelo más rico que el del
+   API (revisión por documento, etapas, asignar a un revisor, `Organization` única). Hay que
+   alinear `endpoints.ts`, los repositorios y las pantallas con las rutas de
+   `docs/organizaciones.md`: el alta (con las subidas firmadas), `mine/` y `mine/resubmit/`,
+   y la cola (lista, detalle, tomar, devolver, aprobar, rechazar). La sesión ya trae
+   `organization`; el portal hoy usa `organizationId` y carga la organización del demo.
+2. **Bucket real.** Falta crear el bucket y las variables `STORAGE_*` (guía en
+   `docs/archivos.md`, incluido el CORS del portal). Sin eso solo se probó con
+   almacenamiento en memoria y con la firma local de boto3.
+3. Lo que quedó fuera a propósito (lista en `docs/organizaciones.md`): lista «Todas» y
+   suspender organizaciones, más de un operador, suscripción, platillo por su dueño,
+   limpieza de archivos huérfanos y aviso de bienvenida.
+4. El 404 sobre objetos de otra organización llega con el primer recurso que un operador
+   administre (F4 en adelante).
+
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
 El mapa completo, con módulos del modelo de dominio, rutas propuestas, permisos y las
@@ -232,6 +285,18 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
     modo estricto y el JSON trae listas (y el `related` de la ruta de enlace tampoco valida).
     Venían así; no se tocaron porque el equipo se gestiona con las rutas de `docs/roles.md`.
     Conviene arreglarlos o retirarlos antes de exponerlos a alguien.
+
+11. **Al desplegar F3**: nuevas migraciones (`api_auth.0007` y las de las cinco apps nuevas),
+    que siembran las diez ciudades, los catálogos y el ámbito de los roles de operador.
+    `STORAGE_*` son opcionales para arrancar (sin ellas, subir archivos responde 503), pero
+    hay que crear el bucket y definirlas para que alguien pueda postularse (`docs/archivos.md`).
+    Con `DEPLOY=True` el endpoint del bucket tiene que ser `https`.
+12. `POST /upload/` es pública (quien se postula sube antes de tener cuenta): la acotan el
+    límite de 10 peticiones por minuto, los tipos y tamaños y la vigencia de la URL. Falta
+    limpiar los archivos que nadie reclama y revisar su contenido; es un riesgo conocido.
+13. La base de datos del dominio está en español y la de `api_auth` sigue en inglés: el
+    renombrado de `ApiUser` y compañía (`usuario`...) queda para otra fase y es una migración
+    de renombrado, no de datos.
 
 ## 10. Cómo trabajar en esta máquina (Windows, PowerShell)
 
@@ -292,6 +357,19 @@ uv run --frozen python src/manage.py makemigrations --check --dry-run
   grupos coincide: para "los permisos de mis otros roles" se filtra con `group__in`.
 - Dos controladores sobre la misma ruta base necesitan `endpoint_cls =
   ModelOperationIdEndpoint` (list/retrieve/update...) o el `operationId` se duplica.
+- `pgtrigger`: `UpdateOf` lleva el nombre real de la **columna** (en español: no resuelve
+  `db_column`); las condiciones `Q` sí usan campos. `ReadOnly` no admite `condition`. El
+  cuerpo de la función del disparador tiene que terminar en `RETURN` (`NEW` o `NULL`) y no
+  puede llevar llaves `{}`.
+- Django exige `on_delete` de la misma clase en toda la cadena de un modelo (E323 y E050):
+  los modelos del dominio usan las variantes de Python (`CASCADE`, `RESTRICT`, `SET_NULL`).
+- Un error de ApiError que no sea una clase propia sale como 500 aunque lleve `http_status`:
+  el manejador usa `default_http_status` de la clase (por eso `ServiceUnavailableError`). Un
+  503 global chocaría con el del chequeo de salud: se declara con `extra_responses`.
+- Una restricción de unicidad violada sale con el nombre de la columna **en español** en
+  `field_errors`: los servicios comprueban antes y responden con el nombre en inglés.
+- Los mensajes de commit van en un archivo creado con la herramienta de escritura (sin BOM);
+  `Out-File -Encoding utf8` agrega un BOM que termina en el asunto del commit.
 - PowerShell: no pases archivos por `Get-Content`/`Set-Content` (rompe UTF-8 y agrega BOM);
   edita con las herramientas del editor. El árbol de trabajo está en CRLF (`autocrlf`).
 - `ruff` es muy estricto (`ALL`): comentarios en lugar de docstrings en muchas piezas,

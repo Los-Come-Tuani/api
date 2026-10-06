@@ -110,6 +110,7 @@ país de dos letras (`NI`, `US`). Una contraseña débil no gasta el código.
   "groups": [{ "id": 3, "name": "Cliente" }],
   "permissions": [],
   "organization_id": null,
+  "organization": null,
   "two_factor": { "enabled": false, "required": false },
   "created_at": "2026-10-05T21:40:00Z"
 }
@@ -117,6 +118,12 @@ país de dos letras (`NI`, `US`). Una contraseña débil no gasta el código.
 
 `status` es `pending`, `active`, `suspended`, `expelled` o `closing`. `role` es
 `admin`, `alcaldia`, `guia`, `institucion`, `negocio`, `traductor`, `turista` o `null`.
+
+`organization` es la organización sobre la que actúa la persona (su asignación de rol
+vigente): `{ "id", "kind": "business" | "institution" | "municipality", "name",
+"verified" }`, con `organization_id` repetido; `null` para quien no es de una organización.
+Mientras `verified` es `false` solo ve su solicitud
+([Organizaciones](organizaciones.md)).
 
 `permissions` son los permisos funcionales que le dan sus roles, ya con los que se
 deducen (`guides.decide` trae `guides.view`), por ejemplo `["guides.decide",

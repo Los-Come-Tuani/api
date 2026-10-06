@@ -22,6 +22,7 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 | F0   | Secretos fuera de git (gitleaks), configuración por entorno, 2FA cifrado y probado               | M2          |
 | F1   | Identidad: correo, registro con código, contraseña, perfil, baja, Google; portal y app enlazados | M2          |
 | F2   | Roles y permisos funcionales, superficies por rol, 2FA obligatorio, equipo e invitaciones        | M3 (parte)  |
+| F3   | **API hecha**: alta pública de comercios, instituciones y alcaldías, cola de verificación, roles con ámbito y archivos. Falta adaptar el portal ([guía](organizaciones.md)) | M1, M3, M5, M7, M14 |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 
@@ -89,6 +90,23 @@ roles de sistema sin personas.
 Para qué: que un comercio, alcaldía o institución se postule, el equipo la revise y entre
 a administrar sus lugares. Módulos: **M7** (organizaciones), **M3** (`asignacion_rol` con
 ámbito), **M14** (verificación) y la parte de **M5** que son las alcaldías.
+
+**Estado: el API está hecho; falta el portal.** Lo que se decidió con el equipo antes de
+empezar:
+
+- Manda el modelo de dominio: comercio, institución cultural y alcaldía por separado, con
+  una sola cola de verificación. El portal se adapta.
+- Alcance: el núcleo (alta pública de las tres, cola con aprobar, rechazar con motivo y
+  corregir y reenviar, y operadores con ámbito). La solicitud asistida con cobro y el
+  pedido de otro lugar quedan fuera.
+- Archivos: un bucket compatible con S3 con URLs firmadas ([Archivos](archivos.md)).
+- Quien se postula entra al portal con acceso limitado a su solicitud mientras la revisan,
+  con el correo verificado por el código del alta.
+- Nombres: la base de datos en español, como pide el modelo; el código, las rutas y el
+  JSON en inglés.
+
+Lo que se hizo y lo que sigue está en [Organizaciones y verificación](organizaciones.md).
+La tabla de abajo era la propuesta inicial; las rutas reales son las de esa guía.
 
 | Recurso (propuesta)                         | Lo usa      | Permiso                                   |
 | ------------------------------------------- | ----------- | ----------------------------------------- |
