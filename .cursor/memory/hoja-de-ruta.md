@@ -19,8 +19,13 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | Portal | `C:\development\kplan\portal` | `feat/hoja-de-ruta-api` (sale de `main`) | `.cursor/memory/hoja-de-ruta.md` |
 | App    | `C:\development\mobile-1`     | `feat/hoja-de-ruta-api` (sale de `main`) | `.cursor/memory/hoja-de-ruta.md` |
 
-- **Nada está empujado a ningún remoto.** No empujes sin que el usuario lo pida: un push a
-  `develop-a` puede disparar un despliegue sin las variables nuevas (ver sección 9).
+- **Remotos (revisado el 2026-10-06).** Los primeros commits ya están en GitHub, empujados la
+  tarde del 2026-10-05: `origin/develop-a` del API (hasta `a52c002`: F0, F1 y la primera
+  memoria) y `origin/feat/hoja-de-ruta-api` del portal y de la app (solo F0). **Lo posterior
+  sigue solo local**: en el API, F2 desde `ee7e784`; en el portal y la app, el enlace de F1
+  y F2. No empujes sin que el usuario lo pida: un push a `develop-a` puede disparar un
+  despliegue sin las variables nuevas (ver sección 9), y lo ya empujado trae
+  `TOTP_ENCRYPTION_KEYS` como obligatoria con `DEPLOY=True`.
 - Nunca commitear en `production` ni en `staging`. Portal y app no tienen rama de
   desarrollo: no tocar su `main`.
 - Commits convencionales en español (`feat(auth): ...`, `docs: ...`). Sin emojis.
