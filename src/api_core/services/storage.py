@@ -19,13 +19,15 @@ if TYPE_CHECKING:
 NOT_CONFIGURED_DETAIL: Final[str] = "El almacenamiento de archivos no está configurado."
 
 
-# Lo que el cliente necesita para subir un archivo directo al almacenamiento: un
-# formulario `multipart` con estos campos y el archivo al final.
+# Lo que el cliente necesita para subir un archivo directo al almacenamiento: un `PUT` a
+# `url` con estas cabeceras y el archivo como cuerpo. No es un formulario `POST`: R2 no
+# lo admite, y el `PUT` firmado funciona igual en S3, R2 y MinIO.
 @dataclass(frozen=True, slots=True)
 class PresignedUpload:
     key: str
     url: str
-    fields: dict[str, str]
+    # las cabeceras que firmó la URL y que el cliente tiene que mandar tal cual
+    headers: dict[str, str]
     expires_in: int
     max_bytes: int
 
@@ -45,6 +47,7 @@ class Storage(Protocol):
         expires_in: int,
         key: str,
         max_bytes: int,
+        size: int,
     ) -> PresignedUpload: ...
 
     def stat(self, key: str) -> StoredObject | None: ...
@@ -85,26 +88,28 @@ class S3Storage:
         expires_in: int,
         key: str,
         max_bytes: int,
+        size: int,
     ) -> PresignedUpload:
-        # la política del formulario hace que el propio almacenamiento rechace lo que no
-        # sea del tipo ni del tamaño pedidos
-        signed: dict[str, Any] = self.client.generate_presigned_post(
-            Bucket=self.bucket,
-            Conditions=[
-                {"Content-Type": content_type},
-                ["content-length-range", 1, max_bytes],
-            ],
+        # el tipo y el tamaño van dentro de la firma: el propio almacenamiento rechaza
+        # el `PUT` si el archivo no es del tipo ni del peso con que se pidió la URL
+        url: str = self.client.generate_presigned_url(
+            "put_object",
             ExpiresIn=expires_in,
-            Fields={"Content-Type": content_type},
-            Key=key,
+            HttpMethod="PUT",
+            Params={
+                "Bucket": self.bucket,
+                "ContentLength": size,
+                "ContentType": content_type,
+                "Key": key,
+            },
         )
 
         return PresignedUpload(
             expires_in=expires_in,
-            fields=dict(signed["fields"]),
+            headers={"Content-Type": content_type},
             key=key,
             max_bytes=max_bytes,
-            url=str(signed["url"]),
+            url=str(url),
         )
 
     def stat(self, key: str) -> StoredObject | None:
@@ -176,13 +181,14 @@ class MemoryStorage:
         expires_in: int,
         key: str,
         max_bytes: int,
+        size: int,  # ruff: ignore[unused-method-argument]
     ) -> PresignedUpload:
         signed = PresignedUpload(
             expires_in=expires_in,
-            fields={"Content-Type": content_type, "key": key},
+            headers={"Content-Type": content_type},
             key=key,
             max_bytes=max_bytes,
-            url="https://storage.example/bucket",
+            url=f"https://storage.example/bucket/{key}",
         )
 
         self.presigned.append(signed)

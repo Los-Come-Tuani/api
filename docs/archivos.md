@@ -15,10 +15,12 @@ al cliente una URL firmada y el cliente lo sube directo a un bucket compatible c
    pública (quien se postula sube sus documentos antes de tener cuenta) y tiene el
    límite estricto de peticiones.
 2. El API valida el tipo y el tamaño que admite esa clase de archivo y responde `201`
-   con `{ "key", "url", "fields", "expires_in", "max_bytes" }`.
-3. El cliente sube con un formulario `multipart` a `url`: primero todos los `fields`, tal
-   cual, y al final el archivo en el campo `file`. El bucket rechaza lo que no sea del
-   tipo ni del tamaño firmados.
+   con `{ "key", "url", "method", "headers", "expires_in", "max_bytes" }`.
+3. El cliente sube con un `PUT` a `url`, con las `headers` tal cual (el `Content-Type`
+   que declaró) y el archivo como cuerpo. El tipo y el peso van dentro de la firma: el
+   bucket rechaza el `PUT` si el archivo no es del tipo ni del tamaño con que se pidió la
+   URL (`403 SignatureDoesNotMatch`). Es un `PUT` y no un formulario `POST` porque R2 no
+   admite los formularios firmados; el `PUT` firmado funciona igual en S3, R2 y MinIO.
 4. Al mandar la solicitud, el cliente referencia el archivo por su `key`. El API
    comprueba que esa clave sea de la clase correcta y que el archivo ya esté en el
    bucket con el tipo y el tamaño permitidos. Con una clave inventada responde `400`.
@@ -65,8 +67,8 @@ git.
    [
      {
        "AllowedOrigins": ["https://portal.kplan.example"],
-       "AllowedMethods": ["POST"],
-       "AllowedHeaders": ["*"],
+       "AllowedMethods": ["PUT"],
+       "AllowedHeaders": ["Content-Type"],
        "MaxAgeSeconds": 3600
      }
    ]
@@ -80,7 +82,7 @@ git.
 ### AWS S3 o MinIO
 
 Mismo esquema: bucket privado, clave con permiso de lectura y escritura sobre él, CORS
-con `POST` y, en MinIO, `STORAGE_ENDPOINT_URL` apuntando al servidor (en desarrollo
+con `PUT` y, en MinIO, `STORAGE_ENDPOINT_URL` apuntando al servidor (en desarrollo
 admite `http://localhost:9000`).
 
 ## Riesgos conocidos

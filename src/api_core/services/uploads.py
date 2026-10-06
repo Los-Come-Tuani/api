@@ -61,9 +61,9 @@ def fail(field: str, message: str) -> BadRequestError:
     ).scoped(RequestScopes.BODY)
 
 
-# Valida lo que el cliente quiere subir y le da una URL firmada para hacerlo. El archivo
-# no pasa por el API: el almacenamiento rechaza lo que no sea del tipo ni del tamaño
-# declarados.
+# Valida lo que el cliente quiere subir y le da una URL firmada para hacerlo (un `PUT`).
+# El archivo no pasa por el API: el almacenamiento rechaza lo que no sea del tipo ni del
+# tamaño declarados, porque ambos van dentro de la firma.
 def issue_upload(kind: str, content_type: str, size: int) -> PresignedUpload:
     rule: UploadRule = RULES[kind]
 
@@ -88,6 +88,7 @@ def issue_upload(kind: str, content_type: str, size: int) -> PresignedUpload:
         expires_in=int(CONFIG.STORAGE_UPLOAD_EXPIRES.total_seconds()),
         key=f"{kind}/{uuid7()}{EXTENSIONS[content_type]}",
         max_bytes=rule.max_bytes,
+        size=size,
     )
 
 

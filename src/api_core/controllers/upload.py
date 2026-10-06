@@ -34,8 +34,9 @@ class UploadController(
 
         return UploadGet(
             expires_in=signed.expires_in,
-            fields=signed.fields,
+            headers=signed.headers,
             key=signed.key,
             max_bytes=signed.max_bytes,
+            method="PUT",
             url=signed.url,
         )

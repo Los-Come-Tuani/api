@@ -39,8 +39,9 @@ Cuatro pasos del cliente, todos sin sesión salvo el último, que la deja abiert
    hasta que se incorpora a la plataforma: el formulario las ofrece todas).
 2. `POST /auth/register-code/` con `{ "email" }`: manda el código de seis dígitos al
    correo (el mismo del registro de la app; ver [Autenticación](autenticacion.md)).
-3. `POST /upload/` por cada archivo y subirlo con la URL firmada (ver [Archivos](archivos.md)):
-   la foto del platillo (`signature-dish-photo`) o el documento legal (`legal-document`).
+3. `POST /upload/` por cada archivo y subirlo con un `PUT` a la URL firmada (ver
+   [Archivos](archivos.md)): la foto del platillo (`signature-dish-photo`) o el documento
+   legal (`legal-document`).
 4. `POST /organization-application/business/`, `/institution/` o `/municipality/`, con la
    cabecera `X-CSRFToken`, los datos de la cuenta y los de la organización.
 

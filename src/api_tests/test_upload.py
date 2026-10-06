@@ -1,5 +1,6 @@
 from http import HTTPStatus
 from typing import TYPE_CHECKING
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 
@@ -58,8 +59,10 @@ def test_anyone_can_ask_for_a_signed_upload_without_a_session(
     # la clave es de la clase de archivo y conserva la extensión del tipo
     assert signed["key"].startswith("signature-dish-photo/")
     assert signed["key"].endswith(".jpg")
-    assert signed["url"] == "https://storage.example/bucket"
-    assert signed["fields"]["Content-Type"] == "image/jpeg"
+    # se sube con un `PUT` firmado, mandando el tipo que se declaró
+    assert signed["url"] == f"https://storage.example/bucket/{signed['key']}"
+    assert signed["method"] == "PUT"
+    assert signed["headers"] == {"Content-Type": "image/jpeg"}
     assert signed["max_bytes"] == 5 * MEGABYTE
     assert signed["expires_in"] == 600
     assert memory.presigned[0].key == signed["key"]
@@ -241,7 +244,7 @@ def test_a_deployed_storage_needs_https() -> None:
     ).storage_enabled
 
 
-def test_the_signed_form_asks_the_bucket_to_enforce_type_and_size() -> None:
+def test_the_signed_put_carries_the_type_and_the_size_inside_the_signature() -> None:
     config = build_config(
         STORAGE_ACCESS_KEY_ID="clave",
         STORAGE_BUCKET="kplan",
@@ -254,11 +257,19 @@ def test_the_signed_form_asks_the_bucket_to_enforce_type_and_size() -> None:
         expires_in=600,
         key="signature-dish-photo/abc.jpg",
         max_bytes=5 * MEGABYTE,
+        size=200_000,
     )
+    url = urlsplit(signed.url)
+    query = parse_qs(url.query)
 
-    assert signed.url.startswith("https://cuenta.r2.cloudflarestorage.com/kplan")
-    assert signed.fields["key"] == "signature-dish-photo/abc.jpg"
-    assert signed.fields["Content-Type"] == "image/jpeg"
-    # la política firmada es lo que hace cumplir el límite de tamaño
-    assert "policy" in signed.fields
-    assert "x-amz-signature" in signed.fields
+    # un `PUT` directo al bucket (R2 no admite el formulario `POST`)
+    assert f"{url.scheme}://{url.netloc}" == "https://cuenta.r2.cloudflarestorage.com"
+    assert url.path == "/kplan/signature-dish-photo/abc.jpg"
+    assert signed.headers == {"Content-Type": "image/jpeg"}
+    assert query["X-Amz-Expires"] == ["600"]
+    assert "X-Amz-Signature" in query
+
+    # el tipo y el peso van dentro de la firma: con otro, el almacenamiento rechaza el
+    # `PUT` (`SignatureDoesNotMatch`)
+    signed_headers = set(query["X-Amz-SignedHeaders"][0].split(";"))
+    assert {"content-length", "content-type", "host"} <= signed_headers
