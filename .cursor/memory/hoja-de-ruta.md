@@ -19,11 +19,13 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | Portal | `C:\development\kplan\portal` | `feat/hoja-de-ruta-api` (sale de `main`) | `.cursor/memory/hoja-de-ruta.md` |
 | App    | `C:\development\mobile-1`     | `feat/hoja-de-ruta-api` (sale de `main`) | `.cursor/memory/hoja-de-ruta.md` |
 
-- **Remotos (revisado el 2026-10-06).** Los primeros commits ya están en GitHub, empujados la
-  tarde del 2026-10-05: `origin/develop-a` del API (hasta `a52c002`: F0, F1 y la primera
-  memoria) y `origin/feat/hoja-de-ruta-api` del portal y de la app (solo F0). **Lo posterior
-  sigue solo local**: en el API, F2 desde `ee7e784`; en el portal y la app, el enlace de F1
-  y F2. No empujes sin que el usuario lo pida: un push a `develop-a` puede disparar un
+- **Remotos (revisado el 2026-10-06, tarde).** `origin/develop-a` del API llega a `ac38063`
+  (F0, F1, F2 y F3 hasta la guía de organizaciones; empujado el 2026-10-06 a las 14:23).
+  **Solo local en el API**: desde `c0d3ca6` (`submitted` en `mine/`, el
+  centro de las ciudades, el `PUT` firmado que pide R2, `GET /auth/staff-member/` y las
+  memorias); lo empujado todavía sube con el formulario `POST`, que R2 no admite. Portal y
+  app: `origin/feat/hoja-de-ruta-api` sigue en F0 (2026-10-05); el enlace de F1, F2 y F3 es
+  local. No empujes sin que el usuario lo pida: un push a `develop-a` puede disparar un
   despliegue sin las variables nuevas (ver sección 9), y lo ya empujado trae
   `TOTP_ENCRYPTION_KEYS` como obligatoria con `DEPLOY=True`.
 - Nunca commitear en `production` ni en `staging`. Portal y app no tienen rama de
