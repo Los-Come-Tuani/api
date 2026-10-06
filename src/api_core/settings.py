@@ -108,6 +108,11 @@ INSTALLED_APPS: Final[Sequence[str]] = (
     "pghistory",
     "api_core",
     "api_auth",
+    "api_catalogs",
+    "api_territory",
+    "api_organizations",
+    "api_moderation",
+    "api_roles",
 )
 
 MIDDLEWARE: Final[Sequence[str]] = (

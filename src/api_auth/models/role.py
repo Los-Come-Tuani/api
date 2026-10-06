@@ -14,7 +14,7 @@ from django.db.models.functions import Now
 from django.utils.timezone import now
 from pgtrigger import ReadOnly
 
-from api_auth.enums import AccountRoles, GroupKinds
+from api_auth.enums import AccountRoles, GroupKinds, GroupScopes
 from api_core.models.base import ApiModel
 from api_utils.db import track_table
 
@@ -43,6 +43,14 @@ class ApiGroupProfile(ApiModel):
     kind = CharField(choices=GroupKinds, max_length=16)
     # el papel que los clientes ven en la sesión; el equipo es siempre `admin`
     role = CharField(choices=AccountRoles, max_length=16)
+    # qué llave exige asignar este rol (`asignacion_rol`): ninguna para el equipo, la de
+    # su organización para un operador
+    scope = CharField(
+        choices=GroupScopes,
+        db_default=GroupScopes.GLOBAL,
+        default=GroupScopes.GLOBAL,
+        max_length=16,
+    )
 
     description = CharField(blank=True, db_default="", default="", max_length=300)
 
@@ -63,6 +71,16 @@ class ApiGroupProfile(ApiModel):
             CheckConstraint(
                 condition=Q(role__in=AccountRoles.values),
                 name="chk_apigroupprofile_role",
+            ),
+            CheckConstraint(
+                condition=Q(scope__in=GroupScopes.values),
+                name="chk_apigroupprofile_scope",
+            ),
+            # solo el operador de una organización tiene ámbito; el resto, global
+            CheckConstraint(
+                condition=(Q(kind=GroupKinds.OPERATOR) & ~Q(scope=GroupScopes.GLOBAL))
+                | (~Q(kind=GroupKinds.OPERATOR) & Q(scope=GroupScopes.GLOBAL)),
+                name="chk_apigroupprofile_scope_kind",
             ),
         )
 

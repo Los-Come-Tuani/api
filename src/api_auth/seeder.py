@@ -9,7 +9,7 @@ from api_auth.catalog import (
     CATALOG,
     FunctionalPermissions as P,
 )
-from api_auth.enums import AccountRoles, ApiUserTypes, GroupKinds
+from api_auth.enums import AccountRoles, ApiUserTypes, GroupKinds, GroupScopes
 from api_auth.models import ApiGroupProfile
 
 if TYPE_CHECKING:
@@ -28,6 +28,7 @@ class RoleSpec:
     permissions: Sequence[str] = field(default_factory=tuple)
     requires_two_factor: bool = False
     is_system: bool = False
+    scope: str = GroupScopes.GLOBAL
 
 
 # - los grupos que el sistema necesita: no se editan ni se borran desde el portal
@@ -67,6 +68,7 @@ SYSTEM_ROLES: Final[Sequence[RoleSpec]] = (
         kind=GroupKinds.OPERATOR,
         name="Negocio",
         role=AccountRoles.NEGOCIO,
+        scope=GroupScopes.BUSINESS,
     ),
     RoleSpec(
         description="Alcaldías que administran sus lugares desde el portal.",
@@ -74,6 +76,7 @@ SYSTEM_ROLES: Final[Sequence[RoleSpec]] = (
         kind=GroupKinds.OPERATOR,
         name="Alcaldía",
         role=AccountRoles.ALCALDIA,
+        scope=GroupScopes.MUNICIPALITY,
     ),
     RoleSpec(
         description="Instituciones que administran sus lugares desde el portal.",
@@ -81,6 +84,7 @@ SYSTEM_ROLES: Final[Sequence[RoleSpec]] = (
         kind=GroupKinds.OPERATOR,
         name="Institución",
         role=AccountRoles.INSTITUCION,
+        scope=GroupScopes.INSTITUTION,
     ),
 )
 
@@ -183,6 +187,7 @@ def seed_role(spec: RoleSpec, permissions: dict[str, Permission]) -> None:
                 "kind": spec.kind,
                 "requires_two_factor": spec.requires_two_factor,
                 "role": spec.role,
+                "scope": spec.scope,
             },
         )
 
@@ -195,6 +200,7 @@ def seed_role(spec: RoleSpec, permissions: dict[str, Permission]) -> None:
             "kind": spec.kind,
             "requires_two_factor": spec.requires_two_factor,
             "role": spec.role,
+            "scope": spec.scope,
         },
     )
 

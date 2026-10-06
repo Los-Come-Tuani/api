@@ -7,14 +7,22 @@ from django.core.cache import cache
 from dmr.test import DMRClient
 from pgtransaction.transaction import Atomic
 
-from api_auth.enums import AccountRoles, GroupKinds
+from api_auth.enums import AccountRoles, GroupKinds, GroupScopes
 from api_auth.models import ApiGroupProfile, ApiUser, ApiUserGroups
 from api_auth.seeder import seed_permissions
 from api_auth.services import totp
 from api_tests.helpers import PASSWORD
 
+# - el ámbito que exige cada papel de operador
+OPERATOR_SCOPES: Final[dict[str, str]] = {
+    AccountRoles.ALCALDIA: GroupScopes.MUNICIPALITY,
+    AccountRoles.INSTITUCION: GroupScopes.INSTITUTION,
+    AccountRoles.NEGOCIO: GroupScopes.BUSINESS,
+}
+
 if TYPE_CHECKING:
     from collections.abc import Callable
+    from typing import Final
 
     from django.conf import LazySettings
 
@@ -115,6 +123,10 @@ def make_role(db: None) -> Callable[..., Group]:  # ruff: ignore[unused-function
             kind=kind,
             requires_two_factor=requires_two_factor,
             role=role,
+            # el operador de una organización exige el ámbito de su organización
+            scope=OPERATOR_SCOPES.get(role, GroupScopes.GLOBAL)
+            if kind == GroupKinds.OPERATOR
+            else GroupScopes.GLOBAL,
         )
 
         group.permissions.add(*(functional[codename] for codename in permissions))

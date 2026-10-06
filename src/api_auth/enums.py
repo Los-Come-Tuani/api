@@ -33,6 +33,15 @@ class GroupKinds(TextChoices):
     STAFF = "staff"  # el equipo de K'Plan: portal
 
 
+class GroupScopes(TextChoices):
+    # sobre qué objeto actúa quien tiene el rol (D-02): el personal interno, sin ámbito;
+    # el operador de una organización, solo sobre la suya
+    GLOBAL = "global"
+    BUSINESS = "business"
+    INSTITUTION = "institution"
+    MUNICIPALITY = "municipality"
+
+
 class Surfaces(TextChoices):
     MOBILE = "mobile"
     WEB = "web"
