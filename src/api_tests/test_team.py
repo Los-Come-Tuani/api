@@ -78,6 +78,12 @@ MATRIX: Final[
     ),
     ("delete", "/auth/staff-role/{role}/", lambda _: None, frozenset({"staff"})),
     (
+        "get",
+        "/auth/staff-member/",
+        lambda _: None,
+        frozenset({"staff", "users", "viewer"}),
+    ),
+    (
         "post",
         "/auth/staff-invite/",
         lambda ids: {
@@ -289,6 +295,45 @@ def test_the_role_list_shows_team_roles_with_their_members_and_permissions(
     assert mine["permissions"] == ["staff.manage", "users.manage"]
     assert mine["system"] is False
     assert mine["requires_two_factor"] is False
+
+
+def test_the_team_list_shows_each_member_with_their_team_role(
+    client: DMRClient,
+    manager: ApiUser,
+    make_member: Callable[..., ApiUser],
+    user: ApiUser,
+) -> None:
+    viewer = make_member("observa@example.com", "users.view")
+
+    response = client.get("/auth/staff-member/")
+
+    assert response.status_code == HTTPStatus.OK, response.content
+    members = {member["email"]: member for member in body(response)}
+    # el equipo, con su rol del equipo; una cuenta de la calle no aparece
+    assert members[str(manager.email)]["role"]["id"] == role_of_manager(manager).pk
+    assert members[str(viewer.email)]["status"] == "active"
+    assert str(user.email) not in members
+    assert set(members[str(viewer.email)]) == {
+        "created_at",
+        "email",
+        "id",
+        "name",
+        "role",
+        "status",
+    }
+
+
+def test_the_team_list_includes_superusers_even_without_a_team_role(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+) -> None:
+    root = ApiUser.objects.create_superuser(email="raiz@example.com", password=PASSWORD)
+
+    members = {
+        member["email"]: member for member in body(client.get("/auth/staff-member/"))
+    }
+
+    assert members[str(root.email)]["role"] is None
 
 
 def test_system_roles_are_listed_first_and_marked(

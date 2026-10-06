@@ -34,6 +34,7 @@ from api_auth.services.team import (
     send_password_reset_to,
     set_role_sync,
     set_status_sync,
+    staff_members_sync,
     update_role_sync,
 )
 from api_core.controllers.base import BaseController
@@ -114,6 +115,15 @@ class StaffRoleDetailController(BaseController[CustomPydanticFastSerializer]):
 
 ########################################################################################
 # Invitación y personas del equipo
+
+
+class StaffMemberController(BaseController[CustomPydanticFastSerializer]):
+    # las personas del equipo con su rol: lo que lista la pantalla del equipo
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> list[StaffMemberGet]:
+        await ensure_permission(self.request.user, P.STAFF_MANAGE, P.USERS_VIEW)
+
+        return await sync_to_async(staff_members_sync)()
 
 
 class StaffInviteController(BaseController[CustomPydanticFastSerializer]):

@@ -36,6 +36,7 @@ from api_auth.controllers.register import (
 from api_auth.controllers.team import (
     StaffAcceptController,
     StaffInviteController,
+    StaffMemberController,
     StaffPermissionController,
     StaffRoleController,
     StaffRoleDetailController,
@@ -107,6 +108,7 @@ router: Final[Router] = Router(
             SessionRevokeController,
             StaffAcceptController,
             StaffInviteController,
+            StaffMemberController,
             StaffPermissionController,
             StaffRoleController,
             TwoFactorConfirmController,

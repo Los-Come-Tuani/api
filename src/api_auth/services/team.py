@@ -317,6 +317,19 @@ def member_payload(user: ApiUser) -> StaffMemberGet:
     )
 
 
+# El equipo de K'Plan: quien tiene un rol del equipo y los superusuarios (tienen todo
+# aunque no estén en un grupo). Es pequeño: se devuelve completo, por nombre.
+def staff_members_sync() -> list[StaffMemberGet]:
+    members = (
+        ApiUser.objects
+        .filter(Q(groups__profile__kind=GroupKinds.STAFF) | Q(is_superuser=True))
+        .distinct()
+        .order_by("first_name", "last_name", "email")
+    )
+
+    return [member_payload(user) for user in members]
+
+
 def ensure_not_last_admin(target: ApiUser) -> None:
     # la última persona activa con el rol Super admin (o con todo, por ser superusuario)
     # no se suspende ni se cambia de rol: nadie podría volver a administrar el equipo

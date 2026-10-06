@@ -99,6 +99,7 @@ Todo bajo `/auth/`. El permiso es el que pide cada ruta; `403` si falta.
 | `GET staff-role/{id}/`                     | `staff.manage` o `users.view`| Un rol                                                  |
 | `PUT staff-role/{id}/`                     | `staff.manage`               | Cambia nombre, descripción, permisos y segundo factor   |
 | `DELETE staff-role/{id}/`                  | `staff.manage`               | Borra un rol sin personas (`204`)                       |
+| `GET staff-member/`                        | `staff.manage` o `users.view`| El equipo: cada persona con su rol del equipo (y los superusuarios, con `role: null`), por nombre |
 | `POST staff-invite/`                       | `staff.manage`               | Invita a alguien al equipo (`201`)                      |
 | `POST staff-accept/`                       | Pública (sin sesión)         | La persona invitada elige su contraseña (`204`)         |
 | `POST user-role/`                          | `staff.manage`               | Cambia el rol de una persona del equipo                 |
