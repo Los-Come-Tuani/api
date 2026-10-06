@@ -43,10 +43,10 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | f1-app-link             | Hecha (app, rama `feat/hoja-de-ruta-api`). Ver `mobile-1/.cursor/memory`            |
 | f2-roles-permissions    | **API hecha** (sección 7). Falta el lado del portal                                 |
 | f3-f8-roadmap           | Hecha (documentación: `docs/hoja-de-ruta.md`); cada fase de dominio se confirma antes |
-| F3 (organizaciones)     | **API hecha** (sección 7b). Falta adaptar el portal                                 |
+| F3 (organizaciones)     | **API hecha** y **portal hecho para quien se postula** (alta, estado, corregir). Falta la cola del equipo en el portal (sección 7b) |
 
-Siguiente paso recomendado: adaptar el portal a F3 (sección 7b) y lo que falta de F2 en el
-portal (sección 7); después, que el usuario elija la fase de dominio que sigue (F4 en
+Siguiente paso recomendado: la cola del equipo en el portal (sección 7b) y lo que falta de F2
+en el portal (sección 7); después, que el usuario elija la fase de dominio que sigue (F4 en
 adelante).
 
 ## 3. Qué hay hecho en el API
@@ -81,8 +81,8 @@ adelante).
   `ApiExternalIdentity` (`models/security.py`), y `ApiGroupProfile` (`models/role.py`).
   Migraciones `0004_identity` (con relleno de datos), `0005_external_identity` y
   `0006_group_profile`.
-- **Pruebas**: 507, más los casos que genera `schemathesis` contra `/openapi/` (la suite
-  completa tarda unos 3 a 5 minutos si nada más usa la base). Cubren config, TOTP, cifrado,
+- **Pruebas**: unas 512, más los casos que genera `schemathesis` contra `/openapi/` (597 en
+  la última corrida completa, unos 2 minutos si nada más usa la base). Cubren config, TOTP, cifrado,
   login, 2FA, registro, contraseña, perfil, baja, bloqueo, modelos, Google, roles, equipo,
   organizaciones, archivos y la cola de verificación.
 - **Docs**: `docs/autenticacion.md` (contrato de identidad para portal y app),
@@ -119,10 +119,12 @@ Todas sin prefijo `/api`, con barra final:
   `GET|PUT|DELETE /auth/staff-role/{id}/`, `POST /auth/staff-invite/`,
   `POST /auth/staff-accept/` (pública), `POST /auth/user-role/`, `POST /auth/user-status/`,
   `POST /auth/user-password-reset/`. Detalle y permisos en `docs/roles.md`.
-- Organizaciones (F3): `GET /catalog/city|business-type|institution-type/` (públicas),
-  `POST /upload/` (pública, URL firmada), `POST /organization-application/business|
+- Organizaciones (F3): `GET /catalog/city|business-type|institution-type/` (públicas; la
+  ciudad trae su centro), `POST /upload/` (pública; devuelve una URL para un `PUT` firmado),
+  `POST /organization-application/business|
   institution|municipality/` (portal: cookies y CSRF; deja la sesión abierta),
-  `GET /organization-application/mine/`, `POST /organization-application/mine/resubmit/`.
+  `GET /organization-application/mine/` (con `submitted`: lo que mandó, para corregir),
+  `POST /organization-application/mine/resubmit/` (devuelve lo mismo que `mine/`).
   Cola del equipo: `GET /verification-request/`, `.../reason/`, `.../{id}/` y
   `POST .../{id}/take|release|approve|reject/`. Detalle en `docs/organizaciones.md`.
 - Errores: `{ "detail": "...", "field_errors": { "body.campo": "..." } }`. El 429 trae
@@ -209,24 +211,32 @@ en inglés.
 - `ApiGroupProfile.scope` (migración `api_auth.0007`): el ámbito que exige cada rol;
   Negocio, Alcaldía e Institución lo traen. La asignación se comprueba en la base.
 - La sesión trae `organization` (`{id, kind, name, verified}`) y `organization_id`.
+- `GET mine/` y `POST mine/resubmit/` devuelven `MineApplicationGet`: la solicitud más
+  `submitted`, los datos con la forma de lo que se manda al corregir (archivos como
+  `{key, url}`); lo arma `api_organizations/services/mine.py`. Con eso el portal llena el
+  formulario de corrección. `GET catalog/city/` trae `latitude` y `longitude` (el centro
+  para encuadrar el mapa).
 - Archivos: `api_core.services.storage` (S3, deshabilitado y en memoria para pruebas) y
-  `api_core.services.uploads` (tipos y tamaños por clase). Variables `STORAGE_*`; sin ellas,
-  `POST /upload/` responde 503. Dependencia nueva: boto3. Guía: `docs/archivos.md`.
+  `api_core.services.uploads` (tipos y tamaños por clase, y `read_url` para ver un archivo).
+  Variables `STORAGE_*`; sin ellas, `POST /upload/` responde 503. Dependencia nueva: boto3.
+  Guía: `docs/archivos.md`. **Se sube con un `PUT` firmado** (`{key, url, method, headers}`):
+  la primera versión usaba un formulario `POST` (`generate_presigned_post`) y R2 no lo
+  admite; con R2 habría fallado solo en producción, y por eso las pruebas no lo veían.
 - Pruebas: `test_organizations_models`, `test_moderation_models`, `test_role_assignments`,
   `test_upload`, `test_organization_applications` y `test_verification_queue`.
 
 **Falta de F3** (en este orden):
 
-1. **Portal.** Las pantallas de postular, de estado de la solicitud y de admisiones siguen
-   siendo demo (`/api/organization-applications...`), con un modelo más rico que el del
-   API (revisión por documento, etapas, asignar a un revisor, `Organization` única). Hay que
-   alinear `endpoints.ts`, los repositorios y las pantallas con las rutas de
-   `docs/organizaciones.md`: el alta (con las subidas firmadas), `mine/` y `mine/resubmit/`,
-   y la cola (lista, detalle, tomar, devolver, aprobar, rechazar). La sesión ya trae
-   `organization`; el portal hoy usa `organizationId` y carga la organización del demo.
+1. **Portal, la cola del equipo.** El alta, el estado y la corrección de quien se postula
+   **ya están** en el portal (ver su memoria). Falta que las pantallas del equipo
+   (`AdmissionsPage`, `AdmissionPage`, contadores, `OrganizationDetailPage`) dejen el
+   modelo de demo anterior (revisión por documento, etapas, asignar a un revisor) y usen la
+   cola (`GET /verification-request/`, detalle, tomar, devolver, aprobar, rechazar con
+   motivo); después se retira ese modelo.
 2. **Bucket real.** Falta crear el bucket y las variables `STORAGE_*` (guía en
-   `docs/archivos.md`, incluido el CORS del portal). Sin eso solo se probó con
-   almacenamiento en memoria y con la firma local de boto3.
+   `docs/archivos.md`, con el CORS del portal: `PUT` y `Content-Type`). Se probó el flujo
+   completo en un navegador contra un servidor S3 local (moto), con el mismo código de
+   `S3Storage`; falta confirmarlo con R2 de verdad (el `PUT` firmado con `Content-Length`).
 3. Lo que quedó fuera a propósito (lista en `docs/organizaciones.md`): lista «Todas» y
    suspender organizaciones, más de un operador, suscripción, platillo por su dueño,
    limpieza de archivos huérfanos y aviso de bienvenida.
@@ -327,6 +337,14 @@ uv run --frozen python src/manage.py makemigrations --check --dry-run
   Tras cambiar código hay que reiniciarlo (no recarga). Para matarlo en Windows hay que
   parar también el proceso hijo `python.exe` de `multiprocessing`, si no el puerto queda
   ocupado. `manage.py migrate` aplica las migraciones y siembra los roles.
+- Pruebas en el navegador (todo en `%LOCALAPPDATA%\Temp\kplan-dev`, fuera del repo):
+  `e2e\run-e2e-f3.ps1` (F3: alta, rechazo, corrección, aprobación, 41 comprobaciones),
+  `e2e\e2e-f3-demo.mjs` (modo demo), `run-e2e-f2.ps1` (F2) y `run-e2e.ps1` (F1). Se corren
+  con Edge (`playwright-core`). Para F3 hace falta un servidor S3 local: `moto-env\Scripts\
+  moto_server.exe -p 9444` (el 9100 lo usa el servicio de impresión), `e2e\make-bucket.py`
+  (bucket `kplan-dev` con CORS) y el API con `e2e\start-api.ps1`, que le pone las `STORAGE_*`
+  y deja el "correo" en `api.out.log` (de ahí el script lee el código). El portal, con
+  `npm run dev` en `5173`; el modo demo, `npx vite --mode demo --port 5174`.
 - Secretos en commits: `gitleaks` portátil en `%LOCALAPPDATA%\Temp\kplan-dev\gitleaks`;
   antes de commitear, `gitleaks git --staged --redact`. El hook de `prek` también lo corre.
 - Herramientas: `uv` (siempre `--frozen`), ruff (`select = ALL`, preview), ty, pytest-django,
@@ -357,6 +375,13 @@ uv run --frozen python src/manage.py makemigrations --check --dry-run
   grupos coincide: para "los permisos de mis otros roles" se filtra con `group__in`.
 - Dos controladores sobre la misma ruta base necesitan `endpoint_cls =
   ModelOperationIdEndpoint` (list/retrieve/update...) o el `operationId` se duplica.
+- **R2 (y por tanto el bucket de producción) no admite el formulario `POST` firmado**: solo
+  `GET`, `HEAD`, `PUT` y `DELETE`. Las subidas son un `PUT` con `Content-Type` y `Content-Length`
+  dentro de la firma. Lo que funciona con S3 o MinIO puede fallar con R2: confirma cada operación
+  del almacenamiento contra la tabla de compatibilidad de R2 antes de usarla.
+- Pruebas en navegador con Playwright: `page.mouse.click(x, y)` no se desplaza a la vista, y un
+  clic fuera del viewport no hace nada. Antes de calcular la posición de un mapa o de un
+  elemento largo, `scrollIntoViewIfNeeded()`.
 - `pgtrigger`: `UpdateOf` lleva el nombre real de la **columna** (en español: no resuelve
   `db_column`); las condiciones `Q` sí usan campos. `ReadOnly` no admite `condition`. El
   cuerpo de la función del disparador tiene que terminar en `RETURN` (`NEW` o `NULL`) y no
