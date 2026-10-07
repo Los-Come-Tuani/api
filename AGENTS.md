@@ -1,15 +1,17 @@
 # Guía para agentes
 
 API de K'Plan: Django 6.1 con django-modern-rest (async), PostgreSQL 18 y Redis. La consumen el
-portal web (`C:\development\kplan\portal`) y la app móvil (`C:\development\mobile-1`).
+portal web y la app móvil, repos hermanos de este (`..\portal` y `..\mobile` o `mobile-1`).
 
 ## Léelo primero
 
 Hay una hoja de ruta en curso. F0 a F2 (secretos y configuración, identidad, Google, enlace
 del portal y de la app, roles y permisos) están hechas, y F3 (organizaciones y verificación)
 está hecha en el API y en el portal (falta crear el bucket real); F5 (guías y traductores) está
-hecha en el API, el portal y la app; F4, F6, F7 y F8 (el resto del dominio) se confirman
-con el usuario una por una y están en `docs/hoja-de-ruta.md`. Antes de trabajar lee
+hecha en el API, el portal y la app; F4 (lugares, circuitos e itinerarios) y el directorio de
+cuentas están hechos en el API y se conectan al portal y la app; F6, F7 y F8 (el resto del
+dominio) se confirman con el usuario una por una y están en `docs/hoja-de-ruta.md`. El
+usuario trabaja en dos máquinas con rutas distintas: la memoria dice cuáles. Antes de trabajar lee
 `.cursor/memory/hoja-de-ruta.md`: dice qué está hecho, qué falta, cómo correr todo en esta
 máquina y qué avisos hay para el usuario. El portal y la app tienen su propia memoria en
 `.cursor/memory/hoja-de-ruta.md`. El diseño de fondo del dominio está en `docs/modelo-dominio/`.

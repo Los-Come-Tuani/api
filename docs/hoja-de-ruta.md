@@ -195,10 +195,18 @@ Para qué: la oferta que publican las organizaciones y que modera el equipo. Mó
 | `badge-activation/`, `badge-campaign/` y su `cancel`  | Portal, app | Organización; moderar: `content.moderate` |
 | `visit-event/` (agenda de llegadas)                   | Portal, app | `agenda.view`                         |
 
-Antes de empezar, confirmar: la política de moderación (antes o después de publicar), los
-límites de cupones por negocio y cómo se acredita una visita (QR, ubicación o ambos; una
-por establecimiento cada 24 horas, `RF-S-15`). Los saldos de insignias son libros de
-movimientos ([D-24](modelo-dominio/decisiones.md#d-24)).
+Los saldos de insignias son libros de movimientos ([D-24](modelo-dominio/decisiones.md#d-24)).
+
+**Estado: en curso.** Lo que se decidió con el equipo antes de empezar (2026-10-07):
+
+- Publican eventos las instituciones culturales **y las alcaldías** verificadas.
+- Moderación **después**: el evento se ve según sus fechas y la campaña de cupones al
+  crearse; el equipo con `content.moderate` puede ocultarlos.
+- La insignia de un lugar se gana **escaneando su QR y estando a menos de 50 m** (las dos
+  cosas), una vez por lugar cada 24 horas (`RF-S-15`).
+- Activar la insignia de un lugar es pagado, pero los cobros llegan con F8: mientras tanto
+  la activa el equipo con `places.manage`.
+- Un comercio tiene **hasta tres campañas de cupones activas** a la vez.
 
 ## F7. Contratación, chat y reseñas
 

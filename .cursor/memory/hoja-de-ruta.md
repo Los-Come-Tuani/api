@@ -1,6 +1,6 @@
 # Memoria de trabajo: hoja de ruta del API de K'Plan
 
-Actualizada el 2026-10-07. Es el traspaso para el siguiente agente: qué está hecho, qué
+Actualizada el 2026-10-07 (tarde, en la PC 2). Es el traspaso para el siguiente agente: qué está hecho, qué
 falta y cómo trabajar en esta máquina. Léela completa antes de tocar código. Si algo de
 aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 
@@ -13,11 +13,15 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
   el usuario antes de empezar.
 - Hay tres repos. Cada uno tiene `.cursor/memory/hoja-de-ruta.md` con su parte:
 
-| Repo   | Ruta                          | Rama de trabajo          | Memoria                                   |
-| ------ | ----------------------------- | ------------------------ | ----------------------------------------- |
-| API    | `C:\development\kplan\api`    | `develop-a`              | este archivo |
-| Portal | `C:\development\kplan\portal` | `feat/hoja-de-ruta-api` (sale de `main`) | `.cursor/memory/hoja-de-ruta.md` |
-| App    | `C:\development\mobile-1`     | `feat/hoja-de-ruta-api` (sale de `main`) | `.cursor/memory/hoja-de-ruta.md` |
+| Repo   | Ruta (PC 1, `PDesarrollo`)    | Ruta (PC 2, `Lenovo`)     | Rama de trabajo          |
+| ------ | ----------------------------- | ------------------------- | ------------------------ |
+| API    | `C:\development\kplan\api`    | `C:\coding\kplan2\api`    | `develop-a`              |
+| Portal | `C:\development\kplan\portal` | `C:\coding\kplan2\portal` | `feat/hoja-de-ruta-api` (sale de `main`) |
+| App    | `C:\development\mobile-1`     | `C:\coding\kplan2\mobile` | `feat/hoja-de-ruta-api` (sale de `main`) |
+
+El usuario trabaja en las dos máquinas: **antes de empezar, `git fetch` en los tres repos**
+y cámbiate a la rama de trabajo (la sección 10 dice cómo correr todo en cada una). Cada repo
+tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
 
 - **Remotos (2026-10-07, 11:15).** Todo está empujado a pedido del usuario: el API en
   `origin/develop-a` (F0 a F3 y F5, con el `PUT` firmado que pide R2), y portal y app en
@@ -45,10 +49,12 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | f3-f8-roadmap           | Hecha (documentación: `docs/hoja-de-ruta.md`); cada fase de dominio se confirma antes |
 | F3 (organizaciones)     | **Hecha** en el API y en el portal (alta, estado, corregir y la cola del equipo). Falta crear el bucket real (sección 7b) |
 | F5 (guías y traductores)| **Hecha** en el API, el portal (la cola en dos pasos) y la app (postularse, estado, corregir, renovar, perfil). Sección 7c |
+| Directorio de cuentas   | **Hecho en el API** (`GET|PATCH /auth/account/`, `docs/roles.md`). El portal lo conecta (sección 7d) |
+| F4 (lugares y circuitos)| **Hecha en el API**: lugares, ficha, novedades, circuitos oficiales, itinerarios del turista (sección 7d). Portal y app: ver sección 7d |
 
-Siguiente paso: preguntarle al usuario qué fase sigue (F4, F6, F7 u F8; se confirman
-antes). Pendientes chicos que no dependen de una fase: el directorio de cuentas para
-"Todos los usuarios" del portal (sección 7) y crear el bucket real (sección 7b).
+Orden que eligió el usuario (2026-10-07): directorio + F4, luego F6, F7 y F8, en ese orden;
+cada fase se le confirma con sus preguntas antes de empezar. Pendiente chico: crear el
+bucket real (sección 7b).
 
 ## 3. Qué hay hecho en el API
 
@@ -312,6 +318,52 @@ simplificó: español nativo, los demás avanzado (el API acepta los cuatro nive
 para el usuario al desplegar: migraciones nuevas (`apicatalogs.0002`, `apimoderation.0002` y
 `0003`, `apiprofiles.0001`) y el cron.
 
+## 7d. Directorio de cuentas y F4 lugares, circuitos e itinerarios
+
+**Hecho en el API** (2026-10-07, commits `feat(cuentas)...` y `feat(territorio)...`).
+Decisiones del usuario: el equipo con `circuits.manage` crea circuitos en cualquier ciudad y
+cada alcaldía verificada los de su ciudad; el circuito guarda la base del modelo más todos
+los campos que usan portal y app; la ficha de un lugar la edita su dueño y sale de
+inmediato; los circuitos propios del turista entran ya, como itinerarios. Contrato:
+`docs/territorio.md` y la sección "Directorio de cuentas" de `docs/roles.md`.
+
+- Directorio: `api_auth/{schemas,services,controllers}/directory.py`. El papel se deriva en
+  SQL (`Case` + `Exists` por rol, mismo orden que `ROLE_PRIORITY`) para poder filtrar.
+  `api_core/services/pages.py` (`paginate`, con la clase del esquema explícita: con el tipo
+  genérico pydantic falla en tiempo de ejecución).
+- `api_catalogs`: `pilar_cultural` (5 filas: historia, cultura, gastronomia, naturaleza,
+  aventura) y `PILLAR_BY_BUSINESS_TYPE`. Ruta `catalog/pillar/`.
+- `api_territory`: `punto_interes` (dueño opcional: comercio, institución o alcaldía; un
+  comercio, un solo lugar), `ficha_lugar`, `oferta_lugar`, `publicacion`, `estado_circuito`,
+  `circuito_oficial` (ciudad, alcaldía opcional solo en `creative`, tipo, precios, horarios,
+  temporada, `version`) y `circuito_parada`. `foto` (en `api_organizations`) suma
+  `punto_interes_id` y `circuito_id` con exactamente un dueño. Servicios en
+  `api_territory/services/` (`access.Actor`: permisos + organización **verificada**).
+- `api_itineraries` (M6): `estado_itinerario`, `itinerario` (cuelga de la cuenta, no de
+  `perfil_turista`), `itinerario_parada` (copias) e `itinerario_circuito`. Disparadores:
+  `ajustado` no se revierte y uno que sigue un circuito no tiene paradas propias.
+- Aprobar un comercio (`api_moderation.services.resolve_sync`) le crea su lugar
+  (`ensure_business_place_sync`) con su foto de platillo.
+- `upload/` suma `place-photo` y `circuit-photo`. Una imagen cuya clave empieza con
+  `https://` (contenido de ejemplo) se devuelve tal cual.
+- `python src/manage.py seedcontent`: 26 lugares y 5 circuitos de la app (fixtures en
+  `api_territory/fixtures/`), activa sus ciudades y crea alcaldías verificadas de ejemplo
+  (León, Masaya, Estelí). Con `DEPLOY=True` pide `--force`: **no correrlo en producción**
+  (ocuparía la alcaldía de esas ciudades). Rivas/Ometepe se salta (no es Ciudad Creativa).
+- Pruebas: `test_directory.py` (16), `test_places.py` (30), `test_circuits.py` (20),
+  `test_itineraries.py` (13); ayudas en `api_tests/territory_helpers.py`. Suite: 832.
+  **La suite completa tarda ~17 min** (antes ~4): schemathesis genera los cuerpos grandes
+  de `official-circuit/`. Para iterar, corre solo los archivos que tocas.
+
+**Falta de F4**: horarios de grupo de un circuito (F7), reseñas (F7; `rating` y
+`reviews_count` son un resumen fijo), métricas del circuito para la alcaldía (RF-A-10,
+cuando exista iniciar un recorrido), pedir otro lugar (`place-request/`) y la lista de
+organizaciones del portal (`organization/`).
+
+**Portal**: lo conecta un agente (usuarios, lugares, ficha, novedades, circuitos; la
+alcaldía entra a Circuitos). **App**: circuitos, lugares e itinerarios contra el API. El
+estado real de cada uno está en su memoria.
+
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
 El mapa completo, con módulos del modelo de dominio, rutas propuestas, permisos y las
@@ -380,8 +432,39 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
     `0003`, `apiprofiles.0001` (siembran idiomas, servicios, tipos de documento, motivos y
     estados). Programar `python src/manage.py expirecredentials` una vez al día: sin él,
     nadie se suspende cuando le vence un documento.
+15. **Al desplegar F4**: migraciones `apicatalogs.0003_pilares`,
+    `apiorganizations.0002_foto_dueno_preparar` y `0003_foto_lugares_circuitos`,
+    `apiterritory.0002_lugares_circuitos` y `apiitineraries.0001_initial` (siembran pilares y
+    estados). Los comercios ya aprobados **no** reciben su lugar solos: solo los que se
+    aprueban desde ahora (se puede llamar `ensure_business_place_sync` en un shell). La
+    producción arranca sin lugares ni circuitos: los crea el equipo o las alcaldías;
+    `seedcontent` es solo para desarrollo y demo.
+16. El `.gitleaks.toml` permite las líneas de dependencia de migraciones
+    (`("apiterritory", "0002_...")`), que la regla genérica tomaba por claves.
 
-## 10. Cómo trabajar en esta máquina (Windows, PowerShell)
+## 10. Cómo trabajar en cada máquina (Windows, PowerShell)
+
+### PC 2 (`Lenovo`, `C:\coding\kplan2`)
+
+- Postgres 18 y Redis en Docker: abrir Docker Desktop y, en el API,
+  `$env:POSTGRES_PORT='5433'; $env:JWT_SECRET_KEY='x'*64; $env:SECRET_KEY='x'*64; docker compose up -d postgres redis`
+  (las variables solo para que compose arranque; **quítalas de la shell después**: tapan las
+  del `.env`). El `.env` local apunta a `127.0.0.1:5433` y a Redis en `6379`.
+- `uv` se actualizó a 0.12 para poder instalar Python 3.14.6 (`.python-version`).
+- Pruebas: `$env:PYTHONUTF8='1'; $env:DEBUG='False'; $env:CI='true'; uv run --frozen pytest --no-cov -q -p no:warnings`
+  (con Redis corriendo no hace falta el módulo de ajustes locales de la PC 1).
+- Servidor: `powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\Temp\kplan-dev\start-api.ps1"`
+  (log en `api.out.log` de la misma carpeta). Cuentas locales (contraseña `Kplan-Local-2026`,
+  solo en la base de esta máquina): `admin@example.com` (superusuario),
+  `alcaldia.leon@example.com`, `negocio.leon@example.com`, `turista@example.com`; se
+  recrean con `dev_accounts.py` de esa carpeta (`manage.py shell -c "exec(open(...).read())"`).
+  Contenido de ejemplo: `manage.py seedcontent`.
+- `gitleaks` portátil en `%LOCALAPPDATA%\Temp\kplan-dev\gitleaks\gitleaks.exe`. No hay
+  ganchos de `prek` instalados: córrelo a mano antes de cada commit.
+- Desde PowerShell las cookies `Secure` del portal no viajan por `http`; para probar a mano
+  usa el inicio de sesión móvil (`Bearer`) o un navegador.
+
+### PC 1 (`PDesarrollo`, `C:\development`)
 
 El Postgres 18 portátil y el módulo de ajustes locales están **fuera del repo**, en
 `%LOCALAPPDATA%\Temp\kplan-dev`. Si la carpeta desapareció, se recrea: Postgres 18 (hace
@@ -472,6 +555,13 @@ uv run --frozen python src/manage.py makemigrations --check --dry-run
   `Out-File -Encoding utf8` agrega un BOM que termina en el asunto del commit.
 - PowerShell: no pases archivos por `Get-Content`/`Set-Content` (rompe UTF-8 y agrega BOM);
   edita con las herramientas del editor. El árbol de trabajo está en CRLF (`autocrlf`).
+- `Paginated[Get](...)` con el tipo genérico sin resolver revienta en tiempo de ejecución
+  (pydantic evalúa el límite del tipo): `paginate` recibe la clase del esquema.
+- Dos apps con llaves foráneas cruzadas (`foto` -> `punto_interes` y `punto_interes` ->
+  `comercio`): `makemigrations` parte la de `apiorganizations` en dos (quitar la
+  restricción vieja y, después de crear las tablas de territorio, agregar las columnas).
+  Las llaves foráneas hacia la otra app van como texto (`"apiterritory.Circuit"`).
+- Un comentario como `# Ajustar (D-33)` lo marca `ruff` como código comentado.
 - `ruff` es muy estricto (`ALL`): comentarios en lugar de docstrings en muchas piezas,
   líneas cortas, y `# ty: ignore[...]` donde los tipos de Django no resuelven (un ignore
   que sobra también es un aviso: quítalo).
