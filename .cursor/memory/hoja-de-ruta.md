@@ -1,6 +1,6 @@
 # Memoria de trabajo: hoja de ruta del API de K'Plan
 
-Actualizada el 2026-10-06. Es el traspaso para el siguiente agente: qué está hecho, qué
+Actualizada el 2026-10-07. Es el traspaso para el siguiente agente: qué está hecho, qué
 falta y cómo trabajar en esta máquina. Léela completa antes de tocar código. Si algo de
 aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 
@@ -46,11 +46,11 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | f2-roles-permissions    | **Hecha** en el API, el portal (permisos, invitación, equipo y roles) y la app (modo guía según el rol). "Todos los usuarios" del portal sigue en demo (sección 7) |
 | f3-f8-roadmap           | Hecha (documentación: `docs/hoja-de-ruta.md`); cada fase de dominio se confirma antes |
 | F3 (organizaciones)     | **Hecha** en el API y en el portal (alta, estado, corregir y la cola del equipo). Falta crear el bucket real (sección 7b) |
-| F5 (guías y traductores)| **API hecha** (sección 7c). Faltan la app (postularse, estado, corregir, renovar, perfil) y el portal (la cola en dos pasos) |
+| F5 (guías y traductores)| **Hecha** en el API, el portal (la cola en dos pasos) y la app (postularse, estado, corregir, renovar, perfil). Sección 7c |
 
-Siguiente paso: F5 en la app y en el portal (sección 7c). Pendientes chicos que no
-dependen de una fase: el directorio de cuentas para "Todos los usuarios" del portal
-(sección 7) y crear el bucket real (sección 7b). F4, F6, F7 y F8 se confirman antes.
+Siguiente paso: preguntarle al usuario qué fase sigue (F4, F6, F7 u F8; se confirman
+antes). Pendientes chicos que no dependen de una fase: el directorio de cuentas para
+"Todos los usuarios" del portal (sección 7) y crear el bucket real (sección 7b).
 
 ## 3. Qué hay hecho en el API
 
@@ -193,8 +193,8 @@ que lleva a Seguridad, `/invitacion`, y las pantallas "Equipo interno" y "Roles 
 contra `/auth/staff-*` (reinvitar respeta `sent: false`; quitar el acceso pide `users.manage`).
 
 **App: hecho.** El modo guía sigue al `role` de la sesión: `guia` y `traductor` lo tienen,
-`turista` no. Con el API configurado, la postulación desde la app queda cerrada con un aviso
-(no hay ruta todavía: llega con F5); la demo conserva el flujo simulado.
+`turista` no. Desde F5 manda además `provider` de la sesión y la postulación va contra el
+API (sección 7c).
 
 **Falta de F2**:
 
@@ -202,10 +202,9 @@ contra `/auth/staff-*` (reinvitar respeta `sent: false`; quitar el acceso pide `
   rol derivado (`role_of`), filtros por rol y estado y búsqueda, para que el portal deje
   `/api/users`. Con eso pasa también "Mandar código para nueva contraseña"
   (`POST /auth/user-password-reset/`, que ya existe).
-- Dar o quitar el rol de guía o traductor no tiene ruta hasta F5: no hay admin de Django,
-  `user-role/` solo acepta roles del equipo y las rutas genéricas de grupos responden 400
-  (aviso 10 de la sección 9). Para probar la app como guía hoy: `manage.py shell` y agregar
-  a la cuenta al grupo "Guía".
+- El rol de guía o traductor lo da aprobar la solicitud (F5, sección 7c). Quitarlo no tiene
+  ruta: `user-role/` solo acepta roles del equipo y las rutas genéricas de grupos responden
+  400 (aviso 10 de la sección 9).
 - Los operadores externos (negocio, alcaldía, institución) llegan con F3 (tabla de
   asignación con ámbito y `revocada_en`); hoy existen como roles de sistema sin personas.
 - Matriz de pruebas de los endpoints de dominio: se amplía en cada fase (un objeto de otro
@@ -261,7 +260,7 @@ en inglés.
 
 ## 7c. F5 guías y traductores
 
-**Hecho en el API.** Decisiones del usuario (2026-10-07): una cuenta, un papel (el
+**Hecho en el API, el portal y la app.** Decisiones del usuario (2026-10-07): una cuenta, un papel (el
 prestador crea su propia cuenta desde la app y, mientras lo revisan, solo ve su estado);
 documentos: cédula y récord de policía a todos, licencia del INTUR a los guías,
 certificado de idiomas a los traductores, licencia de conducir y seguro a quien lleva
@@ -296,12 +295,24 @@ renovación sin dejar de trabajar y perfil público editable. Contrato: `docs/pr
 - Pruebas: `test_provider_applications.py` (27) y `test_provider_queue.py` (71, con la
   matriz de permisos). Ayudas en `api_tests/provider_helpers.py`. Suite completa: 722.
 
-**Falta de F5**: la app (postularse como guía, traductor o ambos con subida firmada,
-estado y correcciones, renovar, perfil público; la cuenta de prestador no es turista:
-quitar "Entrar como turista" con el API real) y el portal ("Guías y traductores" contra
-`provider-request/`, con la revisión por documento y la decisión; retirar antecedentes y
-etapas de la demo). Aviso para el usuario al desplegar: migraciones nuevas
-(`apicatalogs.0002`, `apimoderation.0002` y `0003`, `apiprofiles.0001`) y el cron.
+**Portal: hecho** (`e7cd18e`, ver su memoria). "Guías y traductores" va contra
+`provider-request/`: la cola, el detalle con el visor de documentos, aceptar o rechazar cada
+uno, pedir correcciones y la decisión final; la demo habla el mismo formato. Probado en el
+navegador contra el API real (`e2e\e2e-f5-queue.mjs`, 23 comprobaciones) y en demo
+(`e2e\e2e-f5-demo.mjs`).
+
+**App: hecho** (`4dc73f4`, ver su memoria). Postularse como guía, traductor o ambos con la
+subida firmada, el estado con el veredicto por documento, corregir solo lo rechazado,
+renovar un documento y editar el perfil público. La cuenta de prestador no es turista: ya
+no hay "Entrar como turista" y cualquier login de una cuenta aprobada lleva a la app del
+guía. `test/integration/provider_contract_test.dart` pasó contra el API local con el S3 de
+prueba (sección 10).
+
+**Falta de F5**: el turista todavía no ve a los guías aprobados (el perfil público y la
+contratación siguen simulados en la app; llegan con F7). En la app el nivel de idioma se
+simplificó: español nativo, los demás avanzado (el API acepta los cuatro niveles). Aviso
+para el usuario al desplegar: migraciones nuevas (`apicatalogs.0002`, `apimoderation.0002` y
+`0003`, `apiprofiles.0001`) y el cron.
 
 ## 8. F3 a F8 (mapa, se confirma una por una)
 

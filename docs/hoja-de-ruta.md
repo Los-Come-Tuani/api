@@ -159,8 +159,9 @@ Al aprobar, la cuenta recibe el rol público de guía o traductor (un grupo con 
 `public`). Guía y traductor comparten tabla y proceso
 ([D-12](modelo-dominio/decisiones.md#d-12)).
 
-**Estado: en curso.** Lo que se decidió con el equipo antes de empezar (detalle y rutas
-reales en [Guías y traductores](prestadores.md); la tabla de arriba era la propuesta):
+**Estado: hecha** en el API, el portal y la app. Lo que se decidió con el equipo antes de
+empezar (detalle y rutas reales en [Guías y traductores](prestadores.md); la tabla de arriba
+era la propuesta):
 
 - Una cuenta, un papel: el prestador crea su propia cuenta desde la app y, mientras lo
   revisan, solo ve el estado de su solicitud.
