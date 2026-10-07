@@ -44,6 +44,7 @@ from api_organizations.models import Business, SignatureDish
 from api_organizations.schemas.application import ReasonGet, ResolutionGet
 from api_organizations.services.application import organization_record
 from api_roles.models import RoleAssignment
+from api_territory.services.places import ensure_business_place_sync
 
 if TYPE_CHECKING:
     from typing import Final
@@ -510,6 +511,12 @@ def resolve_sync(  # ruff: ignore[too-many-arguments]
             ),
             taken_by=actor,
         )
+
+        # aprobar un comercio le da su lugar en el mapa, que él mismo completa
+        business: Any = getattr(request, "business", None)
+
+        if approved and business is not None:
+            ensure_business_place_sync(business)
 
     return detail_sync(request_id)
 

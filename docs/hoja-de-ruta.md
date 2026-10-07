@@ -23,6 +23,8 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 | F1   | Identidad: correo, registro con código, contraseña, perfil, baja, Google; portal y app enlazados | M2          |
 | F2   | Roles y permisos funcionales, superficies por rol, 2FA obligatorio, equipo e invitaciones        | M3 (parte)  |
 | F3   | **Hecha** (API y portal): alta pública de comercios, instituciones y alcaldías, cola de verificación del equipo, roles con ámbito y archivos ([guía](organizaciones.md)). Falta crear el bucket real | M1, M3, M5, M7, M14 |
+| F4   | **Hecha en el API**: lugares con ficha y novedades, circuitos oficiales (equipo y alcaldías) e itinerarios del turista ([guía](territorio.md)) | M1, M5, M6 |
+| F5   | **Hecha** (API, portal y app): postulación de guías y traductores y su revisión en dos pasos ([guía](prestadores.md)) | M4, M14 |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 
@@ -137,9 +139,17 @@ culturales).
 | `circuit/`, `circuit/{id}/`                           | Portal, app | `circuits.view` / `manage`           |
 | `circuit/{id}/group-session/` (horarios de grupo)     | App         | Guía del circuito                    |
 
-Antes de empezar, confirmar: borradores y publicación de una ficha editada por su dueño;
-el circuito oficial se versiona ([D-15](modelo-dominio/decisiones.md#d-15)); el catálogo
-de ciudades; y qué datos de mapa guarda el API y cuáles siguen en la app.
+**Estado: hecha en el API** (rutas reales en [Lugares, circuitos e itinerarios](territorio.md);
+la tabla de arriba era la propuesta). Lo que se decidió con el equipo antes de empezar:
+
+- El equipo con `circuits.manage` crea circuitos en cualquier ciudad; cada alcaldía
+  verificada, solo los de su ciudad (los creativos).
+- El circuito guarda la base del modelo (estados, versión, paradas ordenadas) más lo que ya
+  usan el portal y la app: precios, horarios, dificultad, punto de encuentro, temporada e
+  insignias extra.
+- La ficha de un lugar la edita su dueño y sale de inmediato; el equipo con
+  `places.manage` la corrige después. Aprobar un comercio le crea su lugar.
+- Los circuitos propios del turista se guardan como itinerarios (M6) en esta fase.
 
 ## F5. Guías y traductores
 

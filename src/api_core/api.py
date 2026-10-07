@@ -5,9 +5,11 @@ from dmr.routing import Router
 
 import api_auth.api
 import api_catalogs.api
+import api_itineraries.api
 import api_moderation.api
 import api_organizations.api
 import api_profiles.api
+import api_territory.api
 
 from api_core.controllers.routers import route_controllers, sort_urls
 from api_core.controllers.upload import UploadController
@@ -24,9 +26,11 @@ router: Final[Router] = Router(
     urls=sort_urls((
         *api_auth.api.router.urls,
         *api_catalogs.api.router.urls,
+        *api_itineraries.api.router.urls,
         *api_moderation.api.router.urls,
         *api_organizations.api.router.urls,
         *api_profiles.api.router.urls,
+        *api_territory.api.router.urls,
         *route_controllers(UploadController),
     )),
 )

@@ -6,6 +6,7 @@ from dmr import modify
 from api_catalogs.models import (
     BusinessType,
     CredentialType,
+    CulturalPillar,
     InstitutionType,
     Language,
     ServiceType,
@@ -99,6 +100,23 @@ class ServiceTypeListController(
     async def get(self) -> list[OptionGet]:  # ruff: ignore[no-self-use]
         rows = await sync_to_async(list)(
             ServiceType.objects.filter(active=True).order_by("label")
+        )
+
+        return [
+            OptionGet(code=str(row.code), id=str(row.pk), label=str(row.label))
+            for row in rows
+        ]
+
+
+class PillarListController(
+    PublicEndpointMixin,
+    BaseController[CustomPydanticFastSerializer],
+):
+    # los pilares culturales que clasifican los lugares, en el orden de la app
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> list[OptionGet]:  # ruff: ignore[no-self-use]
+        rows = await sync_to_async(list)(
+            CulturalPillar.objects.filter(active=True).order_by("order", "label")
         )
 
         return [

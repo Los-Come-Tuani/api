@@ -10,7 +10,9 @@ from api_core.services.uploads import UploadKinds
 
 class UploadPost(DTO):
     kind: Literal[
+        UploadKinds.CIRCUIT_PHOTO,
         UploadKinds.LEGAL_DOCUMENT,
+        UploadKinds.PLACE_PHOTO,
         UploadKinds.PROVIDER_DOCUMENT,
         UploadKinds.PROVIDER_PHOTO,
         UploadKinds.SIGNATURE_DISH_PHOTO,

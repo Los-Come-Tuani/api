@@ -1,0 +1,303 @@
+[
+  {
+    "id": "granada-historias-sabores",
+    "shortTitle": "Granada Histórica",
+    "title": "Granada, entre historias y sabores",
+    "subtitle": "Paseo por la historia y la cultura",
+    "category": "Ciudad",
+    "city": "Granada",
+    "rating": 4.5,
+    "reviewsCount": 126,
+    "stopIds": [
+      "granada-catedral",
+      "granada-parque-central",
+      "granada-calle-calzada",
+      "granada-convento-san-francisco",
+      "granada-mercado",
+      "granada-muelle"
+    ],
+    "travelMode": "walking",
+    "duration": "4 h 20 min",
+    "durationShort": "4 h aprox.",
+    "badges": 3,
+    "difficulty": "Fácil",
+    "priceAdult": 250,
+    "priceChild": 0,
+    "description": "Un recorrido a pie por el corazón de Granada donde la historia colonial, la cultura viva y la gastronomía se encuentran en cada esquina",
+    "images": [
+      "https://picsum.photos/seed/granada-1/900/600",
+      "https://picsum.photos/seed/granada-2/900/600",
+      "https://picsum.photos/seed/granada-3/900/600",
+      "https://picsum.photos/seed/granada-4/900/600",
+      "https://picsum.photos/seed/granada-5/900/600"
+    ],
+    "recommendations": "Usa ropa cómoda, calzado adecuado, protector solar y lleva una botella de agua",
+    "meetingPoint": "Parque Central de Granada, frente a la Catedral",
+    "includes": "Entradas y degustaciones",
+    "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
+    "notes": "El recorrido incluye caminatas por calles empedradas y visitas a sitios históricos",
+    "startTimes": ["8:30 a.m.", "10:00 a.m.", "2:00 p.m."],
+    "location": { "latitude": 11.9344, "longitude": -85.9560 },
+    "comments": [
+      {
+        "author": "Ana Carolina R.",
+        "rating": 5,
+        "timeAgo": "Hace dos días",
+        "text": "Un recorrido increíble. Granada es aún más hermosa conociendo su cultura."
+      },
+      {
+        "author": "Silvia H.",
+        "rating": 4,
+        "timeAgo": "Hace una semana",
+        "text": "La guía que contratamos por la app sabía muchísimo de la historia colonial. Repetiría sin dudarlo."
+      },
+      {
+        "author": "Marcos J.",
+        "rating": 5,
+        "timeAgo": "Hace dos semanas",
+        "text": "Las degustaciones al final valen cada córdoba. Muy recomendado."
+      }
+    ]
+  },
+  {
+    "id": "isla-de-ometepe",
+    "shortTitle": "Isla de Ometepe",
+    "title": "Ometepe, la isla de los dos volcanes",
+    "subtitle": "Naturaleza, leyendas y aventura",
+    "category": "Naturaleza",
+    "city": "Rivas",
+    "rating": 4.8,
+    "reviewsCount": 89,
+    "stopIds": [
+      "ometepe-ferry",
+      "ometepe-moyogalpa",
+      "ometepe-charco-verde",
+      "ometepe-museo-ceibo",
+      "ometepe-petroglifos",
+      "ometepe-ojo-de-agua",
+      "ometepe-mirador-maderas",
+      "ometepe-playa-santo-domingo"
+    ],
+    "travelMode": "vehicle",
+    "legMinutes": { "ometepe-moyogalpa": 0 },
+    "duration": "9 h 50 min",
+    "durationShort": "1 día",
+    "badges": 4,
+    "difficulty": "Moderado",
+    "priceAdult": 750,
+    "priceChild": 400,
+    "description": "Una travesía por la isla formada por los volcanes Concepción y Maderas, con petroglifos, ojos de agua y comunidades locales, que termina en la playa del istmo",
+    "images": [
+      "https://picsum.photos/seed/ometepe-1/900/600",
+      "https://picsum.photos/seed/ometepe-2/900/600",
+      "https://picsum.photos/seed/ometepe-3/900/600"
+    ],
+    "recommendations": "Lleva traje de baño, repelente, protector solar y calzado para caminata",
+    "meetingPoint": "Puerto de San Jorge, Rivas",
+    "includes": "Boleto del ferry, entradas y almuerzo típico",
+    "badgesNote": "Este recorrido contiene un total de 4 insignias coleccionables",
+    "notes": "La salida es temprano y el regreso depende del horario del ferry. En la isla se recorre en vehículo: llévalo tú o pídele al guía que lo ponga en tu propuesta",
+    "startTimes": ["6:00 a.m.", "7:30 a.m."],
+    "location": { "latitude": 11.5060, "longitude": -85.5850 },
+    "comments": [
+      {
+        "author": "Luis P.",
+        "rating": 5,
+        "timeAgo": "Hace tres días",
+        "text": "El Ojo de Agua y los petroglifos son impresionantes. Día completo bien aprovechado."
+      },
+      {
+        "author": "Karla M.",
+        "rating": 5,
+        "timeAgo": "Hace un mes",
+        "text": "Excelente organización, el almuerzo típico estuvo delicioso."
+      }
+    ]
+  },
+  {
+    "id": "leon-colonial",
+    "shortTitle": "León Colonial",
+    "title": "León, cuna de poetas y volcanes",
+    "subtitle": "Arte, catedrales y tradición",
+    "category": "Ciudad",
+    "city": "León",
+    "rating": 4.6,
+    "reviewsCount": 74,
+    "stopIds": [
+      "leon-catedral",
+      "leon-techos",
+      "leon-ruben-dario",
+      "leon-murales",
+      "leon-mercado"
+    ],
+    "travelMode": "walking",
+    "duration": "3 h 5 min",
+    "durationShort": "3 h aprox.",
+    "badges": 2,
+    "difficulty": "Fácil",
+    "priceAdult": 300,
+    "priceChild": 150,
+    "description": "Un paseo por la ciudad universitaria: la Catedral Patrimonio de la Humanidad, murales, museos y la casa de Rubén Darío",
+    "images": [
+      "https://picsum.photos/seed/leon-1/900/600",
+      "https://picsum.photos/seed/leon-2/900/600",
+      "https://picsum.photos/seed/leon-3/900/600"
+    ],
+    "recommendations": "Lleva sombrero y agua, el sol de León es fuerte al mediodía",
+    "meetingPoint": "Parque Central de León, frente a la Catedral",
+    "includes": "Guía certificado, entrada a museos y subida a los techos de la Catedral",
+    "badgesNote": "Este recorrido contiene un total de 2 insignias coleccionables, más 3 insignias extra de \"Circuitos creativos\" y una medalla de León al completarlo",
+    "notes": "La subida a los techos de la Catedral se hace descalzo",
+    "startTimes": ["9:00 a.m.", "3:00 p.m."],
+    "location": { "latitude": 12.4345, "longitude": -86.8780 },
+    "isCreativeCircuit": true,
+    "organizer": "Alcaldía de León",
+    "comments": [
+      {
+        "author": "Diana C.",
+        "rating": 5,
+        "timeAgo": "Hace cinco días",
+        "text": "Los techos blancos de la Catedral son una postal. Vale muchísimo la pena."
+      }
+    ]
+  },
+  {
+    "id": "ruta-del-cafe",
+    "shortTitle": "Ruta del Café",
+    "title": "Ruta del café en las Segovias",
+    "subtitle": "Del grano a la taza",
+    "category": "Naturaleza",
+    "city": "Matagalpa",
+    "rating": 4.7,
+    "reviewsCount": 58,
+    "stopIds": [
+      "cafe-selva-negra",
+      "cafe-beneficio",
+      "cafe-secado",
+      "cafe-tueste",
+      "cafe-cata",
+      "cafe-mirador",
+      "cafe-comunidad"
+    ],
+    "travelMode": "vehicle",
+    "duration": "6 h 45 min",
+    "durationShort": "7 h aprox.",
+    "badges": 3,
+    "difficulty": "Moderado",
+    "priceAdult": 500,
+    "priceChild": 250,
+    "description": "Visita a fincas cafetaleras de montaña para conocer el proceso completo del café nicaragüense y catar el resultado",
+    "images": [
+      "https://picsum.photos/seed/cafe-1/900/600",
+      "https://picsum.photos/seed/cafe-2/900/600",
+      "https://picsum.photos/seed/cafe-3/900/600"
+    ],
+    "recommendations": "Usa botas o zapatos cerrados, puede haber lodo en los senderos",
+    "meetingPoint": "Parque Darío, Matagalpa",
+    "includes": "Entrada a las fincas, cata de café y refrigerio",
+    "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
+    "notes": "El clima de montaña es fresco y lluvioso por la tarde. La comunidad cafetalera queda lejos de la finca: llévate vehículo o pídele al guía que lo ponga en tu propuesta",
+    "startTimes": ["7:00 a.m.", "8:00 a.m."],
+    "location": { "latitude": 12.9270, "longitude": -85.9170 },
+    "comments": [
+      {
+        "author": "Roberto A.",
+        "rating": 5,
+        "timeAgo": "Hace un mes",
+        "text": "Aprendí todo el proceso del café y la cata final estuvo buenísima."
+      }
+    ]
+  },
+  {
+    "id": "masaya-artesanias-volcan",
+    "shortTitle": "Masaya Artesanal",
+    "title": "Masaya, cuna del folclore y el fuego",
+    "subtitle": "Artesanías, tradición y el cráter del volcán",
+    "category": "Ciudad",
+    "city": "Masaya",
+    "rating": 4.7,
+    "reviewsCount": 41,
+    "stopIds": [
+      "masaya-mercado-artesanias",
+      "masaya-parque-central",
+      "masaya-volcan",
+      "masaya-monimbo"
+    ],
+    "travelMode": "vehicle",
+    "duration": "3 h 25 min",
+    "durationShort": "3 h aprox.",
+    "badges": 2,
+    "difficulty": "Fácil",
+    "priceAdult": 280,
+    "priceChild": 140,
+    "description": "Un recorrido preestablecido por la Alcaldía de Masaya por el mercado de artesanías, el barrio de Monimbó y el mirador del volcán",
+    "images": [
+      "https://picsum.photos/seed/masaya-1/900/600",
+      "https://picsum.photos/seed/masaya-2/900/600",
+      "https://picsum.photos/seed/masaya-3/900/600"
+    ],
+    "recommendations": "Lleva efectivo para las artesanías y protector solar para el mirador del volcán",
+    "meetingPoint": "Parque Central de Masaya, frente a la Iglesia San Jerónimo",
+    "includes": "Guía certificado, entrada al Mercado de Artesanías y al mirador del volcán",
+    "badgesNote": "Este recorrido contiene un total de 2 insignias coleccionables, más 3 insignias extra de \"Circuitos creativos\" y una medalla de Masaya al completarlo",
+    "notes": "El acceso al cráter del volcán depende del horario del parque nacional",
+    "startTimes": ["9:00 a.m.", "2:00 p.m."],
+    "location": { "latitude": 11.9738, "longitude": -86.0958 },
+    "isCreativeCircuit": true,
+    "organizer": "Alcaldía de Masaya",
+    "comments": [
+      {
+        "author": "Fernando J.",
+        "rating": 5,
+        "timeAgo": "Hace una semana",
+        "text": "Ver el lago de lava desde el borde del cráter fue impresionante. El mercado de artesanías también vale mucho la pena."
+      }
+    ]
+  },
+  {
+    "id": "esteli-murales-tabaco",
+    "shortTitle": "Estelí Creativa",
+    "title": "Estelí, murales y tradición tabacalera",
+    "subtitle": "Arte urbano, historia y el aroma del tabaco",
+    "category": "Ciudad",
+    "city": "Estelí",
+    "rating": 4.6,
+    "reviewsCount": 33,
+    "stopIds": [
+      "esteli-galeria-heroes",
+      "esteli-catedral",
+      "esteli-tabacalera",
+      "esteli-mirador-tisey"
+    ],
+    "travelMode": "vehicle",
+    "duration": "3 h 35 min",
+    "durationShort": "4 h aprox.",
+    "badges": 2,
+    "difficulty": "Fácil",
+    "priceAdult": 300,
+    "priceChild": 150,
+    "description": "Un recorrido preestablecido por la Alcaldía de Estelí por sus murales, una tabacalera artesanal y el mirador de la reserva Tisey",
+    "images": [
+      "https://picsum.photos/seed/esteli-1/900/600",
+      "https://picsum.photos/seed/esteli-2/900/600",
+      "https://picsum.photos/seed/esteli-3/900/600"
+    ],
+    "recommendations": "Lleva una chaqueta ligera para el mirador y calzado cómodo para caminar",
+    "meetingPoint": "Parque Central de Estelí, frente a la Catedral",
+    "includes": "Guía certificado, entrada a la Galería de Héroes y Mártires y recorrido en una tabacalera",
+    "badgesNote": "Este recorrido contiene un total de 2 insignias coleccionables, más 3 insignias extra de \"Circuitos creativos\" y una medalla de Estelí al completarlo",
+    "notes": "El mirador Tisey queda a las afueras de la ciudad; el recorrido incluye el transporte",
+    "startTimes": ["9:00 a.m.", "1:00 p.m."],
+    "location": { "latitude": 13.0906, "longitude": -86.3538 },
+    "isCreativeCircuit": true,
+    "organizer": "Alcaldía de Estelí",
+    "comments": [
+      {
+        "author": "Patricia G.",
+        "rating": 5,
+        "timeAgo": "Hace dos semanas",
+        "text": "Los murales cuentan una historia que no conocía. La tabacalera fue una sorpresa, muy bien explicado el proceso."
+      }
+    ]
+  }
+]

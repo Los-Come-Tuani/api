@@ -221,9 +221,9 @@ class BusinessHours(ApiModel):
 ########################################################################################
 
 
-# La imagen de un dueño: un comercio hoy; después, un punto de interés, un circuito o un
-# evento. Una sola tabla con referencias excluyentes y una verificación que exige
-# exactamente una presente. Vive aquí mientras su único dueño es el comercio.
+# La imagen de un dueño: un comercio, un lugar o un circuito (después, un evento). Una
+# sola tabla con referencias excluyentes y una verificación que exige exactamente una
+# presente. La primera por `order` es la portada.
 @track_table(meta={"db_table": "foto_cambio"})
 class Photo(ApiModel):
     business = ForeignKey(
@@ -234,6 +234,24 @@ class Photo(ApiModel):
         on_delete=CASCADE,
         related_name="photos",
         to=Business,
+    )
+    point = ForeignKey(
+        db_column="punto_interes_id",
+        db_default=None,
+        default=None,
+        null=True,
+        on_delete=CASCADE,
+        related_name="photos",
+        to="apiterritory.PointOfInterest",
+    )
+    circuit = ForeignKey(
+        db_column="circuito_id",
+        db_default=None,
+        default=None,
+        null=True,
+        on_delete=CASCADE,
+        related_name="photos",
+        to="apiterritory.Circuit",
     )
 
     # la referencia en el almacenamiento de archivos
@@ -252,8 +270,29 @@ class Photo(ApiModel):
 
         constraints: Sequence[CheckConstraint] = (
             CheckConstraint(
-                condition=Q(business__isnull=False),
+                condition=(
+                    Q(business__isnull=False, point__isnull=True, circuit__isnull=True)
+                    | Q(
+                        business__isnull=True, point__isnull=False, circuit__isnull=True
+                    )
+                    | Q(
+                        business__isnull=True, point__isnull=True, circuit__isnull=False
+                    )
+                ),
                 name="chk_foto_dueno_excluyente",
+            ),
+        )
+
+        indexes: Sequence[Index] = (
+            Index(
+                condition=Q(point__isnull=False),
+                fields=["point", "order"],
+                name="idx_foto_lugar",
+            ),
+            Index(
+                condition=Q(circuit__isnull=False),
+                fields=["circuit", "order"],
+                name="idx_foto_circuito",
             ),
         )
 

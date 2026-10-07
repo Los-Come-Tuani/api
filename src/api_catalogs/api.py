@@ -8,6 +8,7 @@ from api_catalogs.controllers.catalogs import (
     CredentialTypeListController,
     InstitutionTypeListController,
     LanguageListController,
+    PillarListController,
     ServiceTypeListController,
 )
 from api_core.controllers.routers import route_controller
@@ -39,5 +40,6 @@ router: Final[Router] = Router(
             ctrl=CredentialTypeListController,
             endpoint="catalog/credential-type",
         ),
+        route_controller(ctrl=PillarListController, endpoint="catalog/pillar"),
     ),
 )

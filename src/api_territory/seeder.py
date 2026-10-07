@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 
 from django.db.transaction import atomic
 
-from api_territory.models import City
+from api_territory.models import CircuitStatus, City
 
 if TYPE_CHECKING:
     from typing import Final
@@ -29,8 +29,30 @@ CITIES: Final[tuple[tuple[str, str, str, str], ...]] = (
 ########################################################################################
 
 
+# - (código, etiqueta, visible, admite edición, terminal): `estado_circuito`
+CIRCUIT_STATES: Final[tuple[tuple[str, str, bool, bool, bool], ...]] = (
+    ("borrador", "Borrador", False, True, False),
+    ("publicado", "Publicado", True, True, False),
+    ("despublicado", "Despublicado", False, True, False),
+    ("retirado", "Retirado", False, False, True),
+)
+
+########################################################################################
+
+
 @atomic
 def execute() -> None:
+    for code, label, is_visible, allows_editing, is_terminal in CIRCUIT_STATES:
+        CircuitStatus.objects.update_or_create(
+            code=code,
+            defaults={
+                "allows_editing": allows_editing,
+                "is_terminal": is_terminal,
+                "is_visible": is_visible,
+                "label": label,
+            },
+        )
+
     # `get_or_create`: la ciudad que se activa después no se vuelve a apagar al migrar
     for code, name, latitude, longitude in CITIES:
         City.objects.get_or_create(

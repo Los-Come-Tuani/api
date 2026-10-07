@@ -37,6 +37,10 @@ class UploadKinds(TextChoices):
     PROVIDER_DOCUMENT = "provider-document"
     # la foto del perfil público de un guía o traductor
     PROVIDER_PHOTO = "provider-photo"
+    # una foto de un lugar o de una de sus novedades
+    PLACE_PHOTO = "place-photo"
+    # una foto de un circuito oficial
+    CIRCUIT_PHOTO = "circuit-photo"
 
 
 @dataclass(frozen=True, slots=True)
@@ -56,7 +60,9 @@ PHOTO_RULE: Final[UploadRule] = UploadRule(
 )
 
 RULES: Final[dict[str, UploadRule]] = {
+    UploadKinds.CIRCUIT_PHOTO: PHOTO_RULE,
     UploadKinds.LEGAL_DOCUMENT: DOCUMENT_RULE,
+    UploadKinds.PLACE_PHOTO: PHOTO_RULE,
     UploadKinds.PROVIDER_DOCUMENT: DOCUMENT_RULE,
     UploadKinds.PROVIDER_PHOTO: PHOTO_RULE,
     UploadKinds.SIGNATURE_DISH_PHOTO: PHOTO_RULE,

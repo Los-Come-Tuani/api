@@ -193,3 +193,23 @@ class Currency(ApiModel):
                 name="chk_moneda_decimales_rango",
             ),
         )
+
+
+########################################################################################
+
+
+# La clasificación cultural de los lugares (RF-T-29): la app la usa para el ícono, el
+# filtro y la insignia que da cada parada.
+@track_table(meta={"db_table": "pilar_cultural_cambio"})
+class CulturalPillar(ApiModel):
+    code = CharField(db_column="codigo", max_length=40)
+    label = CharField(db_column="etiqueta", max_length=100)
+    order = SmallIntegerField(db_column="orden", db_default=0, default=0)
+    active = BooleanField(db_column="activo", db_default=True, default=True)
+
+    class Meta(ApiModel.Meta):
+        db_table: str = "pilar_cultural"
+
+        constraints: Sequence[UniqueConstraint] = (
+            UniqueConstraint(fields=["code"], name="unq_pilarcultural_codigo"),
+        )

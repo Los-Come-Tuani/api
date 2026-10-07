@@ -5,6 +5,7 @@ from django.db.transaction import atomic
 from api_catalogs.models import (
     BusinessType,
     CredentialType,
+    CulturalPillar,
     Currency,
     InstitutionType,
     Language,
@@ -35,6 +36,25 @@ BUSINESS_TYPES: Final[tuple[tuple[str, str], ...]] = (
     ("artesania", "Artesanía"),
     ("otro", "Otro"),
 )
+
+# - (código, etiqueta): los pilares culturales que clasifican los lugares (RF-T-29), en
+#   el orden en que la app los muestra
+CULTURAL_PILLARS: Final[tuple[tuple[str, str], ...]] = (
+    ("historia", "Historia"),
+    ("cultura", "Cultura"),
+    ("gastronomia", "Gastronomía"),
+    ("naturaleza", "Naturaleza"),
+    ("aventura", "Aventura"),
+)
+
+# - el pilar del lugar que se crea al aprobar un comercio, según su giro
+PILLAR_BY_BUSINESS_TYPE: Final[dict[str, str]] = {
+    "artesania": "cultura",
+    "cafeteria": "gastronomia",
+    "otro": "cultura",
+    "panaderia": "gastronomia",
+    "restaurante": "gastronomia",
+}
 
 INSTITUTION_TYPES: Final[tuple[tuple[str, str], ...]] = (
     ("casa_cultura", "Casa de cultura"),
@@ -183,6 +203,12 @@ def execute() -> None:
 
     for code, name in LANGUAGES:
         Language.objects.get_or_create(code=code, defaults={"name": name})
+
+    for order, (code, label) in enumerate(CULTURAL_PILLARS):
+        CulturalPillar.objects.get_or_create(
+            code=code,
+            defaults={"label": label, "order": order},
+        )
 
     services: dict[str, ServiceType] = {}
 
