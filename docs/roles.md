@@ -110,7 +110,41 @@ Todo bajo `/auth/`. El permiso es el que pide cada ruta; `403` si falta.
 | `POST user-role/`                          | `staff.manage`               | Cambia el rol de una persona del equipo                 |
 | `POST user-status/`                        | `users.manage`               | Suspende o reactiva una cuenta                          |
 | `POST user-password-reset/`                | `users.manage`               | Manda a la persona un código para crear otra contraseña |
+| `GET account/`                             | `users.view` o `staff.manage`| El directorio de cuentas ("Todos los usuarios"), paginado |
+| `GET account/{id}/`                        | `users.view` o `staff.manage`| Una cuenta del directorio                               |
+| `PATCH account/{id}/`                      | `users.manage` o `staff.manage` | Corrige el nombre (`first_name`, `last_name`)        |
 | `GET user/`, `user/all/`, `user/{id}/`     | `users.view`                 | Ver a las personas (los permisos del modelo también sirven) |
+
+### Directorio de cuentas
+
+`GET /auth/account/` acepta `role` (`admin`, `alcaldia`, `institucion`, `negocio`,
+`guia`, `traductor`, `turista`), `status` (`pending`, `active`, `suspended`,
+`expelled`, `closing`), `search` (nombre, sin importar tildes, o correo), `page` y
+`page_size` (hasta 100). Responde `{ next, previous, elements, pages, current,
+results }`, por nombre. Cada cuenta trae:
+
+```json
+{
+  "id": "…", "email": "…", "first_name": "…", "last_name": "…", "name": "…",
+  "status": "active", "verified": true, "created_at": "…",
+  "role": "negocio", "superuser": false,
+  "staff_role": null,
+  "organization": { "id": "…", "kind": "business", "name": "…", "verified": true },
+  "provider": null,
+  "city": { "id": "…", "code": "leon", "name": "León" }
+}
+```
+
+- `role` es el papel de más rango entre sus grupos (el mismo de la sesión); nulo para
+  una cuenta sin grupos (por ejemplo, un guía cuya solicitud sigue en revisión: su
+  estado viene en `provider`).
+- Con `users.view` se ven todas las cuentas; con solo `staff.manage`, solo el equipo
+  (otra cuenta responde `404`).
+- `PATCH` corrige el nombre: el equipo pide `staff.manage`; el resto, `users.manage`.
+  Nadie se edita a sí mismo desde aquí (`403`: su perfil es `/auth/profile/`) y un
+  superusuario solo lo edita otro. El correo no se cambia aquí (`400`). Suspender,
+  reactivar, cambiar el rol del equipo y mandar un código de contraseña siguen en
+  `user-status/`, `user-role/` y `user-password-reset/`.
 
 Cuerpo de un rol: `{ "name", "description"?, "permissions": [...],
 "requires_two_factor"? }` (el segundo factor es obligatorio salvo que se diga

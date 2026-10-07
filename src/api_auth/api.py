@@ -8,6 +8,7 @@ from api_auth.controllers.account import (
     SessionRevokeController,
 )
 from api_auth.controllers.csrf import CsrfController
+from api_auth.controllers.directory import AccountController, AccountDetailController
 from api_auth.controllers.google import MobileGoogleController, WebGoogleController
 from api_auth.controllers.group import (
     GroupDetailController,
@@ -145,6 +146,13 @@ router: Final[Router] = Router(
             ctrl=StaffRoleDetailController,
             endpoint="auth/staff-role",
             instance_param=("int", "id"),
+            suffix="detail",
+        ),
+        route_controller(ctrl=AccountController, endpoint="auth/account"),
+        route_controller(
+            ctrl=AccountDetailController,
+            endpoint="auth/account",
+            instance_param=("uuid", "id"),
             suffix="detail",
         ),
     ),
