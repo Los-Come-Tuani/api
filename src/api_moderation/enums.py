@@ -32,3 +32,16 @@ class VerificationKinds(TextChoices):
     BUSINESS = "business"
     INSTITUTION = "institution"
     MUNICIPALITY = "municipality"
+
+
+class VerificationProcedures(TextChoices):
+    # el trámite: el alta de lo que aspira a existir, o renovar un documento de lo que
+    # ya existe (un prestador aprobado)
+    APPLICATION = "alta"
+    RENEWAL = "renovacion"
+
+
+PROCEDURE_API_NAMES: Final[dict[str, str]] = {
+    VerificationProcedures.APPLICATION: "application",
+    VerificationProcedures.RENEWAL: "renewal",
+}

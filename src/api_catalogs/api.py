@@ -5,7 +5,10 @@ from dmr.routing import Router
 from api_catalogs.controllers.catalogs import (
     BusinessTypeListController,
     CityListController,
+    CredentialTypeListController,
     InstitutionTypeListController,
+    LanguageListController,
+    ServiceTypeListController,
 )
 from api_core.controllers.routers import route_controller
 
@@ -26,6 +29,15 @@ router: Final[Router] = Router(
         route_controller(
             ctrl=InstitutionTypeListController,
             endpoint="catalog/institution-type",
+        ),
+        route_controller(ctrl=LanguageListController, endpoint="catalog/language"),
+        route_controller(
+            ctrl=ServiceTypeListController,
+            endpoint="catalog/service-type",
+        ),
+        route_controller(
+            ctrl=CredentialTypeListController,
+            endpoint="catalog/credential-type",
         ),
     ),
 )

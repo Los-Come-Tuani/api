@@ -5,7 +5,7 @@ from django.contrib.auth.models import Permission
 
 from api_auth.catalog import ALL_IDS, expand_implied
 from api_auth.enums import AccountRoles, GroupKinds, Surfaces
-from api_auth.models import ApiGroupProfile
+from api_auth.models import ApiGroupProfile, ApiUser
 from api_exceptions.errors import ForbiddenError
 
 from .two_factor import has_two_factor
@@ -13,7 +13,6 @@ from .two_factor import has_two_factor
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
 
-    from api_auth.models import ApiUser
     from api_utils.types import UsableHttpRequest
 
 ########################################################################################
@@ -117,13 +116,21 @@ async def ensure_permission(user: ApiUser, *any_of: str) -> None:
 
 
 def surface_allows_sync(user: ApiUser, surface: str) -> bool:
-    # una cuenta sin grupos no tiene un papel que la limite: tampoco tiene permisos
     if user.is_superuser:
         return True
 
     profiles: list[ApiGroupProfile] = profiles_of_sync(user)
 
     if not profiles:
+        # el guía o traductor en revisión todavía no tiene su papel, pero es de la
+        # calle: entra por la app. Otra cuenta sin grupos no tiene un papel que la
+        # limite (tampoco tiene permisos).
+        if ApiUser.objects.filter(
+            pk=user.pk,
+            provider_profile__isnull=False,
+        ).exists():
+            return surface == Surfaces.MOBILE.value
+
         return True
 
     kinds: set[str] = {str(profile.kind) for profile in profiles}

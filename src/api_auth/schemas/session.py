@@ -37,6 +37,15 @@ class OrganizationRefGet(DTO):
     verified: bool
 
 
+class ProviderRefGet(DTO):
+    id: UUID
+    # `active` es el único en que el turista lo encuentra y lo contrata; `suspended`
+    # entra a la app para renovar lo que venció
+    status: Literal["unaccredited", "in_review", "active", "suspended"]
+    # lo que ofrece: `guia`, `traductor` o los dos
+    services: tuple[str, ...]
+
+
 class SessionUserGet(BaseGet):
     """La persona de la sesión, con todo lo que un cliente necesita para arrancar."""
 
@@ -58,4 +67,6 @@ class SessionUserGet(BaseGet):
     # vigente); nulo para quien no es de una organización
     organization_id: UUID | None
     organization: OrganizationRefGet | None
+    # el perfil de guía o traductor; nulo para quien no es prestador
+    provider: ProviderRefGet | None
     two_factor: TwoFactorState

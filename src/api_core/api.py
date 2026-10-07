@@ -7,6 +7,7 @@ import api_auth.api
 import api_catalogs.api
 import api_moderation.api
 import api_organizations.api
+import api_profiles.api
 
 from api_core.controllers.routers import route_controllers, sort_urls
 from api_core.controllers.upload import UploadController
@@ -25,6 +26,7 @@ router: Final[Router] = Router(
         *api_catalogs.api.router.urls,
         *api_moderation.api.router.urls,
         *api_organizations.api.router.urls,
+        *api_profiles.api.router.urls,
         *route_controllers(UploadController),
     )),
 )

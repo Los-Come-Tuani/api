@@ -9,7 +9,12 @@ from api_core.services.uploads import UploadKinds
 
 
 class UploadPost(DTO):
-    kind: Literal[UploadKinds.LEGAL_DOCUMENT, UploadKinds.SIGNATURE_DISH_PHOTO]
+    kind: Literal[
+        UploadKinds.LEGAL_DOCUMENT,
+        UploadKinds.PROVIDER_DOCUMENT,
+        UploadKinds.PROVIDER_PHOTO,
+        UploadKinds.SIGNATURE_DISH_PHOTO,
+    ]
     # el tipo MIME del archivo y su tamaño en bytes: la firma los lleva dentro y el
     # almacenamiento los hace cumplir
     content_type: str

@@ -157,9 +157,20 @@ acreditaciones) y **M14** (solicitudes de verificación).
 
 Al aprobar, la cuenta recibe el rol público de guía o traductor (un grupo con `kind`
 `public`). Guía y traductor comparten tabla y proceso
-([D-12](modelo-dominio/decisiones.md#d-12)). Antes de empezar, confirmar: los antecedentes
-que se verifican y quién los verifica; los plazos por etapa; qué ve el solicitante cuando
-se le pide una corrección.
+([D-12](modelo-dominio/decisiones.md#d-12)).
+
+**Estado: en curso.** Lo que se decidió con el equipo antes de empezar (detalle y rutas
+reales en [Guías y traductores](prestadores.md); la tabla de arriba era la propuesta):
+
+- Una cuenta, un papel: el prestador crea su propia cuenta desde la app y, mientras lo
+  revisan, solo ve el estado de su solicitud.
+- Documentos: cédula y récord de policía a todos, licencia del INTUR a los guías,
+  certificado de idiomas a los traductores, y licencia de conducir y seguro a quien lleva
+  turistas en su vehículo.
+- Dos pasos: quien revisa (`guides.review`) acepta o rechaza cada documento y pide
+  correcciones; quien decide (`guides.decide`) aprueba o rechaza al final.
+- Entran el vencimiento (comando diario que suspende), la renovación sin dejar de trabajar
+  y el perfil público editable.
 
 ## F6. Eventos, cupones e insignias
 

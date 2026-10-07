@@ -77,6 +77,11 @@ Negocio, Alcaldía e Institución son roles de **operador** con ámbito: se dan 
 organización concreta con `asignacion_rol`, no solo por pertenecer al grupo. Ver
 [Organizaciones y verificación](organizaciones.md#roles-con-ambito).
 
+Guía y Traductor los da la aprobación del equipo (`guides.decide`), también con
+`asignacion_rol` y sin ámbito: no hay otra ruta para darlos. En la cola de guías y
+traductores, `guides.review` revisa los documentos y pide correcciones, y `guides.decide`
+aprueba o rechaza al final. Ver [Guías y traductores](prestadores.md#la-cola-del-equipo).
+
 ## Segundo factor obligatorio
 
 Quien tiene un rol con `requires_two_factor` entra, pero mientras no active el 2FA solo

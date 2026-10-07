@@ -49,6 +49,8 @@ if TYPE_CHECKING:
     from typing import Final
     from uuid import UUID
 
+    from django.db.models.query import QuerySet
+
     from api_auth.models import ApiUser
 
 ########################################################################################
@@ -118,8 +120,16 @@ def inline_payload(request: VerificationRequest) -> VerificationRequestInlineGet
     )
 
 
+def organization_requests() -> QuerySet:
+    # la cola de las organizaciones: los expedientes de los prestadores van por la suya
+    # (`provider-request/`), con otros permisos
+    return VerificationRequest.objects.select_related(*RELATED).filter(
+        provider__isnull=True
+    )
+
+
 def queue_sync(query: VerificationQuery) -> Paginated[VerificationRequestInlineGet]:
-    requests = VerificationRequest.objects.select_related(*RELATED)
+    requests = organization_requests()
 
     if query.status == "open":
         requests = requests.filter(status__code__in=OPEN_STATES)
@@ -268,7 +278,7 @@ def history_of(request: VerificationRequest) -> list[HistoryItem]:
 
 
 def fetch_request(request_id: UUID, *, lock: bool = False) -> VerificationRequest:
-    requests = VerificationRequest.objects.select_related(*RELATED)
+    requests = organization_requests()
 
     found: VerificationRequest | None = (
         requests.select_for_update(of=("self",)).filter(pk=request_id).first()

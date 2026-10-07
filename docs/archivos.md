@@ -29,6 +29,8 @@ al cliente una URL firmada y el cliente lo sube directo a un bucket compatible c
 | ---------------------- | --------------------------------------- | ------ |
 | `legal-document`       | PDF, JPEG, PNG                          | 10 MB  |
 | `signature-dish-photo` | JPEG, PNG, WebP                         | 5 MB   |
+| `provider-document`    | PDF, JPEG, PNG                          | 10 MB  |
+| `provider-photo`       | JPEG, PNG, WebP                         | 5 MB   |
 
 La URL firmada vive diez minutos (`STORAGE_UPLOAD_EXPIRES`) y sirve solo para esa clave.
 Para ver un archivo (el equipo que revisa una solicitud) el API firma una URL de lectura

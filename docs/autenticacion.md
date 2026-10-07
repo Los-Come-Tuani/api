@@ -111,6 +111,7 @@ país de dos letras (`NI`, `US`). Una contraseña débil no gasta el código.
   "permissions": [],
   "organization_id": null,
   "organization": null,
+  "provider": null,
   "two_factor": { "enabled": false, "required": false },
   "created_at": "2026-10-05T21:40:00Z"
 }
@@ -124,6 +125,12 @@ vigente): `{ "id", "kind": "business" | "institution" | "municipality", "name",
 "verified" }`, con `organization_id` repetido; `null` para quien no es de una organización.
 Mientras `verified` es `false` solo ve su solicitud
 ([Organizaciones](organizaciones.md)).
+
+`provider` es el perfil de guía o traductor: `{ "id", "status": "unaccredited" |
+"in_review" | "active" | "suspended", "services": ["guia", "traductor"] }`; `null` para
+quien no es prestador. Mientras lo revisan, la cuenta no tiene `role` todavía y solo entra
+por la app; con la aprobación recibe `guia` o `traductor`
+([Guías y traductores](prestadores.md)).
 
 `permissions` son los permisos funcionales que le dan sus roles, ya con los que se
 deducen (`guides.decide` trae `guides.view`), por ejemplo `["guides.decide",

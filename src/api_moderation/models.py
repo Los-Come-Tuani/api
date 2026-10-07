@@ -21,6 +21,7 @@ from pgtrigger import After, Delete, Insert, Protect, ReadOnly, Trigger, Update
 from api_auth.models import ApiUser
 from api_catalogs.models import Reason
 from api_core.models.base import ApiModel
+from api_moderation.enums import VerificationProcedures
 from api_organizations.models import Business, CulturalInstitution
 from api_territory.models import Municipality
 from api_utils.db import track_table
@@ -55,8 +56,10 @@ class VerificationStatus(ApiModel):
 
 
 # La cola de trabajo del equipo: una solicitud por registro que aspira a existir para el
-# turista. Cuatro objetos mutuamente excluyentes en el modelo; aquí, los tres que hay
-# hasta que lleguen las acreditaciones de los prestadores.
+# turista. Objetos mutuamente excluyentes: las tres organizaciones y el perfil de un
+# prestador. El modelo prevé la acreditación en lugar del perfil; aquí el expediente es
+# de la persona, porque la revisión en dos pasos decide sobre ella y sus documentos se
+# revisan dentro (ver `docs/prestadores.md`).
 #
 # Se atiende por orden de llegada (`submitted_at`). Quien la toma queda en `taken_by`, y
 # soltarla es volver ese campo a nulo.
@@ -88,6 +91,23 @@ class VerificationRequest(ApiModel):
         on_delete=CASCADE,
         related_name="verification_requests",
         to=CulturalInstitution,
+    )
+    provider = ForeignKey(
+        db_column="perfil_prestador_id",
+        db_default=None,
+        default=None,
+        null=True,
+        on_delete=CASCADE,
+        related_name="verification_requests",
+        to="apiprofiles.ProviderProfile",
+    )
+
+    procedure = CharField(
+        choices=VerificationProcedures,
+        db_column="tramite",
+        db_default=VerificationProcedures.APPLICATION,
+        default=VerificationProcedures.APPLICATION,
+        max_length=16,
     )
 
     status = ForeignKey(
@@ -128,19 +148,38 @@ class VerificationRequest(ApiModel):
                         business__isnull=False,
                         institution__isnull=True,
                         municipality__isnull=True,
+                        provider__isnull=True,
                     )
                     | Q(
                         business__isnull=True,
                         institution__isnull=False,
                         municipality__isnull=True,
+                        provider__isnull=True,
                     )
                     | Q(
                         business__isnull=True,
                         institution__isnull=True,
                         municipality__isnull=False,
+                        provider__isnull=True,
+                    )
+                    | Q(
+                        business__isnull=True,
+                        institution__isnull=True,
+                        municipality__isnull=True,
+                        provider__isnull=False,
                     )
                 ),
                 name="chk_solicitudverificacion_objeto_excluyente",
+            ),
+            CheckConstraint(
+                condition=Q(procedure__in=VerificationProcedures.values),
+                name="chk_solicitudverificacion_tramite",
+            ),
+            # solo un prestador aprobado renueva
+            CheckConstraint(
+                condition=Q(procedure=VerificationProcedures.APPLICATION)
+                | Q(provider__isnull=False),
+                name="chk_solicitudverificacion_renovacion_prestador",
             ),
             CheckConstraint(
                 condition=Q(resolved_at__isnull=True)
@@ -164,6 +203,11 @@ class VerificationRequest(ApiModel):
                 fields=["municipality"],
                 name="unq_solicitudverificacion_abierta_alcaldia",
             ),
+            UniqueConstraint(
+                condition=Q(provider__isnull=False, resolved_at__isnull=True),
+                fields=["provider"],
+                name="unq_solicitudverificacion_abierta_prestador",
+            ),
         )
 
         indexes: Sequence[Index] = (
@@ -183,7 +227,14 @@ class VerificationRequest(ApiModel):
             *ApiModel.Meta.triggers,
             # mutable protegida: lo que se verifica y cuándo llegó no se reescriben
             ReadOnly(
-                fields=["business", "institution", "municipality", "submitted_at"],
+                fields=[
+                    "business",
+                    "institution",
+                    "municipality",
+                    "procedure",
+                    "provider",
+                    "submitted_at",
+                ],
                 name="trg_solicitudverificacion_readonly",
             ),
         )

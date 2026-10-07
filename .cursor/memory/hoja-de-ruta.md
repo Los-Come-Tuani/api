@@ -46,10 +46,11 @@ aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 | f2-roles-permissions    | **Hecha** en el API, el portal (permisos, invitación, equipo y roles) y la app (modo guía según el rol). "Todos los usuarios" del portal sigue en demo (sección 7) |
 | f3-f8-roadmap           | Hecha (documentación: `docs/hoja-de-ruta.md`); cada fase de dominio se confirma antes |
 | F3 (organizaciones)     | **Hecha** en el API y en el portal (alta, estado, corregir y la cola del equipo). Falta crear el bucket real (sección 7b) |
+| F5 (guías y traductores)| **API hecha** (sección 7c). Faltan la app (postularse, estado, corregir, renovar, perfil) y el portal (la cola en dos pasos) |
 
-Siguiente paso recomendado: que el usuario elija la fase de dominio que sigue (F4 en adelante,
-`docs/hoja-de-ruta.md`). Pendientes chicos que no dependen de una fase: el directorio de
-cuentas para "Todos los usuarios" del portal (sección 7) y crear el bucket real (sección 7b).
+Siguiente paso: F5 en la app y en el portal (sección 7c). Pendientes chicos que no
+dependen de una fase: el directorio de cuentas para "Todos los usuarios" del portal
+(sección 7) y crear el bucket real (sección 7b). F4, F6, F7 y F8 se confirman antes.
 
 ## 3. Qué hay hecho en el API
 
@@ -258,6 +259,50 @@ en inglés.
 4. El 404 sobre objetos de otra organización llega con el primer recurso que un operador
    administre (F4 en adelante).
 
+## 7c. F5 guías y traductores
+
+**Hecho en el API.** Decisiones del usuario (2026-10-07): una cuenta, un papel (el
+prestador crea su propia cuenta desde la app y, mientras lo revisan, solo ve su estado);
+documentos: cédula y récord de policía a todos, licencia del INTUR a los guías,
+certificado de idiomas a los traductores, licencia de conducir y seguro a quien lleva
+turistas; revisión en **dos pasos** (`guides.review` acepta o rechaza cada documento y pide
+correcciones; `guides.decide` aprueba o rechaza); vencimiento con comando diario,
+renovación sin dejar de trabajar y perfil público editable. Contrato: `docs/prestadores.md`.
+
+- App nueva `api_profiles` (M4): `estado_prestador`, `perfil_prestador` (`ciudad_id` nulo es
+  todo el país, `lleva_turistas`, `foto_clave`, disparador de un solo papel por cuenta),
+  `prestador_servicio`, `prestador_idioma`, `estado_acreditacion` (con `reemplazada`) y
+  `acreditacion` (con el veredicto de quien revisó y el expediente donde se subió; un
+  disparador exige el vencimiento en los tipos que vencen y otro, uno en vigor por tipo).
+  `api_catalogs` suma `idioma`, `tipo_servicio` y `tipo_acreditacion` (seis tipos) y los
+  motivos `rechazo_documento`, `rechazo_prestador` y `documentos_por_corregir`.
+  `solicitud_verificacion` suma `perfil_prestador_id` y `tramite` (`alta`/`renovacion`);
+  la cola de organizaciones los excluye (`organization_requests`).
+- Rutas: `catalog/language|service-type|credential-type/` (públicas),
+  `POST provider-application/` (pública, móvil: devuelve tokens), `GET .../mine/`,
+  `POST .../mine/resubmit/`, `POST .../mine/renewal/`, `GET|PATCH provider-profile/mine/`, y
+  la cola `provider-request/` (lista, `reason/`, detalle, `take`, `release`,
+  `document-review`, `request-changes`, `approve`, `reject`). `upload/` suma
+  `provider-document` y `provider-photo`.
+- El veredicto y el estado son dos cosas: quien revisa deja `veredicto`; el estado cambia al
+  resolver (aprobar pone `aprobada` y deja `reemplazada` la anterior). Un documento
+  aceptado en un expediente rechazado pasa tal cual al siguiente y no se vuelve a revisar.
+  Una renovación se resuelve sola cuando su último documento queda revisado.
+- Aprobar da los grupos Guía y/o Traductor con `grant_role_sync` (sin ámbito). La sesión
+  trae `provider` (`{id, status, services}`). Una cuenta con perfil y sin grupos solo entra
+  por la app (`surface_allows_sync`).
+- `python src/manage.py expirecredentials`: vence y suspende (con correo). **Hay que
+  programarlo una vez al día al desplegar** (cron de Railway).
+- Pruebas: `test_provider_applications.py` (27) y `test_provider_queue.py` (71, con la
+  matriz de permisos). Ayudas en `api_tests/provider_helpers.py`. Suite completa: 722.
+
+**Falta de F5**: la app (postularse como guía, traductor o ambos con subida firmada,
+estado y correcciones, renovar, perfil público; la cuenta de prestador no es turista:
+quitar "Entrar como turista" con el API real) y el portal ("Guías y traductores" contra
+`provider-request/`, con la revisión por documento y la decisión; retirar antecedentes y
+etapas de la demo). Aviso para el usuario al desplegar: migraciones nuevas
+(`apicatalogs.0002`, `apimoderation.0002` y `0003`, `apiprofiles.0001`) y el cron.
+
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
 El mapa completo, con módulos del modelo de dominio, rutas propuestas, permisos y las
@@ -322,6 +367,10 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
 13. La base de datos del dominio está en español y la de `api_auth` sigue en inglés: el
     renombrado de `ApiUser` y compañía (`usuario`...) queda para otra fase y es una migración
     de renombrado, no de datos.
+14. **Al desplegar F5**: migraciones `apicatalogs.0002_prestadores`, `apimoderation.0002` y
+    `0003`, `apiprofiles.0001` (siembran idiomas, servicios, tipos de documento, motivos y
+    estados). Programar `python src/manage.py expirecredentials` una vez al día: sin él,
+    nadie se suspende cuando le vence un documento.
 
 ## 10. Cómo trabajar en esta máquina (Windows, PowerShell)
 

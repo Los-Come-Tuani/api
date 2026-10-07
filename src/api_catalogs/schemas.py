@@ -10,6 +10,15 @@ class OptionGet(DTO):
     label: str
 
 
+# Un documento que se le puede pedir a un guía o traductor.
+class CredentialTypeGet(OptionGet):
+    # el servicio que acredita (`guia`, `traductor`), o nulo si se le pide a todos
+    service: str | None
+    requires_expiry: bool
+    # se le pide a quien lleva turistas en su vehículo
+    requires_vehicle: bool
+
+
 class CityGet(DTO):
     id: str
     code: str

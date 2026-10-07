@@ -123,6 +123,67 @@ async def send_application_decision(  # ruff: ignore[too-many-arguments]
     )
 
 
+async def send_provider_decision(  # ruff: ignore[too-many-arguments]
+    *,
+    approved: bool,
+    documents: list[tuple[str, str, str]],
+    name: str,
+    note: str,
+    reason: str,
+    renewal: bool,
+    to: str,
+) -> bool:
+    # lo que el equipo decidió sobre un guía o traductor. `documents` son los
+    # rechazados, (documento, motivo, nota), para corregirlos sin adivinar
+    if approved:
+        body = (
+            f"Hola {name}, aprobamos la renovación de tus documentos.\n\n"
+            "Siguen en vigor y puedes seguir trabajando con K'Plan.\n"
+            if renewal
+            else f"Hola {name}, aprobamos tu perfil en K'Plan.\n\n"
+            "Ya apareces para los turistas: entra a la app con tu correo y tu "
+            "contraseña.\n"
+        )
+        subject = "Aprobamos tu perfil en K'Plan"
+    else:
+        lines = "".join(
+            f"- {document}: {cause}." + (f" {detail}" if detail else "") + "\n"
+            for document, cause, detail in documents
+        )
+        listed = f"\nLo que hay que corregir:\n{lines}" if lines else ""
+        detail = f"\nNota del equipo: {note}\n" if note else ""
+        body = (
+            f"Hola {name}, no pudimos aprobar tu solicitud.\n\n"
+            f"Motivo: {reason}.\n{listed}{detail}\n"
+            "Entra a la app de K'Plan para ver qué corregir y volver a enviarla.\n"
+        )
+        subject = "Sobre tu solicitud en K'Plan"
+
+    return await send_email(
+        body=body,
+        kind="provider_decision",
+        subject=subject,
+        to=to,
+    )
+
+
+async def send_provider_suspended(*, documents: list[str], name: str, to: str) -> bool:
+    # se le venció un documento sin renovación aprobada: deja de recibir contrataciones
+    listed = "".join(f"- {document}\n" for document in documents)
+
+    return await send_email(
+        body=(
+            f"Hola {name}, se venció un documento que te pedimos para trabajar con "
+            f"K'Plan:\n\n{listed}\n"
+            "Mientras no lo renueves no apareces para los turistas ni recibes "
+            "contrataciones nuevas. Entra a la app y sube el documento vigente.\n"
+        ),
+        kind="provider_suspended",
+        subject="Se venció un documento de tu perfil en K'Plan",
+        to=to,
+    )
+
+
 async def send_closing_notice(*, days: int, to: str) -> bool:
     return await send_email(
         body=(

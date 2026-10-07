@@ -32,6 +32,11 @@ class UploadKinds(TextChoices):
     LEGAL_DOCUMENT = "legal-document"
     # la fotografía del platillo estrella de un comercio
     SIGNATURE_DISH_PHOTO = "signature-dish-photo"
+    # un documento de un guía o traductor (cédula, licencia...): casi siempre una foto
+    # tomada con el teléfono (RF-P-20)
+    PROVIDER_DOCUMENT = "provider-document"
+    # la foto del perfil público de un guía o traductor
+    PROVIDER_PHOTO = "provider-photo"
 
 
 @dataclass(frozen=True, slots=True)
@@ -40,15 +45,21 @@ class UploadRule:
     max_bytes: int
 
 
+DOCUMENT_RULE: Final[UploadRule] = UploadRule(
+    content_types=("application/pdf", "image/jpeg", "image/png"),
+    max_bytes=10 * MEGABYTE,
+)
+
+PHOTO_RULE: Final[UploadRule] = UploadRule(
+    content_types=("image/jpeg", "image/png", "image/webp"),
+    max_bytes=5 * MEGABYTE,
+)
+
 RULES: Final[dict[str, UploadRule]] = {
-    UploadKinds.LEGAL_DOCUMENT: UploadRule(
-        content_types=("application/pdf", "image/jpeg", "image/png"),
-        max_bytes=10 * MEGABYTE,
-    ),
-    UploadKinds.SIGNATURE_DISH_PHOTO: UploadRule(
-        content_types=("image/jpeg", "image/png", "image/webp"),
-        max_bytes=5 * MEGABYTE,
-    ),
+    UploadKinds.LEGAL_DOCUMENT: DOCUMENT_RULE,
+    UploadKinds.PROVIDER_DOCUMENT: DOCUMENT_RULE,
+    UploadKinds.PROVIDER_PHOTO: PHOTO_RULE,
+    UploadKinds.SIGNATURE_DISH_PHOTO: PHOTO_RULE,
 }
 
 ########################################################################################

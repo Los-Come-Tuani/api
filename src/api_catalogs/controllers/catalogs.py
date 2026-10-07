@@ -3,8 +3,14 @@ from http import HTTPStatus
 from asgiref.sync import sync_to_async
 from dmr import modify
 
-from api_catalogs.models import BusinessType, InstitutionType
-from api_catalogs.schemas import CityGet, OptionGet
+from api_catalogs.models import (
+    BusinessType,
+    CredentialType,
+    InstitutionType,
+    Language,
+    ServiceType,
+)
+from api_catalogs.schemas import CityGet, CredentialTypeGet, OptionGet
 from api_core.controllers.base import BaseController
 from api_core.controllers.mixins import PublicEndpointMixin
 from api_core.controllers.serializers import CustomPydanticFastSerializer
@@ -65,5 +71,63 @@ class InstitutionTypeListController(
 
         return [
             OptionGet(code=str(row.code), id=str(row.pk), label=str(row.label))
+            for row in rows
+        ]
+
+
+class LanguageListController(
+    PublicEndpointMixin,
+    BaseController[CustomPydanticFastSerializer],
+):
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> list[OptionGet]:  # ruff: ignore[no-self-use]
+        rows = await sync_to_async(list)(
+            Language.objects.filter(active=True).order_by("name")
+        )
+
+        return [
+            OptionGet(code=str(row.code), id=str(row.pk), label=str(row.name))
+            for row in rows
+        ]
+
+
+class ServiceTypeListController(
+    PublicEndpointMixin,
+    BaseController[CustomPydanticFastSerializer],
+):
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> list[OptionGet]:  # ruff: ignore[no-self-use]
+        rows = await sync_to_async(list)(
+            ServiceType.objects.filter(active=True).order_by("label")
+        )
+
+        return [
+            OptionGet(code=str(row.code), id=str(row.pk), label=str(row.label))
+            for row in rows
+        ]
+
+
+class CredentialTypeListController(
+    PublicEndpointMixin,
+    BaseController[CustomPydanticFastSerializer],
+):
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> list[CredentialTypeGet]:  # ruff: ignore[no-self-use]
+        rows = await sync_to_async(list)(
+            CredentialType.objects
+            .select_related("service")
+            .filter(active=True)
+            .order_by("order", "label")
+        )
+
+        return [
+            CredentialTypeGet(
+                code=str(row.code),
+                id=str(row.pk),
+                label=str(row.label),
+                requires_expiry=bool(row.requires_expiry),
+                requires_vehicle=bool(row.requires_vehicle),
+                service=None if row.service is None else str(row.service.code),
+            )
             for row in rows
         ]
