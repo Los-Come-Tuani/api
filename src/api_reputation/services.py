@@ -9,6 +9,7 @@ from django.utils.timezone import now
 from api_auth.catalog import FunctionalPermissions as P
 from api_core.services.pages import paginate
 from api_exceptions.errors import ConflictError, ForbiddenError, NotFoundError
+from api_notifications.services import notify
 from api_profiles.models import ProviderProfile
 from api_reputation.models import Review, ReviewDispute
 from api_reputation.schemas import DisputeGet, ReviewGet
@@ -116,6 +117,14 @@ def review_sync(user: ApiUser, booking_id: UUID, data: ReviewPost) -> ReviewGet:
         if not guide:
             refresh_circuit_rating(booking.circuit_id)
             refresh_provider_rating(booking.provider.user_id)
+
+        notify(
+            review.subject_id,  # ty: ignore[unresolved-attribute]
+            "resena",
+            "Te dejaron una reseña",
+            f"{user.display_name} te calificó con {data.rating} de 5.",
+            {"booking_id": str(booking.pk), "review_id": str(review.pk)},
+        )
 
     return review_payload(review)
 

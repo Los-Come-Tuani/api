@@ -5,6 +5,7 @@ from django.utils.timezone import now
 from api_exceptions.errors import ConflictError, NotFoundError
 from api_messaging.models import Message, Participant
 from api_messaging.schemas import MessageGet
+from api_notifications.services import notify
 
 if TYPE_CHECKING:
     from datetime import datetime
@@ -78,6 +79,17 @@ def send_sync(user: ApiUser, booking_id: UUID, body: str) -> MessageGet:
 
     # lo que uno escribe ya lo leyó
     Participant.objects.filter(pk=participant.pk).update(last_read_at=message.sent_at)
+
+    for other in Participant.objects.filter(
+        conversation_id=participant.conversation_id
+    ).exclude(user=user):
+        notify(
+            other.user_id,
+            "mensaje",
+            user.display_name,
+            body.strip()[:140],
+            {"booking_id": str(booking_id)},
+        )
 
     return message_payload(message, user)
 

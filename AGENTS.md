@@ -8,9 +8,10 @@ portal web y la app móvil, repos hermanos de este (`..\portal` y `..\mobile` o 
 Hay una hoja de ruta en curso. F0 a F2 (secretos y configuración, identidad, Google, enlace
 del portal y de la app, roles y permisos) están hechas, y F3 (organizaciones y verificación)
 está hecha en el API y en el portal (falta crear el bucket real); F5 (guías y traductores) está
-hecha en el API, el portal y la app; F4 (lugares, circuitos e itinerarios) y el directorio de
-cuentas están hechos en el API y se conectan al portal y la app; F6, F7 y F8 (el resto del
-dominio) se confirman con el usuario una por una y están en `docs/hoja-de-ruta.md`. El
+hecha en el API, el portal y la app; F4 (lugares, circuitos e itinerarios), el directorio de
+cuentas, F6 (agenda, insignias y cupones), F7 (guías, reservas, chat y reseñas) y F8 (cobros,
+retiros, estados de cuenta, avisos, reportes y sanciones) están hechos en el API y se
+conectan al portal y la app; las decisiones de cada fase están en `docs/hoja-de-ruta.md`. El
 usuario trabaja en dos máquinas con rutas distintas: la memoria dice cuáles. Antes de trabajar lee
 `.cursor/memory/hoja-de-ruta.md`: dice qué está hecho, qué falta, cómo correr todo en esta
 máquina y qué avisos hay para el usuario. El portal y la app tienen su propia memoria en

@@ -7,6 +7,7 @@ from pgtrigger import ignore
 
 from api_auth.models import ApiUserTotpDevice
 from api_auth.services.crypto import rotate_secret, uses_primary_key
+from api_finance.models import BankAccount
 
 ########################################################################################
 
@@ -34,6 +35,17 @@ class Command(BaseCommand):
 
                 ApiUserTotpDevice.objects.filter(pk=device.pk).update(
                     secret=rotate_secret(device.secret),
+                )
+
+                rotated += 1
+
+            # las cuentas bancarias de los guías usan las mismas llaves (D-09)
+            for account in BankAccount.objects.select_for_update().iterator():
+                if uses_primary_key(str(account.number_encrypted)):
+                    continue
+
+                BankAccount.objects.filter(pk=account.pk).update(
+                    number_encrypted=rotate_secret(str(account.number_encrypted)),
                 )
 
                 rotated += 1

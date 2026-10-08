@@ -53,6 +53,7 @@ tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
 | F4 (lugares y circuitos)| **Hecha en el API**: lugares, ficha, novedades, circuitos oficiales, itinerarios del turista (sección 7d). Portal y app: ver sección 7d |
 | F6 (agenda, insignias, cupones) | **Hecha en el API** (sección 7e). Portal y app todavía no la consumen |
 | F7 (guías, reservas, chat, reseñas) | **Hecha en el API** (sección 7f). Portal y app todavía no la consumen |
+| F8 (cobros, retiros, avisos, sanciones) | **Hecha en el API** (sección 7g). Portal y app todavía no la consumen |
 
 Orden que eligió el usuario (2026-10-07): directorio + F4, luego F6, F7 y F8, en ese orden;
 cada fase se le confirma con sus preguntas antes de empezar. Pendiente chico: crear el
@@ -420,10 +421,43 @@ instante con impugnación; entran los horarios de grupo. Contrato: `docs/servici
 - Perfil público de los guías (`guide/`): lo que faltaba de F5 para que el turista los vea.
 - Pruebas: `test_services.py` (20).
 
-**Falta de F7**: cobro, reembolso y comisión (F8); avisos push (F8); WebSocket; avance del
-viaje parada por parada y agenda de llegadas (`visit-events`); lectura de reservas por el
-equipo. **Portal y app**: conectarlos (en la app: guías, salidas, reservar, convocatorias,
-chat, reseñas y la app del guía; en el portal: la cola de impugnaciones).
+**Falta de F7**: WebSocket; avance del viaje parada por parada y agenda de llegadas
+(`visit-events`); lectura de reservas por el equipo. **Portal y app**: conectarlos (en la
+app: guías, salidas, reservar, convocatorias, chat, reseñas y la app del guía; en el
+portal: la cola de impugnaciones).
+
+## 7g. F8 cobros, retiros, estados de cuenta, avisos, reportes y sanciones
+
+**Hecho en el API** (2026-10-08). Decisiones del usuario: pasarela intercambiable, hoy
+`manual` (el turista ve `PAYMENT_INSTRUCTIONS` y el equipo con `billing.manage` confirma el
+pago); comisión 15 % configurable con `billing.manage`; solo córdobas; retiros del guía a
+mano (cuenta cifrada, un cambio espera 24 h); estados de cuenta mensuales para comercios
+(insignia + cupón validado) cobrados fuera de línea; avisos por Firebase Cloud Messaging +
+bandeja; entran reportes y sanciones. Contrato: `docs/finanzas.md` y `docs/avisos.md`.
+
+- `api_finance`: `tarifa` (sembradas: `comision_reserva` 15, `insignia_mensual` 300,
+  `cupon_validado` 10), `pago` (uno por reserva con monto; se refleja en
+  `reserva.estado_pago`), `comision` (copia la tasa), `cuenta_bancaria` (número con
+  `encrypt_secret`, fuera del historial; `rotatetotpkeys` lo rota), `solicitud_retiro`,
+  `movimiento_saldo` (libro del guía, la suma nunca negativa por trigger), `estado_cuenta`
+  y sus líneas. Servicios: `gateway.py` (protocolo + `ManualGateway`), `payments.py`
+  (`open_payment`, `cancel_payment`, `settle` cierra la reserva prestada y pagada),
+  `balance.py`, `statements.py`. Comando `issuestatements [--period AAAA-MM]`.
+- `api_notifications`: `aviso_emitido` (bandeja; `estado_push`), `token_notificacion`,
+  preferencias por clase. `notify()` deja el aviso y, con Firebase y la preferencia, lo
+  manda en `on_commit`. `push.py` firma el JWT de la cuenta de servicio con PyJWT y usa
+  `urllib` (sin dependencias nuevas). Lo llaman reservas, postulaciones, cancelaciones,
+  chat, reseñas, pagos, retiros y sanciones.
+- `api_reports`: motivos (contexto `reporte`), `reporte` (persona, reseña, lugar o evento)
+  y `sancion` (suspensión/expulsión cambian el estado con `change_status_sync`; `syncevents`
+  levanta las suspensiones vencidas y también vence convocatorias).
+- Pruebas: `test_finance.py`, `test_notifications.py`, `test_reports.py` (32); ayudas de
+  reservas en `api_tests/services_helpers.py`.
+
+**Falta de F8**: pasarela real y su webhook; vencimiento del pago pendiente; cola de tareas
+para los envíos; avisos por correo. **Portal**: pagos, retiros, estados de cuenta, tarifas,
+reportes y sanciones. **App**: registrar el token de Firebase, la bandeja, las instrucciones
+de pago, saldo/cuenta/retiros del guía y reportar.
 
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
@@ -506,7 +540,13 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
     `apiorganizations.0004_foto_evento` y `apirewards.0001`. Programar
     `python src/manage.py syncevents` una vez al día (eventos, campañas y cupones vencidos).
 18. **Al desplegar F7**: migraciones `apiservices.0001`, `apimessaging.0001` y
-    `apireputation.0001`. Las reservas no cobran: el pago llega con F8.
+    `apireputation.0001`.
+19. **Al desplegar F8**: migraciones `apifinance.0001`, `apinotifications.0001` y
+    `apireports.0001`. Definir `PAYMENT_INSTRUCTIONS` con la cuenta real a la que paga el
+    turista. Programar `issuestatements` el día 1 de cada mes (además de `syncevents` y
+    `expirecredentials` diarios). Para los avisos al teléfono hace falta un proyecto de
+    Firebase: `FCM_PROJECT_ID` y `FCM_SERVICE_ACCOUNT` (secreto, solo en Railway) en el
+    API y el `google-services.json` del mismo proyecto en la app; sin ellos, solo bandeja.
 
 ## 10. Cómo trabajar en cada máquina (Windows, PowerShell)
 

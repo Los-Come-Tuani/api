@@ -5,6 +5,8 @@ from django.db.utils import IntegrityError
 from django.utils.timezone import localdate, now
 
 from api_exceptions.errors import ConflictError, NotFoundError
+from api_finance.services.payments import cancel_payment
+from api_notifications.services import notify
 from api_services.models import Booking, GuidedDeparture
 from api_services.services.bookings import CANCELLED, busy_at, status_row
 from api_services.services.guides import (
@@ -128,13 +130,26 @@ def cancel_departure_sync(
         GuidedDeparture.objects.filter(pk=departure.pk).update(
             cancel_reason=reason.strip(), cancelled_at=moment
         )
-        Booking.objects.filter(
-            departure=departure, status__code__in=LIVE_BOOKINGS
-        ).update(
+        affected = list(
+            Booking.objects.filter(departure=departure, status__code__in=LIVE_BOOKINGS)
+        )
+        Booking.objects.filter(pk__in=[item.pk for item in affected]).update(
             cancel_reason=reason.strip(),
             cancelled_at=moment,
             cancelled_by=user,
             status=status_row(CANCELLED),
         )
+
+        for booking in affected:
+            found: Any = booking
+            cancel_payment(booking)
+            notify(
+                found.user_id,
+                "reserva",
+                "El guía canceló la salida",
+                f"Se canceló tu salida del {found.date:%d/%m}. "
+                f"Motivo: {reason.strip()}",
+                {"booking_id": str(found.pk)},
+            )
 
     return departure_payload(departures().get(pk=departure.pk))

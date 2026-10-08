@@ -16,8 +16,9 @@ dominio de [servicios](modelo-dominio/modulos/servicios.md),
   cualquiera que el turista no creó ni modificó) el guía publica sus **salidas** y el
   turista reserva una. En un itinerario propio del turista (armado o ajustado por él), el
   turista publica una **convocatoria**, los guías se postulan con su precio y él elige.
-- **Sin cobro en línea hasta F8**: la reserva se confirma al crearse y el monto queda
-  congelado ([D-20](modelo-dominio/decisiones.md#d-20)); `payment_status` es `sin_cobro`.
+- La reserva se confirma al crearse y el monto queda congelado
+  ([D-20](modelo-dominio/decisiones.md#d-20)). Desde F8 abre su cobro con la pasarela
+  (hoy, manual): ver [Cobros, comisiones y retiros](finanzas.md).
 - El turista cancela gratis **hasta 24 horas antes**; el guía cancela con un motivo.
 - Chat por **consultas periódicas**: la app pide los mensajes posteriores al último que
   tiene.
@@ -89,7 +90,8 @@ con `syncevents`).
 {
   "id": "…", "role": "tourist", "status": "confirmed",
   "date": "2026-10-10", "start_time": "08:30", "adults": 2, "children": 1,
-  "amount": 600, "payment_status": "sin_cobro",
+  "amount": 600, "payment_status": "pendiente",
+  "payment_instructions": "El equipo de K'Plan te escribirá para confirmar el pago…",
   "circuit": { "id": "…", "title": "…" }, "itinerary": null,
   "guide": { "id": "…", "name": "Pedro", "photo": null },
   "tourist": { "id": "…", "name": "Ana" },
@@ -100,10 +102,14 @@ con `syncevents`).
 }
 ```
 
-Estados: `confirmed`, `in_progress`, `delivered`, `closed` (con el cobro, F8) y `cancelled`.
-El monto de una salida es `price_adult × adults + price_child × children` del circuito; el
-de una convocatoria, el `fee` del guía elegido. Una reserva de otra persona responde `404`.
-Pasadas las 24 horas previas el turista ya no cancela (`409`).
+Estados: `confirmed`, `in_progress`, `delivered`, `closed` y `cancelled`. Una reserva
+prestada se cierra (`closed`) cuando además está pagada: ahí se guarda la comisión y el
+resto entra al saldo del guía ([finanzas](finanzas.md)). `payment_status` es `sin_cobro`
+(gratis), `pendiente`, `pagado`, `por_reembolsar`, `reembolsado` o `anulado`; cancelar
+anula el pago pendiente o deja por reembolsar el ya hecho. El monto de una salida es
+`price_adult × adults + price_child × children` del circuito; el de una convocatoria, el
+`fee` del guía elegido. Una reserva de otra persona responde `404`. Pasadas las 24 horas
+previas el turista ya no cancela (`409`).
 
 ## Chat
 
@@ -138,8 +144,7 @@ perfil) y el del circuito, si la reserva era de uno. Ocultarla los recalcula.
 
 ## Lo que queda para después
 
-- El cobro al reservar, el reembolso al cancelar, la liberación al cerrar y la comisión: F8.
-- Avisos (nueva postulación, mensaje nuevo, reserva cancelada): F8 (notificaciones push).
+- El cobro en línea con una pasarela real (hoy el equipo confirma los pagos a mano).
 - El chat en tiempo real (WebSocket) y el chat antes de reservar.
 - La agenda de llegadas para los lugares (`visit-events`) y el avance del viaje parada por
   parada.
@@ -149,6 +154,7 @@ perfil) y el del circuito, si la reserva era de uno. Ocultarla los recalcula.
 
 - La salida guiada sobre un circuito oficial hace de `recorrido` + `recorrido_dia`: el
   producto del guía es guiar un circuito oficial en una fecha y hora.
-- La reserva no pasa por `pendiente_pago` ni `expirada` (no hay pasarela todavía).
+- La reserva no pasa por `pendiente_pago` ni `expirada`: se confirma al nacer y el pago va
+  aparte (`estado_pago`).
 - Las convocatorias y reservas cuelgan de la cuenta, no de `perfil_turista`.
 - No hay tablas `transicion_*`: los cambios quedan en el historial (`pghistory`).

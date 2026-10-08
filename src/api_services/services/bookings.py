@@ -6,7 +6,10 @@ from django.db.transaction import atomic
 from django.utils.timezone import localdate, now
 
 from api_exceptions.errors import ConflictError, ForbiddenError, NotFoundError
+from api_finance.models import Payment
+from api_finance.services.payments import cancel_payment, open_payment, settle
 from api_messaging.models import Conversation, Message, Participant
+from api_notifications.services import notify
 from api_profiles.models import ProviderProfile
 from api_reputation.models import Review
 from api_rewards.services.badges import ensure_tourist
@@ -122,6 +125,12 @@ def unread_for(user: ApiUser, booking: Booking) -> int:
     return messages.count()
 
 
+def payment_instructions(booking: Booking) -> str:
+    payment: Any = Payment.objects.filter(booking=booking, status="pendiente").first()
+
+    return "" if payment is None else str(payment.instructions)
+
+
 def booking_payload(booking: Booking, viewer: ApiUser) -> BookingGet:
     found: Any = booking
     guide: bool = is_guide_of(viewer, booking)
@@ -155,6 +164,7 @@ def booking_payload(booking: Booking, viewer: ApiUser) -> BookingGet:
                 id=found.itinerary.pk, title=str(found.itinerary.title)
             )
         ),
+        payment_instructions=payment_instructions(booking),
         payment_status=str(found.payment_status),
         reviewed=Review.objects.filter(author=viewer, booking=booking).exists(),
         role="guide" if guide else "tourist",
@@ -262,6 +272,14 @@ def book_departure_sync(user: ApiUser, data: BookingPost) -> BookingGet:
         )
 
         open_conversation(booking)
+        open_payment(booking)
+        notify(
+            departure.provider.user_id,
+            "reserva",
+            "Nueva reserva",
+            f"{user.display_name} reservó tu salida del {departure.date:%d/%m}.",
+            {"booking_id": str(booking.pk)},
+        )
 
     return booking_sync(user, booking.pk)
 
@@ -293,6 +311,16 @@ def cancel_booking_sync(user: ApiUser, booking_id: UUID, reason: str) -> Booking
             cancelled_at=now(),
             cancelled_by=user,
             status=status_row(CANCELLED),
+        )
+
+        cancel_payment(booking)
+        notify(
+            booking.user_id if guide else booking.provider.user_id,
+            "reserva",
+            "Reserva cancelada",
+            f"Se canceló la reserva del {booking.date:%d/%m}."
+            + (f" Motivo: {reason.strip()}" if reason.strip() else ""),
+            {"booking_id": str(booking.pk)},
         )
 
     return booking_sync(user, booking_id)
@@ -334,5 +362,8 @@ def finish_booking_sync(user: ApiUser, booking_id: UUID) -> BookingGet:
         Booking.objects.filter(pk=booking.pk).update(
             finished_at=now(), status=status_row(DELIVERED)
         )
+
+        # cobrada (o gratis), se cierra ya: la comisión y el saldo del guía
+        settle(booking.pk)
 
     return booking_sync(user, booking_id)

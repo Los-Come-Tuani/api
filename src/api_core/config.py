@@ -159,6 +159,21 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     #   Son públicos; no se necesita ningún secreto. Vacío = Google deshabilitado.
     GOOGLE_OAUTH_CLIENT_IDS: CsvList = ()
 
+    # - avisos push con Firebase Cloud Messaging (API HTTP v1): el id del proyecto y la
+    #   cuenta de servicio (el JSON completo en una línea). Vacíos = los avisos quedan
+    #   solo en la bandeja de la app. Ver `docs/avisos.md`.
+    FCM_PROJECT_ID: str = ""
+    FCM_SERVICE_ACCOUNT: Annotated[SecretStr, StringConstraints(max_length=8192)] = (
+        SecretStr(secret_value="")
+    )
+
+    # - la pasarela con la que se cobran las reservas. `manual`: el turista recibe estas
+    #   instrucciones y el equipo confirma el pago a mano. Ver `docs/finanzas.md`.
+    PAYMENT_GATEWAY: Literal["manual"] = "manual"
+    PAYMENT_INSTRUCTIONS: Annotated[str, StringConstraints(max_length=2000)] = (
+        "El equipo de K'Plan te escribirá para confirmar el pago de tu reserva."
+    )
+
     # - correo saliente. Sin `EMAIL_HOST` los correos salen por consola en desarrollo y
     #   se descartan con `DEPLOY=True`, para que ningún código de verificación quede
     #   escrito en los logs de producción.

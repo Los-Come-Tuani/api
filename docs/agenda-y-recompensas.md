@@ -18,8 +18,9 @@ de [agenda](modelo-dominio/modulos/agenda.md) e [insignias](modelo-dominio/modul
 - La insignia de un lugar se gana **escaneando su QR y estando a menos de 50 m** (las dos
   cosas), una vez por lugar cada 24 horas
   ([RF-S-15](requerimientos/funcionales/plataforma.md#rf-s-15)).
-- Activar la insignia de un lugar es pagado, pero los cobros llegan con F8: mientras tanto
-  la activa el equipo con `places.manage` (`has_badge` del lugar).
+- Activar la insignia de un lugar es pagado: la activa el equipo con `places.manage`
+  (`has_badge` del lugar) y, desde F8, el comercio la paga cada mes en su estado de cuenta
+  junto con los cupones que validó ([finanzas](finanzas.md)).
 - Un comercio tiene **hasta tres campañas de cupones activas** a la vez.
 
 ## Agenda
@@ -178,10 +179,9 @@ código de otro comercio responde `404`; uno ya usado o vencido, `409`.
 
 ## Lo que queda para después
 
-- La tarifa que K'Plan cobra por cupón validado, la activación pagada de la insignia y las
-  campañas de insignias extra con multiplicador y paquetes: F8 (cobros).
-- Los avisos a quien había visto un evento cancelado y los avisos por cercanía: F8
-  (notificaciones).
+- Las campañas de insignias extra con multiplicador y los paquetes.
+- Los avisos a quien había visto un evento cancelado y los avisos por cercanía (la bandeja
+  y el envío ya existen: [avisos](avisos.md)).
 - Las medallas por ciudad y el nivel de exploración del turista (`perfil_turista`).
 - La agenda de llegadas de los grupos (`visit-events`): con los recorridos de F7.
 

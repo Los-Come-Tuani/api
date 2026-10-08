@@ -231,7 +231,11 @@ class BookingGet(DTO):
     children: int
     # congelado al reservar, en córdobas
     amount: int
+    # `sin_cobro` (gratis), `pendiente`, `pagado`, `por_reembolsar`, `reembolsado` o
+    # `anulado`
     payment_status: str
+    # cómo pagar mientras está pendiente (lo da la pasarela)
+    payment_instructions: str
     circuit: BookingRouteRef | None
     itinerary: BookingRouteRef | None
     guide: GuideRef

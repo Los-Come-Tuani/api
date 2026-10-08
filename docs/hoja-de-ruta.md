@@ -27,6 +27,7 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 | F5   | **Hecha** (API, portal y app): postulación de guías y traductores y su revisión en dos pasos ([guía](prestadores.md)) | M4, M14 |
 | F6   | **Hecha en el API**: agenda cultural, insignias por QR y ubicación, campañas de cupones, canje y validación ([guía](agenda-y-recompensas.md)) | M1, M8, M12 |
 | F7   | **Hecha en el API**: guías públicos, salidas, convocatorias, reservas, chat y reseñas con impugnación ([guía](servicios.md)) | M9, M10, M11 |
+| F8   | **Hecha en el API**: cobro de reservas con pasarela manual, comisión, saldo y retiros del guía, estados de cuenta de comercios ([guía](finanzas.md)); bandeja y avisos por Firebase, reportes y sanciones ([guía](avisos.md)) | M13, M14, M15 |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 
@@ -250,10 +251,24 @@ Para qué: cobrar a las organizaciones, pagar a los guías y avisar a todos. Mó
 | `guide-withdrawal/`                         | App, portal | Guía; el equipo `billing.manage`          |
 | Notificaciones y preferencias               | App, portal | Sesión                                    |
 
-Antes de empezar, confirmar: la pasarela de pago disponible en Nicaragua, la moneda y
-cómo se conciliarán los cobros; la cuenta bancaria de desembolso se cifra y su cambio
-espera 24 horas ([D-09](modelo-dominio/decisiones.md#d-09), [D-10](modelo-dominio/decisiones.md#d-10));
-el proveedor de notificaciones push y los correos del sistema.
+**Estado: hecha en el API** (rutas reales en
+[Cobros, comisiones, retiros y estados de cuenta](finanzas.md) y en
+[Avisos, reportes y sanciones](avisos.md)). Lo que se decidió con el equipo antes de
+empezar (2026-10-08):
+
+- **Pasarela intercambiable**: el flujo de pago queda completo con una pasarela "manual"
+  (el turista recibe las instrucciones y el equipo confirma el pago); la pasarela real se
+  conecta cuando haya contrato, sin cambiar el resto.
+- **Comisión del 15%**, configurable por el equipo con `billing.manage`.
+- **Solo córdobas.**
+- **Retiros del guía a mano**: pide retirar su saldo a su cuenta bancaria (guardada cifrada,
+  [D-09](modelo-dominio/decisiones.md#d-09); cambiarla espera 24 horas,
+  [D-10](modelo-dominio/decisiones.md#d-10)) y el equipo marca el pago hecho.
+- **Estados de cuenta mensuales** para los comercios (insignia mensual del lugar y tarifa por
+  cupón validado), que el equipo cobra fuera de línea y marca pagados; tarifas editables.
+- **Avisos** por Firebase Cloud Messaging más una bandeja en la app; sin credenciales de
+  Firebase, solo la bandeja.
+- Entran los **reportes y sanciones**.
 
 ## Cómo se confirma una fase
 

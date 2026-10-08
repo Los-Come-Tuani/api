@@ -120,6 +120,9 @@ INSTALLED_APPS: Final[Sequence[str]] = (
     "api_services",
     "api_messaging",
     "api_reputation",
+    "api_finance",
+    "api_notifications",
+    "api_reports",
 )
 
 MIDDLEWARE: Final[Sequence[str]] = (

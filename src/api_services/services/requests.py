@@ -6,7 +6,9 @@ from django.db.utils import IntegrityError
 from django.utils.timezone import localdate, now
 
 from api_exceptions.errors import ConflictError, NotFoundError
+from api_finance.services.payments import open_payment
 from api_itineraries.models import Itinerary
+from api_notifications.services import notify
 from api_rewards.services.badges import ensure_tourist
 from api_services.models import Application, Booking, RequestStatus, ServiceRequest
 from api_services.schemas import (
@@ -298,6 +300,14 @@ def accept_application_sync(
         )
 
         open_conversation(booking)
+        open_payment(booking)
+        notify(
+            provider.user_id,
+            "reserva",
+            "Te eligieron",
+            f"{user.display_name} aceptó tu postulación para el {request.date:%d/%m}.",
+            {"booking_id": str(booking.pk)},
+        )
 
     return booking_sync(user, booking.pk)
 
@@ -391,6 +401,14 @@ def apply_sync(user: ApiUser, request_id: UUID, data: ApplyPost) -> ApplicationG
         )
     except IntegrityError as i:
         raise ConflictError(detail="Ya te postulaste a esta convocatoria.") from i
+
+    notify(
+        request.user_id,
+        "convocatoria",
+        "Un guía se postuló",
+        f"{user.display_name} se ofrece para tu recorrido por C$ {data.fee}.",
+        {"request_id": str(request.pk)},
+    )
 
     return application_payload(application)
 

@@ -272,7 +272,7 @@ def test_a_tourist_books_a_private_departure_with_a_frozen_price(
     assert booking["status"] == "confirmed"
     assert booking["amount"] == 600
     assert again["amount"] == 600
-    assert booking["payment_status"] == "sin_cobro"
+    assert booking["payment_status"] == "pendiente"
     assert booking["role"] == "tourist"
 
 
