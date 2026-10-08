@@ -61,6 +61,15 @@ def sign_in(client: DMRClient, token: str | None = None, **extra: object) -> obj
     )
 
 
+def web_sign_in(client: DMRClient, token: str | None = None) -> object:
+    csrf = client.get("/auth/csrf/").headers["x-csrftoken"]
+    return client.post(
+        "/auth/web/google/",
+        {"id_token": token or google_token()},
+        headers={"X-CSRFToken": csrf},
+    )
+
+
 def profile_data() -> dict[str, str]:
     return {"birth_date": ADULT, "nationality": "ni"}
 
@@ -76,6 +85,18 @@ def _google_enabled(monkeypatch: pytest.MonkeyPatch) -> None:
 def tourist(make_user: Callable[..., ApiUser], **extra: object) -> ApiUser:
     user = make_user(email=EMAIL, **extra)
     user.groups.add(Group.objects.get(name="Cliente"))  # ty: ignore[unresolved-attribute]
+
+    return user
+
+
+def portal_user(
+    make_user: Callable[..., ApiUser],
+    *,
+    group: str = "Negocio",
+    **extra: object,
+) -> ApiUser:
+    user = make_user(email=EMAIL, **extra)
+    user.groups.add(Group.objects.get(name=group))  # ty: ignore[unresolved-attribute]
 
     return user
 
@@ -184,7 +205,7 @@ def test_an_unverified_account_is_never_linked_by_email(
     assert pending.verified_at is None
 
 
-def test_team_accounts_cannot_use_google(
+def test_team_accounts_cannot_use_google_from_mobile(
     client: DMRClient,
     make_user: Callable[..., ApiUser],
 ) -> None:
@@ -193,6 +214,55 @@ def test_team_accounts_cannot_use_google(
     response = sign_in(client)
 
     assert response.status_code == HTTPStatus.FORBIDDEN  # ty: ignore[unresolved-attribute]
+    assert not ApiExternalIdentity.objects.exists()
+
+
+def test_public_accounts_cannot_use_google_from_the_portal(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+) -> None:
+    tourist(make_user)
+
+    response = web_sign_in(csrf_client)
+
+    assert response.status_code == HTTPStatus.FORBIDDEN  # ty: ignore[unresolved-attribute]
+    assert not ApiExternalIdentity.objects.exists()
+
+
+def test_google_does_not_create_accounts_from_the_portal(
+    csrf_client: DMRClient,
+) -> None:
+    response = web_sign_in(csrf_client)
+
+    assert response.status_code == HTTPStatus.FORBIDDEN  # ty: ignore[unresolved-attribute]
+    assert not ApiUser.objects.filter(email=EMAIL).exists()
+
+
+@pytest.mark.parametrize("group", ["Negocio", "Alcaldía", "Institución", "Personal"])
+def test_an_existing_portal_account_can_link_google(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+    group: str,
+) -> None:
+    user = portal_user(make_user, group=group)
+
+    response = web_sign_in(csrf_client)
+
+    assert response.status_code == HTTPStatus.OK, response.content  # ty: ignore[unresolved-attribute]
+    assert body(response)["user"]["email"] == EMAIL  # ty: ignore[invalid-argument-type]
+    assert ApiExternalIdentity.objects.get(user=user).subject
+
+
+def test_an_unverified_portal_account_is_not_linked(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+) -> None:
+    portal_user(make_user, status="pending")
+
+    response = web_sign_in(csrf_client)
+
+    assert response.status_code == HTTPStatus.FORBIDDEN  # ty: ignore[unresolved-attribute]
+    assert not ApiExternalIdentity.objects.exists()
 
 
 def test_an_account_that_cannot_operate_is_refused(
@@ -285,8 +355,10 @@ def test_google_still_asks_for_the_second_factor(
 
 def test_the_web_endpoint_sets_cookies_and_requires_csrf(
     csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
 ) -> None:
-    payload = {"id_token": google_token(), **profile_data()}
+    portal_user(make_user)
+    payload = {"id_token": google_token()}
 
     blocked = csrf_client.post("/auth/web/google/", payload)
     assert blocked.status_code == HTTPStatus.FORBIDDEN

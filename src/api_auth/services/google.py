@@ -12,7 +12,7 @@ from django.utils.timezone import now
 from django.views.decorators.debug import sensitive_variables
 from jwt import PyJWKClient, PyJWKClientConnectionError, PyJWTError
 
-from api_auth.enums import ApiUserTypes, IdentityProviders
+from api_auth.enums import AccountRoles, ApiUserTypes, IdentityProviders, Surfaces
 from api_auth.models import ApiExternalIdentity, ApiUser
 from api_core.config import CONFIG
 from api_exceptions.enums import BadRequestErrorTypes, RequestScopes
@@ -49,6 +49,16 @@ CLOCK_LEEWAY_SECONDS: Final[int] = 10
 DISABLED_DETAIL: Final[str] = "El inicio de sesión con Google no está habilitado."
 INVALID_TOKEN_DETAIL: Final[str] = "El token de Google no es válido."  # ruff: ignore[hardcoded-password-string]
 UNVERIFIED_DETAIL: Final[str] = "Google no ha verificado el correo de esta cuenta."
+WRONG_SURFACE_DETAIL: Final[str] = (
+    "Esta cuenta debe usar la forma de acceso indicada para su tipo."
+)
+
+WEB_ROLES: Final[frozenset[str]] = frozenset({
+    AccountRoles.ADMIN.value,
+    AccountRoles.ALCALDIA.value,
+    AccountRoles.INSTITUCION.value,
+    AccountRoles.NEGOCIO.value,
+})
 
 ########################################################################################
 
@@ -191,7 +201,29 @@ def link_account_sync(profile: GoogleProfile, user: ApiUser) -> ApiUser:
     return user
 
 
-def resolve_account_sync(profile: GoogleProfile, data: GooglePost) -> ApiUser:
+def ensure_google_surface_sync(user: ApiUser, surface: str) -> None:
+    role: str | None = role_of_sync(user)
+
+    if surface == Surfaces.WEB.value and role in WEB_ROLES:
+        return
+
+    if surface == Surfaces.MOBILE.value and (
+        role in PUBLIC_ROLES
+        or ApiUser.objects.filter(
+            pk=user.pk,
+            provider_profile__isnull=False,
+        ).exists()
+    ):
+        return
+
+    raise ForbiddenError(detail=WRONG_SURFACE_DETAIL)
+
+
+def resolve_account_sync(
+    profile: GoogleProfile,
+    data: GooglePost,
+    surface: str,
+) -> ApiUser:
     identity: ApiExternalIdentity | None = (
         ApiExternalIdentity.objects
         .select_related("user")
@@ -200,40 +232,36 @@ def resolve_account_sync(profile: GoogleProfile, data: GooglePost) -> ApiUser:
     )
 
     if identity is not None:
-        return identity.user  # ty: ignore[invalid-return-type]
+        user: ApiUser = identity.user  # ty: ignore[invalid-assignment]
+        ensure_google_surface_sync(user, surface)
+        return user
 
     existing: ApiUser | None = ApiUser.objects.filter(email=profile.email).first()
 
     if existing is not None:
+        ensure_google_surface_sync(existing, surface)
         return link_account_sync(profile, existing)
 
+    # El alta con Google existe solo en la app. En el portal primero se acepta una
+    # invitación o se completa la postulación de la organización; Google únicamente
+    # enlaza esa cuenta ya verificada.
+    if surface == Surfaces.WEB.value:
+        raise ForbiddenError(detail=WRONG_SURFACE_DETAIL)
+
     return create_account_sync(profile, data)
-
-
-def ensure_public_role_sync(user: ApiUser) -> None:
-    # Google es para turistas, guías y traductores. El equipo y las organizaciones
-    # entran con correo, contraseña y segundo factor.
-    if role_of_sync(user) in PUBLIC_ROLES:
-        return
-
-    raise ForbiddenError(
-        detail="Esta cuenta debe iniciar sesión con su correo y su contraseña.",
-    )
 
 
 ########################################################################################
 
 
 @sensitive_variables()
-async def sign_in_with_google(data: GooglePost) -> ApiUser:
+async def sign_in_with_google(data: GooglePost, surface: str) -> ApiUser:
     if not CONFIG.GOOGLE_OAUTH_CLIENT_IDS:
         raise NotFoundError(detail=DISABLED_DETAIL)
 
     profile: GoogleProfile = await sync_to_async(verify_token_sync)(data.id_token)
 
-    user: ApiUser = await sync_to_async(resolve_account_sync)(profile, data)
-
-    await sync_to_async(ensure_public_role_sync)(user)
+    user: ApiUser = await sync_to_async(resolve_account_sync)(profile, data, surface)
 
     ensure_can_operate(user)
 

@@ -4,20 +4,20 @@ icon: lucide/log-in
 
 # Inicio de sesión con Google
 
-Guía para dejar funcionando "Continuar con Google" en la app (y, si se quiere, en el
-portal). El API **no necesita ningún secreto de Google**: valida el token de identidad
+Guía para dejar funcionando "Continuar con Google" en la app y en el portal. El API
+**no necesita ningún secreto de Google**: valida el token de identidad
 con las llaves públicas de Google y comprueba que fue emitido para alguno de tus
 Client ID. Los Client ID son públicos, pero las credenciales que Google te deja
 descargar sí se tratan como secretas (ver [Qué no se versiona](#que-no-se-versiona)).
 
-## Antes de crear nada: identificadores definitivos
+## Identificadores definitivos
 
-Los Client ID de Android y de iOS quedan atados a identificadores de la app. Si luego
-cambian, hay que crear de nuevo los Client ID. Fíjalos primero:
+Los Client ID de Android y de iOS quedan atados a identificadores de la app. K'Plan usa:
 
-- **Android**: `applicationId` en `android/app/build.gradle.kts`, y la huella SHA-1 de
+- **Android**: `dev.kplan.app`, y la huella SHA-1 de
   cada llave de firma (depuración, subida y la de Play App Signing).
-- **iOS**: el _bundle identifier_ (`PRODUCT_BUNDLE_IDENTIFIER`).
+- **iOS**: `dev.kplan.app`; su configuración de Google queda pendiente hasta trabajar
+  la publicación para iPhone.
 
 La SHA-1 de depuración se obtiene con:
 
@@ -47,7 +47,7 @@ En **Clientes** crea uno de cada tipo que vayas a usar:
 
 | Tipo        | Datos que pide                                             | Para qué sirve                                                              |
 | ----------- | ---------------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Web**     | Orígenes de JavaScript autorizados (portal)                | Es el `aud` del token: lo valida el API y la app lo usa como `serverClientId` |
+| **Web**     | Orígenes de JavaScript autorizados (portal)                | Es el `aud` del token: lo validan el API, el portal y la app como `serverClientId` |
 | **Android** | Nombre del paquete y SHA-1 (uno por llave de firma)        | Google comprueba que la firma de la app es la registrada                   |
 | **iOS**     | _Bundle ID_                                                | Es el `GIDClientID` de la app en iOS                                        |
 
@@ -67,7 +67,9 @@ Vacía, el inicio de sesión con Google queda deshabilitado (`404`). En producci
 define como variable del servicio.
 
 Rutas: `POST /auth/mobile/google/` y `POST /auth/web/google/` (esta última con la
-cabecera CSRF y cookies, igual que el inicio de sesión del portal). Cuerpo:
+cabecera CSRF y cookies, igual que el inicio de sesión del portal).
+
+En la app móvil, el cuerpo es:
 
 ```json
 { "id_token": "<JWT de Google>", "birth_date": "1990-05-17", "nationality": "NI" }
@@ -82,10 +84,15 @@ cabecera CSRF y cookies, igual que el inicio de sesión del portal). Cuerpo:
 - Si existe una cuenta con ese correo, se **vincula** solo cuando su correo ya estaba
   verificado. Una cuenta sin verificar da `403`: de lo contrario, quien la creó con una
   contraseña propia se quedaría con la cuenta de quien entra con Google.
-- Solo entran turistas, guías y traductores. El equipo y las organizaciones usan correo,
-  contraseña y segundo factor (`403`).
+- En móvil solo entran turistas, guías y traductores.
 - La respuesta es la misma del inicio de sesión: `200` con la sesión, o `202` con el
   reto si la cuenta tiene 2FA.
+
+En el portal el cuerpo lleva solo `{ "id_token": "<JWT de Google>" }`. Google no crea
+cuentas desde ahí: el negocio, la alcaldía o la institución primero completa su
+postulación, y el equipo primero acepta su invitación. Después Google puede enlazar esa
+cuenta existente, activa y con correo verificado. Una cuenta de la app o un correo que
+todavía no tiene cuenta de portal recibe `403`. El segundo factor sigue aplicándose.
 
 ## 4. App (Flutter)
 
@@ -112,12 +119,24 @@ Client ID se compilan en la app con `--dart-define-from-file` (`env/dev.json`...
   con las mismas garantías de privacidad) a las apps que incluyen Google. Hay que
   resolverlo antes de publicar en iOS.
 
-## 5. Portal (opcional)
+## 5. Portal
 
-El API ya acepta `POST /auth/web/google/`. Para un botón en el portal se usa Google
-Identity Services con el Client ID Web, que entrega el token de identidad (`credential`)
-que se manda como `id_token`. No hay botón en el portal todavía: los negocios y el equipo
-de K'Plan no usan Google (`403`).
+El portal usa Google Identity Services con el Client ID Web. El botón oficial entrega
+`credential`, que se manda como `id_token` a `POST /auth/web/google/`. La variable pública
+del build es:
+
+```bash
+VITE_GOOGLE_CLIENT_ID="123456789-abc.apps.googleusercontent.com"
+```
+
+En desarrollo el origen autorizado es `http://localhost:5173`. Cuando exista el dominio
+de producción hay que agregar su origen exacto al mismo Client ID.
+
+## Firebase
+
+Firebase, `google-services.json` y una cuenta de servicio no se usan para este inicio de
+sesión. El cliente Android se registra directamente en Google Auth Platform con
+`dev.kplan.app` y la SHA-1 de cada firma.
 
 ## Qué no se versiona
 

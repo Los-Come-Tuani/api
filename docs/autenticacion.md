@@ -51,10 +51,14 @@ El correo se compara sin importar mayúsculas ni espacios en los extremos. El
 
 `POST /auth/mobile/google/` y `POST /auth/web/google/` con `{ "id_token",
 "birth_date"?, "nationality"? }` devuelven lo mismo que el inicio de sesión (`200`, o
-`202` si la cuenta tiene 2FA). La primera vez hay que mandar también `birth_date` y
-`nationality`; sin ellos la respuesta es `400` con esos campos en `field_errors`. Solo
-turistas, guías y traductores pueden usarlo. Configuración completa en
-[Inicio de sesión con Google](google.md).
+`202` si la cuenta tiene 2FA).
+
+- **Móvil**: solo turistas, guías y traductores. La primera vez puede crear la cuenta y
+  entonces exige también `birth_date` y `nationality`.
+- **Portal**: solo negocios, alcaldías, instituciones y equipo. No crea cuentas: enlaza
+  una cuenta existente, activa y con correo verificado; manda únicamente `id_token`.
+
+Configuración completa en [Inicio de sesión con Google](google.md).
 
 ## Registro (app)
 

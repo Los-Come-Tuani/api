@@ -1,6 +1,6 @@
 # Memoria de trabajo: hoja de ruta del API de K'Plan
 
-Actualizada el 2026-10-07 (tarde, en la PC 2). Es el traspaso para el siguiente agente: qué está hecho, qué
+Actualizada el 2026-10-08 (mañana, en la PC 2). Es el traspaso para el siguiente agente: qué está hecho, qué
 falta y cómo trabajar en esta máquina. Léela completa antes de tocar código. Si algo de
 aquí ya no es cierto, corrígelo en el mismo commit en que lo cambies.
 
@@ -52,7 +52,7 @@ tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
 | f0-env-config           | Hecha (3 repos)                                                                     |
 | f0-totp-migration-tests | Hecha (API)                                                                         |
 | f1-api-identity         | Hecha (API)                                                                         |
-| f1-google-login         | Hecha en el API y en la app, con guía (`docs/google.md`). El portal no lo usa: Google es solo para roles públicos |
+| f1-google-login         | Hecha en el API, la app y el portal, con guía (`docs/google.md`) |
 | f1-portal-link          | Hecha (portal, rama `feat/hoja-de-ruta-api`). Ver `portal/.cursor/memory`           |
 | f1-app-link             | Hecha (app, rama `feat/hoja-de-ruta-api`). Ver `mobile-1/.cursor/memory`            |
 | f2-roles-permissions    | **Hecha** en el API, el portal (permisos, invitación, equipo y roles) y la app (modo guía según el rol). "Todos los usuarios" del portal sigue en demo (sección 7) |
@@ -90,9 +90,10 @@ bucket real (sección 7b).
   olvidé, restablecer y cambiar contraseña; `GET/PATCH /auth/profile/`; baja de cuenta a 30
   días con restauración; revocación inmediata de sesiones (`sessions_revoked_at`);
   perfil de sesión con rol, permisos, organización y estado de 2FA.
-- **Google (F1)**: `POST /auth/mobile/google/` y `POST /auth/web/google/` con ID token;
-  identidad externa en `ApiExternalIdentity`; solo roles públicos; solo se vincula a cuentas
-  con correo verificado; `GOOGLE_OAUTH_CLIENT_IDS`. Guía paso a paso: `docs/google.md`.
+- **Google (F1)**: `POST /auth/mobile/google/` crea o enlaza turistas, guías y traductores;
+  `POST /auth/web/google/` solo enlaza cuentas existentes y verificadas de organizaciones o
+  equipo. Identidad externa en `ApiExternalIdentity`; `GOOGLE_OAUTH_CLIENT_IDS`. Guía:
+  `docs/google.md`.
 - **Roles y permisos (F2)**: ver sección 7 y `docs/roles.md`.
 - **Organizaciones (F3)**: alta pública de comercio, institución cultural y alcaldía, cola
   de verificación del equipo, roles con ámbito y archivos en un bucket S3. Ver sección 7b y
@@ -159,9 +160,9 @@ Todas sin prefijo `/api`, con barra final:
 Hechos y verificados contra el API real (prueba de integración, navegador real y prueba de
 contrato en Dart). El detalle de cada uno está en su propia memoria:
 `C:\development\kplan\portal\.cursor\memory\hoja-de-ruta.md` y
-`C:\development\mobile-1\.cursor\memory\hoja-de-ruta.md`. En la app falta decidir el
-`applicationId` y el bundle id definitivos **antes** de crear los Client ID de Google, y el
-inicio de sesión con Apple en iOS.
+`C:\development\mobile-1\.cursor\memory\hoja-de-ruta.md`. El identificador Android y el
+bundle ID son `dev.kplan.app`; el Client ID Web y el de Android de desarrollo ya existen.
+Faltan la configuración de Google para iOS y el inicio de sesión con Apple.
 
 ## 6. Qué cambia para los clientes con F2
 
@@ -516,8 +517,8 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
    existen la solicitud, la restauración y el estado `closing`).
 5. `ALLOWED_HOSTS`, CORS y CSRF conservan los valores heredados de Railway como respaldo en
    `DEPLOY` mientras no existan las variables; bórralos cuando estén definidas.
-6. El identificador de la app (`com.example...`) lo decide el usuario. No hay URL de
-   producción todavía: son placeholders.
+6. El identificador de Android y el bundle ID de iOS son `dev.kplan.app`. No hay URL de
+   producción todavía: las de portal y API siguen como placeholders.
 7. Los secretos reales solo viven en variables de entorno. El `.env` local está ignorado.
 8. **Al desplegar F2**: la siembra le pone perfil a los grupos existentes con nombre de
    rol de sistema, y **Administrador exige segundo factor**: quien lo tenga y no lo haya
