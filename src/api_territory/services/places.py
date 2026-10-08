@@ -13,6 +13,7 @@ from api_core.services.pages import paginate
 from api_core.services.uploads import UploadKinds
 from api_exceptions.errors import ConflictError, ForbiddenError, NotFoundError
 from api_organizations.models import Business, CulturalInstitution, Photo
+from api_rewards.services.badges import sync_badge
 from api_territory.models import (
     City,
     Municipality,
@@ -430,6 +431,7 @@ def create_place_sync(actor: Actor, data: PlacePost) -> PlaceGet:
         )
 
         replace_photos("point", point, images)
+        sync_badge(point)
 
     return place_sync(actor, point.pk)
 
@@ -503,6 +505,10 @@ def update_place_sync(actor: Actor, point_id: UUID, patch: PlacePatch) -> PlaceG
 
         if images is not None:
             replace_photos("point", point, images)
+
+        # la insignia y su QR siguen a `has_badge` (F6)
+        if "has_badge" in changes:
+            sync_badge(PointOfInterest.objects.get(pk=point.pk))
 
     return place_sync(actor, point.pk)
 

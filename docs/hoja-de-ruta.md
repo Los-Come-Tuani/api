@@ -25,6 +25,7 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 | F3   | **Hecha** (API y portal): alta pública de comercios, instituciones y alcaldías, cola de verificación del equipo, roles con ámbito y archivos ([guía](organizaciones.md)). Falta crear el bucket real | M1, M3, M5, M7, M14 |
 | F4   | **Hecha en el API**: lugares con ficha y novedades, circuitos oficiales (equipo y alcaldías) e itinerarios del turista ([guía](territorio.md)) | M1, M5, M6 |
 | F5   | **Hecha** (API, portal y app): postulación de guías y traductores y su revisión en dos pasos ([guía](prestadores.md)) | M4, M14 |
+| F6   | **Hecha en el API**: agenda cultural, insignias por QR y ubicación, campañas de cupones, canje y validación ([guía](agenda-y-recompensas.md)) | M1, M8, M12 |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 
@@ -197,7 +198,9 @@ Para qué: la oferta que publican las organizaciones y que modera el equipo. Mó
 
 Los saldos de insignias son libros de movimientos ([D-24](modelo-dominio/decisiones.md#d-24)).
 
-**Estado: en curso.** Lo que se decidió con el equipo antes de empezar (2026-10-07):
+**Estado: hecha en el API** (rutas reales en [Agenda, insignias y cupones](agenda-y-recompensas.md);
+la tabla de arriba era la propuesta; lo pagado queda para F8). Lo que se decidió con el
+equipo antes de empezar (2026-10-07):
 
 - Publican eventos las instituciones culturales **y las alcaldías** verificadas.
 - Moderación **después**: el evento se ve según sus fechas y la campaña de cupones al
@@ -219,9 +222,18 @@ Recursos de la app (los modelos ya están en `mobile-1`): `itinerary`, `guide-re
 reseñas. Son de roles públicos (`/auth/mobile/*`); el equipo solo necesita lectura para
 atender incidencias.
 
-Antes de empezar, confirmar: el ciclo de una reserva (estados, cancelación, plazos;
-ver [reserva](diagramas/estados/reserva.md)); la tarifa que se congela en la reserva
-([D-20](modelo-dominio/decisiones.md#d-20)); tiempo real del chat; moderación de reseñas.
+**Estado: en curso.** Lo que se decidió con el equipo antes de empezar (2026-10-07):
+
+- **Dos caminos según el circuito.** En un circuito oficial (creativo, especial de K'Plan o
+  cualquiera que el turista no creó ni modificó) el guía publica sus horarios y el turista
+  reserva uno; en los de grupo, con cupos. En un circuito propio del turista (armado o
+  ajustado por él) el turista publica una convocatoria, los guías se postulan y él elige.
+- **Sin cobro en línea hasta F8**: la reserva se confirma y la tarifa queda congelada
+  ([D-20](modelo-dominio/decisiones.md#d-20)); el pago se conecta con la pasarela.
+- Cancelación gratis **hasta 24 horas antes**; después ya no se cancela desde la app.
+- Chat por **consultas periódicas**; WebSocket más adelante.
+- Reseñas **publicadas al instante**; el reseñado puede impugnarlas y el equipo decide.
+- Entran los horarios de grupo de los circuitos creativos.
 
 ## F8. Finanzas y notificaciones
 

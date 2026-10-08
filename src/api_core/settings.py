@@ -115,6 +115,8 @@ INSTALLED_APPS: Final[Sequence[str]] = (
     "api_roles",
     "api_profiles",
     "api_itineraries",
+    "api_agenda",
+    "api_rewards",
 )
 
 MIDDLEWARE: Final[Sequence[str]] = (

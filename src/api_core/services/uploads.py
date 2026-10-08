@@ -41,6 +41,10 @@ class UploadKinds(TextChoices):
     PLACE_PHOTO = "place-photo"
     # una foto de un circuito oficial
     CIRCUIT_PHOTO = "circuit-photo"
+    # una foto de un evento de la agenda
+    EVENT_PHOTO = "event-photo"
+    # la imagen de una campaña de cupones
+    COUPON_PHOTO = "coupon-photo"
 
 
 @dataclass(frozen=True, slots=True)
@@ -61,6 +65,8 @@ PHOTO_RULE: Final[UploadRule] = UploadRule(
 
 RULES: Final[dict[str, UploadRule]] = {
     UploadKinds.CIRCUIT_PHOTO: PHOTO_RULE,
+    UploadKinds.COUPON_PHOTO: PHOTO_RULE,
+    UploadKinds.EVENT_PHOTO: PHOTO_RULE,
     UploadKinds.LEGAL_DOCUMENT: DOCUMENT_RULE,
     UploadKinds.PLACE_PHOTO: PHOTO_RULE,
     UploadKinds.PROVIDER_DOCUMENT: DOCUMENT_RULE,

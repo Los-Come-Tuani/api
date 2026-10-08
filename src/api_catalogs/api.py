@@ -3,9 +3,11 @@ from typing import TYPE_CHECKING
 from dmr.routing import Router
 
 from api_catalogs.controllers.catalogs import (
+    BenefitTypeListController,
     BusinessTypeListController,
     CityListController,
     CredentialTypeListController,
+    EventCategoryListController,
     InstitutionTypeListController,
     LanguageListController,
     PillarListController,
@@ -41,5 +43,13 @@ router: Final[Router] = Router(
             endpoint="catalog/credential-type",
         ),
         route_controller(ctrl=PillarListController, endpoint="catalog/pillar"),
+        route_controller(
+            ctrl=EventCategoryListController,
+            endpoint="catalog/event-category",
+        ),
+        route_controller(
+            ctrl=BenefitTypeListController,
+            endpoint="catalog/benefit-type",
+        ),
     ),
 )

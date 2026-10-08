@@ -18,7 +18,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
     initial = True
 
-    dependencies = []
+    # los índices del historial usan `gin_trgm_ops`: la extensión va antes
+    dependencies = [("apicore", "0002_immutable_unaccent")]
 
     operations = [
         migrations.CreateModel(

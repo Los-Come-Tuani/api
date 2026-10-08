@@ -19,6 +19,13 @@ class CredentialTypeGet(OptionGet):
     requires_vehicle: bool
 
 
+# Lo que puede dar un cupón.
+class BenefitTypeGet(OptionGet):
+    # la campaña tiene que decir cuánto (el porcentaje o los córdobas)
+    requires_amount: bool
+    is_percentage: bool
+
+
 class CityGet(DTO):
     id: str
     code: str

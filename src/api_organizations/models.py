@@ -253,6 +253,15 @@ class Photo(ApiModel):
         related_name="photos",
         to="apiterritory.Circuit",
     )
+    event = ForeignKey(
+        db_column="evento_id",
+        db_default=None,
+        default=None,
+        null=True,
+        on_delete=CASCADE,
+        related_name="photos",
+        to="apiagenda.Event",
+    )
 
     # la referencia en el almacenamiento de archivos
     file_key = CharField(db_column="archivo_id", max_length=255)
@@ -271,12 +280,29 @@ class Photo(ApiModel):
         constraints: Sequence[CheckConstraint] = (
             CheckConstraint(
                 condition=(
-                    Q(business__isnull=False, point__isnull=True, circuit__isnull=True)
-                    | Q(
-                        business__isnull=True, point__isnull=False, circuit__isnull=True
+                    Q(
+                        business__isnull=False,
+                        circuit__isnull=True,
+                        event__isnull=True,
+                        point__isnull=True,
                     )
                     | Q(
-                        business__isnull=True, point__isnull=True, circuit__isnull=False
+                        business__isnull=True,
+                        circuit__isnull=True,
+                        event__isnull=True,
+                        point__isnull=False,
+                    )
+                    | Q(
+                        business__isnull=True,
+                        circuit__isnull=False,
+                        event__isnull=True,
+                        point__isnull=True,
+                    )
+                    | Q(
+                        business__isnull=True,
+                        circuit__isnull=True,
+                        event__isnull=False,
+                        point__isnull=True,
                     )
                 ),
                 name="chk_foto_dueno_excluyente",
@@ -293,6 +319,11 @@ class Photo(ApiModel):
                 condition=Q(circuit__isnull=False),
                 fields=["circuit", "order"],
                 name="idx_foto_circuito",
+            ),
+            Index(
+                condition=Q(event__isnull=False),
+                fields=["event", "order"],
+                name="idx_foto_evento",
             ),
         )
 

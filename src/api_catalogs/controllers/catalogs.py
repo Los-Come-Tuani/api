@@ -4,14 +4,21 @@ from asgiref.sync import sync_to_async
 from dmr import modify
 
 from api_catalogs.models import (
+    BenefitType,
     BusinessType,
     CredentialType,
     CulturalPillar,
+    EventCategory,
     InstitutionType,
     Language,
     ServiceType,
 )
-from api_catalogs.schemas import CityGet, CredentialTypeGet, OptionGet
+from api_catalogs.schemas import (
+    BenefitTypeGet,
+    CityGet,
+    CredentialTypeGet,
+    OptionGet,
+)
 from api_core.controllers.base import BaseController
 from api_core.controllers.mixins import PublicEndpointMixin
 from api_core.controllers.serializers import CustomPydanticFastSerializer
@@ -121,6 +128,44 @@ class PillarListController(
 
         return [
             OptionGet(code=str(row.code), id=str(row.pk), label=str(row.label))
+            for row in rows
+        ]
+
+
+class EventCategoryListController(
+    PublicEndpointMixin,
+    BaseController[CustomPydanticFastSerializer],
+):
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> list[OptionGet]:  # ruff: ignore[no-self-use]
+        rows = await sync_to_async(list)(
+            EventCategory.objects.filter(active=True).order_by("order", "label")
+        )
+
+        return [
+            OptionGet(code=str(row.code), id=str(row.pk), label=str(row.label))
+            for row in rows
+        ]
+
+
+class BenefitTypeListController(
+    PublicEndpointMixin,
+    BaseController[CustomPydanticFastSerializer],
+):
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> list[BenefitTypeGet]:  # ruff: ignore[no-self-use]
+        rows = await sync_to_async(list)(
+            BenefitType.objects.filter(active=True).order_by("label")
+        )
+
+        return [
+            BenefitTypeGet(
+                code=str(row.code),
+                id=str(row.pk),
+                is_percentage=bool(row.is_percentage),
+                label=str(row.label),
+                requires_amount=bool(row.requires_amount),
+            )
             for row in rows
         ]
 

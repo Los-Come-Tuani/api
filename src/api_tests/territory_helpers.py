@@ -6,8 +6,10 @@ from django.contrib.auth.models import Group
 from django.utils.timezone import now
 from dmr.test import DMRClient
 
-from api_catalogs.models import BusinessType, CulturalPillar
-from api_organizations.models import Business
+from api_auth.enums import ApiUserTypes
+from api_auth.models import ApiUserGroups
+from api_catalogs.models import BusinessType, CulturalPillar, InstitutionType
+from api_organizations.models import Business, CulturalInstitution
 from api_roles.services import grant_role_sync
 from api_territory.models import (
     Circuit,
@@ -65,6 +67,31 @@ def verified_municipality(code: str = "leon") -> Municipality:
     )
 
 
+def verified_institution(code: str = "leon") -> CulturalInstitution:
+    institution = CulturalInstitution.objects.create(
+        city=city(code),
+        contact_email=f"teatro.{code}@example.com",
+        document_key="legal-document/acta.pdf",
+        institution_type=InstitutionType.objects.get(code="teatro"),
+        name=f"Teatro de {city(code).name}",
+        phone="2311-1111",
+    )
+    CulturalInstitution.objects.filter(pk=institution.pk).update(verified_at=now())
+    institution.refresh_from_db()
+
+    return institution
+
+
+def tourist(user: ApiUser) -> dict[str, str]:
+    # una cuenta de turista con su sesión de la app
+    ApiUserGroups.objects.get_or_create(
+        api_user=user,
+        group=Group.objects.get(name=ApiUserTypes.CLIENT.value),
+    )
+
+    return mobile_headers(user)
+
+
 def verified_business(
     code: str = "leon",
     *,
@@ -92,7 +119,7 @@ def verified_business(
 
 def operator(
     user: ApiUser,
-    organization: Business | Municipality,
+    organization: Business | CulturalInstitution | Municipality,
     role: str,
 ) -> ApiUser:
     grant_role_sync(

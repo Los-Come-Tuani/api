@@ -3,10 +3,12 @@ from typing import TYPE_CHECKING, NamedTuple
 from django.db.transaction import atomic
 
 from api_catalogs.models import (
+    BenefitType,
     BusinessType,
     CredentialType,
     CulturalPillar,
     Currency,
+    EventCategory,
     InstitutionType,
     Language,
     Reason,
@@ -45,6 +47,25 @@ CULTURAL_PILLARS: Final[tuple[tuple[str, str], ...]] = (
     ("gastronomia", "Gastronomía"),
     ("naturaleza", "Naturaleza"),
     ("aventura", "Aventura"),
+)
+
+# - (código, etiqueta): las clases de evento de la agenda, en el orden del portal
+EVENT_CATEGORIES: Final[tuple[tuple[str, str], ...]] = (
+    ("tradicion", "Tradición"),
+    ("feria", "Feria"),
+    ("cultura", "Cultura"),
+    ("taller", "Taller"),
+    ("charla", "Charla"),
+    ("musica", "Música"),
+    ("gastronomia", "Gastronomía"),
+)
+
+# - (código, etiqueta, exige monto, es porcentaje): lo que da un cupón
+BENEFIT_TYPES: Final[tuple[tuple[str, str, bool, bool], ...]] = (
+    ("descuento_porcentaje", "Descuento en porcentaje", True, True),
+    ("descuento_monto", "Descuento en córdobas", True, False),
+    ("producto_gratis", "Producto gratis", False, False),
+    ("regalo", "Regalo", False, False),
 )
 
 # - el pilar del lugar que se crea al aprobar un comercio, según su giro
@@ -165,6 +186,31 @@ CREDENTIAL_TYPES: Final[tuple[CredentialTypeSpec, ...]] = (
 ########################################################################################
 
 
+# Los catálogos de lugares, agenda y cupones (F4 y F6).
+def seed_content_catalogs() -> None:
+    for order, (code, label) in enumerate(CULTURAL_PILLARS):
+        CulturalPillar.objects.get_or_create(
+            code=code,
+            defaults={"label": label, "order": order},
+        )
+
+    for order, (code, label) in enumerate(EVENT_CATEGORIES):
+        EventCategory.objects.get_or_create(
+            code=code,
+            defaults={"label": label, "order": order},
+        )
+
+    for code, label, requires_amount, is_percentage in BENEFIT_TYPES:
+        BenefitType.objects.get_or_create(
+            code=code,
+            defaults={
+                "is_percentage": is_percentage,
+                "label": label,
+                "requires_amount": requires_amount,
+            },
+        )
+
+
 @atomic
 def execute() -> None:
     # `get_or_create`: lo que el equipo desactiva o ajusta después no se pisa al migrar
@@ -204,11 +250,7 @@ def execute() -> None:
     for code, name in LANGUAGES:
         Language.objects.get_or_create(code=code, defaults={"name": name})
 
-    for order, (code, label) in enumerate(CULTURAL_PILLARS):
-        CulturalPillar.objects.get_or_create(
-            code=code,
-            defaults={"label": label, "order": order},
-        )
+    seed_content_catalogs()
 
     services: dict[str, ServiceType] = {}
 

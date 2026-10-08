@@ -51,6 +51,7 @@ tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
 | F5 (guías y traductores)| **Hecha** en el API, el portal (la cola en dos pasos) y la app (postularse, estado, corregir, renovar, perfil). Sección 7c |
 | Directorio de cuentas   | **Hecho en el API** (`GET|PATCH /auth/account/`, `docs/roles.md`). El portal lo conecta (sección 7d) |
 | F4 (lugares y circuitos)| **Hecha en el API**: lugares, ficha, novedades, circuitos oficiales, itinerarios del turista (sección 7d). Portal y app: ver sección 7d |
+| F6 (agenda, insignias, cupones) | **Hecha en el API** (sección 7e). Portal y app todavía no la consumen |
 
 Orden que eligió el usuario (2026-10-07): directorio + F4, luego F6, F7 y F8, en ese orden;
 cada fase se le confirma con sus preguntas antes de empezar. Pendiente chico: crear el
@@ -364,6 +365,38 @@ organizaciones del portal (`organization/`).
 alcaldía entra a Circuitos). **App**: circuitos, lugares e itinerarios contra el API. El
 estado real de cada uno está en su memoria.
 
+## 7e. F6 agenda, insignias y cupones
+
+**Hecho en el API** (2026-10-07). Decisiones del usuario: publican eventos instituciones y
+alcaldías verificadas (y el equipo los especiales de K'Plan); moderación después
+(`content.moderate` oculta eventos y retira campañas); la insignia se gana con QR **y**
+menos de 50 m, una por lugar cada 24 h; la activación pagada de la insignia la hace el
+equipo (`has_badge`) hasta F8; hasta tres campañas activas por comercio. Contrato:
+`docs/agenda-y-recompensas.md`.
+
+- `api_catalogs`: `categoria_evento` y `tipo_beneficio` (`seed_content_catalogs`). Rutas
+  `catalog/event-category/` y `catalog/benefit-type/`.
+- `api_agenda`: `estado_evento` y `evento` (institución o alcaldía o ninguna; `featured`,
+  `hidden_at`, `clonado_de`). La vigencia sale del calendario en `sync_states()` (antes de
+  cada lectura y con `manage.py syncevents`, que **hay que programar a diario**).
+- `api_rewards`: `insignia` (una por lugar, `codigo_qr`; la crea o apaga `sync_badge` al
+  cambiar `has_badge`), `visita_acreditada` (disparador de 24 h), `movimiento_insignia`
+  (disparador de saldo no negativo), `estado_campania`, `campania_cupon`, `estado_cupon` y
+  `cupon` (beneficio copiado y congelado). Canje y validación con filas bloqueadas
+  (`select_for_update`). Visitas y canjes solo para el papel `turista`.
+- `foto` suma `evento_id`. `upload/` suma `event-photo` y `coupon-photo`.
+- Las migraciones iniciales de `apicatalogs` y `apiterritory` ahora dependen de
+  `apicore.0002` (usaban `gin_trgm_ops` sin declararlo; con las apps nuevas el orden de
+  creación de la base de pruebas cambió y fallaba).
+- Pruebas: `test_agenda.py` (20) y `test_rewards.py` (25).
+
+**Falta de F6**: lo pagado (tarifa por cupón validado, activación mensual de la insignia,
+campañas de insignias extra con multiplicador) va con F8; avisos de cancelación y por
+cercanía, con F8; medallas por ciudad y nivel de exploración; la agenda de llegadas
+(`visit-events`), con F7. **Portal y app**: conectarlos a estas rutas (agenda de la
+institución y la alcaldía, moderación, QR del lugar, campañas y validación en el portal;
+agenda, escanear QR, saldo, tienda y billetera en la app).
+
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
 El mapa completo, con módulos del modelo de dominio, rutas propuestas, permisos y las
@@ -441,6 +474,9 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
     `seedcontent` es solo para desarrollo y demo.
 16. El `.gitleaks.toml` permite las líneas de dependencia de migraciones
     (`("apiterritory", "0002_...")`), que la regla genérica tomaba por claves.
+17. **Al desplegar F6**: migraciones `apicatalogs.0004_agenda_cupones`, `apiagenda.0001`,
+    `apiorganizations.0004_foto_evento` y `apirewards.0001`. Programar
+    `python src/manage.py syncevents` una vez al día (eventos, campañas y cupones vencidos).
 
 ## 10. Cómo trabajar en cada máquina (Windows, PowerShell)
 

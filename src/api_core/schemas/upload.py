@@ -11,6 +11,8 @@ from api_core.services.uploads import UploadKinds
 class UploadPost(DTO):
     kind: Literal[
         UploadKinds.CIRCUIT_PHOTO,
+        UploadKinds.COUPON_PHOTO,
+        UploadKinds.EVENT_PHOTO,
         UploadKinds.LEGAL_DOCUMENT,
         UploadKinds.PLACE_PHOTO,
         UploadKinds.PROVIDER_DOCUMENT,

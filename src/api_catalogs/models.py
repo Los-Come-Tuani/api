@@ -213,3 +213,45 @@ class CulturalPillar(ApiModel):
         constraints: Sequence[UniqueConstraint] = (
             UniqueConstraint(fields=["code"], name="unq_pilarcultural_codigo"),
         )
+
+
+########################################################################################
+
+
+# La clase de un evento de la agenda: feria, taller, música...
+@track_table(meta={"db_table": "categoria_evento_cambio"})
+class EventCategory(ApiModel):
+    code = CharField(db_column="codigo", max_length=40)
+    label = CharField(db_column="etiqueta", max_length=100)
+    order = SmallIntegerField(db_column="orden", db_default=0, default=0)
+    active = BooleanField(db_column="activo", db_default=True, default=True)
+
+    class Meta(ApiModel.Meta):
+        db_table: str = "categoria_evento"
+
+        constraints: Sequence[UniqueConstraint] = (
+            UniqueConstraint(fields=["code"], name="unq_categoriaevento_codigo"),
+        )
+
+
+# Lo que da un cupón: un descuento en porcentaje o en córdobas, un producto gratis o un
+# regalo. `requires_amount` dice si la campaña tiene que declarar cuánto.
+@track_table(meta={"db_table": "tipo_beneficio_cambio"})
+class BenefitType(ApiModel):
+    code = CharField(db_column="codigo", max_length=40)
+    label = CharField(db_column="etiqueta", max_length=100)
+    requires_amount = BooleanField(
+        db_column="exige_monto", db_default=False, default=False
+    )
+    # el monto es un porcentaje y no lleva moneda
+    is_percentage = BooleanField(
+        db_column="es_porcentaje", db_default=False, default=False
+    )
+    active = BooleanField(db_column="activo", db_default=True, default=True)
+
+    class Meta(ApiModel.Meta):
+        db_table: str = "tipo_beneficio"
+
+        constraints: Sequence[UniqueConstraint] = (
+            UniqueConstraint(fields=["code"], name="unq_tipobeneficio_codigo"),
+        )

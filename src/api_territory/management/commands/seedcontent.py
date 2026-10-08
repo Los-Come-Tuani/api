@@ -12,6 +12,7 @@ from django.utils.timezone import now
 
 from api_catalogs.models import CulturalPillar
 from api_core.config import CONFIG
+from api_rewards.services.badges import sync_badge
 from api_territory.models import (
     Circuit,
     CircuitStatus,
@@ -166,6 +167,7 @@ class Command(BaseCommand):
             if created:
                 replace_photos("point", point, row.get("images", []))
 
+            sync_badge(point)
             points[row["id"]] = point
 
         City.objects.filter(pk__in={point.city_id for point in points.values()}).update(  # ty: ignore[unresolved-attribute]
