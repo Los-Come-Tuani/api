@@ -26,6 +26,7 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 | F4   | **Hecha en el API**: lugares con ficha y novedades, circuitos oficiales (equipo y alcaldías) e itinerarios del turista ([guía](territorio.md)) | M1, M5, M6 |
 | F5   | **Hecha** (API, portal y app): postulación de guías y traductores y su revisión en dos pasos ([guía](prestadores.md)) | M4, M14 |
 | F6   | **Hecha en el API**: agenda cultural, insignias por QR y ubicación, campañas de cupones, canje y validación ([guía](agenda-y-recompensas.md)) | M1, M8, M12 |
+| F7   | **Hecha en el API**: guías públicos, salidas, convocatorias, reservas, chat y reseñas con impugnación ([guía](servicios.md)) | M9, M10, M11 |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 
@@ -222,7 +223,8 @@ Recursos de la app (los modelos ya están en `mobile-1`): `itinerary`, `guide-re
 reseñas. Son de roles públicos (`/auth/mobile/*`); el equipo solo necesita lectura para
 atender incidencias.
 
-**Estado: en curso.** Lo que se decidió con el equipo antes de empezar (2026-10-07):
+**Estado: hecha en el API** (rutas reales en [Guías, reservas, chat y reseñas](servicios.md);
+lo pagado queda para F8). Lo que se decidió con el equipo antes de empezar (2026-10-07):
 
 - **Dos caminos según el circuito.** En un circuito oficial (creativo, especial de K'Plan o
   cualquiera que el turista no creó ni modificó) el guía publica sus horarios y el turista

@@ -52,6 +52,7 @@ tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
 | Directorio de cuentas   | **Hecho en el API** (`GET|PATCH /auth/account/`, `docs/roles.md`). El portal lo conecta (sección 7d) |
 | F4 (lugares y circuitos)| **Hecha en el API**: lugares, ficha, novedades, circuitos oficiales, itinerarios del turista (sección 7d). Portal y app: ver sección 7d |
 | F6 (agenda, insignias, cupones) | **Hecha en el API** (sección 7e). Portal y app todavía no la consumen |
+| F7 (guías, reservas, chat, reseñas) | **Hecha en el API** (sección 7f). Portal y app todavía no la consumen |
 
 Orden que eligió el usuario (2026-10-07): directorio + F4, luego F6, F7 y F8, en ese orden;
 cada fase se le confirma con sus preguntas antes de empezar. Pendiente chico: crear el
@@ -397,6 +398,33 @@ cercanía, con F8; medallas por ciudad y nivel de exploración; la agenda de lle
 institución y la alcaldía, moderación, QR del lugar, campañas y validación en el portal;
 agenda, escanear QR, saldo, tienda y billetera en la app).
 
+## 7f. F7 guías, reservas, chat y reseñas
+
+**Hecho en el API** (2026-10-07). Decisiones del usuario: en un circuito oficial (creativo,
+especial o cualquiera que el turista no creó ni modificó) el guía publica sus salidas y el
+turista reserva; en un itinerario propio el turista publica una convocatoria y elige entre
+las postulaciones; sin cobro en línea hasta F8 (monto congelado, `estado_pago=sin_cobro`);
+el turista cancela gratis hasta 24 h antes; chat por consultas periódicas; reseñas al
+instante con impugnación; entran los horarios de grupo. Contrato: `docs/servicios.md`.
+
+- `api_services`: `salida_guiada` (exclusiva en circuitos privados; un guía no sale dos
+  veces a la misma hora), `estado_convocatoria`, `convocatoria`, `postulacion`,
+  `estado_reserva` (sin `pendiente_pago` ni `expirada` hasta F8) y `reserva` (nace de una
+  salida o de una postulación; monto de solo lectura). Servicios en `services/` (`guides`,
+  `departures`, `requests`, `bookings`). Guía = prestador activo con el servicio `guia`.
+- `api_messaging`: `conversacion` (una por reserva, nace con ella), participantes con
+  `leido_hasta` y `mensaje` inmutable.
+- `api_reputation`: `resena` (una por autor y reserva; inmutable salvo `oculta_en`) e
+  `impugnacion`; las del turista recalculan `promedio_valoracion` y `total_resenas` del
+  `perfil_prestador` y `calificacion`/`resenas` del circuito.
+- Perfil público de los guías (`guide/`): lo que faltaba de F5 para que el turista los vea.
+- Pruebas: `test_services.py` (20).
+
+**Falta de F7**: cobro, reembolso y comisión (F8); avisos push (F8); WebSocket; avance del
+viaje parada por parada y agenda de llegadas (`visit-events`); lectura de reservas por el
+equipo. **Portal y app**: conectarlos (en la app: guías, salidas, reservar, convocatorias,
+chat, reseñas y la app del guía; en el portal: la cola de impugnaciones).
+
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
 El mapa completo, con módulos del modelo de dominio, rutas propuestas, permisos y las
@@ -477,6 +505,8 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
 17. **Al desplegar F6**: migraciones `apicatalogs.0004_agenda_cupones`, `apiagenda.0001`,
     `apiorganizations.0004_foto_evento` y `apirewards.0001`. Programar
     `python src/manage.py syncevents` una vez al día (eventos, campañas y cupones vencidos).
+18. **Al desplegar F7**: migraciones `apiservices.0001`, `apimessaging.0001` y
+    `apireputation.0001`. Las reservas no cobran: el pago llega con F8.
 
 ## 10. Cómo trabajar en cada máquina (Windows, PowerShell)
 

@@ -7,10 +7,13 @@ import api_agenda.api
 import api_auth.api
 import api_catalogs.api
 import api_itineraries.api
+import api_messaging.api
 import api_moderation.api
 import api_organizations.api
 import api_profiles.api
+import api_reputation.api
 import api_rewards.api
+import api_services.api
 import api_territory.api
 
 from api_core.controllers.routers import route_controllers, sort_urls
@@ -30,10 +33,13 @@ router: Final[Router] = Router(
         *api_auth.api.router.urls,
         *api_catalogs.api.router.urls,
         *api_itineraries.api.router.urls,
+        *api_messaging.api.router.urls,
         *api_moderation.api.router.urls,
         *api_organizations.api.router.urls,
         *api_profiles.api.router.urls,
+        *api_reputation.api.router.urls,
         *api_rewards.api.router.urls,
+        *api_services.api.router.urls,
         *api_territory.api.router.urls,
         *route_controllers(UploadController),
     )),
