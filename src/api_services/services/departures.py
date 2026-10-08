@@ -22,6 +22,8 @@ from api_territory.services.access import invalid
 if TYPE_CHECKING:
     from uuid import UUID
 
+    from django.db.models.query import QuerySet
+
     from api_auth.models import ApiUser
     from api_services.schemas import DepartureGet, DeparturePatch, DeparturePost
 
@@ -112,6 +114,54 @@ def update_departure_sync(
     return departure_payload(departures().get(pk=departure.pk))
 
 
+# Cancela las salidas y sus reservas vivas: el pago pendiente se anula, el cobrado queda
+# por reembolsar y se avisa a cada turista (y al guía, si no fue él quien canceló).
+def cancel_departures(
+    found: QuerySet,
+    *,
+    by: ApiUser,
+    reason: str,
+    title: str,
+) -> int:
+    moment = now()
+    chosen = list(found.filter(cancelled_at__isnull=True))
+
+    GuidedDeparture.objects.filter(pk__in=[item.pk for item in chosen]).update(
+        cancel_reason=reason, cancelled_at=moment
+    )
+
+    affected = list(
+        Booking.objects.select_related("provider").filter(
+            departure__in=chosen, status__code__in=LIVE_BOOKINGS
+        )
+    )
+    Booking.objects.filter(pk__in=[item.pk for item in affected]).update(
+        cancel_reason=reason,
+        cancelled_at=moment,
+        cancelled_by=by,
+        status=status_row(CANCELLED),
+    )
+
+    for booking in affected:
+        current: Any = booking
+        cancel_payment(booking)
+        message = f"Se canceló tu salida del {current.date:%d/%m}. Motivo: {reason}"
+        notify(
+            current.user_id, "reserva", title, message, {"booking_id": str(current.pk)}
+        )
+
+        if current.provider.user_id != by.pk:
+            notify(
+                current.provider.user_id,
+                "reserva",
+                title,
+                message,
+                {"booking_id": str(current.pk)},
+            )
+
+    return len(chosen)
+
+
 # Cancelar la salida cancela sus reservas, con el motivo que da el guía.
 def cancel_departure_sync(
     user: ApiUser, departure_id: UUID, reason: str
@@ -124,32 +174,33 @@ def cancel_departure_sync(
     if not reason.strip():
         raise invalid("reason", "Dile a quienes reservaron por qué cancelas.")
 
-    moment = now()
-
     with atomic():
-        GuidedDeparture.objects.filter(pk=departure.pk).update(
-            cancel_reason=reason.strip(), cancelled_at=moment
+        cancel_departures(
+            GuidedDeparture.objects.filter(pk=departure.pk),
+            by=user,
+            reason=reason.strip(),
+            title="El guía canceló la salida",
         )
-        affected = list(
-            Booking.objects.filter(departure=departure, status__code__in=LIVE_BOOKINGS)
-        )
-        Booking.objects.filter(pk__in=[item.pk for item in affected]).update(
-            cancel_reason=reason.strip(),
-            cancelled_at=moment,
-            cancelled_by=user,
-            status=status_row(CANCELLED),
-        )
-
-        for booking in affected:
-            found: Any = booking
-            cancel_payment(booking)
-            notify(
-                found.user_id,
-                "reserva",
-                "El guía canceló la salida",
-                f"Se canceló tu salida del {found.date:%d/%m}. "
-                f"Motivo: {reason.strip()}",
-                {"booking_id": str(found.pk)},
-            )
 
     return departure_payload(departures().get(pk=departure.pk))
+
+
+# Un circuito que sale de la app (retirado o despublicado) cancela sus próximas salidas.
+def cancel_circuit_departures(circuit_id: UUID, *, by: ApiUser, reason: str) -> int:
+    return cancel_departures(
+        GuidedDeparture.objects.filter(circuit_id=circuit_id, date__gte=localdate()),
+        by=by,
+        reason=reason,
+        title="Se canceló tu recorrido",
+    )
+
+
+# Las salidas de un circuito que ve el portal (el equipo o la alcaldía de su ciudad),
+# aunque el circuito ya no esté publicado; también las canceladas.
+def official_departures_sync(circuit: Circuit) -> list[DepartureGet]:
+    return [
+        departure_payload(item)
+        for item in departures()
+        .filter(circuit=circuit, date__gte=localdate())
+        .order_by("date", "start_time")
+    ]

@@ -8,6 +8,7 @@ from api_auth.catalog import FunctionalPermissions as P
 from api_core.services.pages import paginate
 from api_core.services.uploads import UploadKinds
 from api_exceptions.errors import ConflictError, ForbiddenError, NotFoundError
+from api_services.services.departures import cancel_circuit_departures
 from api_territory.models import (
     Circuit,
     CircuitStatus,
@@ -32,6 +33,7 @@ from .images import (
     photos_payload,
     replace_photos,
 )
+from .legs import estimated_leg
 from .places import (
     RELATED as POINT_RELATED,
     city_ref,
@@ -73,6 +75,8 @@ STATUS_BY_API: Final[dict[str, str]] = {name: code for code, name in STATUS_API.
 # - los creativos dan tres insignias extra al completarlos (la medalla de la ciudad)
 CREATIVE_BONUS_BADGES: Final[int] = 3
 
+WITHDRAWN_REASON: Final[str] = "El circuito ya no está disponible en K'Plan."
+
 ########################################################################################
 # Lectura
 
@@ -97,6 +101,26 @@ def clock(value: time) -> str:
     return value.strftime("%H:%M")
 
 
+# La visita de cada parada más el traslado desde la anterior: el escrito a mano o, si no
+# hay, el que estiman el portal y la app con la distancia.
+def duration_of(stops: list[Any], travel_mode: str) -> int:
+    total: int = 0
+
+    for index, stop in enumerate(stops):
+        total += int(stop.point.visit_minutes)
+
+        if index == 0:
+            continue
+
+        total += (
+            int(stop.leg_minutes)
+            if stop.leg_minutes is not None
+            else estimated_leg(stops[index - 1].point, stop.point, travel_mode)
+        )
+
+    return total
+
+
 def inline_payload(circuit: Circuit) -> CircuitInlineGet:
     found: Any = circuit
     stops: list[Any] = list(found.stops.all())
@@ -113,9 +137,7 @@ def inline_payload(circuit: Circuit) -> CircuitInlineGet:
         created_at=found.created_at,
         description=str(found.description),
         difficulty=found.difficulty,
-        duration_minutes=sum(
-            int(stop.point.visit_minutes) + int(stop.leg_minutes or 0) for stop in stops
-        ),
+        duration_minutes=duration_of(stops, str(found.travel_mode)),
         id=found.pk,
         images=photos_payload(circuit),
         includes=str(found.includes),
@@ -548,12 +570,19 @@ def update_circuit_sync(actor: Actor, circuit_id: UUID, data: CircuitPut) -> Cir
         write_stops(circuit, data, points)
         replace_photos("circuit", circuit, images)
 
+        if circuit.status.code == PUBLISHED and status != PUBLISHED:
+            cancel_circuit_departures(
+                circuit.pk, by=actor.user, reason=WITHDRAWN_REASON
+            )
+
     return circuit_sync(actor, circuit.pk)
 
 
 # Retirar es definitivo (RF-A-09): sale de la app y ya no se edita, pero los itinerarios
-# que lo siguen o que salieron de él lo conservan.
+# que lo siguen o que salieron de él lo conservan. Sus próximas salidas se cancelan.
 def retire_circuit_sync(actor: Actor, circuit_id: UUID) -> None:
     circuit: Circuit = editable_circuit(actor, circuit_id)
 
-    Circuit.objects.filter(pk=circuit.pk).update(status=status_row(RETIRED))
+    with atomic():
+        Circuit.objects.filter(pk=circuit.pk).update(status=status_row(RETIRED))
+        cancel_circuit_departures(circuit.pk, by=actor.user, reason=WITHDRAWN_REASON)

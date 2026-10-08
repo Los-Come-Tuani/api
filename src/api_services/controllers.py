@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import ClassVar
+from typing import TYPE_CHECKING, ClassVar
 
 from asgiref.sync import sync_to_async
 from dmr import Body, Path, modify
@@ -30,6 +30,13 @@ from api_services.schemas import (
     ServiceCancelPost,
 )
 from api_services.services import bookings, departures, guides, requests
+from api_territory.controllers import as_actor
+from api_territory.services.circuits import visible_circuit
+
+if TYPE_CHECKING:
+    from uuid import UUID
+
+    from api_territory.services.access import Actor
 
 ########################################################################################
 # Lo público: los guías aprobados y las salidas de un circuito
@@ -67,6 +74,17 @@ class CircuitDepartureController(
     @modify(status_code=HTTPStatus.OK)
     async def get(self, parsed_path: Path[UuidInstancePath]) -> list[DepartureGet]:  # ruff: ignore[no-self-use]
         return await sync_to_async(guides.circuit_departures_sync)(parsed_path.id)
+
+
+def official_departures(actor: Actor, circuit_id: UUID) -> list[DepartureGet]:
+    return departures.official_departures_sync(visible_circuit(actor, circuit_id))
+
+
+class OfficialCircuitDepartureController(BaseController[CustomPydanticFastSerializer]):
+    # el portal: las salidas de un circuito que ve, aunque ya no esté publicado
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self, parsed_path: Path[UuidInstancePath]) -> list[DepartureGet]:
+        return await as_actor(self.request.user, official_departures, parsed_path.id)
 
 
 ########################################################################################

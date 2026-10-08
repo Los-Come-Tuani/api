@@ -46,6 +46,12 @@ class BadRequestError(TypedApiError[BadRequestErrorTypes]):
         "string_too_long": "Este campo debe tener un máximo de {} caracter(es).",
     }
 
+    # - las de listas: su contexto trae el tipo primero, así que se leen por nombre
+    PYDANTIC_NAMED_MAPPER: Final[dict[str, str]] = {
+        "too_long": "Este campo admite como máximo {max_length} elemento(s).",
+        "too_short": "Este campo necesita al menos {min_length} elemento(s).",
+    }
+
     default_detail: Final[str] = "La solicitud contiene datos inválidos."
 
     default_http_status: Final[HTTPStatus] = HTTPStatus.BAD_REQUEST
@@ -73,6 +79,11 @@ class BadRequestError(TypedApiError[BadRequestErrorTypes]):
     @classmethod
     def parse_pydantic_error(cls, err: ErrorDetail | ErrorDetails) -> str:
         ctx: dict | None = err.get("ctx")
+
+        named: str | None = cls.PYDANTIC_NAMED_MAPPER.get(err.get("type", ""))
+
+        if named is not None and ctx is not None:
+            return named.format_map(ctx)
 
         msg: str | None = cls.PYDANTIC_TYPE_MAPPER.get(err.get("type", ""))
 

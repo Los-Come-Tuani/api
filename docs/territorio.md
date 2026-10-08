@@ -152,7 +152,8 @@ Corregir el título no la mueve.
 
 `category` es `city`, `nature` o `culture`; `difficulty`, `easy` o `moderate`. `badges` son
 las insignias de sus paradas más las extra; `duration_minutes`, el tiempo de visita de las
-paradas más los traslados que se conocen (`leg_minutes` nulo es "lo calcula la app"). La
+paradas más los traslados: el escrito a mano (`leg_minutes`) o, si es nulo, el estimado con
+la distancia y `travel_mode`, con la misma cuenta que el portal y la app. La
 lista no trae `stops`: trae `stop_ids` y `route` (lo mínimo de cada parada para trazar el
 recorrido y calcular la duración sin pedir los lugares).
 
@@ -165,6 +166,7 @@ recorrido y calcular la duración sin pedir los lugares).
 | `GET official-circuit/{id}/`   | Quien lo ve                                                   | Con sus paradas                  |
 | `PUT official-circuit/{id}/`   | `circuits.manage` o la alcaldía que lo organiza               | Reemplaza todo                   |
 | `DELETE official-circuit/{id}/`| `circuits.manage` o la alcaldía que lo organiza               | Lo retira para siempre (`204`)   |
+| `GET official-circuit/{id}/departure/` | Quien lo ve                                           | Sus próximas salidas de guía, también las canceladas y aunque el circuito ya no esté publicado (la forma de [servicios](servicios.md)) |
 
 Un circuito de otra ciudad no existe para una alcaldía, ni por identificador
 ([RF-A-03](requerimientos/funcionales/portal-alcaldias.md#rf-a-03)); los del equipo en su
@@ -200,6 +202,10 @@ Reglas:
   temporada (las dos fechas o ninguna).
 - Publicar (`status: "published"`) pide al menos una foto y un horario.
 - En `PUT`, `status: "draft"` sobre algo que ya se publicó lo deja `unpublished`.
+- Despublicar o retirar un circuito **cancela sus próximas salidas de guía y sus reservas**:
+  el pago pendiente se anula, el cobrado queda por reembolsar y el turista y el guía
+  reciben un aviso `reserva`.
+- Con menos de dos paradas, `field_errors["body.stops"]` dice cuántas hacen falta.
 - `images` son claves de `POST /upload/` con `kind: "circuit-photo"`.
 
 ## Itinerarios del turista

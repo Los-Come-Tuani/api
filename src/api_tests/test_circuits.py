@@ -1,12 +1,18 @@
+from decimal import Decimal
 from http import HTTPStatus
 from typing import TYPE_CHECKING
 
 import pytest
 
+from django.db.models import F
+
 from api_core.services import storage as storage_module
 from api_core.services.storage import MemoryStorage
-from api_territory.models import Circuit
+from api_notifications.models import Notification
+from api_services.models import Booking, GuidedDeparture
+from api_territory.models import Circuit, CircuitStatus, CircuitStop, PointOfInterest
 from api_tests.helpers import body
+from api_tests.services_helpers import book, make_guide, publish_departure
 from api_tests.territory_helpers import (
     CIRCUIT_PHOTO,
     PLACE_PHOTO,
@@ -14,8 +20,10 @@ from api_tests.territory_helpers import (
     city,
     make_circuit,
     make_point,
+    mobile_headers,
     operator,
     signed_in,
+    tourist,
     verified_municipality,
 )
 
@@ -25,7 +33,6 @@ if TYPE_CHECKING:
     from dmr.test import DMRClient
 
     from api_auth.models import ApiUser
-    from api_territory.models import PointOfInterest
 
 ########################################################################################
 
@@ -387,6 +394,154 @@ def test_a_retired_circuit_leaves_the_app_and_is_not_edited(
     assert edited.status_code == HTTPStatus.CONFLICT
     assert client.get(f"/circuit/{circuit.pk}/").status_code == HTTPStatus.NOT_FOUND
     assert Circuit.objects.filter(pk=circuit.pk).exists()
+
+
+########################################################################################
+# Las salidas de guía de un circuito que sale de la app
+
+
+@pytest.fixture
+def guide_user(make_user: Callable[..., ApiUser]) -> ApiUser:
+    user = make_user(email="guia@example.com", first_name="Pedro")
+    make_guide(user)
+
+    return user
+
+
+def booked(
+    client: DMRClient,
+    circuit: Circuit,
+    guide_user: ApiUser,
+    tourist_user: ApiUser,
+) -> dict:
+    departure = publish_departure(client, mobile_headers(guide_user), circuit)
+
+    return book(client, tourist(tourist_user), departure)
+
+
+def test_retiring_a_circuit_cancels_its_departures_and_bookings(
+    client: DMRClient,
+    guide_user: ApiUser,
+    make_member: Callable[..., ApiUser],
+    make_user: Callable[..., ApiUser],
+    points: list[PointOfInterest],
+) -> None:
+    circuit = make_circuit(points[:2])
+    Circuit.objects.filter(pk=circuit.pk).update(price_adult=500)
+    ana = make_user(email="turista@example.com")
+    booking = booked(client, circuit, guide_user, ana)
+
+    manager(make_member, "circuits.manage").delete(f"{CIRCUITS}{circuit.pk}/")
+
+    found = Booking.objects.select_related("status").get(pk=booking["id"])
+    title = "Se canceló tu recorrido"
+    assert found.status.code == "cancelada"
+    assert found.payment_status == "anulado"
+    assert GuidedDeparture.objects.get(circuit=circuit).cancelled_at is not None
+    assert Notification.objects.filter(title=title, user=ana).exists()
+    assert Notification.objects.filter(title=title, user=guide_user).exists()
+
+
+def test_unpublishing_a_circuit_cancels_its_bookings(
+    client: DMRClient,
+    guide_user: ApiUser,
+    make_member: Callable[..., ApiUser],
+    make_user: Callable[..., ApiUser],
+    points: list[PointOfInterest],
+) -> None:
+    circuit = make_circuit(points[:2])
+    booking = booked(client, circuit, guide_user, make_user(email="t@example.com"))
+    team = manager(make_member, "circuits.manage")
+
+    response = team.put(f"{CIRCUITS}{circuit.pk}/", circuit_body(points[:2]))
+
+    assert body(response)["status"] == "unpublished"
+    assert Booking.objects.get(pk=booking["id"]).cancelled_at is not None
+
+
+def test_editing_a_published_circuit_keeps_its_bookings(
+    client: DMRClient,
+    guide_user: ApiUser,
+    make_member: Callable[..., ApiUser],
+    make_user: Callable[..., ApiUser],
+    points: list[PointOfInterest],
+) -> None:
+    circuit = make_circuit(points[:2])
+    booking = booked(client, circuit, guide_user, make_user(email="t@example.com"))
+    team = manager(make_member, "circuits.manage")
+
+    team.put(f"{CIRCUITS}{circuit.pk}/", circuit_body(points[:2], status="published"))
+
+    assert Booking.objects.get(pk=booking["id"]).cancelled_at is None
+
+
+def test_the_portal_sees_the_departures_of_an_unpublished_circuit(
+    client: DMRClient,
+    guide_user: ApiUser,
+    make_member: Callable[..., ApiUser],
+    mayor: ApiUser,
+    points: list[PointOfInterest],
+) -> None:
+    circuit = make_circuit(points[:2])
+    departure = publish_departure(client, mobile_headers(guide_user), circuit)
+    Circuit.objects.filter(pk=circuit.pk).update(
+        status=CircuitStatus.objects.get(code="despublicado")
+    )
+    path = f"{CIRCUITS}{circuit.pk}/departure/"
+
+    team = body(manager(make_member, "circuits.view").get(path))
+    municipality = body(signed_in(mayor).get(path))
+    public = body(client.get(f"/circuit/{circuit.pk}/departure/"))
+
+    assert [item["id"] for item in team] == [departure["id"]]
+    assert [item["id"] for item in municipality] == [departure["id"]]
+    assert public == []
+
+
+def test_the_departures_of_another_city_do_not_exist_for_a_municipality(
+    mayor: ApiUser,
+) -> None:
+    granada = [make_point("granada", name="Uno"), make_point("granada", name="Dos")]
+    elsewhere = make_circuit(granada, title="Granada a pie")
+
+    response = signed_in(mayor).get(f"{CIRCUITS}{elsewhere.pk}/departure/")
+
+    assert response.status_code == HTTPStatus.NOT_FOUND
+
+
+########################################################################################
+# Lo que se calcula
+
+
+def test_a_circuit_with_one_stop_says_why(
+    make_member: Callable[..., ApiUser],
+    points: list[PointOfInterest],
+) -> None:
+    team = manager(make_member, "circuits.manage")
+
+    response = team.post(CIRCUITS, circuit_body(points[:1]))
+
+    assert body(response)["field_errors"]["body.stops"] == (
+        "Este campo necesita al menos 2 elemento(s)."
+    )
+
+
+def test_the_duration_counts_the_estimated_walks(
+    client: DMRClient,
+    points: list[PointOfInterest],
+) -> None:
+    first, second, third = points
+    # a un kilómetro en línea recta: 1,3 km por calle, 20 minutos a pie
+    PointOfInterest.objects.filter(pk=second.pk).update(
+        latitude=F("latitude") + Decimal("0.009")
+    )
+    circuit = make_circuit([first, second, third])
+    # el tramo escrito a mano manda sobre el estimado
+    CircuitStop.objects.filter(circuit=circuit, point=third).update(leg_minutes=12)
+
+    listed = body(client.get("/circuit/"))
+
+    assert listed[0]["duration_minutes"] == 30 + 20 + 30 + 12 + 30
 
 
 def test_the_list_leaves_out_the_retired_unless_asked(

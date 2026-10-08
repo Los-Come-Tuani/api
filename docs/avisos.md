@@ -41,7 +41,7 @@ cualquiera puede hacer y las sanciones del equipo. Es la fase F8 de la
 | `kind`         | Cuándo llega                                                          | `data`            |
 | -------------- | --------------------------------------------------------------------- | ----------------- |
 | `mensaje`      | Un mensaje nuevo en el chat de una reserva                             | `booking_id`      |
-| `reserva`      | Al guía: una reserva nueva o el turista aceptó su postulación. A los dos: una reserva cancelada (también cuando el guía cancela su salida) | `booking_id` |
+| `reserva`      | Al guía: una reserva nueva o el turista aceptó su postulación. A los dos: una reserva cancelada (también cuando el guía cancela su salida o el circuito se despublica o se retira) | `booking_id` |
 | `convocatoria` | Al turista: un guía se postuló a su convocatoria                       | `request_id`      |
 | `resena`       | Le dejaron una reseña                                                  | `booking_id`, `review_id` |
 | `pago`         | Pago confirmado o reembolsado (turista); retiro pagado o rechazado (guía) | `booking_id` o `withdrawal_id` |

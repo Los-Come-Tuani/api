@@ -17,6 +17,7 @@ from api_services.controllers import (
     GuideController,
     GuideDetailController,
     MineApplicationController,
+    OfficialCircuitDepartureController,
     OpenRequestApplyController,
     OpenRequestController,
     ServiceRequestAcceptController,
@@ -63,6 +64,8 @@ router: Final[Router] = Router(
         route_controller(ctrl=GuideController, endpoint="guide"),
         detail(GuideDetailController, "guide"),
         action(CircuitDepartureController, "circuit", "departure"),
+        # el portal
+        action(OfficialCircuitDepartureController, "official-circuit", "departure"),
         # el guía
         route_controller(ctrl=DepartureController, endpoint="departure"),
         detail(DepartureDetailController, "departure"),
