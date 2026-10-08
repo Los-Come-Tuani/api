@@ -66,8 +66,11 @@ def tariffs_payload() -> list[TariffGet]:
     ]
 
 
+# El comercio también las lee: son lo que paga cada mes.
 def pricing_sync(actor: Actor) -> list[TariffGet]:
-    if not actor.can(P.BILLING_VIEW):
+    business: bool = actor.organization is not None and actor.operates("business")
+
+    if not (actor.can(P.BILLING_VIEW) or business):
         raise ForbiddenError
 
     return tariffs_payload()

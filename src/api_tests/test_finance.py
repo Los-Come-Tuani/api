@@ -38,6 +38,7 @@ from api_tests.territory_helpers import (
     signed_in,
     tourist,
     verified_business,
+    verified_municipality,
 )
 
 if TYPE_CHECKING:
@@ -269,6 +270,25 @@ def test_only_billing_manage_changes_the_pricing(
     assert viewer.put("/pricing/", {"coupon_fee": 1}).status_code == (
         HTTPStatus.FORBIDDEN
     )
+
+
+def test_a_business_reads_what_it_pays_but_does_not_change_it(
+    make_user: Callable[..., ApiUser],
+) -> None:
+    owner = signed_in(
+        operator(make_user(email="negocio@example.com"), verified_business(), "Negocio")
+    )
+    mayor = signed_in(
+        operator(
+            make_user(email="alcaldia@example.com"), verified_municipality(), "Alcaldía"
+        )
+    )
+
+    assert owner.get("/pricing/").status_code == HTTPStatus.OK
+    assert owner.put("/pricing/", {"coupon_fee": 1}).status_code == (
+        HTTPStatus.FORBIDDEN
+    )
+    assert mayor.get("/pricing/").status_code == HTTPStatus.FORBIDDEN
 
 
 ########################################################################################

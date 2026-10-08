@@ -85,6 +85,8 @@ class PublicEventQuery(PageQuery):
 
 class EventQuery(PageQuery):
     city_id: Reference | None = None
+    # la institución o la alcaldía que lo programa
+    organizer_id: Reference | None = None
     category: CategoryCode | None = None
     status: EventStatusName | None = None
     from_date: CalendarDate | None = None

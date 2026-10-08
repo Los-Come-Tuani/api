@@ -69,10 +69,10 @@ córdobas; cero es libre.
 
 | Ruta                              | Quién                                                       | Qué hace                         |
 | --------------------------------- | ----------------------------------------------------------- | -------------------------------- |
-| `GET cultural-event/`             | `content.moderate`: todos. Institución o alcaldía: los suyos | Paginado, del más reciente. Filtros: `city_id`, `category`, `status`, `from_date`, `to_date`, `search`. Trae `hidden` y `hidden_reason` |
+| `GET cultural-event/`             | `content.moderate`: todos. Institución o alcaldía: los suyos | Paginado, del más reciente. Filtros: `city_id`, `organizer_id` (la institución o la alcaldía), `category`, `status`, `from_date`, `to_date`, `search`. Trae `hidden` y `hidden_reason` |
 | `POST cultural-event/`            | Institución o alcaldía verificada; `content.moderate` (especial de K'Plan) | Lo programa (`201`)     |
 | `GET cultural-event/{id}/`        | Quien lo ve                                                  | Uno                              |
-| `PATCH cultural-event/{id}/`      | Quien lo ve                                                  | Corrige lo que llega (`409` si terminó o se canceló) |
+| `PATCH cultural-event/{id}/`      | Quien lo ve                                                  | Corrige lo que llega, salvo la ciudad (`409` si terminó o se canceló) |
 | `POST cultural-event/{id}/cancel/`| Quien lo ve                                                  | `{ reason? }`: lo cancela; sigue visible, señalado |
 | `POST cultural-event/{id}/clone/` | Quien lo ve                                                  | `{ start_date, end_date }`: copia todo lo demás (`201`) |
 | `POST cultural-event/{id}/hide/`  | `content.moderate`                                           | `{ reason }`: lo saca de la app  |
@@ -154,8 +154,8 @@ igual hasta su fecha límite.
 | `POST coupon-campaign/`                | Un comercio verificado                        | Publica una campaña (`201`; `409` si ya tiene tres activas) |
 | `GET coupon-campaign/{id}/`            | Quien la ve                                   | Una                              |
 | `PATCH coupon-campaign/{id}/`          | El comercio                                   | `title`, `description`, `terms`, `stock_total` (no menos de lo entregado), `expires_at` (futura), `image_key`. El beneficio y el costo no cambian |
-| `POST coupon-campaign/{id}/withdraw/`  | El comercio o `content.moderate`              | `{ reason? }`: corta la emisión  |
-| `GET coupon-redemption/`               | El comercio: lo suyo. `content.moderate`: todo | Los cupones entregados, con el nombre del turista. Filtros: `status`, `campaign_id` |
+| `POST coupon-campaign/{id}/withdraw/`  | El comercio o `content.moderate`              | `{ reason? }`: corta la emisión de una campaña activa (`409` si ya está agotada, vencida o retirada) |
+| `GET coupon-redemption/`               | El comercio: lo suyo. `content.moderate`: todo | Los cupones entregados, con el nombre del turista. Filtros: `status`, `campaign_id` y `code` (busca un cupón como lo dicta el turista, sin consumirlo) |
 | `POST coupon-redemption/validate/`     | El comercio                                   | `{ code }`: lo consume en el mostrador |
 
 Cuerpo de `POST coupon-campaign/`: `{ benefit_type, title, description?, terms?,

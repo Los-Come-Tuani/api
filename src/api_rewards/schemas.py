@@ -207,6 +207,8 @@ class RedemptionGet(DTO):
 class RedemptionQuery(PageQuery):
     status: CouponStatusName | None = None
     campaign_id: Reference | None = None
+    # buscar un cupón en el mostrador sin consumirlo (como lo dicta el turista)
+    code: Annotated[str, StringConstraints(max_length=20)] | None = None
 
 
 class ValidatePost(DTO):

@@ -24,11 +24,11 @@ retiros del guía y lo que se cobra cada mes a los comercios. Es la fase F8 de l
 - **Estados de cuenta mensuales** para los comercios: la insignia del lugar y una tarifa
   por cupón validado. El equipo los cobra fuera de línea y los marca pagados.
 
-## Tarifas (`billing.view` ve, `billing.manage` cambia)
+## Tarifas (`billing.view` y los comercios ven, `billing.manage` cambia)
 
 | Ruta           | Qué hace                                                              |
 | -------------- | --------------------------------------------------------------------- |
-| `GET pricing/` | Las tarifas: `[{ code, label, value, unit, updated_at }]`              |
+| `GET pricing/` | Las tarifas: `[{ code, label, value, unit, updated_at }]`. También para el comercio: es lo que paga cada mes |
 | `PUT pricing/` | `{ commission_rate?, badge_monthly?, coupon_fee? }`: solo cambia las que llegan |
 
 | `code`             | Qué es                                     | `unit`    | Inicial |

@@ -240,6 +240,19 @@ def test_an_event_of_another_institution_does_not_exist(theater: ApiUser) -> Non
     assert response.status_code == HTTPStatus.NOT_FOUND
 
 
+def test_the_team_filters_the_agenda_by_organizer(
+    institution: CulturalInstitution,
+    make_member: Callable[..., ApiUser],
+) -> None:
+    make_event(institution, start=2, end=2, name="Del teatro")
+    make_event(verified_institution("granada"), start=2, end=2, name="De otro")
+    team = signed_in(make_member("equipo@example.com", "content.moderate"))
+
+    listed = body(team.get(MANAGED, {"organizer_id": str(institution.pk)}))
+
+    assert [item["name"] for item in listed["results"]] == ["Del teatro"]
+
+
 def test_a_cancelled_event_stays_visible_and_is_not_edited(
     client: DMRClient,
     institution: CulturalInstitution,

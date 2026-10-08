@@ -601,6 +601,9 @@ def redemptions_sync(actor: Actor, query: RedemptionQuery) -> Paginated[Redempti
     if query.campaign_id is not None:
         found = found.filter(campaign_id=query.campaign_id)
 
+    if query.code:
+        found = found.filter(code=normalized_code(query.code))
+
     return paginate(
         found.order_by("-redeemed_at", "id"),
         query,

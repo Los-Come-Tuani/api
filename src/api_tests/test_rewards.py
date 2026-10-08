@@ -447,6 +447,28 @@ def test_the_business_validates_the_coupon_once(
     assert again.status_code == HTTPStatus.CONFLICT
 
 
+def test_the_business_looks_up_a_coupon_without_spending_it(
+    client: DMRClient,
+    ana: ApiUser,
+    headers: dict[str, str],
+    owner: ApiUser,
+) -> None:
+    portal = signed_in(owner)
+    campaign = body(portal.post(CAMPAIGNS, campaign_body()))
+    give_badges(ana, 5)
+    coupon = body(
+        client.post("/coupon/", {"campaign_id": campaign["id"]}, headers=headers)
+    )
+    dictated = f"{coupon['code'][:4].lower()} {coupon['code'][4:]}"
+
+    found = body(portal.get("/coupon-redemption/", {"code": dictated}))
+
+    assert [item["status"] for item in found["results"]] == ["valid"]
+    assert (
+        body(portal.get("/coupon-redemption/", {"code": "ZZZZZZZZ"}))["elements"] == 0
+    )
+
+
 def test_a_coupon_of_another_business_does_not_exist_for_this_one(
     client: DMRClient,
     ana: ApiUser,

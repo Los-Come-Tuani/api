@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Any, Final
 
+from django.db.models import Q
 from django.db.transaction import atomic
 from django.utils.timezone import localdate, now
 
@@ -266,6 +267,11 @@ def events_sync(actor: Actor, query: EventQuery) -> Paginated[ManagedEventGet]:
 
     if query.city_id is not None:
         found = found.filter(city_id=query.city_id)
+
+    if query.organizer_id is not None:
+        found = found.filter(
+            Q(institution_id=query.organizer_id) | Q(municipality_id=query.organizer_id)
+        )
 
     if query.category:
         found = found.filter(category__code=query.category)
