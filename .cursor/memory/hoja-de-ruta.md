@@ -38,10 +38,15 @@ tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
   vive todo lo de F1 a F8). Portal: `main` es producción (`https://portal.kplan.dev`) y
   `staging` (sale de `feat/hoja-de-ruta-api`) va a `https://staging-portal.kplan.dev` contra
   `develop-api`. App: `main` es producción (`env/prod.example.json` -> `api.kplan.dev`) y
-  `staging` usa `env/staging.example.json` -> `develop-api.kplan.dev`. El portal toma
-  `VITE_API_URL` de las variables del build en Cloudflare; el API, sus dominios de
-  `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` y `CSRF_TRUSTED_ORIGINS` en Railway. Lo nuevo se
-  sube a `staging` del portal y de la app adelantando la rama a `feat/hoja-de-ruta-api`.
+  `staging` usa `env/staging.example.json` -> `develop-api.kplan.dev`. Por decisión del
+  usuario, el portal publicado (`.env.production`) y el APK de release sin archivo de
+  entorno (`ApiClient.releaseBaseUrl`) hablan con `develop-api.kplan.dev`. Una variable
+  `VITE_API_URL` del hosting manda sobre `.env.production`. En Railway, el servicio de
+  `develop-a` necesita en `CORS_ALLOWED_ORIGINS` y `CSRF_TRUSTED_ORIGINS` los orígenes de
+  los portales que lo usen (`https://staging-portal.kplan.dev` y, si `main` se publica
+  con este código, `https://portal.kplan.dev`), y `develop-api.kplan.dev` en
+  `ALLOWED_HOSTS`. Lo nuevo se sube a `staging` del portal y de la app adelantando la rama
+  a `feat/hoja-de-ruta-api`.
 - Commits convencionales en español (`feat(auth): ...`, `docs: ...`). Sin emojis.
 
 ## 2. Estado de las tareas
