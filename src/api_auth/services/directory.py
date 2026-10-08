@@ -182,8 +182,8 @@ def accounts_sync(
 ) -> Paginated[AccountGet]:
     accounts = visible_accounts(sees_everyone=sees_everyone)
 
-    if query.role is not None:
-        accounts = accounts.filter(derived_role=query.role)
+    if query.roles:
+        accounts = accounts.filter(derived_role__in=query.roles)
 
     if query.status is not None:
         accounts = accounts.filter(status=query.status)

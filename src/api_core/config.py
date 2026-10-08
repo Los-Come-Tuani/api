@@ -181,6 +181,9 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     STORAGE_BUCKET: str = ""
     STORAGE_DOWNLOAD_EXPIRES: timedelta = timedelta(minutes=5)
     STORAGE_ENDPOINT_URL: str = ""
+    # - las fotos del contenido público (lugares, circuitos, eventos, cupones) se ven en
+    #   la app durante una sesión larga: su URL firmada dura más que la de un documento
+    STORAGE_PUBLIC_EXPIRES: timedelta = timedelta(hours=24)
     STORAGE_REGION: str = "auto"
     STORAGE_SECRET_ACCESS_KEY: OptionalSecret = SecretStr(secret_value="")
     STORAGE_UPLOAD_EXPIRES: timedelta = timedelta(minutes=10)

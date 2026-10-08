@@ -21,6 +21,7 @@ from api_territory.schemas.circuit import (
     CircuitInlineGet,
     CircuitStopGet,
     MunicipalityRef,
+    RoutePointGet,
 )
 
 from .access import Actor, invalid
@@ -136,6 +137,17 @@ def inline_payload(circuit: Circuit) -> CircuitInlineGet:
         rating=float(found.rating),
         recommendations=str(found.recommendations),
         reviews_count=int(found.reviews_count),
+        route=[
+            RoutePointGet(
+                latitude=float(stop.point.latitude),
+                leg_minutes=stop.leg_minutes,
+                longitude=float(stop.point.longitude),
+                name=str(stop.point.name),
+                point_id=stop.point_id,
+                visit_minutes=int(stop.point.visit_minutes),
+            )
+            for stop in stops
+        ],
         short_title=str(found.short_title),
         start_times=[clock(value) for value in found.start_times],
         status=STATUS_API[str(found.status.code)],  # ty: ignore[invalid-argument-type]

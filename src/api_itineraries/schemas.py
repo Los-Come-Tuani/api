@@ -70,6 +70,7 @@ class ItineraryPost(DTO):
     start_time: ClockTime | None = None
     travel_mode: TravelMode | None = None
     pace: Pace = "balanced"
+    fixed_arrivals: FixedArrivals = Field(default_factory=dict)
 
 
 # Solo se aplican los campos que llegan. Cambiar las paradas de uno que sigue un

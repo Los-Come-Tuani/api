@@ -23,7 +23,7 @@ EXTERNAL_PREFIX: str = "https://"
 def image_payload(key: str) -> ImageGet:
     return ImageGet(
         key=key,
-        url=key if key.startswith(EXTERNAL_PREFIX) else read_url(key),
+        url=key if key.startswith(EXTERNAL_PREFIX) else read_url(key, public=True),
     )
 
 

@@ -135,13 +135,18 @@ def verify_upload(kind: str, key: str, *, field: str) -> StoredObject:
     return stored
 
 
-# Una URL para ver un archivo del almacenamiento privado; vence en minutos. Es nula si
-# el almacenamiento no está configurado: la solicitud se lee igual, sin el enlace.
-def read_url(key: str) -> str | None:
+# Una URL para ver un archivo del almacenamiento privado; vence en minutos (en horas
+# las del contenido público, `public`). Es nula si el almacenamiento no está
+# configurado: lo demás se lee igual, sin el enlace.
+def read_url(key: str, *, public: bool = False) -> str | None:
+    expires = (
+        CONFIG.STORAGE_PUBLIC_EXPIRES if public else CONFIG.STORAGE_DOWNLOAD_EXPIRES
+    )
+
     try:
         return get_storage().presign_download(
             key,
-            expires_in=int(CONFIG.STORAGE_DOWNLOAD_EXPIRES.total_seconds()),
+            expires_in=int(expires.total_seconds()),
         )
     except ServiceUnavailableError:
         return None

@@ -155,6 +155,20 @@ def test_the_directory_filters_by_role_status_and_name_without_accents(
     assert "turista@example.com" not in emails(team)
 
 
+@pytest.mark.usefixtures("operator", "tourist")
+def test_the_directory_filters_by_several_roles_at_once(
+    client: DMRClient,
+    make_member: Callable[..., ApiUser],
+) -> None:
+    web_login(client, make_member("miembro@example.com", "users.view"))
+
+    both = body(client.get(ACCOUNTS, {"role": "negocio,turista"}))
+    wrong = client.get(ACCOUNTS, {"role": "negocio,pirata"})
+
+    assert emails(both) == {"negocio@example.com", "turista@example.com"}
+    assert wrong.status_code == HTTPStatus.BAD_REQUEST
+
+
 def test_the_directory_is_paginated(
     client: DMRClient,
     make_member: Callable[..., ApiUser],

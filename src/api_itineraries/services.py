@@ -224,6 +224,7 @@ def create_itinerary_sync(user: ApiUser, data: ItineraryPost) -> ItineraryGet:
     with atomic():
         itinerary: Itinerary = Itinerary.objects.create(
             adjusted=not follows,
+            fixed_arrivals=dict(data.fixed_arrivals),
             followed_circuit=circuit if follows else None,
             pace=data.pace,
             start_time=data.start_time or DEFAULT_START,

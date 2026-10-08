@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import Annotated
+from typing import Annotated, get_args
 
-from pydantic import StringConstraints
+from pydantic import AfterValidator, StringConstraints
+from pydantic_core import PydanticCustomError
 
 from api_core.schemas.base import DTO
 from api_core.schemas.get import BaseGet
@@ -16,11 +17,41 @@ from .types import UserStatus
 ########################################################################################
 
 
+ROLES: frozenset[str] = frozenset(get_args(Role.__value__))
+
+
+def known_roles(value: str | None) -> str | None:
+    if value is None:
+        return None
+
+    unknown = {item.strip() for item in value.split(",")} - ROLES
+
+    if unknown:
+        raise PydanticCustomError(
+            "api_custom",
+            "",
+            {"msg": f"Papel desconocido: {', '.join(sorted(unknown))}."},
+        )
+
+    return value
+
+
 class AccountQuery(PageQuery):
-    role: Role | None = None
+    # uno o varios papeles separados por comas (`guia,traductor`)
+    role: Annotated[
+        str | None,
+        StringConstraints(max_length=100),
+        AfterValidator(known_roles),
+    ] = None
     status: UserStatus | None = None
     # por nombre o correo
     search: Annotated[str, StringConstraints(max_length=100)] | None = None
+
+    @property
+    def roles(self) -> list[str]:
+        return (
+            [] if self.role is None else [item.strip() for item in self.role.split(",")]
+        )
 
 
 ########################################################################################

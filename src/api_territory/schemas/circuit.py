@@ -46,6 +46,17 @@ class CircuitStopGet(DTO):
     leg_minutes: int | None
 
 
+# Lo mínimo de cada parada para trazar el recorrido y calcular su duración sin pedir los
+# lugares aparte.
+class RoutePointGet(DTO):
+    point_id: UUID
+    name: str
+    latitude: float
+    longitude: float
+    visit_minutes: int
+    leg_minutes: int | None
+
+
 class CircuitInlineGet(DTO):
     id: UUID
     kind: CircuitKind
@@ -80,6 +91,7 @@ class CircuitInlineGet(DTO):
     reviews_count: int
     images: list[ImageGet]
     stop_ids: list[UUID]
+    route: list[RoutePointGet]
     # las insignias de sus paradas más las extra
     badges: int
     # el tiempo de visita de las paradas más los traslados que se conocen

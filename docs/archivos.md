@@ -31,10 +31,16 @@ al cliente una URL firmada y el cliente lo sube directo a un bucket compatible c
 | `signature-dish-photo` | JPEG, PNG, WebP                         | 5 MB   |
 | `provider-document`    | PDF, JPEG, PNG                          | 10 MB  |
 | `provider-photo`       | JPEG, PNG, WebP                         | 5 MB   |
+| `place-photo`          | JPEG, PNG, WebP (lugares y novedades)   | 5 MB   |
+| `circuit-photo`        | JPEG, PNG, WebP                         | 5 MB   |
+| `event-photo`          | JPEG, PNG, WebP                         | 5 MB   |
+| `coupon-photo`         | JPEG, PNG, WebP                         | 5 MB   |
 
 La URL firmada vive diez minutos (`STORAGE_UPLOAD_EXPIRES`) y sirve solo para esa clave.
 Para ver un archivo (el equipo que revisa una solicitud) el API firma una URL de lectura
-de cinco minutos (`STORAGE_DOWNLOAD_EXPIRES`); el bucket es **privado**.
+de cinco minutos (`STORAGE_DOWNLOAD_EXPIRES`); el bucket es **privado**. Las fotos del
+contenido que ve la app (lugares, circuitos, eventos y cupones) se firman por 24 horas
+(`STORAGE_PUBLIC_EXPIRES`), para que no venzan en medio de una sesión.
 
 Sin bucket configurado, `POST /upload/` responde `503` con
 `"El almacenamiento de archivos no está configurado."`.

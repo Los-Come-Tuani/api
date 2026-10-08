@@ -9,6 +9,7 @@ from api_territory.models import Circuit
 from api_tests.helpers import body
 from api_tests.territory_helpers import (
     CIRCUIT_PHOTO,
+    PLACE_PHOTO,
     circuit_body,
     city,
     make_circuit,
@@ -37,6 +38,7 @@ CIRCUITS = "/official-circuit/"
 def memory(monkeypatch: pytest.MonkeyPatch) -> MemoryStorage:
     storage = MemoryStorage()
     storage.put(CIRCUIT_PHOTO, content_type="image/jpeg")
+    storage.put(PLACE_PHOTO, content_type="image/jpeg")
     monkeypatch.setattr(storage_module, "current", storage)
 
     return storage
@@ -94,6 +96,45 @@ def test_the_detail_brings_the_stops_in_order(
         "Catedral de León",
     ]
     assert detail["stop_ids"] == [str(points[2].pk), str(points[0].pk)]
+
+
+def test_the_list_brings_the_route_to_draw_and_time_it(
+    client: DMRClient,
+    points: list[PointOfInterest],
+) -> None:
+    make_circuit(points[:2])
+
+    listed = body(client.get("/circuit/"))
+
+    assert [item["name"] for item in listed[0]["route"]] == [
+        "Catedral de León",
+        "Iglesia La Recolección",
+    ]
+    assert listed[0]["route"][0]["visit_minutes"] == 30
+
+
+def test_the_photos_of_public_content_last_a_day(
+    client: DMRClient,
+    make_member: Callable[..., ApiUser],
+) -> None:
+    team = signed_in(make_member("equipo@example.com", "places.manage"))
+    place = body(
+        team.post(
+            "/place/",
+            {
+                "city_id": str(city().pk),
+                "images": [PLACE_PHOTO],
+                "latitude": 12.435,
+                "longitude": -86.879,
+                "name": "Museo de Leyendas",
+                "pillar": "cultura",
+            },
+        )
+    )
+
+    detail = body(client.get(f"/stop/{place['id']}/"))
+
+    assert detail["images"][0]["url"].endswith("expires=86400")
 
 
 def test_the_app_filters_circuits_by_city(

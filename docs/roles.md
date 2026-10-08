@@ -118,7 +118,7 @@ Todo bajo `/auth/`. El permiso es el que pide cada ruta; `403` si falta.
 ### Directorio de cuentas
 
 `GET /auth/account/` acepta `role` (`admin`, `alcaldia`, `institucion`, `negocio`,
-`guia`, `traductor`, `turista`), `status` (`pending`, `active`, `suspended`,
+`guia`, `traductor`, `turista`; varios separados por comas, `guia,traductor`), `status` (`pending`, `active`, `suspended`,
 `expelled`, `closing`), `search` (nombre, sin importar tildes, o correo), `page` y
 `page_size` (hasta 100). Responde `{ next, previous, elements, pages, current,
 results }`, por nombre. Cada cuenta trae:

@@ -206,6 +206,25 @@ def test_a_tourist_builds_an_itinerary_from_scratch(
     assert ids(body(response)) == [str(points[2].pk)]
 
 
+def test_the_fixed_arrivals_can_come_with_the_new_itinerary(
+    client: DMRClient,
+    headers: dict[str, str],
+    points: list[PointOfInterest],
+) -> None:
+    response = client.post(
+        ITINERARIES,
+        {
+            "fixed_arrivals": {"0": 540},
+            "stop_ids": [str(points[0].pk)],
+            "title": "Con hora fija",
+        },
+        headers=headers,
+    )
+
+    assert response.status_code == HTTPStatus.CREATED, response.content
+    assert body(response)["fixed_arrivals"] == {"0": 540}
+
+
 def test_the_plan_keeps_the_fixed_arrivals(
     client: DMRClient,
     headers: dict[str, str],

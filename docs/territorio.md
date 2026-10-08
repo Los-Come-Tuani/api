@@ -142,6 +142,8 @@ Corregir el título no la mueve.
   "version": 1, "rating": 4.7, "reviews_count": 98,
   "images": [{ "key": "…", "url": "…" }],
   "stop_ids": ["…", "…"],
+  "route": [{ "point_id": "…", "name": "…", "latitude": 12.43, "longitude": -86.87,
+              "visit_minutes": 45, "leg_minutes": null }],
   "badges": 5, "duration_minutes": 165,
   "created_at": "…", "published_at": "…",
   "stops": [{ "order": 0, "point": { "…": "un lugar" }, "directions": "", "leg_minutes": null }]
@@ -151,7 +153,8 @@ Corregir el título no la mueve.
 `category` es `city`, `nature` o `culture`; `difficulty`, `easy` o `moderate`. `badges` son
 las insignias de sus paradas más las extra; `duration_minutes`, el tiempo de visita de las
 paradas más los traslados que se conocen (`leg_minutes` nulo es "lo calcula la app"). La
-lista no trae `stops`: trae `stop_ids`.
+lista no trae `stops`: trae `stop_ids` y `route` (lo mínimo de cada parada para trazar el
+recorrido y calcular la duración sin pedir los lugares).
 
 ### Rutas del portal
 
@@ -220,7 +223,7 @@ Tres maneras de empezar (`POST`):
 - `{ "title", "stop_ids"? }`: desde cero.
 
 También acepta `start_time` (`"HH:MM"`, por defecto `09:00`), `travel_mode` (`walking`,
-`vehicle`) y `pace` (`relaxed`, `balanced`, `intense`).
+`vehicle`), `pace` (`relaxed`, `balanced`, `intense`) y `fixed_arrivals`.
 
 `PATCH` acepta `title`, `stop_ids`, `start_time`, `travel_mode`, `pace` y `fixed_arrivals`
 (posición de la parada, como texto, a minutos desde la medianoche: `{ "0": 600 }`).
