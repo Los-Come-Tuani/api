@@ -25,12 +25,12 @@ de [agenda](modelo-dominio/modulos/agenda.md) e [insignias](modelo-dominio/modul
 
 ## Agenda
 
-| Estado      | En la app              | Se edita |
-| ----------- | ---------------------- | -------- |
-| `scheduled` | sí, como próximo       | sí       |
-| `ongoing`   | sí                     | sí       |
-| `finished`  | no                     | no       |
-| `cancelled` | sí, señalado           | no       |
+| Estado      | En la app        | Se edita |
+| ----------- | ---------------- | -------- |
+| `scheduled` | sí, como próximo | sí       |
+| `ongoing`   | sí               | sí       |
+| `finished`  | no               | no       |
+| `cancelled` | sí, señalado     | no       |
 
 La vigencia la gobierna el calendario ([RF-I-02](requerimientos/funcionales/portal-instituciones.md#rf-i-02)):
 nadie publica ni despublica. Un evento que empieza hoy o antes está `ongoing`; uno cuya
@@ -39,25 +39,36 @@ diario `python src/manage.py syncevents` (que también vence campañas y cupones
 
 ### Rutas de la app (públicas)
 
-| Ruta              | Qué devuelve                                                              |
-| ----------------- | ------------------------------------------------------------------------- |
-| `GET event/`      | Lo próximo y lo que está en curso (y lo cancelado que no terminó), sin lo oculto. Paginado. Filtros: `city` (código), `category`, `from_date`, `to_date` (alguno de sus días cae en el rango), `featured` |
-| `GET event/{id}/` | Un evento visible                                                          |
-| `GET catalog/event-category/` | Las clases: `tradicion`, `feria`, `cultura`, `taller`, `charla`, `musica`, `gastronomia` |
+| Ruta                          | Qué devuelve                                                                                                                                                                                              |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET event/`                  | Lo próximo y lo que está en curso (y lo cancelado que no terminó), sin lo oculto. Paginado. Filtros: `city` (código), `category`, `from_date`, `to_date` (alguno de sus días cae en el rango), `featured` |
+| `GET event/{id}/`             | Un evento visible                                                                                                                                                                                         |
+| `GET catalog/event-category/` | Las clases: `tradicion`, `feria`, `cultura`, `taller`, `charla`, `musica`, `gastronomia`                                                                                                                  |
 
 ```json
 {
-  "id": "…", "name": "Noche de marimba", "description": "…",
+  "id": "…",
+  "name": "Noche de marimba",
+  "description": "…",
   "category": { "code": "musica", "label": "Música" },
   "city": { "id": "…", "code": "leon", "name": "León" },
-  "venue": "Teatro Municipal", "address": "…", "latitude": 12.43, "longitude": -86.87,
-  "start_date": "2026-10-10", "end_date": "2026-10-11",
-  "start_time": "18:00", "end_time": "22:00",
-  "entry_price": 100, "featured": false,
-  "status": "scheduled", "cancellation_reason": "",
+  "venue": "Teatro Municipal",
+  "address": "…",
+  "latitude": 12.43,
+  "longitude": -86.87,
+  "start_date": "2026-10-10",
+  "end_date": "2026-10-11",
+  "start_time": "18:00",
+  "end_time": "22:00",
+  "entry_price": 100,
+  "featured": false,
+  "status": "scheduled",
+  "cancellation_reason": "",
   "organizer": { "kind": "institution", "id": "…", "name": "Teatro de León" },
-  "point_id": null, "images": [{ "key": "…", "url": "…" }],
-  "cloned_from_id": null, "created_at": "…"
+  "point_id": null,
+  "images": [{ "key": "…", "url": "…" }],
+  "cloned_from_id": null,
+  "created_at": "…"
 }
 ```
 
@@ -67,16 +78,16 @@ córdobas; cero es libre.
 
 ### Rutas del portal
 
-| Ruta                              | Quién                                                       | Qué hace                         |
-| --------------------------------- | ----------------------------------------------------------- | -------------------------------- |
-| `GET cultural-event/`             | `content.moderate`: todos. Institución o alcaldía: los suyos | Paginado, del más reciente. Filtros: `city_id`, `organizer_id` (la institución o la alcaldía), `category`, `status`, `from_date`, `to_date`, `search`. Trae `hidden` y `hidden_reason` |
-| `POST cultural-event/`            | Institución o alcaldía verificada; `content.moderate` (especial de K'Plan) | Lo programa (`201`)     |
-| `GET cultural-event/{id}/`        | Quien lo ve                                                  | Uno                              |
-| `PATCH cultural-event/{id}/`      | Quien lo ve                                                  | Corrige lo que llega, salvo la ciudad (`409` si terminó o se canceló) |
-| `POST cultural-event/{id}/cancel/`| Quien lo ve                                                  | `{ reason? }`: lo cancela; sigue visible, señalado |
-| `POST cultural-event/{id}/clone/` | Quien lo ve                                                  | `{ start_date, end_date }`: copia todo lo demás (`201`) |
-| `POST cultural-event/{id}/hide/`  | `content.moderate`                                           | `{ reason }`: lo saca de la app  |
-| `POST cultural-event/{id}/show/`  | `content.moderate`                                           | Lo devuelve                      |
+| Ruta                               | Quién                                                                      | Qué hace                                                                                                                                                                               |
+| ---------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET cultural-event/`              | `content.moderate`: todos. Institución o alcaldía: los suyos               | Paginado, del más reciente. Filtros: `city_id`, `organizer_id` (la institución o la alcaldía), `category`, `status`, `from_date`, `to_date`, `search`. Trae `hidden` y `hidden_reason` |
+| `POST cultural-event/`             | Institución o alcaldía verificada; `content.moderate` (especial de K'Plan) | Lo programa (`201`)                                                                                                                                                                    |
+| `GET cultural-event/{id}/`         | Quien lo ve                                                                | Uno                                                                                                                                                                                    |
+| `PATCH cultural-event/{id}/`       | Quien lo ve                                                                | Corrige lo que llega, salvo la ciudad (`409` si terminó o se canceló)                                                                                                                  |
+| `POST cultural-event/{id}/cancel/` | Quien lo ve                                                                | `{ reason? }`: lo cancela; sigue visible, señalado                                                                                                                                     |
+| `POST cultural-event/{id}/clone/`  | Quien lo ve                                                                | `{ start_date, end_date }`: copia todo lo demás (`201`)                                                                                                                                |
+| `POST cultural-event/{id}/hide/`   | `content.moderate`                                                         | `{ reason }`: lo saca de la app                                                                                                                                                        |
+| `POST cultural-event/{id}/show/`   | `content.moderate`                                                         | Lo devuelve                                                                                                                                                                            |
 
 Un evento de otra organización responde `404`. Cuerpo de `POST`: `{ city_id, category,
 name, description?, venue, address?, latitude, longitude, start_date, end_date, start_time,
@@ -90,11 +101,11 @@ el inicio de la app) solo lo cambia el equipo. `point_id` es un lugar activo de 
 
 Cada lugar con `has_badge` tiene su insignia y su QR. El QR lleva `kplan://visit/<código>`.
 
-| Ruta                   | Quién                                  | Qué hace                                      |
-| ---------------------- | -------------------------------------- | --------------------------------------------- |
-| `GET place/{id}/qr/`   | Quien ve el lugar en el portal          | `{ point_id, payload, token, value, active }`; `404` si el lugar no da insignia |
-| `POST visit/`          | Un turista (sesión de la app)           | `{ qr, latitude, longitude }`: acredita la visita (`201`) |
-| `GET badge/mine/`      | Un turista                              | Su saldo                                      |
+| Ruta                 | Quién                          | Qué hace                                                                        |
+| -------------------- | ------------------------------ | ------------------------------------------------------------------------------- |
+| `GET place/{id}/qr/` | Quien ve el lugar en el portal | `{ point_id, payload, token, value, active }`; `404` si el lugar no da insignia |
+| `POST visit/`        | Un turista (sesión de la app)  | `{ qr, latitude, longitude }`: acredita la visita (`201`)                       |
+| `GET badge/mine/`    | Un turista                     | Su saldo                                                                        |
 
 `POST visit/` acepta el texto que leyó la cámara (`kplan://visit/…`) o solo el código.
 Responde `{ id, point: { id, name, pillar }, amount, balance, distance_meters,
@@ -106,10 +117,19 @@ con `body.latitude` si está a más de 50 m, `409` si ya ganó la de ese lugar e
 
 ```json
 {
-  "balance": 4, "earned": 7, "spent": 3,
+  "balance": 4,
+  "earned": 7,
+  "spent": 3,
   "by_pillar": [{ "code": "historia", "label": "Historia", "count": 3 }],
   "visited_point_ids": ["…"],
-  "recent": [{ "amount": -3, "kind": "coupon", "label": "10% en tu almuerzo", "recorded_at": "…" }]
+  "recent": [
+    {
+      "amount": -3,
+      "kind": "coupon",
+      "label": "10% en tu almuerzo",
+      "recorded_at": "…"
+    }
+  ]
 }
 ```
 
@@ -128,12 +148,12 @@ deja que quede negativo.
 
 ### La app
 
-| Ruta              | Quién                | Qué hace                                         |
-| ----------------- | -------------------- | ------------------------------------------------ |
-| `GET reward/`     | Pública              | La tienda: campañas activas con cupos. Paginado. Filtro `city` (del comercio) |
-| `GET reward/{id}/`| Pública              | Una                                              |
-| `POST coupon/`    | Un turista           | `{ campaign_id }`: canjea insignias por un cupón (`201`) |
-| `GET coupon/mine/`| Un turista           | Su billetera, del más reciente                    |
+| Ruta               | Quién      | Qué hace                                                                      |
+| ------------------ | ---------- | ----------------------------------------------------------------------------- |
+| `GET reward/`      | Pública    | La tienda: campañas activas con cupos. Paginado. Filtro `city` (del comercio) |
+| `GET reward/{id}/` | Pública    | Una                                                                           |
+| `POST coupon/`     | Un turista | `{ campaign_id }`: canjea insignias por un cupón (`201`)                      |
+| `GET coupon/mine/` | Un turista | Su billetera, del más reciente                                                |
 
 Una recompensa: `{ id, title, description, terms, benefit: { type, amount, currency, label },
 cost_badges, remaining, expires_at, image, business: { id, name, city, place_id } }`.
@@ -148,15 +168,15 @@ igual hasta su fecha límite.
 
 ### El portal
 
-| Ruta                                   | Quién                                         | Qué hace                         |
-| -------------------------------------- | --------------------------------------------- | -------------------------------- |
-| `GET coupon-campaign/`                 | El comercio: las suyas. `content.moderate`: todas | Paginado. Filtros: `status`, `business_id`. Trae `stock_total`, `stock_delivered`, `consumed` |
-| `POST coupon-campaign/`                | Un comercio verificado                        | Publica una campaña (`201`; `409` si ya tiene tres activas) |
-| `GET coupon-campaign/{id}/`            | Quien la ve                                   | Una                              |
-| `PATCH coupon-campaign/{id}/`          | El comercio                                   | `title`, `description`, `terms`, `stock_total` (no menos de lo entregado), `expires_at` (futura), `image_key`. El beneficio y el costo no cambian |
-| `POST coupon-campaign/{id}/withdraw/`  | El comercio o `content.moderate`              | `{ reason? }`: corta la emisión de una campaña activa (`409` si ya está agotada, vencida o retirada) |
-| `GET coupon-redemption/`               | El comercio: lo suyo. `content.moderate`: todo | Los cupones entregados, con el nombre del turista. Filtros: `status`, `campaign_id` y `code` (busca un cupón como lo dicta el turista, sin consumirlo) |
-| `POST coupon-redemption/validate/`     | El comercio                                   | `{ code }`: lo consume en el mostrador |
+| Ruta                                  | Quién                                             | Qué hace                                                                                                                                               |
+| ------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `GET coupon-campaign/`                | El comercio: las suyas. `content.moderate`: todas | Paginado. Filtros: `status`, `business_id`. Trae `stock_total`, `stock_delivered`, `consumed`                                                          |
+| `POST coupon-campaign/`               | Un comercio verificado                            | Publica una campaña (`201`; `409` si ya tiene tres activas)                                                                                            |
+| `GET coupon-campaign/{id}/`           | Quien la ve                                       | Una                                                                                                                                                    |
+| `PATCH coupon-campaign/{id}/`         | El comercio                                       | `title`, `description`, `terms`, `stock_total` (no menos de lo entregado), `expires_at` (futura), `image_key`. El beneficio y el costo no cambian      |
+| `POST coupon-campaign/{id}/withdraw/` | El comercio o `content.moderate`                  | `{ reason? }`: corta la emisión de una campaña activa (`409` si ya está agotada, vencida o retirada)                                                   |
+| `GET coupon-redemption/`              | El comercio: lo suyo. `content.moderate`: todo    | Los cupones entregados, con el nombre del turista. Filtros: `status`, `campaign_id` y `code` (busca un cupón como lo dicta el turista, sin consumirlo) |
+| `POST coupon-redemption/validate/`    | El comercio                                       | `{ code }`: lo consume en el mostrador                                                                                                                 |
 
 Cuerpo de `POST coupon-campaign/`: `{ benefit_type, title, description?, terms?,
 benefit_amount?, cost_badges, stock_total, expires_at, image_key? }`. `benefit_type` sale de

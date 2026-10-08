@@ -47,7 +47,7 @@
     "description": "La calle peatonal más viva de Granada: casas coloniales convertidas en cafés, música en vivo y artistas callejeros desde la tarde hasta la noche.",
     "tip": "Recórrela al atardecer, cuando encienden las luces y salen los músicos",
     "images": ["https://picsum.photos/seed/granada-calzada/900/600"],
-    "coordinates": { "latitude": 11.9310, "longitude": -85.9520 }
+    "coordinates": { "latitude": 11.931, "longitude": -85.952 }
   },
   {
     "id": "granada-convento-san-francisco",
@@ -96,7 +96,7 @@
     "description": "El punto donde Granada se asoma al Gran Lago. Desde el muelle salen las lanchas hacia Las Isletas, el archipiélago que formó la erupción del volcán Mombacho.",
     "tip": "El paseo en lancha por Las Isletas dura una hora y se paga aparte",
     "images": ["https://picsum.photos/seed/granada-muelle/900/600"],
-    "coordinates": { "latitude": 11.9265, "longitude": -85.9420 }
+    "coordinates": { "latitude": 11.9265, "longitude": -85.942 }
   },
 
   {
@@ -112,7 +112,7 @@
     "description": "El cruce del Lago Cocibolca hacia la isla. Durante la travesía los dos volcanes van creciendo en el horizonte hasta llenar toda la vista.",
     "tip": "Viaja en la cubierta superior para ver los volcanes de frente",
     "images": ["https://picsum.photos/seed/ometepe-ferry/900/600"],
-    "coordinates": { "latitude": 11.4470, "longitude": -85.7970 }
+    "coordinates": { "latitude": 11.447, "longitude": -85.797 }
   },
   {
     "id": "ometepe-moyogalpa",
@@ -127,7 +127,7 @@
     "description": "El puerto de entrada a la isla, al pie del volcán Concepción. Calles de colores, talleres de artesanía en madera y el primer café isleño del recorrido.",
     "tip": "Aquí se alquilan las motos y bicicletas para recorrer la isla",
     "images": ["https://picsum.photos/seed/ometepe-moyogalpa/900/600"],
-    "coordinates": { "latitude": 11.5390, "longitude": -85.6960 }
+    "coordinates": { "latitude": 11.539, "longitude": -85.696 }
   },
   {
     "id": "ometepe-ojo-de-agua",
@@ -147,7 +147,7 @@
       "https://picsum.photos/seed/ometepe-ojo/900/600",
       "https://picsum.photos/seed/ometepe-ojo-2/900/600"
     ],
-    "coordinates": { "latitude": 11.4880, "longitude": -85.5560 }
+    "coordinates": { "latitude": 11.488, "longitude": -85.556 }
   },
   {
     "id": "ometepe-petroglifos",
@@ -164,7 +164,7 @@
     "description": "Piedras grabadas hace más de mil años por los pueblos que habitaron la isla. Espirales, monos y figuras humanas talladas en roca volcánica.",
     "tip": "Pregúntale al guía por el significado de las espirales dobles",
     "images": ["https://picsum.photos/seed/ometepe-petro/900/600"],
-    "coordinates": { "latitude": 11.5650, "longitude": -85.5790 }
+    "coordinates": { "latitude": 11.565, "longitude": -85.579 }
   },
   {
     "id": "ometepe-playa-santo-domingo",
@@ -179,7 +179,7 @@
     "description": "La playa de arena volcánica que une los dos volcanes. El oleaje del lago la hace sentir mar abierto y es el mejor lugar para ver el atardecer.",
     "tip": "El viento pega fuerte por la tarde: perfecto para kitesurf",
     "images": ["https://picsum.photos/seed/ometepe-playa/900/600"],
-    "coordinates": { "latitude": 11.4790, "longitude": -85.5300 }
+    "coordinates": { "latitude": 11.479, "longitude": -85.53 }
   },
   {
     "id": "ometepe-charco-verde",
@@ -196,7 +196,7 @@
     "description": "Laguna rodeada de bosque seco y reserva de monos congos, garzas y urracas. La leyenda dice que aquí habita el Chico Largo, el dueño de la laguna.",
     "tip": "El sendero completo toma 40 minutos y hay monos casi siempre",
     "images": ["https://picsum.photos/seed/ometepe-charco/900/600"],
-    "coordinates": { "latitude": 11.4720, "longitude": -85.6540 }
+    "coordinates": { "latitude": 11.472, "longitude": -85.654 }
   },
   {
     "id": "ometepe-museo-ceibo",
@@ -213,7 +213,7 @@
     "description": "Dos museos en uno: la colección arqueológica precolombina más grande de la isla y un museo de la moneda nicaragüense desde la colonia hasta hoy.",
     "tip": "La entrada cubre los dos museos, no te quedes sólo con uno",
     "images": ["https://picsum.photos/seed/ometepe-ceibo/900/600"],
-    "coordinates": { "latitude": 11.4680, "longitude": -85.6480 }
+    "coordinates": { "latitude": 11.468, "longitude": -85.648 }
   },
   {
     "id": "ometepe-mirador-maderas",
@@ -230,7 +230,7 @@
     "description": "Punto alto en la falda del volcán Maderas con vista al istmo, al Concepción y al lago completo. El bosque nuboso empieza justo arriba de este mirador.",
     "tip": "La subida es de tierra y piedra: calzado de caminata obligatorio",
     "images": ["https://picsum.photos/seed/ometepe-maderas/900/600"],
-    "coordinates": { "latitude": 11.4450, "longitude": -85.5150 }
+    "coordinates": { "latitude": 11.445, "longitude": -85.515 }
   },
 
   {
@@ -248,7 +248,7 @@
     "description": "La basílica más grande de Centroamérica y Patrimonio de la Humanidad. Bajo su nave descansa Rubén Darío, custodiado por el león de mármol.",
     "tip": "La entrada al templo es gratuita; subir a los techos se paga aparte",
     "images": ["https://picsum.photos/seed/leon-catedral/900/600"],
-    "coordinates": { "latitude": 12.4356, "longitude": -86.8780 }
+    "coordinates": { "latitude": 12.4356, "longitude": -86.878 }
   },
   {
     "id": "leon-techos",
@@ -282,7 +282,7 @@
     "description": "La casa donde creció el príncipe de las letras castellanas, con sus manuscritos, su biblioteca y los objetos personales del poeta.",
     "tip": "Pide que te lean el poema que Darío escribió a los trece años",
     "images": ["https://picsum.photos/seed/leon-dario/900/600"],
-    "coordinates": { "latitude": 12.4340, "longitude": -86.8820 }
+    "coordinates": { "latitude": 12.434, "longitude": -86.882 }
   },
   {
     "id": "leon-murales",
@@ -312,7 +312,7 @@
     "description": "Aquí se prueba la comida leonesa de verdad: nacatamal, quesillo con cebolla encurtida y el fresco de tiste que se toma en jícara.",
     "tip": "El quesillo de la esquina norte es el favorito de los locales",
     "images": ["https://picsum.photos/seed/leon-mercado/900/600"],
-    "coordinates": { "latitude": 12.4310, "longitude": -86.8760 }
+    "coordinates": { "latitude": 12.431, "longitude": -86.876 }
   },
 
   {
@@ -330,7 +330,7 @@
     "description": "Finca cafetalera de montaña fundada por colonos alemanes, hoy modelo de producción sostenible con bosque nuboso protegido dentro de sus tierras.",
     "tip": "El clima de montaña es fresco: lleva una chaqueta ligera",
     "images": ["https://picsum.photos/seed/cafe-selva/900/600"],
-    "coordinates": { "latitude": 13.0090, "longitude": -85.9130 }
+    "coordinates": { "latitude": 13.009, "longitude": -85.913 }
   },
   {
     "id": "cafe-beneficio",
@@ -347,7 +347,7 @@
     "description": "Donde el grano recién cortado se despulpa, se fermenta y se lava. Es la etapa que define buena parte del sabor final de la taza.",
     "tip": "Pregunta por la diferencia entre proceso lavado y honey",
     "images": ["https://picsum.photos/seed/cafe-beneficio/900/600"],
-    "coordinates": { "latitude": 13.0050, "longitude": -85.9160 }
+    "coordinates": { "latitude": 13.005, "longitude": -85.916 }
   },
   {
     "id": "cafe-secado",
@@ -364,7 +364,7 @@
     "description": "Los patios y camas africanas donde el café se seca al sol durante días, removido a mano varias veces al día para que pierda humedad parejo.",
     "tip": "Al mediodía es cuando se ve el volteo del grano",
     "images": ["https://picsum.photos/seed/cafe-secado/900/600"],
-    "coordinates": { "latitude": 13.0040, "longitude": -85.9170 }
+    "coordinates": { "latitude": 13.004, "longitude": -85.917 }
   },
   {
     "id": "cafe-tueste",
@@ -381,7 +381,7 @@
     "description": "Aquí el grano verde se convierte en café. Se explican los perfiles de tueste y cada visitante tuesta su propia muestra para llevarse.",
     "tip": "El café que tuestes te lo llevas empacado, es parte del tour",
     "images": ["https://picsum.photos/seed/cafe-tueste/900/600"],
-    "coordinates": { "latitude": 13.0030, "longitude": -85.9180 }
+    "coordinates": { "latitude": 13.003, "longitude": -85.918 }
   },
   {
     "id": "cafe-cata",
@@ -413,7 +413,7 @@
     "description": "Punto alto sobre los cafetales con vista al valle de Matagalpa. Con suerte se ven quetzales y tucanes en el bosque de sombra.",
     "tip": "La neblina cierra la vista después de las tres de la tarde",
     "images": ["https://picsum.photos/seed/cafe-mirador/900/600"],
-    "coordinates": { "latitude": 13.0110, "longitude": -85.9110 }
+    "coordinates": { "latitude": 13.011, "longitude": -85.911 }
   },
   {
     "id": "cafe-comunidad",
@@ -430,7 +430,7 @@
     "description": "Visita a la cooperativa de familias productoras: cómo se organiza la cosecha, el comercio justo y el almuerzo casero preparado por la comunidad.",
     "tip": "Las artesanías y el café de la cooperativa se compran aquí directo",
     "images": ["https://picsum.photos/seed/cafe-comunidad/900/600"],
-    "coordinates": { "latitude": 13.0300, "longitude": -85.7400 }
+    "coordinates": { "latitude": 13.03, "longitude": -85.74 }
   },
   {
     "id": "masaya-mercado-artesanias",
@@ -479,7 +479,7 @@
     "description": "Uno de los pocos volcanes del mundo donde se puede ver el lago de lava activo desde el borde del cráter, entre fumarolas de azufre.",
     "tip": "De noche a veces se ve el resplandor de la lava; consulta el horario del parque",
     "images": ["https://picsum.photos/seed/masaya-volcan/900/600"],
-    "coordinates": { "latitude": 11.9854, "longitude": -86.1610 }
+    "coordinates": { "latitude": 11.9854, "longitude": -86.161 }
   },
   {
     "id": "masaya-monimbo",
@@ -494,7 +494,7 @@
     "description": "Cuna del folclore nicaragüense y de la insurrección de 1978: talleres de cuero, pirotecnia y las máscaras de los bailes de Torovenado.",
     "tip": "Pregunta por los talleres abiertos al público para ver a los artesanos trabajar",
     "images": ["https://picsum.photos/seed/masaya-monimbo/900/600"],
-    "coordinates": { "latitude": 11.9670, "longitude": -86.0930 }
+    "coordinates": { "latitude": 11.967, "longitude": -86.093 }
   },
   {
     "id": "esteli-galeria-heroes",
@@ -543,7 +543,7 @@
     "description": "Estelí produce algunos de los mejores puros del mundo. El recorrido muestra el proceso completo, desde la selección de la hoja hasta el torcido a mano.",
     "tip": "Se puede comprar directo de fábrica a mejor precio que en las tiendas",
     "images": ["https://picsum.photos/seed/esteli-tabacalera/900/600"],
-    "coordinates": { "latitude": 13.0870, "longitude": -86.3550 }
+    "coordinates": { "latitude": 13.087, "longitude": -86.355 }
   },
   {
     "id": "esteli-mirador-tisey",
@@ -560,6 +560,6 @@
     "description": "Bosque de pinos y vista panorámica sobre el valle de Estelí, en una reserva conocida por sus quesos artesanales y senderos frescos.",
     "tip": "Lleva chaqueta ligera: la zona es más fría que el centro de la ciudad",
     "images": ["https://picsum.photos/seed/esteli-tisey/900/600"],
-    "coordinates": { "latitude": 13.0000, "longitude": -86.3800 }
+    "coordinates": { "latitude": 13.0, "longitude": -86.38 }
   }
 ]

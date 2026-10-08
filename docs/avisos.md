@@ -23,39 +23,44 @@ cualquiera puede hacer y las sanciones del equipo. Es la fase F8 de la
 
 ## La bandeja (cualquier sesión)
 
-| Ruta                              | Qué hace                                                  |
-| --------------------------------- | --------------------------------------------------------- |
-| `GET notification/`               | Los avisos, del más nuevo. Paginado. `unread=true`: solo los no leídos |
-| `GET notification/unread/`        | `{ count }`: cuántos no ha leído, para el punto de la campana |
-| `POST notification/{id}/read/`    | Lo marca leído y lo devuelve                               |
-| `POST notification/read-all/`     | Marca todo leído (`204`)                                   |
+| Ruta                           | Qué hace                                                               |
+| ------------------------------ | ---------------------------------------------------------------------- |
+| `GET notification/`            | Los avisos, del más nuevo. Paginado. `unread=true`: solo los no leídos |
+| `GET notification/unread/`     | `{ count }`: cuántos no ha leído, para el punto de la campana          |
+| `POST notification/{id}/read/` | Lo marca leído y lo devuelve                                           |
+| `POST notification/read-all/`  | Marca todo leído (`204`)                                               |
 
 ```json
 {
-  "id": "…", "kind": "mensaje", "title": "Ana", "body": "¡Hola!",
-  "data": { "booking_id": "…" }, "read": false, "created_at": "…"
+  "id": "…",
+  "kind": "mensaje",
+  "title": "Ana",
+  "body": "¡Hola!",
+  "data": { "booking_id": "…" },
+  "read": false,
+  "created_at": "…"
 }
 ```
 
 `data` dice a qué pantalla lleva. Un aviso de otra cuenta responde `404`.
 
-| `kind`         | Cuándo llega                                                          | `data`            |
-| -------------- | --------------------------------------------------------------------- | ----------------- |
-| `mensaje`      | Un mensaje nuevo en el chat de una reserva                             | `booking_id`      |
-| `reserva`      | Al guía: una reserva nueva o el turista aceptó su postulación. A los dos: una reserva cancelada (también cuando el guía cancela su salida o el circuito se despublica o se retira) | `booking_id` |
-| `convocatoria` | Al turista: un guía se postuló a su convocatoria                       | `request_id`      |
-| `resena`       | Le dejaron una reseña                                                  | `booking_id`, `review_id` |
-| `pago`         | Pago confirmado o reembolsado (turista); retiro pagado o rechazado (guía) | `booking_id` o `withdrawal_id` |
-| `cuenta`       | Una sanción (advertencia, suspensión o expulsión)                      | —                 |
+| `kind`         | Cuándo llega                                                                                                                                                                       | `data`                         |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| `mensaje`      | Un mensaje nuevo en el chat de una reserva                                                                                                                                         | `booking_id`                   |
+| `reserva`      | Al guía: una reserva nueva o el turista aceptó su postulación. A los dos: una reserva cancelada (también cuando el guía cancela su salida o el circuito se despublica o se retira) | `booking_id`                   |
+| `convocatoria` | Al turista: un guía se postuló a su convocatoria                                                                                                                                   | `request_id`                   |
+| `resena`       | Le dejaron una reseña                                                                                                                                                              | `booking_id`, `review_id`      |
+| `pago`         | Pago confirmado o reembolsado (turista); retiro pagado o rechazado (guía)                                                                                                          | `booking_id` o `withdrawal_id` |
+| `cuenta`       | Una sanción (advertencia, suspensión o expulsión)                                                                                                                                  | —                              |
 
 ## Teléfonos y preferencias
 
-| Ruta                             | Qué hace                                                           |
-| -------------------------------- | ------------------------------------------------------------------ |
-| `POST device-token/`             | `{ token, platform }` (`android`, `ios` o `web`): al iniciar sesión y cada vez que Firebase da otro token (`204`). El mismo teléfono con otra cuenta pasa a la nueva |
-| `POST device-token/remove/`      | `{ token }`: al cerrar sesión (`204`)                               |
-| `GET notification-preference/`   | `[{ kind, label, push_enabled }]`, una por clase de aviso           |
-| `PUT notification-preference/`   | `{ preferences: [{ kind, push_enabled }] }`: solo cambia las que llegan |
+| Ruta                           | Qué hace                                                                                                                                                             |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST device-token/`           | `{ token, platform }` (`android`, `ios` o `web`): al iniciar sesión y cada vez que Firebase da otro token (`204`). El mismo teléfono con otra cuenta pasa a la nueva |
+| `POST device-token/remove/`    | `{ token }`: al cerrar sesión (`204`)                                                                                                                                |
+| `GET notification-preference/` | `[{ kind, label, push_enabled }]`, una por clase de aviso                                                                                                            |
+| `PUT notification-preference/` | `{ preferences: [{ kind, push_enabled }] }`: solo cambia las que llegan                                                                                              |
 
 Apagar una clase solo apaga el envío al teléfono: el aviso sigue llegando a la bandeja.
 
@@ -64,12 +69,12 @@ la tabla de arriba, para que la app abra la pantalla al tocarlo.
 
 ## Reportes
 
-| Ruta                          | Quién                                  | Qué hace                         |
-| ----------------------------- | -------------------------------------- | -------------------------------- |
-| `GET report/reason/`          | Cualquier sesión                       | `[{ code, label, requires_text }]` |
-| `POST report/`                | Cualquier sesión                       | `{ target_kind, target_id, reason, note? }` (`204`) |
-| `GET report/`                 | `content.moderate` o `users.manage`    | La bandeja, del más viejo. Filtros `status` (`pending`, `handled`, `dismissed`) y `target_kind` |
-| `POST report/{id}/resolve/`   | `content.moderate` o `users.manage`    | `{ status, note? }`: `handled` (se actuó) o `dismissed` (no procede) |
+| Ruta                        | Quién                               | Qué hace                                                                                        |
+| --------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `GET report/reason/`        | Cualquier sesión                    | `[{ code, label, requires_text }]`                                                              |
+| `POST report/`              | Cualquier sesión                    | `{ target_kind, target_id, reason, note? }` (`204`)                                             |
+| `GET report/`               | `content.moderate` o `users.manage` | La bandeja, del más viejo. Filtros `status` (`pending`, `handled`, `dismissed`) y `target_kind` |
+| `POST report/{id}/resolve/` | `content.moderate` o `users.manage` | `{ status, note? }`: `handled` (se actuó) o `dismissed` (no procede)                            |
 
 `target_kind` es `user`, `review`, `place` o `event`. Los motivos: `contenido_inapropiado`,
 `acoso`, `fraude`, `informacion_falsa`, `incumplimiento` y `otro` (con `otro` hay que
@@ -83,11 +88,11 @@ ya resuelto responde `409`.
 
 ## Sanciones
 
-| Ruta                       | Permiso                         | Qué hace                                  |
-| -------------------------- | ------------------------------- | ----------------------------------------- |
-| `GET sanction/`            | `users.view` o `users.manage`   | Paginado, de la más nueva. Filtros `user_id` y `active` |
-| `POST sanction/`           | `users.manage`                  | `{ user_id, kind, reason, days?, report_id? }` (`201`) |
-| `POST sanction/{id}/lift/` | `users.manage`                  | La levanta                                 |
+| Ruta                       | Permiso                       | Qué hace                                                |
+| -------------------------- | ----------------------------- | ------------------------------------------------------- |
+| `GET sanction/`            | `users.view` o `users.manage` | Paginado, de la más nueva. Filtros `user_id` y `active` |
+| `POST sanction/`           | `users.manage`                | `{ user_id, kind, reason, days?, report_id? }` (`201`)  |
+| `POST sanction/{id}/lift/` | `users.manage`                | La levanta                                              |
 
 `kind` es `warning`, `suspension` o `expulsion`. Una suspensión con `days` termina sola
 (`syncevents` la levanta); sin `days` dura hasta que se levante. Suspender deja la cuenta

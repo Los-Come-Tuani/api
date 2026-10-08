@@ -45,11 +45,11 @@ La de Play App Signing aparece en Play Console, en _Integridad de la app_.
 
 En **Clientes** crea uno de cada tipo que vayas a usar:
 
-| Tipo        | Datos que pide                                             | Para qué sirve                                                              |
-| ----------- | ---------------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Web**     | Orígenes de JavaScript autorizados (portal)                | Es el `aud` del token: lo validan el API, el portal y la app como `serverClientId` |
-| **Android** | Nombre del paquete y SHA-1 (uno por llave de firma)        | Google comprueba que la firma de la app es la registrada                   |
-| **iOS**     | _Bundle ID_                                                | Es el `GIDClientID` de la app en iOS                                        |
+| Tipo        | Datos que pide                                      | Para qué sirve                                                                     |
+| ----------- | --------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **Web**     | Orígenes de JavaScript autorizados (portal)         | Es el `aud` del token: lo validan el API, el portal y la app como `serverClientId` |
+| **Android** | Nombre del paquete y SHA-1 (uno por llave de firma) | Google comprueba que la firma de la app es la registrada                           |
+| **iOS**     | _Bundle ID_                                         | Es el `GIDClientID` de la app en iOS                                               |
 
 Para el Client ID Web, agrega como orígenes autorizados `http://localhost:5173` (portal
 en desarrollo) y el origen del portal en producción cuando exista.
@@ -72,7 +72,11 @@ cabecera CSRF y cookies, igual que el inicio de sesión del portal).
 En la app móvil, el cuerpo es:
 
 ```json
-{ "id_token": "<JWT de Google>", "birth_date": "1990-05-17", "nationality": "NI" }
+{
+  "id_token": "<JWT de Google>",
+  "birth_date": "1990-05-17",
+  "nationality": "NI"
+}
 ```
 
 - Si la persona ya entró con Google antes, se identifica por el `sub` del token y basta

@@ -89,21 +89,21 @@ flowchart LR
 
 ## Qué exige cada caso de uso
 
-| Caso de uso                    | Quién lo inicia      | Precondición                                       | Requisito                     |
-| ------------------------------ | -------------------- | -------------------------------------------------- | ----------------------------- |
-| Publicar solicitud             | Turista              | Fechas futuras y presupuesto positivo               | [RF-T-15][rf-t-15]            |
-| Publicar recorrido con tarifa  | Guía                 | Credencial aprobada; tarifa > 0 y cupo ≤ 50         | [RF-P-08][rf-p-08]            |
-| Consultar el tablero           | Guía, traductor      | Credencial aprobada y coincidencia de zona e idioma | [RF-P-12][rf-p-12]            |
-| Postularse                     | Guía, traductor      | Convocatoria en estado `publicada`                  | [RF-P-13][rf-p-13]            |
-| Negociar en la sala            | Ambas partes         | Existe una postulación                              | [RF-S-17][rf-s-17]            |
-| Comparar postulaciones         | Turista              | Al menos una postulación recibida                   | [RF-T-17][rf-t-17]            |
-| Aceptar una postulación        | Turista              | La convocatoria admite postulación                  | [RF-T-15][rf-t-15]            |
-| Reservar un recorrido          | Turista              | El recorrido está publicado y con cupo              | [RF-T-18][rf-t-18]            |
-| Retener la tarifa              | Pasarela             | Reserva en `pendiente_pago`                         | [Reserva](../estados/reserva.md) |
-| Cerrar el servicio prestado    | Guía, traductor      | Reserva en `en_curso`                               | [RF-P-14][rf-p-14]            |
-| Evaluar a la contraparte       | Ambas partes         | Servicio marcado como prestado                      | [RF-S-22][rf-s-22]            |
-| Cancelar la reserva            | Ambas partes         | Reserva `confirmada`; con menos de 24 h exige motivo | [Reserva](../estados/reserva.md) |
-| Expirar lo no atendido         | Proceso programado   | Convocatoria sin adjudicar, o pago sin completar    | [Convocatoria](../estados/convocatoria.md) |
+| Caso de uso                   | Quién lo inicia    | Precondición                                         | Requisito                                  |
+| ----------------------------- | ------------------ | ---------------------------------------------------- | ------------------------------------------ |
+| Publicar solicitud            | Turista            | Fechas futuras y presupuesto positivo                | [RF-T-15][rf-t-15]                         |
+| Publicar recorrido con tarifa | Guía               | Credencial aprobada; tarifa > 0 y cupo ≤ 50          | [RF-P-08][rf-p-08]                         |
+| Consultar el tablero          | Guía, traductor    | Credencial aprobada y coincidencia de zona e idioma  | [RF-P-12][rf-p-12]                         |
+| Postularse                    | Guía, traductor    | Convocatoria en estado `publicada`                   | [RF-P-13][rf-p-13]                         |
+| Negociar en la sala           | Ambas partes       | Existe una postulación                               | [RF-S-17][rf-s-17]                         |
+| Comparar postulaciones        | Turista            | Al menos una postulación recibida                    | [RF-T-17][rf-t-17]                         |
+| Aceptar una postulación       | Turista            | La convocatoria admite postulación                   | [RF-T-15][rf-t-15]                         |
+| Reservar un recorrido         | Turista            | El recorrido está publicado y con cupo               | [RF-T-18][rf-t-18]                         |
+| Retener la tarifa             | Pasarela           | Reserva en `pendiente_pago`                          | [Reserva](../estados/reserva.md)           |
+| Cerrar el servicio prestado   | Guía, traductor    | Reserva en `en_curso`                                | [RF-P-14][rf-p-14]                         |
+| Evaluar a la contraparte      | Ambas partes       | Servicio marcado como prestado                       | [RF-S-22][rf-s-22]                         |
+| Cancelar la reserva           | Ambas partes       | Reserva `confirmada`; con menos de 24 h exige motivo | [Reserva](../estados/reserva.md)           |
+| Expirar lo no atendido        | Proceso programado | Convocatoria sin adjudicar, o pago sin completar     | [Convocatoria](../estados/convocatoria.md) |
 
 ## Lo que las flechas dicen y no se ve a simple vista
 

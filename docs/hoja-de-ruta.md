@@ -17,17 +17,17 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 
 ## Hecho
 
-| Fase | Qué trae                                                                                         | Módulos     |
-| ---- | ------------------------------------------------------------------------------------------------ | ----------- |
-| F0   | Secretos fuera de git (gitleaks), configuración por entorno, 2FA cifrado y probado               | M2          |
-| F1   | Identidad: correo, registro con código, contraseña, perfil, baja, Google; portal y app enlazados | M2          |
-| F2   | Roles y permisos funcionales, superficies por rol, 2FA obligatorio, equipo e invitaciones        | M3 (parte)  |
-| F3   | **Hecha** (API y portal): alta pública de comercios, instituciones y alcaldías, cola de verificación del equipo, roles con ámbito y archivos ([guía](organizaciones.md)). Falta crear el bucket real | M1, M3, M5, M7, M14 |
-| F4   | **Hecha en el API**: lugares con ficha y novedades, circuitos oficiales (equipo y alcaldías) e itinerarios del turista ([guía](territorio.md)) | M1, M5, M6 |
-| F5   | **Hecha** (API, portal y app): postulación de guías y traductores y su revisión en dos pasos ([guía](prestadores.md)) | M4, M14 |
-| F6   | **Hecha en el API**: agenda cultural, insignias por QR y ubicación, campañas de cupones, canje y validación ([guía](agenda-y-recompensas.md)) | M1, M8, M12 |
-| F7   | **Hecha en el API**: guías públicos, salidas, convocatorias, reservas, chat y reseñas con impugnación ([guía](servicios.md)) | M9, M10, M11 |
-| F8   | **Hecha en el API**: cobro de reservas con pasarela manual, comisión, saldo y retiros del guía, estados de cuenta de comercios ([guía](finanzas.md)); bandeja y avisos por Firebase, reportes y sanciones ([guía](avisos.md)) | M13, M14, M15 |
+| Fase | Qué trae                                                                                                                                                                                                                      | Módulos             |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| F0   | Secretos fuera de git (gitleaks), configuración por entorno, 2FA cifrado y probado                                                                                                                                            | M2                  |
+| F1   | Identidad: correo, registro con código, contraseña, perfil, baja, Google; portal y app enlazados                                                                                                                              | M2                  |
+| F2   | Roles y permisos funcionales, superficies por rol, 2FA obligatorio, equipo e invitaciones                                                                                                                                     | M3 (parte)          |
+| F3   | **Hecha** (API y portal): alta pública de comercios, instituciones y alcaldías, cola de verificación del equipo, roles con ámbito y archivos ([guía](organizaciones.md)). Falta crear el bucket real                          | M1, M3, M5, M7, M14 |
+| F4   | **Hecha en el API**: lugares con ficha y novedades, circuitos oficiales (equipo y alcaldías) e itinerarios del turista ([guía](territorio.md))                                                                                | M1, M5, M6          |
+| F5   | **Hecha** (API, portal y app): postulación de guías y traductores y su revisión en dos pasos ([guía](prestadores.md))                                                                                                         | M4, M14             |
+| F6   | **Hecha en el API**: agenda cultural, insignias por QR y ubicación, campañas de cupones, canje y validación ([guía](agenda-y-recompensas.md))                                                                                 | M1, M8, M12         |
+| F7   | **Hecha en el API**: guías públicos, salidas, convocatorias, reservas, chat y reseñas con impugnación ([guía](servicios.md))                                                                                                  | M9, M10, M11        |
+| F8   | **Hecha en el API**: cobro de reservas con pasarela manual, comisión, saldo y retiros del guía, estados de cuenta de comercios ([guía](finanzas.md)); bandeja y avisos por Firebase, reportes y sanciones ([guía](avisos.md)) | M13, M14, M15       |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 
@@ -113,15 +113,15 @@ empezar:
 Lo que se hizo y lo que sigue está en [Organizaciones y verificación](organizaciones.md).
 La tabla de abajo era la propuesta inicial; las rutas reales son las de esa guía.
 
-| Recurso (propuesta)                         | Lo usa      | Permiso                                   |
-| ------------------------------------------- | ----------- | ----------------------------------------- |
-| `organization/`, `organization/{id}/`       | Portal      | `organizations.view` / `manage`           |
-| `organization/{id}/stop/` (asignar lugares) | Portal      | `organizations.manage`                    |
-| `organization-application/` y `mine/`       | Portal      | Quien se postula; el equipo `organizations.view` |
-| `organization-application/{id}/` `assign`, `document`, `resubmit`, `advance`, `request-changes`, `decision` | Portal | `organizations.review` (decidir: `manage`) |
-| `organization-application/assisted/`        | Portal      | `organizations.review`                    |
-| `place-request/` y su `decision`            | Portal      | `organizations.review`                    |
-| `upload/`                                   | Portal, app | Sesión                                    |
+| Recurso (propuesta)                                                                                         | Lo usa      | Permiso                                          |
+| ----------------------------------------------------------------------------------------------------------- | ----------- | ------------------------------------------------ |
+| `organization/`, `organization/{id}/`                                                                       | Portal      | `organizations.view` / `manage`                  |
+| `organization/{id}/stop/` (asignar lugares)                                                                 | Portal      | `organizations.manage`                           |
+| `organization-application/` y `mine/`                                                                       | Portal      | Quien se postula; el equipo `organizations.view` |
+| `organization-application/{id}/` `assign`, `document`, `resubmit`, `advance`, `request-changes`, `decision` | Portal      | `organizations.review` (decidir: `manage`)       |
+| `organization-application/assisted/`                                                                        | Portal      | `organizations.review`                           |
+| `place-request/` y su `decision`                                                                            | Portal      | `organizations.review`                           |
+| `upload/`                                                                                                   | Portal, app | Sesión                                           |
 
 Antes de empezar, confirmar: cómo se parten las organizaciones del portal en las tres
 tablas del modelo; el flujo de estados de la solicitud (ver [verificación](diagramas/estados/verificacion.md)
@@ -134,13 +134,13 @@ Para qué: los lugares, sus fichas, las publicaciones y los circuitos que ve la 
 Módulos: **M5** (ciudades, puntos de interés, circuitos oficiales) y **M1** (pilares
 culturales).
 
-| Recurso (propuesta)                                   | Lo usa      | Permiso                              |
-| ----------------------------------------------------- | ----------- | ------------------------------------ |
-| `stop/`, `stop/available/` (pública), `stop/{id}/`    | Portal, app | `places.view` / `manage`; el dueño edita lo suyo |
-| `stop/{id}/profile/` (ficha)                          | Portal      | Dueño de la parada o `places.manage` |
-| `post/`                                               | Portal, app | Dueño o `content.moderate`           |
-| `circuit/`, `circuit/{id}/`                           | Portal, app | `circuits.view` / `manage`           |
-| `circuit/{id}/group-session/` (horarios de grupo)     | App         | Guía del circuito                    |
+| Recurso (propuesta)                                | Lo usa      | Permiso                                          |
+| -------------------------------------------------- | ----------- | ------------------------------------------------ |
+| `stop/`, `stop/available/` (pública), `stop/{id}/` | Portal, app | `places.view` / `manage`; el dueño edita lo suyo |
+| `stop/{id}/profile/` (ficha)                       | Portal      | Dueño de la parada o `places.manage`             |
+| `post/`                                            | Portal, app | Dueño o `content.moderate`                       |
+| `circuit/`, `circuit/{id}/`                        | Portal, app | `circuits.view` / `manage`                       |
+| `circuit/{id}/group-session/` (horarios de grupo)  | App         | Guía del circuito                                |
 
 **Estado: hecha en el API** (rutas reales en [Lugares, circuitos e itinerarios](territorio.md);
 la tabla de arriba era la propuesta). Lo que se decidió con el equipo antes de empezar:
@@ -160,13 +160,13 @@ Para qué: que alguien se postule como guía o traductor desde la app, el equipo
 sus documentos y antecedentes, y quede aprobado. Módulos: **M4** (perfil de prestador y
 acreditaciones) y **M14** (solicitudes de verificación).
 
-| Recurso (propuesta)                                   | Lo usa      | Permiso                               |
-| ----------------------------------------------------- | ----------- | ------------------------------------- |
-| `guide-application/`, `{id}/`, `reviewers/`           | Portal      | `guides.view`                         |
-| `guide-application/{id}/` `assign`, `document`, `background/{tipo}`, `advance`, `request-changes` | Portal | `guides.review` |
-| `guide-application/{id}/decision/`                    | Portal      | `guides.decide`                       |
-| `guide-application/mine/` y reenvío                   | App         | Turista que se postula                |
-| `tour-guide/` (perfil, cobertura, estado)             | App         | Guía aprobado                         |
+| Recurso (propuesta)                                                                               | Lo usa | Permiso                |
+| ------------------------------------------------------------------------------------------------- | ------ | ---------------------- |
+| `guide-application/`, `{id}/`, `reviewers/`                                                       | Portal | `guides.view`          |
+| `guide-application/{id}/` `assign`, `document`, `background/{tipo}`, `advance`, `request-changes` | Portal | `guides.review`        |
+| `guide-application/{id}/decision/`                                                                | Portal | `guides.decide`        |
+| `guide-application/mine/` y reenvío                                                               | App    | Turista que se postula |
+| `tour-guide/` (perfil, cobertura, estado)                                                         | App    | Guía aprobado          |
 
 Al aprobar, la cuenta recibe el rol público de guía o traductor (un grupo con `kind`
 `public`). Guía y traductor comparten tabla y proceso
@@ -191,12 +191,12 @@ era la propuesta):
 Para qué: la oferta que publican las organizaciones y que modera el equipo. Módulos:
 **M8** (agenda cultural) y **M12** (insignias y cupones).
 
-| Recurso (propuesta)                                   | Lo usa      | Permiso                               |
-| ----------------------------------------------------- | ----------- | ------------------------------------- |
-| `event/`, `event/{id}/`, `event/{id}/moderation/`     | Portal, app | Organización; moderar: `content.moderate` |
-| `coupon/`, `coupon-redemption/` y su `validate`       | Portal, app | Negocio; canje en la app              |
-| `badge-activation/`, `badge-campaign/` y su `cancel`  | Portal, app | Organización; moderar: `content.moderate` |
-| `visit-event/` (agenda de llegadas)                   | Portal, app | `agenda.view`                         |
+| Recurso (propuesta)                                  | Lo usa      | Permiso                                   |
+| ---------------------------------------------------- | ----------- | ----------------------------------------- |
+| `event/`, `event/{id}/`, `event/{id}/moderation/`    | Portal, app | Organización; moderar: `content.moderate` |
+| `coupon/`, `coupon-redemption/` y su `validate`      | Portal, app | Negocio; canje en la app                  |
+| `badge-activation/`, `badge-campaign/` y su `cancel` | Portal, app | Organización; moderar: `content.moderate` |
+| `visit-event/` (agenda de llegadas)                  | Portal, app | `agenda.view`                             |
 
 Los saldos de insignias son libros de movimientos ([D-24](modelo-dominio/decisiones.md#d-24)).
 
@@ -244,12 +244,12 @@ Para qué: cobrar a las organizaciones, pagar a los guías y avisar a todos. Mó
 **M13** (pagos, comisiones, saldos y retiros), **M15** (notificaciones) y lo que quede de
 **M14** (reportes y sanciones).
 
-| Recurso (propuesta)                         | Lo usa      | Permiso                                   |
-| ------------------------------------------- | ----------- | ----------------------------------------- |
-| `billing/statement/` y su `pay`             | Portal      | Organización; el equipo `billing.view`    |
-| `pricing/`                                  | Portal      | `billing.view` / `manage`                 |
-| `guide-withdrawal/`                         | App, portal | Guía; el equipo `billing.manage`          |
-| Notificaciones y preferencias               | App, portal | Sesión                                    |
+| Recurso (propuesta)             | Lo usa      | Permiso                                |
+| ------------------------------- | ----------- | -------------------------------------- |
+| `billing/statement/` y su `pay` | Portal      | Organización; el equipo `billing.view` |
+| `pricing/`                      | Portal      | `billing.view` / `manage`              |
+| `guide-withdrawal/`             | App, portal | Guía; el equipo `billing.manage`       |
+| Notificaciones y preferencias   | App, portal | Sesión                                 |
 
 **Estado: hecha en el API** (rutas reales en
 [Cobros, comisiones, retiros y estados de cuenta](finanzas.md) y en

@@ -12,12 +12,12 @@ Complementa a [Autenticación y cuentas](autenticacion.md).
 Un **rol** es un grupo de Django (`Group`) con un perfil (`ApiGroupProfile`) que dice
 qué clase de grupo es y qué papel muestra:
 
-| Campo                 | Para qué sirve                                                           |
-| --------------------- | ------------------------------------------------------------------------ |
+| Campo                 | Para qué sirve                                                                                                        |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | `kind`                | `staff` (equipo de K'Plan), `operator` (negocios, alcaldías, instituciones) o `public` (turistas, guías, traductores) |
-| `role`                | El papel que ven los clientes en `user.role` (ver abajo)                 |
-| `requires_two_factor` | Quien tenga el rol debe activar el segundo factor                        |
-| `is_system`           | Lo necesita el sistema: no se edita ni se borra desde el portal          |
+| `role`                | El papel que ven los clientes en `user.role` (ver abajo)                                                              |
+| `requires_two_factor` | Quien tenga el rol debe activar el segundo factor                                                                     |
+| `is_system`           | Lo necesita el sistema: no se edita ni se borra desde el portal                                                       |
 
 Un **permiso funcional** es lo que una persona del equipo puede hacer (`guides.review`,
 `users.manage`...). Llega siempre por un rol: los permisos que alguien tenga sueltos no
@@ -25,11 +25,11 @@ cuentan, ni los de una cuenta que no puede operar. Un superusuario tiene todos.
 
 ## Por dónde entra cada rol
 
-| `kind`     | Entra por         | Ejemplos                              |
-| ---------- | ----------------- | ------------------------------------- |
-| `staff`    | Portal (`/auth/web/*`)    | Super admin, Verificador, Aprobador   |
-| `operator` | Portal (`/auth/web/*`)    | Negocio, Alcaldía, Institución        |
-| `public`   | App (`/auth/mobile/*`)    | Turista, Guía, Traductor              |
+| `kind`     | Entra por              | Ejemplos                            |
+| ---------- | ---------------------- | ----------------------------------- |
+| `staff`    | Portal (`/auth/web/*`) | Super admin, Verificador, Aprobador |
+| `operator` | Portal (`/auth/web/*`) | Negocio, Alcaldía, Institución      |
+| `public`   | App (`/auth/mobile/*`) | Turista, Guía, Traductor            |
 
 Por la otra superficie el inicio de sesión responde `401` con el mismo mensaje que una
 contraseña mala: no se revela que la cuenta existe, y cuenta como intento fallido para
@@ -43,16 +43,16 @@ Si una cuenta tiene varios papeles, `user.role` muestra el de mayor rango:
 Los identificadores son los mismos que usa el portal (`src/data/models/access.ts`);
 `GET /auth/staff-permission/` devuelve el catálogo con su etiqueta y descripción.
 
-| Módulo              | Permisos                                                          |
-| ------------------- | ----------------------------------------------------------------- |
-| Agenda              | `agenda.view`                                                     |
+| Módulo              | Permisos                                                             |
+| ------------------- | -------------------------------------------------------------------- |
+| Agenda              | `agenda.view`                                                        |
 | Organizaciones      | `organizations.view`, `organizations.review`, `organizations.manage` |
-| Guías y traductores | `guides.view`, `guides.review`, `guides.decide`                   |
-| Lugares             | `places.view`, `places.manage`                                    |
-| Circuitos           | `circuits.view`, `circuits.manage`                                |
-| Contenido           | `content.moderate`                                                |
-| Facturación         | `billing.view`, `billing.manage`                                  |
-| Equipo y usuarios   | `users.view`, `users.manage`, `staff.manage`                      |
+| Guías y traductores | `guides.view`, `guides.review`, `guides.decide`                      |
+| Lugares             | `places.view`, `places.manage`                                       |
+| Circuitos           | `circuits.view`, `circuits.manage`                                   |
+| Contenido           | `content.moderate`                                                   |
+| Facturación         | `billing.view`, `billing.manage`                                     |
+| Equipo y usuarios   | `users.view`, `users.manage`, `staff.manage`                         |
 
 **Quien puede más, puede ver.** `manage`, `review` y `decide` incluyen el `view` de su
 módulo: un rol con `guides.decide` trae también `guides.view` en la sesión. El rol
@@ -96,24 +96,24 @@ tampoco se puede desactivar (`403`).
 
 Todo bajo `/auth/`. El permiso es el que pide cada ruta; `403` si falta.
 
-| Ruta                                       | Permiso                      | Qué hace                                                |
-| ------------------------------------------ | ---------------------------- | ------------------------------------------------------- |
-| `GET staff-permission/`                    | `staff.manage`               | Catálogo de permisos                                    |
-| `GET staff-role/`                          | `staff.manage` o `users.view`| Roles del equipo, con cuántas personas tiene cada uno   |
-| `POST staff-role/`                         | `staff.manage`               | Crea un rol (`201`)                                     |
-| `GET staff-role/{id}/`                     | `staff.manage` o `users.view`| Un rol                                                  |
-| `PUT staff-role/{id}/`                     | `staff.manage`               | Cambia nombre, descripción, permisos y segundo factor   |
-| `DELETE staff-role/{id}/`                  | `staff.manage`               | Borra un rol sin personas (`204`)                       |
-| `GET staff-member/`                        | `staff.manage` o `users.view`| El equipo: cada persona con su rol del equipo (y los superusuarios, con `role: null`), por nombre |
-| `POST staff-invite/`                       | `staff.manage`               | Invita a alguien al equipo (`201`)                      |
-| `POST staff-accept/`                       | Pública (sin sesión)         | La persona invitada elige su contraseña (`204`)         |
-| `POST user-role/`                          | `staff.manage`               | Cambia el rol de una persona del equipo                 |
-| `POST user-status/`                        | `users.manage`               | Suspende o reactiva una cuenta                          |
-| `POST user-password-reset/`                | `users.manage`               | Manda a la persona un código para crear otra contraseña |
-| `GET account/`                             | `users.view` o `staff.manage`| El directorio de cuentas ("Todos los usuarios"), paginado |
-| `GET account/{id}/`                        | `users.view` o `staff.manage`| Una cuenta del directorio                               |
-| `PATCH account/{id}/`                      | `users.manage` o `staff.manage` | Corrige el nombre (`first_name`, `last_name`)        |
-| `GET user/`, `user/all/`, `user/{id}/`     | `users.view`                 | Ver a las personas (los permisos del modelo también sirven) |
+| Ruta                                   | Permiso                         | Qué hace                                                                                          |
+| -------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `GET staff-permission/`                | `staff.manage`                  | Catálogo de permisos                                                                              |
+| `GET staff-role/`                      | `staff.manage` o `users.view`   | Roles del equipo, con cuántas personas tiene cada uno                                             |
+| `POST staff-role/`                     | `staff.manage`                  | Crea un rol (`201`)                                                                               |
+| `GET staff-role/{id}/`                 | `staff.manage` o `users.view`   | Un rol                                                                                            |
+| `PUT staff-role/{id}/`                 | `staff.manage`                  | Cambia nombre, descripción, permisos y segundo factor                                             |
+| `DELETE staff-role/{id}/`              | `staff.manage`                  | Borra un rol sin personas (`204`)                                                                 |
+| `GET staff-member/`                    | `staff.manage` o `users.view`   | El equipo: cada persona con su rol del equipo (y los superusuarios, con `role: null`), por nombre |
+| `POST staff-invite/`                   | `staff.manage`                  | Invita a alguien al equipo (`201`)                                                                |
+| `POST staff-accept/`                   | Pública (sin sesión)            | La persona invitada elige su contraseña (`204`)                                                   |
+| `POST user-role/`                      | `staff.manage`                  | Cambia el rol de una persona del equipo                                                           |
+| `POST user-status/`                    | `users.manage`                  | Suspende o reactiva una cuenta                                                                    |
+| `POST user-password-reset/`            | `users.manage`                  | Manda a la persona un código para crear otra contraseña                                           |
+| `GET account/`                         | `users.view` o `staff.manage`   | El directorio de cuentas ("Todos los usuarios"), paginado                                         |
+| `GET account/{id}/`                    | `users.view` o `staff.manage`   | Una cuenta del directorio                                                                         |
+| `PATCH account/{id}/`                  | `users.manage` o `staff.manage` | Corrige el nombre (`first_name`, `last_name`)                                                     |
+| `GET user/`, `user/all/`, `user/{id}/` | `users.view`                    | Ver a las personas (los permisos del modelo también sirven)                                       |
 
 ### Directorio de cuentas
 
@@ -125,11 +125,23 @@ results }`, por nombre. Cada cuenta trae:
 
 ```json
 {
-  "id": "…", "email": "…", "first_name": "…", "last_name": "…", "name": "…",
-  "status": "active", "verified": true, "created_at": "…",
-  "role": "negocio", "superuser": false,
+  "id": "…",
+  "email": "…",
+  "first_name": "…",
+  "last_name": "…",
+  "name": "…",
+  "status": "active",
+  "verified": true,
+  "created_at": "…",
+  "role": "negocio",
+  "superuser": false,
   "staff_role": null,
-  "organization": { "id": "…", "kind": "business", "name": "…", "verified": true },
+  "organization": {
+    "id": "…",
+    "kind": "business",
+    "name": "…",
+    "verified": true
+  },
   "provider": null,
   "city": { "id": "…", "code": "leon", "name": "León" }
 }
@@ -171,7 +183,7 @@ Reglas que protegen al equipo:
    la cuenta **pendiente**, le da el rol y le manda un código de seis dígitos al correo.
    Responde `201` con la persona (`status: "pending"`) y `sent`.
 2. La persona abre el portal y manda `POST /auth/staff-accept/` `{ "email", "code",
-   "password" }`: la cuenta pasa a activa y verificada, y ya puede iniciar sesión. Un
+"password" }`: la cuenta pasa a activa y verificada, y ya puede iniciar sesión. Un
    correo sin invitación y un código malo dan la misma respuesta; cinco códigos malos
    invalidan el vigente; una contraseña débil no gasta el código.
 3. Reinvitar a una cuenta pendiente cambia su rol y manda otro código que reemplaza al

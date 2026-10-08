@@ -25,16 +25,16 @@ al cliente una URL firmada y el cliente lo sube directo a un bucket compatible c
    comprueba que esa clave sea de la clase correcta y que el archivo ya esté en el
    bucket con el tipo y el tamaño permitidos. Con una clave inventada responde `400`.
 
-| `kind`                 | Tipos admitidos                         | Máximo |
-| ---------------------- | --------------------------------------- | ------ |
-| `legal-document`       | PDF, JPEG, PNG                          | 10 MB  |
-| `signature-dish-photo` | JPEG, PNG, WebP                         | 5 MB   |
-| `provider-document`    | PDF, JPEG, PNG                          | 10 MB  |
-| `provider-photo`       | JPEG, PNG, WebP                         | 5 MB   |
-| `place-photo`          | JPEG, PNG, WebP (lugares y novedades)   | 5 MB   |
-| `circuit-photo`        | JPEG, PNG, WebP                         | 5 MB   |
-| `event-photo`          | JPEG, PNG, WebP                         | 5 MB   |
-| `coupon-photo`         | JPEG, PNG, WebP                         | 5 MB   |
+| `kind`                 | Tipos admitidos                       | Máximo |
+| ---------------------- | ------------------------------------- | ------ |
+| `legal-document`       | PDF, JPEG, PNG                        | 10 MB  |
+| `signature-dish-photo` | JPEG, PNG, WebP                       | 5 MB   |
+| `provider-document`    | PDF, JPEG, PNG                        | 10 MB  |
+| `provider-photo`       | JPEG, PNG, WebP                       | 5 MB   |
+| `place-photo`          | JPEG, PNG, WebP (lugares y novedades) | 5 MB   |
+| `circuit-photo`        | JPEG, PNG, WebP                       | 5 MB   |
+| `event-photo`          | JPEG, PNG, WebP                       | 5 MB   |
+| `coupon-photo`         | JPEG, PNG, WebP                       | 5 MB   |
 
 La URL firmada vive diez minutos (`STORAGE_UPLOAD_EXPIRES`) y sirve solo para esa clave.
 Para ver un archivo (el equipo que revisa una solicitud) el API firma una URL de lectura
@@ -47,13 +47,13 @@ Sin bucket configurado, `POST /upload/` responde `503` con
 
 ## Variables
 
-| Variable                    | Qué es                                                              |
-| --------------------------- | ------------------------------------------------------------------- |
-| `STORAGE_BUCKET`            | Nombre del bucket                                                   |
-| `STORAGE_ACCESS_KEY_ID`     | Identificador de la clave de acceso (secreto)                       |
-| `STORAGE_SECRET_ACCESS_KEY` | Secreto de la clave de acceso (secreto)                             |
-| `STORAGE_ENDPOINT_URL`      | URL del servicio. R2: la de la cuenta. Vacía: AWS                   |
-| `STORAGE_REGION`            | `auto` en R2; la región real (`us-east-1`...) en AWS                |
+| Variable                    | Qué es                                               |
+| --------------------------- | ---------------------------------------------------- |
+| `STORAGE_BUCKET`            | Nombre del bucket                                    |
+| `STORAGE_ACCESS_KEY_ID`     | Identificador de la clave de acceso (secreto)        |
+| `STORAGE_SECRET_ACCESS_KEY` | Secreto de la clave de acceso (secreto)              |
+| `STORAGE_ENDPOINT_URL`      | URL del servicio. R2: la de la cuenta. Vacía: AWS    |
+| `STORAGE_REGION`            | `auto` en R2; la región real (`us-east-1`...) en AWS |
 
 Las tres primeras van juntas o ninguna: con alguna a medias el API no arranca y dice cuál
 falta. Con `DEPLOY=True` el endpoint tiene que ser `https`. Los valores reales viven solo
@@ -83,6 +83,7 @@ git.
    ```
 
    En desarrollo agrega `http://localhost:5173`. La app móvil no necesita CORS.
+
 5. Opcional: una regla de ciclo de vida que borre los objetos sin referencia. Hoy quien
    se postula puede subir un archivo y abandonar la solicitud, y el objeto queda en el
    bucket; limpiarlos es un trabajo programado pendiente (ver la hoja de ruta).

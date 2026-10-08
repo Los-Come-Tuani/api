@@ -27,11 +27,11 @@ dominio de [servicios](modelo-dominio/modulos/servicios.md),
 
 ## Los guías que ve el turista (públicas)
 
-| Ruta                          | Qué devuelve                                                           |
-| ----------------------------- | ---------------------------------------------------------------------- |
+| Ruta                          | Qué devuelve                                                                                                                                                                                              |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `GET guide/`                  | Prestadores activos, de mejor a peor calificados (los nuevos al final). Paginado. Filtros: `city` (código: los de esa ciudad y los de todo el país), `language` (código), `service` (`guia`, `traductor`) |
-| `GET guide/{id}/`             | Uno, con sus últimas reseñas (`reviews`) y sus próximas salidas (`departures`) |
-| `GET circuit/{id}/departure/` | Las próximas salidas de guía de un circuito oficial                     |
+| `GET guide/{id}/`             | Uno, con sus últimas reseñas (`reviews`) y sus próximas salidas (`departures`)                                                                                                                            |
+| `GET circuit/{id}/departure/` | Las próximas salidas de guía de un circuito oficial                                                                                                                                                       |
 
 Un guía: `{ id, user_id, name, photo, presentation, services, languages: [{ code, name,
 level }], city, carries_tourists, rating, reviews_count }`. `id` es su perfil de prestador
@@ -46,12 +46,12 @@ primera reserva; en una de grupo, varias reservas comparten los cupos.
 
 ## Salidas (el guía, sesión de la app)
 
-| Ruta                           | Qué hace                                                      |
-| ------------------------------ | ------------------------------------------------------------- |
-| `GET departure/`               | Sus próximas salidas                                          |
-| `POST departure/`              | `{ circuit_id, date, start_time, capacity?, transport_included?, note? }` (`201`) |
-| `PATCH departure/{id}/`        | `capacity` (no menos de lo reservado), `transport_included`, `note` |
-| `POST departure/{id}/cancel/`  | `{ reason }`: la cancela y cancela sus reservas               |
+| Ruta                          | Qué hace                                                                          |
+| ----------------------------- | --------------------------------------------------------------------------------- |
+| `GET departure/`              | Sus próximas salidas                                                              |
+| `POST departure/`             | `{ circuit_id, date, start_time, capacity?, transport_included?, note? }` (`201`) |
+| `PATCH departure/{id}/`       | `capacity` (no menos de lo reservado), `transport_included`, `note`               |
+| `POST departure/{id}/cancel/` | `{ reason }`: la cancela y cancela sus reservas                                   |
 
 Solo un guía aprobado (prestador activo con el servicio de guía) publica salidas (`403`). El
 circuito tiene que estar publicado y ser de su ciudad (o el guía, de todo el país). Un guía
@@ -59,17 +59,17 @@ no sale dos veces a la misma hora (`409`).
 
 ## Convocatorias y postulaciones
 
-| Ruta                                  | Quién       | Qué hace                                                 |
-| ------------------------------------- | ----------- | -------------------------------------------------------- |
-| `GET service-request/`                | Turista     | Las suyas, con sus postulaciones                          |
-| `POST service-request/`               | Turista     | `{ itinerary_id, date, start_time, adults?, children?, max_fee?, note?, city_id? }` (`201`) |
-| `GET service-request/{id}/`           | Turista     | Una, con sus postulaciones (de menor a mayor precio)      |
-| `POST service-request/{id}/accept/`   | Turista     | `{ application_id }`: crea la reserva (`201`) y cierra la convocatoria |
-| `POST service-request/{id}/cancel/`   | Turista     | La cancela                                               |
-| `GET open-request/`                   | Guía        | Las abiertas de su ciudad (o todas, si es de todo el país), con `applied` |
-| `POST open-request/{id}/apply/`       | Guía        | `{ fee, message? }` (`201`; `409` si ya se postuló)       |
-| `GET application/mine/`               | Guía        | Sus postulaciones                                        |
-| `POST application/{id}/withdraw/`     | Guía        | Retira una que todavía no se resolvió                     |
+| Ruta                                | Quién   | Qué hace                                                                                    |
+| ----------------------------------- | ------- | ------------------------------------------------------------------------------------------- |
+| `GET service-request/`              | Turista | Las suyas, con sus postulaciones                                                            |
+| `POST service-request/`             | Turista | `{ itinerary_id, date, start_time, adults?, children?, max_fee?, note?, city_id? }` (`201`) |
+| `GET service-request/{id}/`         | Turista | Una, con sus postulaciones (de menor a mayor precio)                                        |
+| `POST service-request/{id}/accept/` | Turista | `{ application_id }`: crea la reserva (`201`) y cierra la convocatoria                      |
+| `POST service-request/{id}/cancel/` | Turista | La cancela                                                                                  |
+| `GET open-request/`                 | Guía    | Las abiertas de su ciudad (o todas, si es de todo el país), con `applied`                   |
+| `POST open-request/{id}/apply/`     | Guía    | `{ fee, message? }` (`201`; `409` si ya se postuló)                                         |
+| `GET application/mine/`             | Guía    | Sus postulaciones                                                                           |
+| `POST application/{id}/withdraw/`   | Guía    | Retira una que todavía no se resolvió                                                       |
 
 Una postulación: `{ id, request_id, request: { itinerary: { id, title, stops }, city, date,
 start_time, adults, children }, guide, fee, message, status, created_at }`; `request` resume
@@ -84,28 +84,39 @@ con `syncevents`).
 
 ## Reservas
 
-| Ruta                         | Quién            | Qué hace                                        |
-| ---------------------------- | ---------------- | ----------------------------------------------- |
-| `GET booking/`               | Turista o guía   | Las suyas (`role` dice cómo las ve)              |
-| `POST booking/`              | Turista          | `{ departure_id, adults?, children? }`: reserva una salida (`201`) |
-| `GET booking/{id}/`          | Los dos          | Una                                             |
-| `POST booking/{id}/cancel/`  | Los dos          | `{ reason? }` (el guía tiene que dar el motivo)  |
-| `POST booking/{id}/start/`   | Guía             | El día del recorrido: pasa a `in_progress`       |
-| `POST booking/{id}/finish/`  | Guía             | Terminó: pasa a `delivered`                      |
+| Ruta                        | Quién          | Qué hace                                                           |
+| --------------------------- | -------------- | ------------------------------------------------------------------ |
+| `GET booking/`              | Turista o guía | Las suyas (`role` dice cómo las ve)                                |
+| `POST booking/`             | Turista        | `{ departure_id, adults?, children? }`: reserva una salida (`201`) |
+| `GET booking/{id}/`         | Los dos        | Una                                                                |
+| `POST booking/{id}/cancel/` | Los dos        | `{ reason? }` (el guía tiene que dar el motivo)                    |
+| `POST booking/{id}/start/`  | Guía           | El día del recorrido: pasa a `in_progress`                         |
+| `POST booking/{id}/finish/` | Guía           | Terminó: pasa a `delivered`                                        |
 
 ```json
 {
-  "id": "…", "role": "tourist", "status": "confirmed",
-  "date": "2026-10-10", "start_time": "08:30", "adults": 2, "children": 1,
-  "amount": 600, "payment_status": "pendiente",
+  "id": "…",
+  "role": "tourist",
+  "status": "confirmed",
+  "date": "2026-10-10",
+  "start_time": "08:30",
+  "adults": 2,
+  "children": 1,
+  "amount": 600,
+  "payment_status": "pendiente",
   "payment_instructions": "El equipo de K'Plan te escribirá para confirmar el pago…",
-  "circuit": { "id": "…", "title": "…" }, "itinerary": null,
+  "circuit": { "id": "…", "title": "…" },
+  "itinerary": null,
   "guide": { "id": "…", "name": "Pedro", "photo": null },
   "tourist": { "id": "…", "name": "Ana" },
   "departure_id": "…",
-  "cancel_deadline": "…", "can_cancel": true,
-  "cancelled_at": null, "cancel_reason": "",
-  "created_at": "…", "unread_messages": 0, "reviewed": false
+  "cancel_deadline": "…",
+  "can_cancel": true,
+  "cancelled_at": null,
+  "cancel_reason": "",
+  "created_at": "…",
+  "unread_messages": 0,
+  "reviewed": false
 }
 ```
 
@@ -120,11 +131,11 @@ previas el turista ya no cancela (`409`).
 
 ## Chat
 
-| Ruta                              | Qué hace                                                 |
-| --------------------------------- | -------------------------------------------------------- |
+| Ruta                              | Qué hace                                                                      |
+| --------------------------------- | ----------------------------------------------------------------------------- |
 | `GET booking/{id}/message/`       | Los mensajes, del más viejo; con `after` (fecha y hora), solo los posteriores |
-| `POST booking/{id}/message/`      | `{ body }` (hasta 2000 caracteres; `201`)                 |
-| `POST booking/{id}/message/read/` | Quien pregunta leyó todo (`204`)                          |
+| `POST booking/{id}/message/`      | `{ body }` (hasta 2000 caracteres; `201`)                                     |
+| `POST booking/{id}/message/read/` | Quien pregunta leyó todo (`204`)                                              |
 
 Solo el turista y el guía de la reserva (`404` para los demás). Un mensaje: `{ id,
 sender_id, mine, body, sent_at }`. La reserva cuenta `unread_messages`. En una reserva
@@ -133,12 +144,12 @@ segundos con la conversación abierta.
 
 ## Reseñas
 
-| Ruta                                 | Quién                  | Qué hace                                  |
-| ------------------------------------ | ---------------------- | ----------------------------------------- |
-| `POST booking/{id}/review/`          | Turista o guía          | `{ rating, comment? }` (1 a 5) cuando el recorrido terminó (`409` antes o si ya la dejó) |
-| `POST review/{id}/dispute/`          | El reseñado             | `{ reason }`: pide que el equipo la revise |
-| `GET review-dispute/`                | `content.moderate`      | Las impugnaciones, de la más vieja. Filtro `status` (`pending`, `upheld`, `rejected`) |
-| `POST review-dispute/{id}/resolve/`  | `content.moderate`      | `{ upheld, note? }`: con `upheld` la reseña se oculta |
+| Ruta                                | Quién              | Qué hace                                                                                 |
+| ----------------------------------- | ------------------ | ---------------------------------------------------------------------------------------- |
+| `POST booking/{id}/review/`         | Turista o guía     | `{ rating, comment? }` (1 a 5) cuando el recorrido terminó (`409` antes o si ya la dejó) |
+| `POST review/{id}/dispute/`         | El reseñado        | `{ reason }`: pide que el equipo la revise                                               |
+| `GET review-dispute/`               | `content.moderate` | Las impugnaciones, de la más vieja. Filtro `status` (`pending`, `upheld`, `rejected`)    |
+| `POST review-dispute/{id}/resolve/` | `content.moderate` | `{ upheld, note? }`: con `upheld` la reseña se oculta                                    |
 
 La reseña del turista alimenta el promedio del guía (`rating` y `reviews_count` de su
 perfil) y el del circuito, si la reserva era de uno. Ocultarla los recalcula.

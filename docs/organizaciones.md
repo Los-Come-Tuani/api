@@ -48,11 +48,11 @@ Cuatro pasos del cliente, todos sin sesión salvo el último, que la deja abiert
 Los datos de la cuenta son los mismos en las tres: `email`, `code`, `password`,
 `first_name` y `last_name`. Los de la organización:
 
-| Clase       | Datos                                                                                         |
-| ----------- | --------------------------------------------------------------------------------------------- |
-| `business`  | `city_id`, `business_type_id`, `ruc`, `name`, `address`, `phone`, `alternate_phone`?, `latitude`, `longitude`, `hours`, `signature_dish` |
-| `institution` | `city_id`, `institution_type_id`, `name`, `contact_email`, `phone`, `document_key`          |
-| `municipality` | `city_id`, `name`, `contact_email`, `phone`, `document_key`                                |
+| Clase          | Datos                                                                                                                                    |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `business`     | `city_id`, `business_type_id`, `ruc`, `name`, `address`, `phone`, `alternate_phone`?, `latitude`, `longitude`, `hours`, `signature_dish` |
+| `institution`  | `city_id`, `institution_type_id`, `name`, `contact_email`, `phone`, `document_key`                                                       |
+| `municipality` | `city_id`, `name`, `contact_email`, `phone`, `document_key`                                                                              |
 
 - `hours`: una fila por día (`weekday` 0 = domingo a 6 = sábado), cada una con `closed`
   o con `opens` y `closes` (`"08:00"`); un cierre anterior a la apertura significa
@@ -100,15 +100,15 @@ servir.
 
 ## La cola del equipo
 
-| Ruta                                    | Permiso                                    | Qué hace                                         |
-| --------------------------------------- | ------------------------------------------ | ------------------------------------------------ |
-| `GET verification-request/`             | `organizations.view`                       | La bandeja, con filtros y páginas                |
-| `GET verification-request/reason/`      | `organizations.view` o `review`            | Los motivos que se ofrecen al rechazar           |
-| `GET verification-request/{id}/`        | `organizations.view`                       | El expediente completo                           |
-| `POST verification-request/{id}/take/`  | `organizations.review` o `manage`          | La toma: queda en revisión y a su nombre         |
-| `POST verification-request/{id}/release/` | `organizations.review` o `manage`        | La devuelve a la cola                            |
-| `POST verification-request/{id}/approve/` | `organizations.review` o `manage`        | Aprueba: la organización se hace visible         |
-| `POST verification-request/{id}/reject/`  | `organizations.review` o `manage`        | Rechaza con motivo                               |
+| Ruta                                      | Permiso                           | Qué hace                                 |
+| ----------------------------------------- | --------------------------------- | ---------------------------------------- |
+| `GET verification-request/`               | `organizations.view`              | La bandeja, con filtros y páginas        |
+| `GET verification-request/reason/`        | `organizations.view` o `review`   | Los motivos que se ofrecen al rechazar   |
+| `GET verification-request/{id}/`          | `organizations.view`              | El expediente completo                   |
+| `POST verification-request/{id}/take/`    | `organizations.review` o `manage` | La toma: queda en revisión y a su nombre |
+| `POST verification-request/{id}/release/` | `organizations.review` o `manage` | La devuelve a la cola                    |
+| `POST verification-request/{id}/approve/` | `organizations.review` o `manage` | Aprueba: la organización se hace visible |
+| `POST verification-request/{id}/reject/`  | `organizations.review` o `manage` | Rechaza con motivo                       |
 
 - La bandeja trae `status` (`open` por defecto, que son las enviadas y las que están en
   revisión; también `submitted`, `in_review`, `approved`, `rejected` o `all`), `kind`,
@@ -145,13 +145,13 @@ La base de datos está en español, como pide el modelo (`comercio`, `ciudad`, `
 Python, las rutas y el JSON siguen en inglés. Las tablas de `api_auth` se renombrarán en
 otra fase.
 
-| Tabla                    | Modelo (Python)        | App                |
-| ------------------------ | ---------------------- | ------------------ |
-| `ciudad`, `alcaldia`     | `City`, `Municipality` | `api_territory`    |
+| Tabla                                                                               | Modelo (Python)                                                              | App                 |
+| ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ------------------- |
+| `ciudad`, `alcaldia`                                                                | `City`, `Municipality`                                                       | `api_territory`     |
 | `comercio`, `comercio_horario`, `platillo_estrella`, `foto`, `institucion_cultural` | `Business`, `BusinessHours`, `SignatureDish`, `Photo`, `CulturalInstitution` | `api_organizations` |
-| `tipo_negocio`, `tipo_institucion`, `motivo`, `motivo_contexto`, `moneda` | `BusinessType`, `InstitutionType`, `Reason`, `ReasonContext`, `Currency` | `api_catalogs` |
-| `estado_verificacion`, `solicitud_verificacion`, `resolucion_verificacion` | `VerificationStatus`, `VerificationRequest`, `VerificationResolution` | `api_moderation` |
-| `asignacion_rol`         | `RoleAssignment`       | `api_roles`        |
+| `tipo_negocio`, `tipo_institucion`, `motivo`, `motivo_contexto`, `moneda`           | `BusinessType`, `InstitutionType`, `Reason`, `ReasonContext`, `Currency`     | `api_catalogs`      |
+| `estado_verificacion`, `solicitud_verificacion`, `resolucion_verificacion`          | `VerificationStatus`, `VerificationRequest`, `VerificationResolution`        | `api_moderation`    |
+| `asignacion_rol`                                                                    | `RoleAssignment`                                                             | `api_roles`         |
 
 Dos apartes del modelo, a propósito: `alcaldia` e `institucion_cultural` guardan su
 documento en `documento_id` (el modelo solo lo prevé en la institución), y `foto` vive en

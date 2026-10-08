@@ -9,12 +9,12 @@ OpenAPI en `/openapi/`; esta guía explica cómo se encadenan.
 
 ## Dos formas de sesión
 
-|                       | App móvil (`/auth/mobile/*`)            | Portal web (`/auth/web/*`)                    |
-| --------------------- | --------------------------------------- | --------------------------------------------- |
-| Credenciales          | `access` y `refresh` en el cuerpo       | Cookies `HttpOnly` (`access`, `refresh`)      |
-| Dónde se guardan      | Almacenamiento seguro del dispositivo   | El navegador; el JavaScript no las ve         |
-| CSRF                  | No aplica                               | Cabecera `X-CSRFToken` en cada `POST`         |
-| Cómo se autentica     | `Authorization: Bearer <access>`        | La cookie `access` viaja sola                 |
+|                   | App móvil (`/auth/mobile/*`)          | Portal web (`/auth/web/*`)               |
+| ----------------- | ------------------------------------- | ---------------------------------------- |
+| Credenciales      | `access` y `refresh` en el cuerpo     | Cookies `HttpOnly` (`access`, `refresh`) |
+| Dónde se guardan  | Almacenamiento seguro del dispositivo | El navegador; el JavaScript no las ve    |
+| CSRF              | No aplica                             | Cabecera `X-CSRFToken` en cada `POST`    |
+| Cómo se autentica | `Authorization: Bearer <access>`      | La cookie `access` viaja sola            |
 
 Para el portal: llamar a `GET /auth/csrf/` una vez (devuelve `204` con la cabecera
 `x-csrftoken`) y mandar ese valor en `X-CSRFToken` en todo `POST`. Las peticiones
@@ -69,7 +69,7 @@ Configuración completa en [Inicio de sesión con Google](google.md).
    No lo gasta: es para que la app avance en el formulario. Cinco códigos equivocados
    lo invalidan.
 3. `POST /auth/register/` con `{ "email", "code", "password", "first_name",
-   "last_name"?, "birth_date", "nationality", "username"? }` → `201` con el usuario de
+"last_name"?, "birth_date", "nationality", "username"? }` → `201` con el usuario de
    la sesión. Gasta el código. La cuenta nace activa, verificada y con el rol de
    turista; después se llama a `login`.
 

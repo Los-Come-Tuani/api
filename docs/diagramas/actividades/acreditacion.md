@@ -84,12 +84,12 @@ flowchart TB
 
 ## Quién ejecuta cada paso
 
-| Partición          | Pasos | Qué le corresponde                                                |
-| ------------------ | :---: | ----------------------------------------------------------------- |
-| Guía o traductor   |   3   | Declarar, documentar y renovar antes de que venza                 |
-| `k'plan`           |   7   | Validar el archivo, encolar, notificar y vigilar el vencimiento    |
-| Moderador          |   4   | Contrastar el documento con lo declarado y resolver               |
-| Proceso programado |   —   | Ejecuta los dos pasos punteados de la partición del sistema       |
+| Partición          | Pasos | Qué le corresponde                                              |
+| ------------------ | :---: | --------------------------------------------------------------- |
+| Guía o traductor   |   3   | Declarar, documentar y renovar antes de que venza               |
+| `k'plan`           |   7   | Validar el archivo, encolar, notificar y vigilar el vencimiento |
+| Moderador          |   4   | Contrastar el documento con lo declarado y resolver             |
+| Proceso programado |   —   | Ejecuta los dos pasos punteados de la partición del sistema     |
 
 El proceso programado no tiene partición propia. Sus dos pasos —comprobar la
 vigencia y suspender— ocurren dentro del sistema y sin que nadie los pida, y por

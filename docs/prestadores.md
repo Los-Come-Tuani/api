@@ -51,24 +51,24 @@ postulación (cuenta + perfil + documentos) ──► bandeja del equipo
 
 ## Catálogos (públicos)
 
-| Ruta                          | Qué trae                                                                   |
-| ----------------------------- | -------------------------------------------------------------------------- |
-| `GET catalog/city/`           | Las ciudades (las mismas de F3)                                            |
-| `GET catalog/language/`       | Los idiomas: `id`, `code` (ISO 639-1, como `en`) y `label`                 |
-| `GET catalog/service-type/`   | Lo que ofrece un prestador: `guia` y `traductor`                           |
-| `GET catalog/credential-type/`| Los documentos: `code`, `label`, `service` (el servicio que acredita, o nulo si se le pide a todos), `requires_expiry` y `requires_vehicle` |
+| Ruta                           | Qué trae                                                                                                                                    |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET catalog/city/`            | Las ciudades (las mismas de F3)                                                                                                             |
+| `GET catalog/language/`        | Los idiomas: `id`, `code` (ISO 639-1, como `en`) y `label`                                                                                  |
+| `GET catalog/service-type/`    | Lo que ofrece un prestador: `guia` y `traductor`                                                                                            |
+| `GET catalog/credential-type/` | Los documentos: `code`, `label`, `service` (el servicio que acredita, o nulo si se le pide a todos), `requires_expiry` y `requires_vehicle` |
 
 Los documentos que se le piden a una persona salen de ahí: los que no son de un servicio,
 los del servicio que ofrece, y los de vehículo si lleva turistas en el suyo.
 
-| `code`               | Documento                    | Se le pide a                 | Vence |
-| -------------------- | ---------------------------- | ---------------------------- | :---: |
-| `cedula`             | Cédula de identidad          | Todos                        |  sí   |
-| `record_policia`     | Récord de policía            | Todos                        |  no   |
-| `licencia_intur`     | Licencia o carné del INTUR   | Guías                        |  sí   |
-| `certificado_idioma` | Certificado de idiomas       | Traductores                  |  no   |
-| `licencia_conducir`  | Licencia de conducir         | Quien lleva turistas         |  sí   |
-| `seguro_vehiculo`    | Seguro del vehículo          | Quien lleva turistas         |  sí   |
+| `code`               | Documento                  | Se le pide a         | Vence |
+| -------------------- | -------------------------- | -------------------- | :---: |
+| `cedula`             | Cédula de identidad        | Todos                |  sí   |
+| `record_policia`     | Récord de policía          | Todos                |  no   |
+| `licencia_intur`     | Licencia o carné del INTUR | Guías                |  sí   |
+| `certificado_idioma` | Certificado de idiomas     | Traductores          |  no   |
+| `licencia_conducir`  | Licencia de conducir       | Quien lleva turistas |  sí   |
+| `seguro_vehiculo`    | Seguro del vehículo        | Quien lleva turistas |  sí   |
 
 ## Postulación (app)
 
@@ -132,15 +132,15 @@ equivocado. Todo ocurre en una transacción: si algo falla, el código vuelve a 
 `GET /provider-application/mine/` devuelve su expediente más reciente (`404` si la cuenta no
 es de un prestador):
 
-| Campo         | Qué es                                                                          |
-| ------------- | ------------------------------------------------------------------------------- |
-| `procedure`   | `application` (la postulación) o `renewal` (una renovación)                     |
-| `status`      | `submitted`, `in_review`, `approved` o `rejected`                               |
-| `resolution`  | Si se resolvió: `approved`, `reason` (`{ code, label }`), `note`, `resolved_at` |
-| `provider`    | El perfil: `id`, `status`, `services`, `approved_at`                            |
-| `profile`     | Lo que mandó, con la forma del reenvío: `services`, `city_id`, `phone`, `presentation`, `languages`, `carries_tourists` |
-| `documents`   | Sus documentos vigentes, uno por tipo (abajo)                                   |
-| `missing`     | Los tipos que se le piden y no tienen un documento utilizable                   |
+| Campo        | Qué es                                                                                                                  |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------- |
+| `procedure`  | `application` (la postulación) o `renewal` (una renovación)                                                             |
+| `status`     | `submitted`, `in_review`, `approved` o `rejected`                                                                       |
+| `resolution` | Si se resolvió: `approved`, `reason` (`{ code, label }`), `note`, `resolved_at`                                         |
+| `provider`   | El perfil: `id`, `status`, `services`, `approved_at`                                                                    |
+| `profile`    | Lo que mandó, con la forma del reenvío: `services`, `city_id`, `phone`, `presentation`, `languages`, `carries_tourists` |
+| `documents`  | Sus documentos vigentes, uno por tipo (abajo)                                                                           |
+| `missing`    | Los tipos que se le piden y no tienen un documento utilizable                                                           |
 
 Cada documento trae `id`, `type` (`{ code, label }`), `number`, `issued_on`, `expires_on`,
 `file` (`{ key, url }`: la URL de lectura vence en minutos), `status` y `review`:
@@ -174,10 +174,10 @@ vuelve a `active` cuando se aprueba lo que le faltaba.
 
 ## Perfil público
 
-| Ruta                          | Qué hace                                                        |
-| ----------------------------- | --------------------------------------------------------------- |
-| `GET provider-profile/mine/`  | El perfil: estado, servicios, ciudad, teléfono, presentación, foto, idiomas, documentos vigentes y los que faltan |
-| `PATCH provider-profile/mine/`| Cambia `presentation`, `phone`, `languages` o `photo_key`       |
+| Ruta                           | Qué hace                                                                                                          |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `GET provider-profile/mine/`   | El perfil: estado, servicios, ciudad, teléfono, presentación, foto, idiomas, documentos vigentes y los que faltan |
+| `PATCH provider-profile/mine/` | Cambia `presentation`, `phone`, `languages` o `photo_key`                                                         |
 
 - `photo_key` es la clave de un archivo subido con `kind` `provider-photo` (JPG, PNG o WEBP
   de hasta 5 MB); `null` quita la foto.
@@ -190,17 +190,17 @@ prestador.
 
 ## La cola del equipo
 
-| Ruta                                          | Permiso                              | Qué hace                                      |
-| --------------------------------------------- | ------------------------------------ | --------------------------------------------- |
-| `GET provider-request/`                       | `guides.view`                        | La bandeja, con filtros y páginas             |
-| `GET provider-request/reason/`                | `guides.view`                        | Los motivos: `document` y `decision`          |
-| `GET provider-request/{id}/`                  | `guides.view`                        | El expediente completo                        |
-| `POST provider-request/{id}/take/`            | `guides.review` o `guides.decide`    | La toma: queda en revisión y a su nombre      |
-| `POST provider-request/{id}/release/`         | `guides.review` o `guides.decide`    | La devuelve a la cola                         |
-| `POST provider-request/{id}/document-review/` | `guides.review` o `guides.decide`    | Acepta o rechaza un documento                 |
-| `POST provider-request/{id}/request-changes/` | `guides.review` o `guides.decide`    | Pide correcciones (cierra el expediente)      |
-| `POST provider-request/{id}/approve/`         | `guides.decide`                      | Aprueba al prestador                          |
-| `POST provider-request/{id}/reject/`          | `guides.decide`                      | Lo rechaza con motivo                         |
+| Ruta                                          | Permiso                           | Qué hace                                 |
+| --------------------------------------------- | --------------------------------- | ---------------------------------------- |
+| `GET provider-request/`                       | `guides.view`                     | La bandeja, con filtros y páginas        |
+| `GET provider-request/reason/`                | `guides.view`                     | Los motivos: `document` y `decision`     |
+| `GET provider-request/{id}/`                  | `guides.view`                     | El expediente completo                   |
+| `POST provider-request/{id}/take/`            | `guides.review` o `guides.decide` | La toma: queda en revisión y a su nombre |
+| `POST provider-request/{id}/release/`         | `guides.review` o `guides.decide` | La devuelve a la cola                    |
+| `POST provider-request/{id}/document-review/` | `guides.review` o `guides.decide` | Acepta o rechaza un documento            |
+| `POST provider-request/{id}/request-changes/` | `guides.review` o `guides.decide` | Pide correcciones (cierra el expediente) |
+| `POST provider-request/{id}/approve/`         | `guides.decide`                   | Aprueba al prestador                     |
+| `POST provider-request/{id}/reject/`          | `guides.decide`                   | Lo rechaza con motivo                    |
 
 - La bandeja acepta `status` (`open` por defecto: las enviadas y las que están en
   revisión; también `submitted`, `in_review`, `approved`, `rejected` o `all`), `service`
@@ -242,11 +242,11 @@ prestador.
 
 La base está en español y el código, las rutas y el JSON en inglés, como en F3.
 
-| Tabla                                              | Modelo (Python)                                    | App            |
-| -------------------------------------------------- | -------------------------------------------------- | -------------- |
-| `idioma`, `tipo_servicio`, `tipo_acreditacion`     | `Language`, `ServiceType`, `CredentialType`        | `api_catalogs` |
+| Tabla                                                                            | Modelo (Python)                                                            | App            |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------- |
+| `idioma`, `tipo_servicio`, `tipo_acreditacion`                                   | `Language`, `ServiceType`, `CredentialType`                                | `api_catalogs` |
 | `estado_prestador`, `perfil_prestador`, `prestador_servicio`, `prestador_idioma` | `ProviderStatus`, `ProviderProfile`, `ProviderService`, `ProviderLanguage` | `api_profiles` |
-| `estado_acreditacion`, `acreditacion`              | `CredentialStatus`, `Credential`                   | `api_profiles` |
+| `estado_acreditacion`, `acreditacion`                                            | `CredentialStatus`, `Credential`                                           | `api_profiles` |
 
 `solicitud_verificacion` suma `perfil_prestador_id` (el quinto objeto que se verifica) y
 `tramite` (`alta` o `renovacion`).

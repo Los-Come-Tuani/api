@@ -138,11 +138,11 @@ retroactivamente, y el límite dejaría de significar algo.
 Es el mismo régimen que `VisitaAcreditada` y por la misma razón: el hecho
 registrado es lo que justifica la decisión posterior.
 
-| Tipo de aviso   | `desactivable` | Cuenta para el límite |
-| --------------- | :------------: | :-------------------: |
-| Proximidad      |    **sí**      |         no            |
-| Promocional     |    **sí**      |       **sí**          |
-| Transaccional   |      no        |         no            |
+| Tipo de aviso | `desactivable` | Cuenta para el límite |
+| ------------- | :------------: | :-------------------: |
+| Proximidad    |     **sí**     |          no           |
+| Promocional   |     **sí**     |        **sí**         |
+| Transaccional |       no       |          no           |
 
 [rf-s-14]: ../../requerimientos/funcionales/plataforma.md#rf-s-14
 [rf-s-16]: ../../requerimientos/funcionales/plataforma.md#rf-s-16

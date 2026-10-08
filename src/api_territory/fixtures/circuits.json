@@ -37,7 +37,7 @@
     "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
     "notes": "El recorrido incluye caminatas por calles empedradas y visitas a sitios históricos",
     "startTimes": ["8:30 a.m.", "10:00 a.m.", "2:00 p.m."],
-    "location": { "latitude": 11.9344, "longitude": -85.9560 },
+    "location": { "latitude": 11.9344, "longitude": -85.956 },
     "comments": [
       {
         "author": "Ana Carolina R.",
@@ -98,7 +98,7 @@
     "badgesNote": "Este recorrido contiene un total de 4 insignias coleccionables",
     "notes": "La salida es temprano y el regreso depende del horario del ferry. En la isla se recorre en vehículo: llévalo tú o pídele al guía que lo ponga en tu propuesta",
     "startTimes": ["6:00 a.m.", "7:30 a.m."],
-    "location": { "latitude": 11.5060, "longitude": -85.5850 },
+    "location": { "latitude": 11.506, "longitude": -85.585 },
     "comments": [
       {
         "author": "Luis P.",
@@ -149,7 +149,7 @@
     "badgesNote": "Este recorrido contiene un total de 2 insignias coleccionables, más 3 insignias extra de \"Circuitos creativos\" y una medalla de León al completarlo",
     "notes": "La subida a los techos de la Catedral se hace descalzo",
     "startTimes": ["9:00 a.m.", "3:00 p.m."],
-    "location": { "latitude": 12.4345, "longitude": -86.8780 },
+    "location": { "latitude": 12.4345, "longitude": -86.878 },
     "isCreativeCircuit": true,
     "organizer": "Alcaldía de León",
     "comments": [
@@ -198,7 +198,7 @@
     "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
     "notes": "El clima de montaña es fresco y lluvioso por la tarde. La comunidad cafetalera queda lejos de la finca: llévate vehículo o pídele al guía que lo ponga en tu propuesta",
     "startTimes": ["7:00 a.m.", "8:00 a.m."],
-    "location": { "latitude": 12.9270, "longitude": -85.9170 },
+    "location": { "latitude": 12.927, "longitude": -85.917 },
     "comments": [
       {
         "author": "Roberto A.",

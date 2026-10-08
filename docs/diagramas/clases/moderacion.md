@@ -154,12 +154,12 @@ vacía.
 
 ## Qué exige cada verificable
 
-| Verificable           | Documento                             | Consecuencia de aprobar mal          |
-| --------------------- | ------------------------------------- | ------------------------------------ |
+| Verificable           | Documento                                   | Consecuencia de aprobar mal                |
+| --------------------- | ------------------------------------------- | ------------------------------------------ |
 | `Acreditacion`        | Licencia del INTUR o certificado de idiomas | Un guía sin credencial atendiendo turistas |
-| `Comercio`            | RUC y datos del formulario            | Una ficha falsa en el mapa           |
-| `InstitucionCultural` | Documento de existencia legal         | Eventos inventados en la agenda      |
-| `Alcaldia`            | Documento de representación           | El sello oficial de una ciudad entera |
+| `Comercio`            | RUC y datos del formulario                  | Una ficha falsa en el mapa                 |
+| `InstitucionCultural` | Documento de existencia legal               | Eventos inventados en la agenda            |
+| `Alcaldia`            | Documento de representación                 | El sello oficial de una ciudad entera      |
 
 `documento_exigido()` es lo que devuelve la segunda columna, y es abstracta
 justamente porque la cuarta fila no se resuelve igual que las otras tres

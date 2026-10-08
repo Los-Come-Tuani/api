@@ -16,4 +16,6 @@ title = "kplan-api"
 [[allowlists]]
   description = "Nombres de migraciones de Django"
   regexTarget = "line"
-  regexes     = ['''^\s*\(\s*["']api[a-z]+["']\s*,\s*["']\d{4}_[a-z0-9_]+["']\s*\),?\s*$''']
+  regexes     = [
+    '''^\s*\(\s*["']api[a-z]+["']\s*,\s*["']\d{4}_[a-z0-9_]+["']\s*\),?\s*$'''
+  ]
