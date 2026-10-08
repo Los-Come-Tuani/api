@@ -25,7 +25,8 @@ cualquiera puede hacer y las sanciones del equipo. Es la fase F8 de la
 
 | Ruta                              | Qué hace                                                  |
 | --------------------------------- | --------------------------------------------------------- |
-| `GET notification/`               | Los avisos, del más nuevo. Paginado. `unread=true`: solo los no leídos (`elements` sirve de contador) |
+| `GET notification/`               | Los avisos, del más nuevo. Paginado. `unread=true`: solo los no leídos |
+| `GET notification/unread/`        | `{ count }`: cuántos no ha leído, para el punto de la campana |
 | `POST notification/{id}/read/`    | Lo marca leído y lo devuelve                               |
 | `POST notification/read-all/`     | Marca todo leído (`204`)                                   |
 

@@ -33,8 +33,11 @@ dominio de [servicios](modelo-dominio/modulos/servicios.md),
 | `GET guide/{id}/`             | Uno, con sus últimas reseñas (`reviews`) y sus próximas salidas (`departures`) |
 | `GET circuit/{id}/departure/` | Las próximas salidas de guía de un circuito oficial                     |
 
-Un guía: `{ id, name, photo, presentation, services, languages: [{ code, name, level }],
-city, carries_tourists, rating, reviews_count }`. `rating` es nulo sin reseñas.
+Un guía: `{ id, user_id, name, photo, presentation, services, languages: [{ code, name,
+level }], city, carries_tourists, rating, reviews_count }`. `id` es su perfil de prestador
+(el de `guide/{id}/`) y `user_id` su cuenta (la de `POST report/` con `target_kind: "user"`).
+`rating` es nulo sin reseñas. Cada reseña del perfil: `{ id, rating, comment, author,
+created_at }` (`id` sirve para reportarla).
 
 Una salida: `{ id, circuit: { id, title, kind, city }, guide: { id, name, photo }, date,
 start_time, capacity, booked, remaining, exclusive, transport_included, note, cancelled,
@@ -67,6 +70,10 @@ no sale dos veces a la misma hora (`409`).
 | `POST open-request/{id}/apply/`       | Guía        | `{ fee, message? }` (`201`; `409` si ya se postuló)       |
 | `GET application/mine/`               | Guía        | Sus postulaciones                                        |
 | `POST application/{id}/withdraw/`     | Guía        | Retira una que todavía no se resolvió                     |
+
+Una postulación: `{ id, request_id, request: { itinerary: { id, title, stops }, city, date,
+start_time, adults, children }, guide, fee, message, status, created_at }`; `request` resume
+la convocatoria para la lista del guía.
 
 Una convocatoria es para un itinerario **propio** (`adjusted`): uno que sigue un circuito
 oficial responde `400` (se reserva una salida). La ciudad, si no llega, es la de la primera

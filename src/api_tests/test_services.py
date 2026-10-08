@@ -158,9 +158,9 @@ def own_itinerary(user: ApiUser) -> Itinerary:
 # Los guías que ve el turista
 
 
-@pytest.mark.usefixtures("guide_user")
 def test_the_tourist_sees_the_approved_guides(
     client: DMRClient,
+    guide_user: ApiUser,
     make_user: Callable[..., ApiUser],
 ) -> None:
     suspended = make_guide(make_user(email="otro@example.com"))
@@ -173,6 +173,8 @@ def test_the_tourist_sees_the_approved_guides(
     assert [item["name"] for item in listed["results"]] == ["Pedro"]
     assert listed["results"][0]["services"] == ["guia"]
     assert listed["results"][0]["rating"] is None
+    # la cuenta, para reportarlo
+    assert listed["results"][0]["user_id"] == str(guide_user.pk)
 
 
 ########################################################################################
@@ -456,6 +458,11 @@ def test_a_tourist_posts_a_request_and_picks_a_guide(
     assert too_much.status_code == HTTPStatus.BAD_REQUEST
     assert applied.status_code == HTTPStatus.CREATED, applied.content
 
+    mine = body(client.get("/application/mine/", headers=guide))
+    assert mine[0]["request"]["itinerary"]["title"] == "Mi León"
+    assert mine[0]["request"]["start_time"] == "09:00"
+    assert mine[0]["request"]["adults"] == 2
+
     accepted = client.post(
         f"/service-request/{request_id}/accept/",
         {"application_id": body(applied)["id"]},
@@ -586,6 +593,7 @@ def test_the_reviews_feed_the_guide_and_the_circuit(
     profile = body(client.get(f"/guide/{provider.pk}/"))
     assert profile["rating"] == 5
     assert profile["reviews"][0]["comment"] == "Excelente guía."
+    assert profile["reviews"][0]["id"] == body(from_tourist)["id"]
     assert body(client.get(f"/circuit/{circuit.pk}/"))["reviews_count"] == 1
 
 

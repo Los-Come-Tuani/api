@@ -42,6 +42,8 @@ class GuideLanguageGet(DTO):
 
 class GuideCardGet(DTO):
     id: UUID
+    # la cuenta del guía (para reportarlo); `id` es su perfil de prestador
+    user_id: UUID
     name: str
     photo: ImageGet | None
     presentation: str
@@ -57,6 +59,7 @@ class GuideCardGet(DTO):
 
 
 class GuideReviewGet(DTO):
+    id: UUID
     rating: int
     comment: str
     # el nombre de pila de quien la escribió
@@ -144,9 +147,20 @@ class ItineraryRef(DTO):
     stops: NonNegativeInt
 
 
+class ApplicationRequestRef(DTO):
+    itinerary: ItineraryRef
+    city: CityRef
+    date: date
+    start_time: str
+    adults: int
+    children: int
+
+
 class ApplicationGet(DTO):
     id: UUID
     request_id: UUID
+    # la convocatoria en corto, para la lista del guía
+    request: ApplicationRequestRef
     guide: GuideCardGet
     fee: int
     message: str

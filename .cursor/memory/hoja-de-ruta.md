@@ -51,9 +51,9 @@ tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
 | F5 (guías y traductores)| **Hecha** en el API, el portal (la cola en dos pasos) y la app (postularse, estado, corregir, renovar, perfil). Sección 7c |
 | Directorio de cuentas   | **Hecho en el API** (`GET|PATCH /auth/account/`, `docs/roles.md`). El portal lo conecta (sección 7d) |
 | F4 (lugares y circuitos)| **Hecha en el API**: lugares, ficha, novedades, circuitos oficiales, itinerarios del turista (sección 7d). Portal y app: ver sección 7d |
-| F6 (agenda, insignias, cupones) | **Hecha en el API** (sección 7e). Portal y app todavía no la consumen |
-| F7 (guías, reservas, chat, reseñas) | **Hecha en el API** (sección 7f). Portal y app todavía no la consumen |
-| F8 (cobros, retiros, avisos, sanciones) | **Hecha en el API** (sección 7g). Portal y app todavía no la consumen |
+| F6 (agenda, insignias, cupones) | **Hecha en el API** (sección 7e), conectada en el portal y la app (2026-10-08) |
+| F7 (guías, reservas, chat, reseñas) | **Hecha en el API** (sección 7f), conectada en el portal y la app (2026-10-08) |
+| F8 (cobros, retiros, avisos, sanciones) | **Hecha en el API** (sección 7g), conectada en el portal y la app (2026-10-08); el push espera el proyecto de Firebase |
 
 Orden que eligió el usuario (2026-10-07): directorio + F4, luego F6, F7 y F8, en ese orden;
 cada fase se le confirma con sus preguntas antes de empezar. Pendiente chico: crear el
@@ -455,9 +455,20 @@ bandeja; entran reportes y sanciones. Contrato: `docs/finanzas.md` y `docs/aviso
   reservas en `api_tests/services_helpers.py`.
 
 **Falta de F8**: pasarela real y su webhook; vencimiento del pago pendiente; cola de tareas
-para los envíos; avisos por correo. **Portal**: pagos, retiros, estados de cuenta, tarifas,
-reportes y sanciones. **App**: registrar el token de Firebase, la bandeja, las instrucciones
-de pago, saldo/cuenta/retiros del guía y reportar.
+para los envíos; avisos por correo. El portal y la app ya consumen F6 a F8 (sus memorias
+dicen qué sigue en demo); en la app el push es solo una interfaz hasta que exista el
+proyecto de Firebase.
+
+Ajustes que pidieron los clientes al conectarse (2026-10-08): despublicar o retirar un
+circuito cancela sus salidas y reservas; `official-circuit/{id}/departure/`;
+`duration_minutes` con traslados estimados (`services/legs.py`, misma cuenta que el portal y
+la app); mensaje legible para listas cortas; `code` en `coupon-redemption/`, `organizer_id`
+en `cultural-event/`, `pricing/` para el comercio; `user_id` del guía e `id` de sus reseñas,
+resumen de la convocatoria en las postulaciones y `notification/unread/`. Pedidos que quedan
+abiertos: convocatorias con servicio, horas y transporte; chat en tiempo real; cuándo
+vuelve a valer la insignia de un lugar; avisos en el idioma del teléfono. Decisiones del
+usuario: la sesión no trae la ciudad de la organización; los estados de cuenta son solo para
+comercios.
 
 ## 8. F3 a F8 (mapa, se confirma una por una)
 
@@ -562,8 +573,11 @@ Cosas que F3 tiene que resolver primero (detalle en `docs/hoja-de-ruta.md`):
 - Servidor: `powershell -NoProfile -ExecutionPolicy Bypass -File "$env:LOCALAPPDATA\Temp\kplan-dev\start-api.ps1"`
   (log en `api.out.log` de la misma carpeta). Cuentas locales (contraseña `Kplan-Local-2026`,
   solo en la base de esta máquina): `admin@example.com` (superusuario),
-  `alcaldia.leon@example.com`, `negocio.leon@example.com`, `turista@example.com`; se
-  recrean con `dev_accounts.py` de esa carpeta (`manage.py shell -c "exec(open(...).read())"`).
+  `alcaldia.leon@example.com`, `negocio.leon@example.com`, `turista@example.com`,
+  `guia.leon@example.com` (guía aprobado, entra por la app) y `teatro.leon@example.com`
+  (institución verificada, portal); se recrean con `dev_accounts.py` de esa carpeta
+  (`manage.py shell -c "exec(open(...).read())"`). El servidor arrancado desde una terminal
+  del agente puede morir con ella: arráncalo con `Start-Process -WindowStyle Hidden`.
   Contenido de ejemplo: `manage.py seedcontent`.
 - `gitleaks` portátil en `%LOCALAPPDATA%\Temp\kplan-dev\gitleaks\gitleaks.exe`. No hay
   ganchos de `prek` instalados: córrelo a mano antes de cada commit.

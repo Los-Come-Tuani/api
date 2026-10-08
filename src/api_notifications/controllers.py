@@ -18,6 +18,7 @@ from api_notifications.schemas import (
     NotificationQuery,
     PreferenceGet,
     PreferencePut,
+    UnreadCountGet,
 )
 from api_notifications.services import (
     mark_all_read_sync,
@@ -26,6 +27,7 @@ from api_notifications.services import (
     preferences_sync,
     register_token_sync,
     remove_token_sync,
+    unread_count_sync,
     update_preferences_sync,
 )
 
@@ -48,6 +50,13 @@ class NotificationReadController(BaseController[CustomPydanticFastSerializer]):
     @modify(status_code=HTTPStatus.OK)
     async def post(self, parsed_path: Path[UuidInstancePath]) -> NotificationGet:
         return await sync_to_async(mark_read_sync)(self.request.user, parsed_path.id)
+
+
+class NotificationUnreadController(BaseController[CustomPydanticFastSerializer]):
+    # el punto de la campana: se puede preguntar seguido
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> UnreadCountGet:
+        return await sync_to_async(unread_count_sync)(self.request.user)
 
 
 class NotificationReadAllController(BaseController[CustomPydanticFastSerializer]):

@@ -22,6 +22,10 @@ class NotificationGet(DTO):
     created_at: datetime
 
 
+class UnreadCountGet(DTO):
+    count: int
+
+
 class NotificationQuery(PageQuery):
     # solo los que no se han leído
     unread: bool = False

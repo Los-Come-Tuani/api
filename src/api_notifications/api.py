@@ -10,6 +10,7 @@ from api_notifications.controllers import (
     NotificationPreferenceController,
     NotificationReadAllController,
     NotificationReadController,
+    NotificationUnreadController,
 )
 
 if TYPE_CHECKING:
@@ -25,6 +26,10 @@ router: Final[Router] = Router(
         route_controller(
             ctrl=NotificationReadAllController,
             endpoint="notification/read-all",
+        ),
+        route_controller(
+            ctrl=NotificationUnreadController,
+            endpoint="notification/unread",
         ),
         route_controller(
             ctrl=NotificationReadController,

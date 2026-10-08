@@ -13,6 +13,7 @@ from api_rewards.services.badges import ensure_tourist
 from api_services.models import Application, Booking, RequestStatus, ServiceRequest
 from api_services.schemas import (
     ApplicationGet,
+    ApplicationRequestRef,
     ItineraryRef,
     OpenRequestGet,
     RequestGet,
@@ -108,6 +109,7 @@ def itinerary_ref(request: ServiceRequest) -> ItineraryRef:
 def application_payload(application: Application) -> ApplicationGet:
     found: Any = application
     provider: Any = visible_guides(only_visible=False).get(pk=found.provider_id)
+    request: Any = requests().get(pk=found.request_id)
 
     return ApplicationGet(
         created_at=found.created_at,
@@ -115,6 +117,14 @@ def application_payload(application: Application) -> ApplicationGet:
         guide=card_payload(provider),
         id=found.pk,
         message=str(found.message),
+        request=ApplicationRequestRef(
+            adults=int(request.adults),
+            children=int(request.children),
+            city=city_ref(request.city),
+            date=request.date,
+            itinerary=itinerary_ref(request),
+            start_time=clock(request.start_time),
+        ),
         request_id=found.request_id,
         status=APPLICATION_API[str(found.status)],  # ty: ignore[invalid-argument-type]
     )

@@ -9,7 +9,7 @@ from api_core.services.pages import paginate
 from api_exceptions.errors import NotFoundError
 from api_notifications import push
 from api_notifications.models import DeviceToken, Notification, NotificationPreference
-from api_notifications.schemas import NotificationGet, PreferenceGet
+from api_notifications.schemas import NotificationGet, PreferenceGet, UnreadCountGet
 
 if TYPE_CHECKING:
     from collections.abc import Mapping
@@ -145,6 +145,12 @@ def mark_read_sync(user: ApiUser, notification_id: UUID) -> NotificationGet:
     )
 
     return notification_payload(Notification.objects.get(pk=notification.pk))
+
+
+def unread_count_sync(user: ApiUser) -> UnreadCountGet:
+    return UnreadCountGet(
+        count=Notification.objects.filter(read_at__isnull=True, user=user).count()
+    )
 
 
 def mark_all_read_sync(user: ApiUser) -> None:

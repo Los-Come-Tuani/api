@@ -129,6 +129,7 @@ def card_payload(provider: ProviderProfile) -> GuideCardGet:
         rating=None if rating is None else round(float(rating), 1),
         reviews_count=int(found.reviews_count),
         services=services_of(provider),
+        user_id=found.user_id,
     )
 
 
@@ -250,6 +251,7 @@ def guide_sync(provider_id: UUID) -> GuideDetailGet:
                 author=str(item.author.first_name) or "Turista",
                 comment=str(item.comment),
                 created_at=item.created_at,
+                id=item.pk,
                 rating=int(item.rating),
             )
             for item in reviews

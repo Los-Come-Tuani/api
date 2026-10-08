@@ -89,6 +89,21 @@ def test_reading_one_and_reading_all(
     assert after_all["elements"] == 0
 
 
+def test_the_bell_counts_the_unread(
+    ana: ApiUser,
+    client: DMRClient,
+    headers: dict[str, str],
+) -> None:
+    for index in range(2):
+        notify(ana.pk, "cuenta", f"Aviso {index}", "Algo pasó.")
+
+    before = body(client.get("/notification/unread/", headers=headers))
+    client.post("/notification/read-all/", {}, headers=headers)
+    after = body(client.get("/notification/unread/", headers=headers))
+
+    assert (before, after) == ({"count": 2}, {"count": 0})
+
+
 def test_an_inbox_of_someone_else_does_not_exist(
     ana: ApiUser,
     client: DMRClient,
