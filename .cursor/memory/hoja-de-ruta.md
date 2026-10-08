@@ -32,6 +32,16 @@ tiene su memoria en `.cursor/memory/hoja-de-ruta.md`.
   `TOTP_ENCRYPTION_KEYS` es obligatoria con `DEPLOY=True`.
 - Nunca commitear en `production` ni en `staging`. Portal y app no tienen rama de
   desarrollo: no tocar su `main`.
+- **Ramas y dominios (2026-10-08, decisión del usuario).** API: `production` ->
+  `https://api.kplan.dev`, `staging` -> `https://staging-api.kplan.dev` (no se le sube lo
+  nuevo: tiene sus propios commits), `develop-a` -> `https://develop-api.kplan.dev` (aquí
+  vive todo lo de F1 a F8). Portal: `main` es producción (`https://portal.kplan.dev`) y
+  `staging` (sale de `feat/hoja-de-ruta-api`) va a `https://staging-portal.kplan.dev` contra
+  `develop-api`. App: `main` es producción (`env/prod.example.json` -> `api.kplan.dev`) y
+  `staging` usa `env/staging.example.json` -> `develop-api.kplan.dev`. El portal toma
+  `VITE_API_URL` de las variables del build en Cloudflare; el API, sus dominios de
+  `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` y `CSRF_TRUSTED_ORIGINS` en Railway. Lo nuevo se
+  sube a `staging` del portal y de la app adelantando la rama a `feat/hoja-de-ruta-api`.
 - Commits convencionales en español (`feat(auth): ...`, `docs: ...`). Sin emojis.
 
 ## 2. Estado de las tareas
