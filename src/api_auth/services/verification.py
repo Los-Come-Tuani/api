@@ -12,13 +12,13 @@ from django.db.transaction import atomic
 from django.utils.timezone import now
 from django.views.decorators.debug import sensitive_variables
 
+from api_auth.enums import VerificationPurposes
 from api_auth.models import ApiVerificationCode
 from api_core.config import CONFIG
 
 if TYPE_CHECKING:
     from typing import Final
 
-    from api_auth.enums import VerificationPurposes
     from api_auth.models import ApiUser
 
 ########################################################################################
@@ -41,6 +41,17 @@ def hash_code(purpose: str, destination: str, code: str) -> str:
         f"{purpose}:{destination}:{code}".encode(),
         sha256,
     ).hexdigest()
+
+
+def accepts_any_code(purpose: VerificationPurposes) -> bool:
+    # nunca para recuperar una contraseña ni aceptar una invitación: eso abriría
+    # cuentas que ya existen, no solo crearía una nueva; y con un proveedor de correo
+    # el código sí llega
+    return (
+        CONFIG.VERIFICATION_ACCEPT_ANY_SIGNUP_CODE
+        and not CONFIG.EMAIL_HOST
+        and purpose == VerificationPurposes.EMAIL
+    )
 
 
 ########################################################################################
@@ -116,7 +127,9 @@ def check_code_sync(
 
         expected: str = hash_code(purpose, destination, code)
 
-        if not compare_digest(str(row.code_hash), expected):
+        if not compare_digest(str(row.code_hash), expected) and not accepts_any_code(
+            purpose,
+        ):
             ApiVerificationCode.objects.filter(pk=row.pk).update(
                 attempts=F("attempts") + 1,
             )

@@ -9,6 +9,7 @@ from django.core import mail
 from api_auth.enums import ApiUserStatus
 from api_auth.models import ApiUser
 from api_auth.services.account import change_status_sync
+from api_core.config import CONFIG
 from api_tests.helpers import PASSWORD, bearer, body, credentials, extract_code
 
 if TYPE_CHECKING:
@@ -121,6 +122,24 @@ def test_a_wrong_reset_code_is_rejected_and_five_of_them_burn_the_real_one(
     assert reset(client, user, code, NEW_PASSWORD).status_code == (  # ty: ignore[unresolved-attribute]
         HTTPStatus.BAD_REQUEST
     )
+
+
+def test_a_test_api_that_takes_any_signup_code_still_checks_reset_codes(
+    client: DMRClient,
+    user: ApiUser,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setitem(
+        CONFIG.__dict__,
+        "VERIFICATION_ACCEPT_ANY_SIGNUP_CODE",
+        value=True,
+    )
+    code = ask_for_a_reset_code(client, user)
+    wrong = "000000" if code != "000000" else "111111"
+
+    response = reset(client, user, wrong, NEW_PASSWORD)
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST  # ty: ignore[unresolved-attribute]
 
 
 def test_a_weak_new_password_does_not_spend_the_code(

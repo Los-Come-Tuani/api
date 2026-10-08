@@ -77,6 +77,13 @@ Reglas: contraseña de al menos ocho caracteres con una mayúscula y un número,
 `birth_date` en formato `YYYY-MM-DD` y mayor de 18 años, `nationality` con el código de
 país de dos letras (`NI`, `US`). Una contraseña débil no gasta el código.
 
+En un API de pruebas sin proveedor de correo (`EMAIL_HOST` vacío y `DEPLOY=True`) el
+código nunca llega. Con `VERIFICATION_ACCEPT_ANY_SIGNUP_CODE=True`, cualquier código de
+seis dígitos sirve para el alta (este registro y las postulaciones de prestadores y
+organizaciones), pero hay que pedirlo con el paso 1 y sigue venciendo y gastándose. La
+recuperación de contraseña y las invitaciones siguen exigiendo el código real. Con
+`EMAIL_HOST` definido la variable no tiene efecto. Nunca va en producción.
+
 ## Contraseña
 
 - `POST /auth/password-forgot/` `{ "email" }` → `204`. Manda un código si la cuenta

@@ -154,6 +154,11 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     VERIFICATION_LIFETIME: timedelta = timedelta(minutes=15)
     VERIFICATION_MAX_ATTEMPTS: PositiveInt = 5
     VERIFICATION_RESEND_AFTER: timedelta = timedelta(seconds=60)
+    #   Solo en un API de pruebas sin proveedor de correo, donde el código de alta nunca
+    #   llega: cualquier código de seis dígitos sirve para crear una cuenta. Hay que
+    #   pedirlo igual, y sigue venciendo y gastándose. La recuperación de contraseña y
+    #   las invitaciones no cambian. Con `EMAIL_HOST` no tiene efecto.
+    VERIFICATION_ACCEPT_ANY_SIGNUP_CODE: bool = False
 
     # - plazo entre pedir la baja de la cuenta y destruir sus datos (RF-S-11)
     ACCOUNT_CLOSING_DELAY: timedelta = timedelta(days=30)

@@ -8,6 +8,7 @@ from django.core import mail
 from django.utils.timezone import localdate, now
 
 from api_auth.models import ApiUser, ApiVerificationCode
+from api_core.config import CONFIG
 from api_tests.helpers import PASSWORD, body, extract_code
 
 if TYPE_CHECKING:
@@ -150,6 +151,59 @@ def test_an_expired_code_is_rejected(client: DMRClient) -> None:
     ApiVerificationCode.objects.update(expires_at=now() - timedelta(seconds=1))
 
     response = client.post("/auth/register-verify/", {"code": code, "email": EMAIL})
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+########################################################################################
+
+
+@pytest.fixture
+def any_signup_code(monkeypatch: pytest.MonkeyPatch) -> None:
+    # `CONFIG` es un modelo congelado: se reemplaza el valor en su `__dict__`
+    monkeypatch.setitem(
+        CONFIG.__dict__,
+        "VERIFICATION_ACCEPT_ANY_SIGNUP_CODE",
+        value=True,
+    )
+
+
+@pytest.mark.usefixtures("any_signup_code")
+def test_a_test_api_without_email_takes_any_signup_code(client: DMRClient) -> None:
+    code = ask_for_a_code(client)
+    other = "000000" if code != "000000" else "111111"
+
+    verify = client.post("/auth/register-verify/", {"code": other, "email": EMAIL})
+    response = client.post("/auth/register/", registration(other))
+
+    assert verify.status_code == HTTPStatus.NO_CONTENT, verify.content
+    assert response.status_code == HTTPStatus.CREATED, response.content
+
+
+@pytest.mark.usefixtures("any_signup_code")
+def test_any_signup_code_still_has_to_be_asked_for_and_is_spent(
+    client: DMRClient,
+) -> None:
+    unasked = client.post("/auth/register-verify/", {"code": "123456", "email": EMAIL})
+
+    ask_for_a_code(client)
+    client.post("/auth/register/", registration("123456"))
+    reuse = client.post("/auth/register-verify/", {"code": "123456", "email": EMAIL})
+
+    assert unasked.status_code == HTTPStatus.BAD_REQUEST
+    assert reuse.status_code == HTTPStatus.BAD_REQUEST
+
+
+@pytest.mark.usefixtures("any_signup_code")
+def test_any_signup_code_has_no_effect_once_email_is_configured(
+    client: DMRClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setitem(CONFIG.__dict__, "EMAIL_HOST", "smtp.example.com")
+    code = ask_for_a_code(client)
+    other = "000000" if code != "000000" else "111111"
+
+    response = client.post("/auth/register-verify/", {"code": other, "email": EMAIL})
 
     assert response.status_code == HTTPStatus.BAD_REQUEST
 
