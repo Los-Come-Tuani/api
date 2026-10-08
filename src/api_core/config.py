@@ -62,15 +62,19 @@ LEGACY_DEPLOY_HOSTS: Final[tuple[str, ...]] = (
     "127.0.0.1",
     "localhost",
     RAILWAY_HEALTHCHECK_HOST,
-    "kplan-web.up.railway.app",
-    "staging-kplan-web.up.railway.app",
+    "api.kplan.dev",
+    "staging-api.kplan.dev",
+    "portal.kplan.dev",
+    "staging-portal.kplan.dev",
 )
 
 LEGACY_DEPLOY_ORIGINS: Final[tuple[str, ...]] = (
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://kplan-web.up.railway.app",
-    "https://staging-kplan-web.up.railway.app",
+    "https://api.kplan.dev",
+    "https://staging-api.kplan.dev",
+    "https://portal.kplan.dev",
+    "https://staging-portal.kplan.dev",
 )
 
 LOCAL_HOSTNAMES: Final[frozenset[str]] = frozenset({"localhost", "127.0.0.1"})
