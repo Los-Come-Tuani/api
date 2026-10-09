@@ -115,6 +115,42 @@ def test_http_localhost_origin_is_still_accepted_when_deployed() -> None:
 ########################################################################################
 
 
+def test_plain_redis_keeps_its_scheme_in_the_cache_location() -> None:
+    assert build_config().redis_cache["LOCATION"] == "redis://127.0.0.1:6379"
+
+
+def test_tls_redis_keeps_its_scheme_in_the_cache_location() -> None:
+    config = build_config(REDIS_URL="rediss://cache.example.net:10000")
+
+    assert config.redis_cache["LOCATION"] == "rediss://cache.example.net:10000"
+
+
+def test_tls_redis_accepts_a_managed_key_when_deployed() -> None:
+    # como la de Azure Managed Redis: 44 caracteres que no se pueden alargar
+    config = build_deployed_config(
+        REDIS_URL="rediss://cache.example.net:10000",
+        REDIS_SECRET_KEY="k" * 44,
+    )
+
+    assert config.REDIS_SECRET_KEY.get_secret_value() == "k" * 44
+
+
+@pytest.mark.parametrize(
+    "overrides",
+    [
+        # sin TLS se siguen exigiendo 64 caracteres
+        {"REDIS_SECRET_KEY": "k" * 44},
+        {"REDIS_SECRET_KEY": "k" * 31, "REDIS_URL": "rediss://cache.example.net:10000"},
+    ],
+)
+def test_short_redis_keys_are_rejected_when_deployed(overrides: dict) -> None:
+    with pytest.raises(ValidationError, match="REDIS_SECRET_KEY"):
+        build_deployed_config(**overrides)
+
+
+########################################################################################
+
+
 def test_email_goes_to_the_console_in_development_without_a_server() -> None:
     assert build_config().email_backend == (
         "django.core.mail.backends.console.EmailBackend"
