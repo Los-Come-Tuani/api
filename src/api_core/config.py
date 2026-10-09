@@ -29,6 +29,10 @@ from api_utils.env import ROOT
 MAX_SECRET_LENGTH: Final[int] = 256
 MIN_SECRET_LENGTH: Final[int] = 64
 
+# - Redis administrado con TLS (`rediss://`): Azure genera claves de 44 caracteres que
+#   no se pueden alargar, y la conexión cifrada no deja ver la clave en la red
+MIN_TLS_REDIS_SECRET_LENGTH: Final[int] = 32
+
 type LongSecret = Annotated[
     SecretStr,
     StringConstraints(max_length=MAX_SECRET_LENGTH, min_length=MIN_SECRET_LENGTH),
@@ -362,13 +366,16 @@ class ApiConfig(BaseSettings, PermissiveDTO):
 
     @model_validator(mode="after")
     def check_redis_secret_key(self) -> Self:
-        if (
-            self.DEPLOY
-            and len(self.REDIS_SECRET_KEY.get_secret_value()) < MIN_SECRET_LENGTH
-        ):
+        minimum = (
+            MIN_TLS_REDIS_SECRET_LENGTH
+            if self.REDIS_URL.scheme == "rediss"
+            else MIN_SECRET_LENGTH
+        )
+
+        if self.DEPLOY and len(self.REDIS_SECRET_KEY.get_secret_value()) < minimum:
             raise ValueError(
                 "`REDIS_SECRET_KEY` es obligatorio; "
-                f"debe tener al menos {MIN_SECRET_LENGTH} "
+                f"debe tener al menos {minimum} "
                 "caracteres cuando `DEPLOY=True`.",
             )
 
@@ -474,7 +481,10 @@ class ApiConfig(BaseSettings, PermissiveDTO):
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": unquote(
                 errors="strict",
-                string=f"redis://{self.REDIS_URL.host}:{self.REDIS_URL.port or 6379}",
+                string=(
+                    f"{self.REDIS_URL.scheme}://"
+                    f"{self.REDIS_URL.host}:{self.REDIS_URL.port or 6379}"
+                ),
             ),
         }
 
