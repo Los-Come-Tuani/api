@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from ipaddress import ip_address
 from typing import Final, override
 
 from django.http import HttpRequest
@@ -47,6 +48,30 @@ class ForwardedAddr(BaseThrottleCacheKey):
         forwarded: str | None = request.META.get("HTTP_X_FORWARDED_FOR")
 
         if forwarded is not None:
-            return forwarded.rsplit(sep=",", maxsplit=1)[-1].strip()
+            addr: str | None = parse_addr(
+                forwarded.rsplit(sep=",", maxsplit=1)[-1].strip(),
+            )
+
+            if addr is not None:
+                return addr
 
         return request.META.get("REMOTE_ADDR")
+
+
+def parse_addr(value: str) -> str | None:
+    # Azure App Service manda `IP:puerto` (o `[IPv6]:puerto`) en `X-Forwarded-For`; la
+    # dirección termina en un campo `inet`, que no acepta el puerto
+    candidates: list[str] = [value]
+
+    host, separator, port = value.rpartition(":")
+
+    if separator and port.isdigit():
+        candidates.append(host.removeprefix("[").removesuffix("]"))
+
+    for candidate in candidates:
+        try:
+            return str(ip_address(candidate))
+        except ValueError:
+            continue
+
+    return None
