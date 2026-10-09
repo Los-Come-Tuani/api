@@ -53,6 +53,7 @@ WORKDIR /app
 COPY --from=base /opt/python /opt/python
 
 COPY --chown=kplan:kplan pyproject.toml ./
+COPY --chown=kplan:kplan scripts/ ./scripts/
 COPY --chown=kplan:kplan src/ ./src/
 
 EXPOSE 8080
