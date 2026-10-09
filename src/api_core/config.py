@@ -130,19 +130,19 @@ class ApiConfig(BaseSettings, PermissiveDTO):
 
         return self
 
-    @model_validator(mode="after")
-    def check_redis_secret_key(self) -> Self:
-        if (
-            self.DEPLOY
-            and len(self.REDIS_SECRET_KEY.get_secret_value()) < MIN_SECRET_LENGTH
-        ):
-            raise ValueError(
-                "`REDIS_SECRET_KEY` es obligatorio; "
-                f"debe tener al menos {MIN_SECRET_LENGTH} "
-                "caracteres cuando `DEPLOY=True`.",
-            )
+    # @model_validator(mode="after")
+    # def check_redis_secret_key(self) -> Self:
+    #     if (
+    #         self.DEPLOY
+    #         and len(self.REDIS_SECRET_KEY.get_secret_value()) < MIN_SECRET_LENGTH
+    #     ):
+    #         raise ValueError(
+    #             "`REDIS_SECRET_KEY` es obligatorio; "
+    #             f"debe tener al menos {MIN_SECRET_LENGTH} "
+    #             "caracteres cuando `DEPLOY=True`.",
+    #         )
 
-        return self
+    #     return self
 
     @cached_property
     def cookie_samesite(self) -> Literal["Lax", "None"]:
