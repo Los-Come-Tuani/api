@@ -28,7 +28,7 @@ Cada fase parte de ahí; esta página solo las ordena y dice qué falta resolver
 | F6   | **Hecha en el API**: agenda cultural, insignias por QR y ubicación, campañas de cupones, canje y validación ([guía](agenda-y-recompensas.md))                                                                                 | M1, M8, M12         |
 | F7   | **Hecha en el API**: guías públicos, salidas, convocatorias, reservas, chat y reseñas con impugnación ([guía](servicios.md))                                                                                                  | M9, M10, M11        |
 | F8   | **Hecha en el API**: cobro de reservas con pasarela manual, comisión, saldo y retiros del guía, estados de cuenta de comercios ([guía](finanzas.md)); bandeja y avisos por Firebase, reportes y sanciones ([guía](avisos.md)) | M13, M14, M15       |
-| F9   | **Hecha en el API**: solicitudes de demo desde la landing y versiones de la app (APK, DMG, EXE) que el equipo publica desde el portal ([guía](landing.md))                                                                    | —                   |
+| F9   | **Hecha en el API**: solicitudes de demo desde la landing, que entregan el link de Drive de cada versión de la app (APK, DMG, EXE) que el equipo publica desde el portal ([guía](landing.md))                                  | —                   |
 
 ### Dónde F2 se aparta del modelo (a propósito)
 
@@ -277,11 +277,11 @@ Para qué: que el sitio público presente la app, facilite su descarga y deje pe
 demostración, con un acceso privado para atender las solicitudes y cargar los instaladores.
 No es un módulo del modelo de dominio: es lo que alimenta la landing.
 
-| Recurso                                       | Lo usa          | Permiso                    |
-| --------------------------------------------- | --------------- | -------------------------- |
-| `demo-request/` (`POST` público), `{id}/`     | Landing, portal | `demos.view` / `manage`    |
-| `app-release/`, `upload/`, `{id}/` y acciones | Portal          | `releases.view` / `manage` |
-| `app-release/latest/` y su descarga           | Landing         | Pública                    |
+| Recurso                                   | Lo usa          | Permiso                    |
+| ----------------------------------------- | --------------- | -------------------------- |
+| `demo-request/` (`POST` público), `{id}/` | Landing, portal | `demos.view` / `manage`    |
+| `app-release/`, `{id}/` y acciones        | Portal          | `releases.view` / `manage` |
+| `app-release/latest/`                     | Landing         | Pública                    |
 
 **Estado: hecha en el API** (rutas reales en [Landing](landing.md)). Lo que se decidió con
 el usuario antes de empezar (2026-10-08):
@@ -294,6 +294,14 @@ el usuario antes de empezar (2026-10-08):
 - Contra el abuso: el límite estricto por dirección y un campo trampa, sin servicios
   externos.
 - Permisos propios (`demos.*`, `releases.*`) en lugar de reusar los de otro módulo.
+
+Cambio pedido por el usuario el mismo día, antes de publicarla:
+
+- Cada versión es un link de Drive, no un archivo subido al bucket.
+- La app se entrega con el formulario: la respuesta trae el link de cada versión publicada
+  y la landing ya no tiene descarga directa.
+- La solicitud queda entregada si recibió los links, o pendiente hasta que el equipo se
+  los haga llegar y la marque (sin correo).
 
 ## Cómo se confirma una fase
 

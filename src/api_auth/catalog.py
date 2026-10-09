@@ -163,21 +163,22 @@ CATALOG: Final[Sequence[PermissionInfo]] = (
         P.DEMOS_MANAGE,
         "Sitio web",
         "Atender solicitudes de demo",
-        "Cambia el estado de las solicitudes de demo, anota el seguimiento y recibe "
-        "el aviso de cada una nueva.",
+        "Marca las solicitudes de demo como entregadas o pendientes, anota el "
+        "seguimiento y recibe el aviso de cada una nueva.",
     ),
     PermissionInfo(
         P.RELEASES_VIEW,
         "Sitio web",
         "Ver versiones de la app",
-        "Ve los instaladores de la app y cuál se descarga desde la landing.",
+        "Ve las versiones de la app, sus links y cuál se entrega a quien pide una "
+        "demo.",
     ),
     PermissionInfo(
         P.RELEASES_MANAGE,
         "Sitio web",
         "Publicar versiones de la app",
-        "Sube los instaladores (APK, DMG, EXE), los publica en la landing y los "
-        "retira.",
+        "Registra cada versión (Android, macOS, Windows) con el link de Drive de su "
+        "instalador, la publica y la retira.",
     ),
 )
 

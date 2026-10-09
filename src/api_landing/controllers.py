@@ -2,7 +2,7 @@ from http import HTTPStatus
 from typing import ClassVar
 
 from asgiref.sync import sync_to_async
-from dmr import Body, HeaderSpec, Path, RedirectTo, modify
+from dmr import Body, Path, modify
 from dmr.endpoint import Endpoint
 from dmr.throttling import Rate
 
@@ -14,8 +14,6 @@ from api_core.controllers.serializers import CustomPydanticFastSerializer
 from api_core.controllers.throttles import build_throttle
 from api_core.schemas.pagination import Paginated
 from api_core.schemas.path import UuidInstancePath
-from api_core.schemas.upload import UploadGet
-from api_exceptions.specs import ServiceUnavailableSpec
 from api_landing import services
 from api_landing.schemas import (
     AppReleaseGet,
@@ -26,10 +24,8 @@ from api_landing.schemas import (
     DemoRequestPatch,
     DemoRequestPost,
     DemoRequestQuery,
-    InstallerUploadPost,
+    DemoRequestResult,
     LatestReleaseGet,
-    PlatformPath,
-    ReleaseDownloadGet,
 )
 from api_territory.controllers import as_actor
 
@@ -49,14 +45,15 @@ class DemoRequestController(BaseController[CustomPydanticFastSerializer]):
         )
 
     # Pública a propósito: quien la pide no tiene cuenta. La acotan el límite estricto
-    # de peticiones y el campo trampa; se responde vacío, también a un bot.
+    # de peticiones y el campo trampa. Responde con los links vigentes, también a un
+    # bot.
     @modify(
         auth=None,
-        status_code=HTTPStatus.NO_CONTENT,
+        status_code=HTTPStatus.OK,
         throttling=(build_throttle(10, Rate.minute),),
     )
-    async def post(self, parsed_body: Body[DemoRequestPost]) -> None:  # ruff: ignore[no-self-use]
-        await sync_to_async(services.submit_demo_request_sync)(parsed_body)
+    async def post(self, parsed_body: Body[DemoRequestPost]) -> DemoRequestResult:  # ruff: ignore[no-self-use]
+        return await sync_to_async(services.submit_demo_request_sync)(parsed_body)
 
 
 class DemoRequestDetailController(BaseController[CustomPydanticFastSerializer]):
@@ -83,7 +80,7 @@ class DemoRequestDetailController(BaseController[CustomPydanticFastSerializer]):
 
 
 ########################################################################################
-# Versiones de la app: ver, `releases.view`; subir, publicar y retirar,
+# Versiones de la app: ver, `releases.view`; crear, publicar y retirar,
 # `releases.manage`
 
 
@@ -96,27 +93,10 @@ class AppReleaseController(BaseController[CustomPydanticFastSerializer]):
     ) -> Paginated[AppReleaseGet]:
         return await as_actor(self.request.user, services.releases_sync, parsed_query)
 
-    @modify(extra_responses=[ServiceUnavailableSpec], status_code=HTTPStatus.CREATED)
+    @modify(status_code=HTTPStatus.CREATED)
     async def post(self, parsed_body: Body[AppReleasePost]) -> AppReleaseGet:
         return await as_actor(
             self.request.user, services.create_release_sync, parsed_body
-        )
-
-
-class AppReleaseUploadController(BaseController[CustomPydanticFastSerializer]):
-    @modify(extra_responses=[ServiceUnavailableSpec], status_code=HTTPStatus.CREATED)
-    async def post(self, parsed_body: Body[InstallerUploadPost]) -> UploadGet:
-        signed = await as_actor(
-            self.request.user, services.issue_installer_upload_sync, parsed_body
-        )
-
-        return UploadGet(
-            expires_in=signed.expires_in,
-            headers=signed.headers,
-            key=signed.key,
-            max_bytes=signed.max_bytes,
-            method="PUT",
-            url=signed.url,
         )
 
 
@@ -143,7 +123,7 @@ class AppReleaseDetailController(BaseController[CustomPydanticFastSerializer]):
 
 
 class AppReleasePublishController(BaseController[CustomPydanticFastSerializer]):
-    @modify(extra_responses=[ServiceUnavailableSpec], status_code=HTTPStatus.OK)
+    @modify(status_code=HTTPStatus.OK)
     async def post(self, parsed_path: Path[UuidInstancePath]) -> AppReleaseGet:
         return await as_actor(
             self.request.user, services.publish_release_sync, parsed_path.id
@@ -158,20 +138,9 @@ class AppReleaseWithdrawController(BaseController[CustomPydanticFastSerializer])
         )
 
 
-# El equipo prueba un instalador (también un borrador) antes de publicarlo. No cuenta
-# como descarga.
-class AppReleaseDownloadController(BaseController[CustomPydanticFastSerializer]):
-    @modify(extra_responses=[ServiceUnavailableSpec], status_code=HTTPStatus.OK)
-    async def get(self, parsed_path: Path[UuidInstancePath]) -> ReleaseDownloadGet:
-        url: str = await as_actor(
-            self.request.user, services.release_download_sync, parsed_path.id
-        )
-
-        return ReleaseDownloadGet(url=url)
-
-
 ########################################################################################
-# Lo que usa la landing: público
+# Lo que usa la landing: público. Dice qué versiones hay, sin los links: esos se dan al
+# pedir la demo.
 
 
 class LatestAppReleaseController(
@@ -181,24 +150,3 @@ class LatestAppReleaseController(
     @modify(status_code=HTTPStatus.OK)
     async def get(self) -> list[LatestReleaseGet]:  # ruff: ignore[no-self-use]
         return await sync_to_async(services.latest_releases_sync)()
-
-
-# El botón de la landing es un enlace a esta ruta: redirige a una URL firmada recién
-# hecha, con el nombre del archivo, y cuenta la descarga.
-class LatestAppReleaseDownloadController(
-    PublicEndpointMixin,
-    BaseController[CustomPydanticFastSerializer],
-):
-    @modify(
-        extra_responses=[ServiceUnavailableSpec],
-        headers={"Location": HeaderSpec(skip_validation=True)},
-        status_code=HTTPStatus.FOUND,
-        # la redirección sale sin cuerpo: no hay JSON que validar
-        validate_responses=False,
-    )
-    async def get(self, parsed_path: Path[PlatformPath]) -> None:  # ruff: ignore[no-self-use]
-        url: str = await sync_to_async(services.download_current_sync)(
-            parsed_path.platform
-        )
-
-        raise RedirectTo(url, status_code=HTTPStatus.FOUND)

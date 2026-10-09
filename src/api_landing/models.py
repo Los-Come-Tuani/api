@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING
 
 from django.db.models import (
-    BigIntegerField,
     CharField,
     CheckConstraint,
     DateTimeField,
@@ -29,8 +28,10 @@ if TYPE_CHECKING:
 ########################################################################################
 
 
-# Alguien que vio la landing pide que le muestren K'Plan. No tiene cuenta: el equipo lo
-# contacta por correo o teléfono y anota cómo va.
+# Alguien que vio la landing pide que le muestren K'Plan. No tiene cuenta. Si al
+# enviarla ya había una versión publicada, recibió los links en ese momento y queda
+# entregada; si no, queda pendiente hasta que el equipo se los haga llegar por fuera y
+# la marque.
 @track_table(meta={"db_table": "solicitud_demo_cambio"})
 class DemoRequest(ApiModel):
     name = CharField(db_column="nombre", max_length=120)
@@ -45,7 +46,10 @@ class DemoRequest(ApiModel):
     )
     message = TextField(blank=True, db_column="mensaje", db_default="", default="")
     status = CharField(
-        db_column="estado", db_default="nueva", default="nueva", max_length=16
+        db_column="estado", db_default="pendiente", default="pendiente", max_length=16
+    )
+    delivered_at = DateTimeField(
+        db_column="entregada_en", db_default=None, default=None, null=True
     )
     # lo que el equipo anota al atenderla; quien la pidió no lo ve
     notes = TextField(blank=True, db_column="notas", db_default="", default="")
@@ -74,15 +78,8 @@ class DemoRequest(ApiModel):
                 name="chk_solicituddemo_tipo",
             ),
             CheckConstraint(
-                condition=Q(
-                    status__in=[
-                        "nueva",
-                        "contactada",
-                        "agendada",
-                        "realizada",
-                        "descartada",
-                    ]
-                ),
+                condition=Q(status="pendiente", delivered_at__isnull=True)
+                | Q(status="entregada", delivered_at__isnull=False),
                 name="chk_solicituddemo_estado",
             ),
         )
@@ -93,21 +90,20 @@ class DemoRequest(ApiModel):
         )
 
 
-# Un instalador de la app que se descarga desde la landing. La vigente de cada
-# plataforma es la publicada más reciente: publicar otra la reemplaza y retirarla deja
-# otra vez la anterior.
+# Una versión de la app con el link (de Drive) donde está su instalador. La vigente de
+# cada plataforma es la publicada más reciente: publicar otra la reemplaza y retirarla
+# deja otra vez la anterior. Su link se entrega a quien pide una demo.
 @track_table(meta={"db_table": "version_app_cambio"})
 class AppRelease(ApiModel):
     platform = CharField(db_column="plataforma", max_length=16)
     version = CharField(db_column="version", max_length=32)
     notes = TextField(blank=True, db_column="notas", db_default="", default="")
-    # la clave del instalador en el almacenamiento (`app-installer/...`)
-    file_key = CharField(db_column="archivo", max_length=200)
-    file_size = BigIntegerField(db_column="tamano")
+    link = CharField(db_column="enlace", max_length=500)
     status = CharField(
         db_column="estado", db_default="borrador", default="borrador", max_length=16
     )
-    downloads = PositiveIntegerField(db_column="descargas", db_default=0, default=0)
+    # cuántas solicitudes de demo recibieron este link
+    deliveries = PositiveIntegerField(db_column="entregas", db_default=0, default=0)
     created_at = DateTimeField(db_column="creado_en", db_default=Now(), default=now)
     created_by = ForeignKey(
         db_column="creado_por",
@@ -144,8 +140,8 @@ class AppRelease(ApiModel):
                 name="chk_versionapp_estado",
             ),
             CheckConstraint(
-                condition=Q(file_size__gt=0),
-                name="chk_versionapp_tamano",
+                condition=Q(link__startswith="https://"),
+                name="chk_versionapp_enlace",
             ),
             UniqueConstraint(
                 fields=["platform", "version"], name="unq_versionapp_version"

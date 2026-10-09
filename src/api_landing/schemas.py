@@ -2,7 +2,7 @@ from datetime import datetime
 from typing import Annotated, Literal
 from uuid import UUID
 
-from pydantic import PositiveInt, StringConstraints
+from pydantic import StringConstraints
 
 from api_auth.schemas.types import Email
 from api_core.schemas.base import DTO
@@ -13,7 +13,7 @@ from api_core.schemas.pagination import PageQuery
 type DemoKind = Literal[
     "business", "municipality", "institution", "tour_operator", "other"
 ]
-type DemoStatus = Literal["new", "contacted", "scheduled", "done", "dismissed"]
+type DemoStatus = Literal["pending", "delivered"]
 type Platform = Literal["android", "macos", "windows"]
 type ReleaseStatus = Literal["draft", "published", "withdrawn"]
 
@@ -21,13 +21,19 @@ type Line = Annotated[str, StringConstraints(max_length=120, min_length=2)]
 type Note = Annotated[str, StringConstraints(max_length=2000)]
 type ReleaseNotes = Annotated[str, StringConstraints(max_length=4000)]
 
-# - `1.2.0`, `1.2.0-beta.1` o `1.2.0+14`: se muestra y va en el nombre del archivo
+# - `1.2.0`, `1.2.0-beta.1` o `1.2.0+14`
 type Version = Annotated[
     str,
     StringConstraints(
         max_length=32,
         pattern=r"^\d+(\.\d+){1,3}([-+][0-9A-Za-z.\-]+)?$",
     ),
+]
+
+# - donde está el instalador (un link compartido de Drive); siempre https
+type Link = Annotated[
+    str,
+    StringConstraints(max_length=500, pattern=r"^https://\S+$", strip_whitespace=True),
 ]
 
 ########################################################################################
@@ -47,6 +53,18 @@ class DemoRequestPost(DTO):
     website: Annotated[str, StringConstraints(max_length=200)] = ""
 
 
+class DeliveredLink(DTO):
+    platform: Platform
+    version: str
+    link: str
+
+
+class DemoRequestResult(DTO):
+    # si la landing pudo darle los links en ese momento; si no, se le avisa después
+    delivered: bool
+    links: list[DeliveredLink]
+
+
 class DemoRequestGet(DTO):
     id: UUID
     name: str
@@ -57,6 +75,7 @@ class DemoRequestGet(DTO):
     city: str
     message: str
     status: DemoStatus
+    delivered_at: datetime | None
     notes: str
     created_at: datetime
     updated_at: datetime | None
@@ -79,24 +98,18 @@ class DemoRequestPatch(DTO):
 # Versiones de la app
 
 
-class InstallerUploadPost(DTO):
-    platform: Platform
-    # en bytes: la firma lo lleva dentro y el almacenamiento lo hace cumplir
-    size: PositiveInt
-
-
 class AppReleasePost(DTO):
     platform: Platform
     version: Version
     notes: ReleaseNotes = ""
-    # la clave que devolvió `app-release/upload/`
-    file: Annotated[str, StringConstraints(max_length=200, min_length=1)]
+    link: Link
 
 
 class AppReleasePatch(DTO):
-    # la versión solo cambia mientras es un borrador
+    # la versión solo cambia mientras es un borrador; el link, siempre
     version: Version | None = None
     notes: ReleaseNotes | None = None
+    link: Link | None = None
 
 
 class AppReleaseGet(DTO):
@@ -104,12 +117,11 @@ class AppReleaseGet(DTO):
     platform: Platform
     version: str
     notes: str
+    link: str
     status: ReleaseStatus
-    # la que hoy se descarga desde la landing para su plataforma
+    # la que hoy se entrega a quien pide una demo para su plataforma
     current: bool
-    file_name: str
-    size: int
-    downloads: int
+    deliveries: int
     created_at: datetime
     created_by: str
     published_at: datetime | None
@@ -121,19 +133,9 @@ class AppReleaseQuery(PageQuery):
     status: ReleaseStatus | None = None
 
 
-class ReleaseDownloadGet(DTO):
-    # firmada por unos minutos: se abre en cuanto llega
-    url: str
-
-
+# Lo público: qué hay disponible, sin el link (ese se da al pedir la demo).
 class LatestReleaseGet(DTO):
     platform: Platform
     version: str
     notes: str
-    file_name: str
-    size: int
     published_at: datetime
-
-
-class PlatformPath(DTO):
-    platform: Platform
