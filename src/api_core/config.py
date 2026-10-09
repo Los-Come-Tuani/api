@@ -127,6 +127,12 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     DEPLOY: bool = False
     SKIP_SEEDERS: bool = False
 
+    # - el contenido de ejemplo (`seedcontent --on-deploy`) se carga al desplegar solo
+    #   estas ramas. `RAILWAY_GIT_BRANCH` la pone Railway cuando el despliegue viene de
+    #   GitHub; fuera de Railway queda vacía y no se carga nada.
+    RAILWAY_GIT_BRANCH: str = ""
+    SEED_CONTENT_BRANCHES: CsvList = ("develop-a",)
+
     JWT_ALGORITHM: Literal["HS256", "HS384", "HS512"] = "HS256"
 
     JWT_ACCESS_LIFETIME: timedelta = timedelta(hours=3)

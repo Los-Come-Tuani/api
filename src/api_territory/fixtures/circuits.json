@@ -1,13 +1,791 @@
 [
   {
-    "id": "granada-historias-sabores",
-    "shortTitle": "Granada Histórica",
-    "title": "Granada, entre historias y sabores",
-    "subtitle": "Paseo por la historia y la cultura",
     "category": "Ciudad",
     "city": "Granada",
+    "description": "Una de las dos rutas del circuito creativo \u00abTesoro Nacional y Capital del Turismo\u00bb, que la Alcald\u00eda de Granada lanz\u00f3 el 14 de marzo de 2026. Va del Parque Central hacia el oeste por la Calle Real Xalteva, entre iglesias coloniales, emprendimientos creativos y la Antigua Fortaleza La P\u00f3lvora.",
+    "difficulty": "F\u00e1cil",
+    "id": "granada-500-anos",
+    "images": [
+      "https://picsum.photos/seed/granada-500-anos-1/900/600",
+      "https://picsum.photos/seed/granada-500-anos-2/900/600",
+      "https://picsum.photos/seed/granada-500-anos-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "granada-bate-bate-chocolate": 5,
+      "granada-cementerio": 13,
+      "granada-la-merced": 2,
+      "granada-la-polvora": 3,
+      "granada-maria-auxiliadora": 5,
+      "granada-museo-chocolate": 2,
+      "granada-palacio-municipal": 2,
+      "granada-tio-antonio": 5,
+      "granada-xalteva": 7
+    },
+    "location": {
+      "latitude": 11.930036,
+      "longitude": -85.954025
+    },
+    "meetingPoint": "Parque Central (Parque Col\u00f3n)",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Granada, lanzado el 14 de marzo de 2026.",
+    "organizer": "Alcald\u00eda de Granada",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Granada 500 a\u00f1os",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "granada-parque-central",
+      "granada-palacio-municipal",
+      "granada-bate-bate-chocolate",
+      "granada-museo-chocolate",
+      "granada-tio-antonio",
+      "granada-la-merced",
+      "granada-xalteva",
+      "granada-maria-auxiliadora",
+      "granada-la-polvora",
+      "granada-cementerio"
+    ],
+    "subtitle": "Iglesias, emprendimientos y La P\u00f3lvora",
+    "title": "Circuito Creativo Granada 500 a\u00f1os",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Ciudad",
+    "city": "Granada",
+    "description": "La otra ruta del circuito creativo \u00abTesoro Nacional y Capital del Turismo\u00bb, lanzado por la Alcald\u00eda de Granada el 14 de marzo de 2026. Sale del Parque Central y baja por plazas, iglesias y la Calle La Calzada hasta el malec\u00f3n del Gran Lago.",
+    "difficulty": "F\u00e1cil",
+    "id": "granada-historia-en-cada-paso",
+    "images": [
+      "https://picsum.photos/seed/granada-historia-en-cada-paso-1/900/600",
+      "https://picsum.photos/seed/granada-historia-en-cada-paso-2/900/600",
+      "https://picsum.photos/seed/granada-historia-en-cada-paso-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "granada-calle-calzada": 4,
+      "granada-catedral": 2,
+      "granada-convento-san-francisco": 2,
+      "granada-gran-sultana": 8,
+      "granada-iglesia-guadalupe": 9,
+      "granada-malecon": 2,
+      "granada-plaza-independencia": 2,
+      "granada-tres-mundos": 2
+    },
+    "location": {
+      "latitude": 11.930036,
+      "longitude": -85.954025
+    },
+    "meetingPoint": "Parque Central (Parque Col\u00f3n)",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Granada, lanzado el 14 de marzo de 2026.",
+    "organizer": "Alcald\u00eda de Granada",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Una historia en cada paso",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "granada-parque-central",
+      "granada-catedral",
+      "granada-plaza-independencia",
+      "granada-tres-mundos",
+      "granada-convento-san-francisco",
+      "granada-calle-calzada",
+      "granada-iglesia-guadalupe",
+      "granada-gran-sultana",
+      "granada-malecon"
+    ],
+    "subtitle": "Del Parque Central al Gran Lago",
+    "title": "Circuito Creativo Granada, una historia en cada paso",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Cultura",
+    "city": "Masaya",
+    "description": "Circuito Creativo de Masaya lanzado el 17 de abril de 2026 por la Alcald\u00eda de Masaya y la Comisi\u00f3n Nacional de Econom\u00eda Creativa, dentro del plan Abril Creativo 2026. Une talleres familiares, espacios de formaci\u00f3n art\u00edstica, gastronom\u00eda tradicional y sitios emblem\u00e1ticos, desde la antigua estaci\u00f3n del ferrocarril hasta el Mercado de Artesan\u00edas.",
+    "difficulty": "Moderado",
+    "id": "masaya-artesania-arte-popular",
+    "images": [
+      "https://picsum.photos/seed/masaya-artesania-arte-popular-1/900/600",
+      "https://picsum.photos/seed/masaya-artesania-arte-popular-2/900/600",
+      "https://picsum.photos/seed/masaya-artesania-arte-popular-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "masaya-baho-vilma": 3,
+      "masaya-barrio-san-juan": 15,
+      "masaya-bordados-marisol": 2,
+      "masaya-casa-de-las-artesanias": 9,
+      "masaya-malecon": 2,
+      "masaya-mercado-de-artesanias": 4,
+      "masaya-parque-central": 15
+    },
+    "location": {
+      "latitude": 11.98131,
+      "longitude": -86.096431
+    },
+    "meetingPoint": "Plaza de la Cultura (Antigua Estaci\u00f3n del Ferrocarril)",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Masaya, lanzado el 17 de abril de 2026.",
+    "organizer": "Alcald\u00eda de Masaya",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Artesan\u00eda y Arte Popular",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "masaya-plaza-de-la-cultura",
+      "masaya-bordados-marisol",
+      "masaya-baho-vilma",
+      "masaya-barrio-san-juan",
+      "masaya-casa-de-las-artesanias",
+      "masaya-malecon",
+      "masaya-parque-central",
+      "masaya-mercado-de-artesanias"
+    ],
+    "subtitle": "Talleres, sabores y tradici\u00f3n de la Ciudad Creativa",
+    "title": "Circuito Creativo Artesan\u00eda y Arte Popular",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Cultura",
+    "city": "San Juan de Oriente",
+    "description": "Circuito Creativo de San Juan de Oriente, relanzado por la alcald\u00eda el 19 de marzo de 2026, D\u00eda Internacional del Artesano, sobre el circuito del mismo nombre presentado en 2022. Recorre cerca de 1 km por talleres de cer\u00e1mica de tradici\u00f3n precolombina y sabores tradicionales, y termina en el Mirador Sendero El Caballito.",
+    "difficulty": "F\u00e1cil",
+    "id": "sjo-tierra-viva",
+    "images": [
+      "https://picsum.photos/seed/sjo-tierra-viva-1/900/600",
+      "https://picsum.photos/seed/sjo-tierra-viva-2/900/600",
+      "https://picsum.photos/seed/sjo-tierra-viva-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "sjo-chicha-bruja-dona-lona": 9,
+      "sjo-mirador-sendero-el-caballito": 4,
+      "sjo-taller-urraca": 2
+    },
+    "location": {
+      "latitude": 11.906034,
+      "longitude": -86.074079
+    },
+    "meetingPoint": "Plaza San Juan de los Platos, calle principal de San Juan de Oriente, donde est\u00e1 el mupi con el mapa del recorrido",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de San Juan de Oriente, lanzado el 19 de marzo de 2026.",
+    "organizer": "Alcald\u00eda de San Juan de Oriente",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Tierra Viva",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "sjo-plaza-san-juan-de-los-platos",
+      "sjo-taller-urraca",
+      "sjo-chicha-bruja-dona-lona",
+      "sjo-mirador-sendero-el-caballito"
+    ],
+    "subtitle": "Talleres de cer\u00e1mica y mirador a la Laguna de Apoyo",
+    "title": "Circuito Creativo Tierra Viva",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Naturaleza",
+    "city": "Managua",
+    "description": "Una de las cinco rutas del Circuito Creativo Xolotl\u00e1n, que la Alcald\u00eda de Managua lanz\u00f3 el 24 de julio de 2026, a los 180 a\u00f1os de Managua como ciudad. Espacios ecol\u00f3gicos, lagunas crat\u00e9ricas y miradores que destacan la riqueza natural de Managua.",
+    "difficulty": "F\u00e1cil",
+    "id": "managua-xolotlan-natural",
+    "images": [
+      "https://picsum.photos/seed/managua-xolotlan-natural-1/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-natural-2/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-natural-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito y traslado entre las paradas",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "managua-arboretum-nacional": 7,
+      "managua-laguna-de-asososca": 22,
+      "managua-laguna-de-tiscapa": 5,
+      "managua-parque-amistad-japn-nicaragua": 10,
+      "managua-parque-divina-misericordia": 11,
+      "managua-paseo-de-los-estudiantes": 4,
+      "managua-paseo-xolotln": 4
+    },
+    "location": {
+      "latitude": 12.162432,
+      "longitude": -86.275499
+    },
+    "meetingPoint": "Puerto Salvador Allende",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Managua, lanzado el 24 de julio de 2026.",
+    "organizer": "Alcald\u00eda de Managua",
+    "priceAdult": 450,
+    "priceChild": 220,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Xolotl\u00e1n: Natural",
+    "startTimes": [
+      "8:30 a.m."
+    ],
+    "stopIds": [
+      "managua-puerto-salvador-allende",
+      "managua-paseo-de-los-estudiantes",
+      "managua-paseo-xolotln",
+      "managua-arboretum-nacional",
+      "managua-laguna-de-tiscapa",
+      "managua-parque-amistad-japn-nicaragua",
+      "managua-parque-divina-misericordia",
+      "managua-laguna-de-asososca"
+    ],
+    "subtitle": "Lagunas, miradores y bosques urbanos",
+    "title": "Circuito Creativo Xolotl\u00e1n: Ruta Natural",
+    "travelMode": "vehicle"
+  },
+  {
+    "category": "Cultura",
+    "city": "Managua",
+    "description": "Una de las cinco rutas del Circuito Creativo Xolotl\u00e1n, que la Alcald\u00eda de Managua lanz\u00f3 el 24 de julio de 2026, a los 180 a\u00f1os de Managua como ciudad. Tiangues, kioscos y comider\u00edas del centro de Managua donde se rescata la cocina tradicional nicarag\u00fcense.",
+    "difficulty": "F\u00e1cil",
+    "id": "managua-xolotlan-gastronomica",
+    "images": [
+      "https://picsum.photos/seed/managua-xolotlan-gastronomica-1/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-gastronomica-2/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-gastronomica-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "managua-comidas-criollas": 3,
+      "managua-kioscos-la-criollera-y-la-chivera": 10,
+      "managua-la-casona": 2,
+      "managua-la-chumila": 2,
+      "managua-la-hormiga-de-oro": 4,
+      "managua-la-refresquera-en-el-arboretum": 3,
+      "managua-las-cuatro-esquinas": 2,
+      "managua-tiangue-la-fe": 2,
+      "managua-tiangue-la-pursima": 2
+    },
+    "location": {
+      "latitude": 12.146252,
+      "longitude": -86.274268
+    },
+    "meetingPoint": "Tiangue Hugo Ch\u00e1vez",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Managua, lanzado el 24 de julio de 2026.",
+    "organizer": "Alcald\u00eda de Managua",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Xolotl\u00e1n: Gastron\u00f3mica",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "managua-tiangue-hugo-chvez",
+      "managua-la-refresquera-en-el-arboretum",
+      "managua-la-casona",
+      "managua-las-cuatro-esquinas",
+      "managua-tiangue-la-pursima",
+      "managua-la-hormiga-de-oro",
+      "managua-kioscos-la-criollera-y-la-chivera",
+      "managua-comidas-criollas",
+      "managua-la-chumila",
+      "managua-tiangue-la-fe"
+    ],
+    "subtitle": "Tiangues y cocina nicarag\u00fcense",
+    "title": "Circuito Creativo Xolotl\u00e1n: Ruta Gastron\u00f3mica",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Ciudad",
+    "city": "Managua",
+    "description": "Una de las cinco rutas del Circuito Creativo Xolotl\u00e1n, que la Alcald\u00eda de Managua lanz\u00f3 el 24 de julio de 2026, a los 180 a\u00f1os de Managua como ciudad. Los sitios emblem\u00e1ticos del centro hist\u00f3rico de Managua, de la Colonia Dambach a la Loma de Tiscapa.",
+    "difficulty": "F\u00e1cil",
+    "id": "managua-xolotlan-historica",
+    "images": [
+      "https://picsum.photos/seed/managua-xolotlan-historica-1/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-historica-2/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-historica-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito y traslado entre las paradas",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "managua-casa-de-los-pueblos": 3,
+      "managua-catedral-santiago-de-los-caballeros-de-managua": 3,
+      "managua-centro-cultural-tino-lpez-guerra": 7,
+      "managua-mirador-loma-de-tiscapa": 6,
+      "managua-museo-de-arte-contemporneo-julio-cortzar": 4,
+      "managua-parque-central": 4,
+      "managua-parque-hroes-de-la-dignidad-nacional": 5,
+      "managua-plaza-de-la-revolucin": 3,
+      "managua-teatro-nacional-rubn-daro": 4
+    },
+    "location": {
+      "latitude": 12.155366,
+      "longitude": -86.264655
+    },
+    "meetingPoint": "Centro Cultural Colonia Dambach",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Managua, lanzado el 24 de julio de 2026.",
+    "organizer": "Alcald\u00eda de Managua",
+    "priceAdult": 450,
+    "priceChild": 220,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Xolotl\u00e1n: Hist\u00f3rica",
+    "startTimes": [
+      "8:30 a.m."
+    ],
+    "stopIds": [
+      "managua-centro-cultural-colonia-dambach",
+      "managua-centro-cultural-tino-lpez-guerra",
+      "managua-teatro-nacional-rubn-daro",
+      "managua-parque-central",
+      "managua-plaza-de-la-revolucin",
+      "managua-catedral-santiago-de-los-caballeros-de-managua",
+      "managua-casa-de-los-pueblos",
+      "managua-museo-de-arte-contemporneo-julio-cortzar",
+      "managua-parque-hroes-de-la-dignidad-nacional",
+      "managua-mirador-loma-de-tiscapa"
+    ],
+    "subtitle": "La memoria de la Vieja Managua",
+    "title": "Circuito Creativo Xolotl\u00e1n: Ruta Hist\u00f3rica Patrimonial",
+    "travelMode": "vehicle"
+  },
+  {
+    "category": "Cultura",
+    "city": "Managua",
+    "description": "Una de las cinco rutas del Circuito Creativo Xolotl\u00e1n, que la Alcald\u00eda de Managua lanz\u00f3 el 24 de julio de 2026, a los 180 a\u00f1os de Managua como ciudad. Museos, casas r\u00e9plica, casas de cultura y centros de arte de la capital.",
+    "difficulty": "F\u00e1cil",
+    "id": "managua-xolotlan-cultural",
+    "images": [
+      "https://picsum.photos/seed/managua-xolotlan-cultural-1/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-cultural-2/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-cultural-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito y traslado entre las paradas",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "managua-casa-de-cultura-y-creatividad-otto-de-la-rocha": 17,
+      "managua-casa-rplica-edsn-blanca-arauz": 4,
+      "managua-casa-rplica-museo-hacienda-san-jacinto": 5,
+      "managua-casa-rplica-museo-rubn-daro": 3,
+      "managua-centro-cultural-tino-lpez-guerra": 5,
+      "managua-cinemateca-nacional": 5,
+      "managua-maquetas-de-representacin-de-la-vieja-managua": 4,
+      "managua-museo-leonel-rugama": 17,
+      "managua-museo-lolita-soriano": 9
+    },
+    "location": {
+      "latitude": 12.155558,
+      "longitude": -86.272183
+    },
+    "meetingPoint": "Palacio Nacional de la Cultura",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Managua, lanzado el 24 de julio de 2026.",
+    "organizer": "Alcald\u00eda de Managua",
+    "priceAdult": 450,
+    "priceChild": 220,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Xolotl\u00e1n: Cultural",
+    "startTimes": [
+      "8:30 a.m."
+    ],
+    "stopIds": [
+      "managua-palacio-nacional-de-la-cultura",
+      "managua-centro-cultural-tino-lpez-guerra",
+      "managua-casa-rplica-edsn-blanca-arauz",
+      "managua-casa-rplica-museo-rubn-daro",
+      "managua-casa-rplica-museo-hacienda-san-jacinto",
+      "managua-maquetas-de-representacin-de-la-vieja-managua",
+      "managua-cinemateca-nacional",
+      "managua-museo-lolita-soriano",
+      "managua-museo-leonel-rugama",
+      "managua-casa-de-cultura-y-creatividad-otto-de-la-rocha"
+    ],
+    "subtitle": "Museos, casas de cultura y arte",
+    "title": "Circuito Creativo Xolotl\u00e1n: Ruta Cultural",
+    "travelMode": "vehicle"
+  },
+  {
+    "category": "Ciudad",
+    "city": "Managua",
+    "description": "Una de las cinco rutas del Circuito Creativo Xolotl\u00e1n, que la Alcald\u00eda de Managua lanz\u00f3 el 24 de julio de 2026, a los 180 a\u00f1os de Managua como ciudad. Paseos frente al lago, parques y espacios deportivos para el disfrute familiar.",
+    "difficulty": "F\u00e1cil",
+    "id": "managua-xolotlan-recreacion",
+    "images": [
+      "https://picsum.photos/seed/managua-xolotlan-recreacion-1/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-recreacion-2/900/600",
+      "https://picsum.photos/seed/managua-xolotlan-recreacion-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito y traslado entre las paradas",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "managua-anfiteatro-toms-borge": 4,
+      "managua-parque-amistad-japn-nicaragua": 13,
+      "managua-parque-hroes-de-la-dignidad-nacional": 4,
+      "managua-parque-luis-alfonso-velsquez-flores": 4,
+      "managua-paseo-de-los-estudiantes": 4,
+      "managua-paseo-xolotln": 4,
+      "managua-piscinas-michelle-richardson": 4,
+      "managua-plaza-soberana": 3,
+      "managua-polideportivo-alexis-argello": 4
+    },
+    "location": {
+      "latitude": 12.162432,
+      "longitude": -86.275499
+    },
+    "meetingPoint": "Puerto Salvador Allende",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Managua, lanzado el 24 de julio de 2026.",
+    "organizer": "Alcald\u00eda de Managua",
+    "priceAdult": 450,
+    "priceChild": 220,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Xolotl\u00e1n: Recreaci\u00f3n",
+    "startTimes": [
+      "8:30 a.m."
+    ],
+    "stopIds": [
+      "managua-puerto-salvador-allende",
+      "managua-paseo-de-los-estudiantes",
+      "managua-paseo-xolotln",
+      "managua-anfiteatro-toms-borge",
+      "managua-plaza-soberana",
+      "managua-polideportivo-alexis-argello",
+      "managua-piscinas-michelle-richardson",
+      "managua-parque-luis-alfonso-velsquez-flores",
+      "managua-parque-hroes-de-la-dignidad-nacional",
+      "managua-parque-amistad-japn-nicaragua"
+    ],
+    "subtitle": "Paseos, parques y deporte en familia",
+    "title": "Circuito Creativo Xolotl\u00e1n: Ruta de Recreaci\u00f3n y Esparcimiento",
+    "travelMode": "vehicle"
+  },
+  {
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "description": "Recorrido por espacios culturales, hist\u00f3ricos y de formaci\u00f3n de Le\u00f3n vinculados a la vida y obra de Rub\u00e9n Dar\u00edo, desde su casa de infancia hasta el Parque Centenario, a la entrada de la ciudad. Se lanz\u00f3 en marzo de 2022 y se relanz\u00f3 el 23 de abril de 2026 por la Alcald\u00eda de Le\u00f3n y la Comisi\u00f3n Local de Econom\u00eda Creativa, con sitios se\u00f1alizados y c\u00f3digos QR.",
+    "difficulty": "Moderado",
+    "id": "leon-circuito-dariano",
+    "images": [
+      "https://picsum.photos/seed/leon-circuito-dariano-1/900/600",
+      "https://picsum.photos/seed/leon-circuito-dariano-2/900/600",
+      "https://picsum.photos/seed/leon-circuito-dariano-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "leon-catedral-tumba-ruben-dario": 7,
+      "leon-centro-cultural-ruben-dario": 4,
+      "leon-escuela-bellas-artes": 2,
+      "leon-monumento-motivos-del-lobo": 2,
+      "leon-parque-centenario-ruben-dario": 11,
+      "leon-parque-de-los-poetas": 3,
+      "leon-plazoleta-ruben-dario": 22,
+      "leon-teatro-jose-de-la-cruz-mena": 2,
+      "leon-vallas-unan-leon": 6
+    },
+    "location": {
+      "latitude": 12.434889,
+      "longitude": -86.882866
+    },
+    "meetingPoint": "Casa Museo Archivo Rub\u00e9n Dar\u00edo",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Le\u00f3n, lanzado el 23 de abril de 2026.",
+    "organizer": "Alcald\u00eda de Le\u00f3n",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Circuito Creativo Dariano",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "leon-casa-museo-archivo-ruben-dario",
+      "leon-monumento-motivos-del-lobo",
+      "leon-parque-de-los-poetas",
+      "leon-teatro-jose-de-la-cruz-mena",
+      "leon-vallas-unan-leon",
+      "leon-centro-cultural-ruben-dario",
+      "leon-catedral-tumba-ruben-dario",
+      "leon-escuela-bellas-artes",
+      "leon-plazoleta-ruben-dario",
+      "leon-parque-centenario-ruben-dario"
+    ],
+    "subtitle": "Tras los pasos de Rub\u00e9n Dar\u00edo en Le\u00f3n",
+    "title": "Circuito Creativo Dariano",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Cultura",
+    "city": "Estel\u00ed",
+    "description": "Estel\u00ed, Ciudad Creativa de las Artes, la M\u00fasica Segoviana y el Muralismo, present\u00f3 este circuito el 25 de abril de 2026. Empieza en el Parque Central con un c\u00f3digo QR y sigue por los espacios hist\u00f3ricos y art\u00edsticos del centro.",
+    "difficulty": "F\u00e1cil",
+    "id": "esteli-raices-y-rutas",
+    "images": [
+      "https://picsum.photos/seed/esteli-raices-y-rutas-1/900/600",
+      "https://picsum.photos/seed/esteli-raices-y-rutas-2/900/600",
+      "https://picsum.photos/seed/esteli-raices-y-rutas-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "esteli-alcaldia": 3,
+      "esteli-casa-cultura-leonel-rugama": 3,
+      "esteli-catedral": 2
+    },
+    "location": {
+      "latitude": 13.09289,
+      "longitude": -86.356288
+    },
+    "meetingPoint": "Parque Central de Estel\u00ed",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Estel\u00ed, lanzado el 25 de abril de 2026.",
+    "organizer": "Alcald\u00eda de Estel\u00ed",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Ra\u00edces y Rutas de Estel\u00ed",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "esteli-parque-central",
+      "esteli-catedral",
+      "esteli-alcaldia",
+      "esteli-casa-cultura-leonel-rugama"
+    ],
+    "subtitle": "Murales, historia y casas de cultura",
+    "title": "Circuito Creativo Ra\u00edces y Rutas de Estel\u00ed",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Ciudad",
+    "city": "Bluefields",
+    "description": "La Alcald\u00eda de Bluefields lanz\u00f3 este circuito el 7 de agosto de 2026, en saludo al D\u00eda de la Emancipaci\u00f3n de la Esclavitud. Recorre parques, edificios emblem\u00e1ticos y espacios que resguardan la memoria y la identidad multi\u00e9tnica de la Costa Caribe Sur.",
+    "difficulty": "F\u00e1cil",
+    "id": "bluefields-paseo-autonomia",
+    "images": [
+      "https://picsum.photos/seed/bluefields-paseo-autonomia-1/900/600",
+      "https://picsum.photos/seed/bluefields-paseo-autonomia-2/900/600",
+      "https://picsum.photos/seed/bluefields-paseo-autonomia-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "bluefields-catedral": 2,
+      "bluefields-colegio-san-jose": 2,
+      "bluefields-consejo-regional": 2,
+      "bluefields-iglesia-morava": 5,
+      "bluefields-mercado-municipal": 3,
+      "bluefields-palacio-municipal": 2
+    },
+    "location": {
+      "latitude": 12.012991,
+      "longitude": -83.764956
+    },
+    "meetingPoint": "Parque Reyes",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Bluefields, lanzado el 7 de agosto de 2026.",
+    "organizer": "Alcald\u00eda de Bluefields",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Paseo de la Autonom\u00eda",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "bluefields-parque-reyes",
+      "bluefields-palacio-municipal",
+      "bluefields-consejo-regional",
+      "bluefields-catedral",
+      "bluefields-colegio-san-jose",
+      "bluefields-iglesia-morava",
+      "bluefields-mercado-municipal"
+    ],
+    "subtitle": "Historia multi\u00e9tnica del Caribe Sur",
+    "title": "Circuito Creativo Historia y Cultura en el Paseo de la Autonom\u00eda",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Cultura",
+    "city": "Juigalpa",
+    "description": "La Alcald\u00eda de Juigalpa lanz\u00f3 este circuito el 16 de abril de 2026 en el Palacio de la Cultura. Integra historia, cultura y conocimiento ancestral, con la estatuaria precolombina de Chontales como protagonista.",
+    "difficulty": "F\u00e1cil",
+    "id": "juigalpa-esplendor-precolombino",
+    "images": [
+      "https://picsum.photos/seed/juigalpa-esplendor-precolombino-1/900/600",
+      "https://picsum.photos/seed/juigalpa-esplendor-precolombino-2/900/600",
+      "https://picsum.photos/seed/juigalpa-esplendor-precolombino-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "juigalpa-casa-cultura": 2,
+      "juigalpa-museo-aguilar-barea": 4,
+      "juigalpa-zoologico-thomas-belt": 16
+    },
+    "location": {
+      "latitude": 12.106096,
+      "longitude": -85.365218
+    },
+    "meetingPoint": "Parque Josefa Toledo de Aguerri",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Juigalpa, lanzado el 16 de abril de 2026.",
+    "organizer": "Alcald\u00eda de Juigalpa",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Esplendor Precolombino",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "juigalpa-parque-josefa-toledo",
+      "juigalpa-casa-cultura",
+      "juigalpa-museo-aguilar-barea",
+      "juigalpa-zoologico-thomas-belt"
+    ],
+    "subtitle": "Historia, cultura y saber ancestral",
+    "title": "Circuito Creativo Esplendor Precolombino y Aprendizaje Ancestral",
+    "travelMode": "walking"
+  },
+  {
+    "category": "Cultura",
+    "city": "Nagarote",
+    "description": "Circuito de la Alcald\u00eda de Nagarote, la \u00abCuna del Quesillo\u00bb, lanzado en abril de 2026 junto con el Museo El Xen\u00edzaro. Recorre el patrimonio hist\u00f3rico, cultural y gastron\u00f3mico de la ciudad, desde el Parque Central y la parroquia Santiago hasta el Parador Tur\u00edstico Nagrandano.",
+    "difficulty": "F\u00e1cil",
+    "id": "nagarote-circuito-nagrandano",
+    "images": [
+      "https://picsum.photos/seed/nagarote-circuito-nagrandano-1/900/600",
+      "https://picsum.photos/seed/nagarote-circuito-nagrandano-2/900/600",
+      "https://picsum.photos/seed/nagarote-circuito-nagrandano-3/900/600"
+    ],
+    "includes": "Gu\u00eda del circuito",
+    "isCreativeCircuit": true,
+    "legMinutes": {
+      "nagarote-mirador-la-concordia": 8,
+      "nagarote-parador-turistico-nagrandano": 8,
+      "nagarote-parque-museo-el-xenizaro": 11,
+      "nagarote-parroquia-santiago": 2
+    },
+    "location": {
+      "latitude": 12.264794,
+      "longitude": -86.563085
+    },
+    "meetingPoint": "Parque Central de Nagarote",
+    "notes": "Circuito creativo oficial de la Alcald\u00eda de Nagarote.",
+    "organizer": "Alcald\u00eda de Nagarote",
+    "priceAdult": 250,
+    "priceChild": 120,
+    "rating": 0,
+    "recommendations": "Usa ropa y calzado c\u00f3modos, protector solar y lleva agua.",
+    "reviewsCount": 0,
+    "shortTitle": "Patrimonial Nagrandano",
+    "startTimes": [
+      "8:00 a.m.",
+      "3:00 p.m."
+    ],
+    "stopIds": [
+      "nagarote-parque-central",
+      "nagarote-parroquia-santiago",
+      "nagarote-mirador-la-concordia",
+      "nagarote-parque-museo-el-xenizaro",
+      "nagarote-parador-turistico-nagrandano"
+    ],
+    "subtitle": "Patrimonio, quesillo y miradores de Nagarote",
+    "title": "Circuito Creativo Patrimonial Nagrandano",
+    "travelMode": "walking"
+  },
+  {
+    "badges": 3,
+    "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
+    "category": "Ciudad",
+    "city": "Granada",
+    "comments": [
+      {
+        "author": "Ana Carolina R.",
+        "rating": 5,
+        "text": "Un recorrido incre\u00edble. Granada es a\u00fan m\u00e1s hermosa conociendo su cultura.",
+        "timeAgo": "Hace dos d\u00edas"
+      },
+      {
+        "author": "Silvia H.",
+        "rating": 4,
+        "text": "La gu\u00eda que contratamos por la app sab\u00eda much\u00edsimo de la historia colonial. Repetir\u00eda sin dudarlo.",
+        "timeAgo": "Hace una semana"
+      },
+      {
+        "author": "Marcos J.",
+        "rating": 5,
+        "text": "Las degustaciones al final valen cada c\u00f3rdoba. Muy recomendado.",
+        "timeAgo": "Hace dos semanas"
+      }
+    ],
+    "description": "Un recorrido a pie por el coraz\u00f3n de Granada donde la historia colonial, la cultura viva y la gastronom\u00eda se encuentran en cada esquina",
+    "difficulty": "F\u00e1cil",
+    "duration": "4 h 20 min",
+    "durationShort": "4 h aprox.",
+    "id": "granada-historias-sabores",
+    "images": [
+      "https://picsum.photos/seed/granada-1/900/600",
+      "https://picsum.photos/seed/granada-2/900/600",
+      "https://picsum.photos/seed/granada-3/900/600",
+      "https://picsum.photos/seed/granada-4/900/600",
+      "https://picsum.photos/seed/granada-5/900/600"
+    ],
+    "includes": "Entradas y degustaciones",
+    "location": {
+      "latitude": 11.9344,
+      "longitude": -85.956
+    },
+    "meetingPoint": "Parque Central de Granada, frente a la Catedral",
+    "notes": "El recorrido incluye caminatas por calles empedradas y visitas a sitios hist\u00f3ricos",
+    "priceAdult": 250,
+    "priceChild": 0,
     "rating": 4.5,
+    "recommendations": "Usa ropa c\u00f3moda, calzado adecuado, protector solar y lleva una botella de agua",
     "reviewsCount": 126,
+    "shortTitle": "Granada Hist\u00f3rica",
+    "startTimes": [
+      "8:30 a.m.",
+      "10:00 a.m.",
+      "2:00 p.m."
+    ],
     "stopIds": [
       "granada-catedral",
       "granada-parque-central",
@@ -16,58 +794,59 @@
       "granada-mercado",
       "granada-muelle"
     ],
-    "travelMode": "walking",
-    "duration": "4 h 20 min",
-    "durationShort": "4 h aprox.",
-    "badges": 3,
-    "difficulty": "Fácil",
-    "priceAdult": 250,
-    "priceChild": 0,
-    "description": "Un recorrido a pie por el corazón de Granada donde la historia colonial, la cultura viva y la gastronomía se encuentran en cada esquina",
-    "images": [
-      "https://picsum.photos/seed/granada-1/900/600",
-      "https://picsum.photos/seed/granada-2/900/600",
-      "https://picsum.photos/seed/granada-3/900/600",
-      "https://picsum.photos/seed/granada-4/900/600",
-      "https://picsum.photos/seed/granada-5/900/600"
-    ],
-    "recommendations": "Usa ropa cómoda, calzado adecuado, protector solar y lleva una botella de agua",
-    "meetingPoint": "Parque Central de Granada, frente a la Catedral",
-    "includes": "Entradas y degustaciones",
-    "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
-    "notes": "El recorrido incluye caminatas por calles empedradas y visitas a sitios históricos",
-    "startTimes": ["8:30 a.m.", "10:00 a.m.", "2:00 p.m."],
-    "location": { "latitude": 11.9344, "longitude": -85.956 },
-    "comments": [
-      {
-        "author": "Ana Carolina R.",
-        "rating": 5,
-        "timeAgo": "Hace dos días",
-        "text": "Un recorrido increíble. Granada es aún más hermosa conociendo su cultura."
-      },
-      {
-        "author": "Silvia H.",
-        "rating": 4,
-        "timeAgo": "Hace una semana",
-        "text": "La guía que contratamos por la app sabía muchísimo de la historia colonial. Repetiría sin dudarlo."
-      },
-      {
-        "author": "Marcos J.",
-        "rating": 5,
-        "timeAgo": "Hace dos semanas",
-        "text": "Las degustaciones al final valen cada córdoba. Muy recomendado."
-      }
-    ]
+    "subtitle": "Paseo por la historia y la cultura",
+    "title": "Granada, entre historias y sabores",
+    "travelMode": "walking"
   },
   {
-    "id": "isla-de-ometepe",
-    "shortTitle": "Isla de Ometepe",
-    "title": "Ometepe, la isla de los dos volcanes",
-    "subtitle": "Naturaleza, leyendas y aventura",
+    "badges": 4,
+    "badgesNote": "Este recorrido contiene un total de 4 insignias coleccionables",
     "category": "Naturaleza",
     "city": "Rivas",
+    "comments": [
+      {
+        "author": "Luis P.",
+        "rating": 5,
+        "text": "El Ojo de Agua y los petroglifos son impresionantes. D\u00eda completo bien aprovechado.",
+        "timeAgo": "Hace tres d\u00edas"
+      },
+      {
+        "author": "Karla M.",
+        "rating": 5,
+        "text": "Excelente organizaci\u00f3n, el almuerzo t\u00edpico estuvo delicioso.",
+        "timeAgo": "Hace un mes"
+      }
+    ],
+    "description": "Una traves\u00eda por la isla formada por los volcanes Concepci\u00f3n y Maderas, con petroglifos, ojos de agua y comunidades locales, que termina en la playa del istmo",
+    "difficulty": "Moderado",
+    "duration": "9 h 50 min",
+    "durationShort": "1 d\u00eda",
+    "id": "isla-de-ometepe",
+    "images": [
+      "https://picsum.photos/seed/ometepe-1/900/600",
+      "https://picsum.photos/seed/ometepe-2/900/600",
+      "https://picsum.photos/seed/ometepe-3/900/600"
+    ],
+    "includes": "Boleto del ferry, entradas y almuerzo t\u00edpico",
+    "legMinutes": {
+      "ometepe-moyogalpa": 0
+    },
+    "location": {
+      "latitude": 11.506,
+      "longitude": -85.585
+    },
+    "meetingPoint": "Puerto de San Jorge, Rivas",
+    "notes": "La salida es temprano y el regreso depende del horario del ferry. En la isla se recorre en veh\u00edculo: ll\u00e9valo t\u00fa o p\u00eddele al gu\u00eda que lo ponga en tu propuesta",
+    "priceAdult": 750,
+    "priceChild": 400,
     "rating": 4.8,
+    "recommendations": "Lleva traje de ba\u00f1o, repelente, protector solar y calzado para caminata",
     "reviewsCount": 89,
+    "shortTitle": "Isla de Ometepe",
+    "startTimes": [
+      "6:00 a.m.",
+      "7:30 a.m."
+    ],
     "stopIds": [
       "ometepe-ferry",
       "ometepe-moyogalpa",
@@ -78,98 +857,50 @@
       "ometepe-mirador-maderas",
       "ometepe-playa-santo-domingo"
     ],
-    "travelMode": "vehicle",
-    "legMinutes": { "ometepe-moyogalpa": 0 },
-    "duration": "9 h 50 min",
-    "durationShort": "1 día",
-    "badges": 4,
-    "difficulty": "Moderado",
-    "priceAdult": 750,
-    "priceChild": 400,
-    "description": "Una travesía por la isla formada por los volcanes Concepción y Maderas, con petroglifos, ojos de agua y comunidades locales, que termina en la playa del istmo",
-    "images": [
-      "https://picsum.photos/seed/ometepe-1/900/600",
-      "https://picsum.photos/seed/ometepe-2/900/600",
-      "https://picsum.photos/seed/ometepe-3/900/600"
-    ],
-    "recommendations": "Lleva traje de baño, repelente, protector solar y calzado para caminata",
-    "meetingPoint": "Puerto de San Jorge, Rivas",
-    "includes": "Boleto del ferry, entradas y almuerzo típico",
-    "badgesNote": "Este recorrido contiene un total de 4 insignias coleccionables",
-    "notes": "La salida es temprano y el regreso depende del horario del ferry. En la isla se recorre en vehículo: llévalo tú o pídele al guía que lo ponga en tu propuesta",
-    "startTimes": ["6:00 a.m.", "7:30 a.m."],
-    "location": { "latitude": 11.506, "longitude": -85.585 },
-    "comments": [
-      {
-        "author": "Luis P.",
-        "rating": 5,
-        "timeAgo": "Hace tres días",
-        "text": "El Ojo de Agua y los petroglifos son impresionantes. Día completo bien aprovechado."
-      },
-      {
-        "author": "Karla M.",
-        "rating": 5,
-        "timeAgo": "Hace un mes",
-        "text": "Excelente organización, el almuerzo típico estuvo delicioso."
-      }
-    ]
+    "subtitle": "Naturaleza, leyendas y aventura",
+    "title": "Ometepe, la isla de los dos volcanes",
+    "travelMode": "vehicle"
   },
   {
-    "id": "leon-colonial",
-    "shortTitle": "León Colonial",
-    "title": "León, cuna de poetas y volcanes",
-    "subtitle": "Arte, catedrales y tradición",
-    "category": "Ciudad",
-    "city": "León",
-    "rating": 4.6,
-    "reviewsCount": 74,
-    "stopIds": [
-      "leon-catedral",
-      "leon-techos",
-      "leon-ruben-dario",
-      "leon-murales",
-      "leon-mercado"
-    ],
-    "travelMode": "walking",
-    "duration": "3 h 5 min",
-    "durationShort": "3 h aprox.",
-    "badges": 2,
-    "difficulty": "Fácil",
-    "priceAdult": 300,
-    "priceChild": 150,
-    "description": "Un paseo por la ciudad universitaria: la Catedral Patrimonio de la Humanidad, murales, museos y la casa de Rubén Darío",
-    "images": [
-      "https://picsum.photos/seed/leon-1/900/600",
-      "https://picsum.photos/seed/leon-2/900/600",
-      "https://picsum.photos/seed/leon-3/900/600"
-    ],
-    "recommendations": "Lleva sombrero y agua, el sol de León es fuerte al mediodía",
-    "meetingPoint": "Parque Central de León, frente a la Catedral",
-    "includes": "Guía certificado, entrada a museos y subida a los techos de la Catedral",
-    "badgesNote": "Este recorrido contiene un total de 2 insignias coleccionables, más 3 insignias extra de \"Circuitos creativos\" y una medalla de León al completarlo",
-    "notes": "La subida a los techos de la Catedral se hace descalzo",
-    "startTimes": ["9:00 a.m.", "3:00 p.m."],
-    "location": { "latitude": 12.4345, "longitude": -86.878 },
-    "isCreativeCircuit": true,
-    "organizer": "Alcaldía de León",
-    "comments": [
-      {
-        "author": "Diana C.",
-        "rating": 5,
-        "timeAgo": "Hace cinco días",
-        "text": "Los techos blancos de la Catedral son una postal. Vale muchísimo la pena."
-      }
-    ]
-  },
-  {
-    "id": "ruta-del-cafe",
-    "shortTitle": "Ruta del Café",
-    "title": "Ruta del café en las Segovias",
-    "subtitle": "Del grano a la taza",
+    "badges": 3,
+    "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
     "category": "Naturaleza",
     "city": "Matagalpa",
+    "comments": [
+      {
+        "author": "Roberto A.",
+        "rating": 5,
+        "text": "Aprend\u00ed todo el proceso del caf\u00e9 y la cata final estuvo buen\u00edsima.",
+        "timeAgo": "Hace un mes"
+      }
+    ],
+    "description": "Visita a fincas cafetaleras de monta\u00f1a para conocer el proceso completo del caf\u00e9 nicarag\u00fcense y catar el resultado",
+    "difficulty": "Moderado",
+    "duration": "6 h 45 min",
+    "durationShort": "7 h aprox.",
+    "id": "ruta-del-cafe",
+    "images": [
+      "https://picsum.photos/seed/cafe-1/900/600",
+      "https://picsum.photos/seed/cafe-2/900/600",
+      "https://picsum.photos/seed/cafe-3/900/600"
+    ],
+    "includes": "Entrada a las fincas, cata de caf\u00e9 y refrigerio",
+    "location": {
+      "latitude": 12.927,
+      "longitude": -85.917
+    },
+    "meetingPoint": "Parque Dar\u00edo, Matagalpa",
+    "notes": "El clima de monta\u00f1a es fresco y lluvioso por la tarde. La comunidad cafetalera queda lejos de la finca: ll\u00e9vate veh\u00edculo o p\u00eddele al gu\u00eda que lo ponga en tu propuesta",
+    "priceAdult": 500,
+    "priceChild": 250,
     "rating": 4.7,
+    "recommendations": "Usa botas o zapatos cerrados, puede haber lodo en los senderos",
     "reviewsCount": 58,
+    "shortTitle": "Ruta del Caf\u00e9",
+    "startTimes": [
+      "7:00 a.m.",
+      "8:00 a.m."
+    ],
     "stopIds": [
       "cafe-selva-negra",
       "cafe-beneficio",
@@ -179,125 +910,8 @@
       "cafe-mirador",
       "cafe-comunidad"
     ],
-    "travelMode": "vehicle",
-    "duration": "6 h 45 min",
-    "durationShort": "7 h aprox.",
-    "badges": 3,
-    "difficulty": "Moderado",
-    "priceAdult": 500,
-    "priceChild": 250,
-    "description": "Visita a fincas cafetaleras de montaña para conocer el proceso completo del café nicaragüense y catar el resultado",
-    "images": [
-      "https://picsum.photos/seed/cafe-1/900/600",
-      "https://picsum.photos/seed/cafe-2/900/600",
-      "https://picsum.photos/seed/cafe-3/900/600"
-    ],
-    "recommendations": "Usa botas o zapatos cerrados, puede haber lodo en los senderos",
-    "meetingPoint": "Parque Darío, Matagalpa",
-    "includes": "Entrada a las fincas, cata de café y refrigerio",
-    "badgesNote": "Este recorrido contiene un total de 3 insignias coleccionables",
-    "notes": "El clima de montaña es fresco y lluvioso por la tarde. La comunidad cafetalera queda lejos de la finca: llévate vehículo o pídele al guía que lo ponga en tu propuesta",
-    "startTimes": ["7:00 a.m.", "8:00 a.m."],
-    "location": { "latitude": 12.927, "longitude": -85.917 },
-    "comments": [
-      {
-        "author": "Roberto A.",
-        "rating": 5,
-        "timeAgo": "Hace un mes",
-        "text": "Aprendí todo el proceso del café y la cata final estuvo buenísima."
-      }
-    ]
-  },
-  {
-    "id": "masaya-artesanias-volcan",
-    "shortTitle": "Masaya Artesanal",
-    "title": "Masaya, cuna del folclore y el fuego",
-    "subtitle": "Artesanías, tradición y el cráter del volcán",
-    "category": "Ciudad",
-    "city": "Masaya",
-    "rating": 4.7,
-    "reviewsCount": 41,
-    "stopIds": [
-      "masaya-mercado-artesanias",
-      "masaya-parque-central",
-      "masaya-volcan",
-      "masaya-monimbo"
-    ],
-    "travelMode": "vehicle",
-    "duration": "3 h 25 min",
-    "durationShort": "3 h aprox.",
-    "badges": 2,
-    "difficulty": "Fácil",
-    "priceAdult": 280,
-    "priceChild": 140,
-    "description": "Un recorrido preestablecido por la Alcaldía de Masaya por el mercado de artesanías, el barrio de Monimbó y el mirador del volcán",
-    "images": [
-      "https://picsum.photos/seed/masaya-1/900/600",
-      "https://picsum.photos/seed/masaya-2/900/600",
-      "https://picsum.photos/seed/masaya-3/900/600"
-    ],
-    "recommendations": "Lleva efectivo para las artesanías y protector solar para el mirador del volcán",
-    "meetingPoint": "Parque Central de Masaya, frente a la Iglesia San Jerónimo",
-    "includes": "Guía certificado, entrada al Mercado de Artesanías y al mirador del volcán",
-    "badgesNote": "Este recorrido contiene un total de 2 insignias coleccionables, más 3 insignias extra de \"Circuitos creativos\" y una medalla de Masaya al completarlo",
-    "notes": "El acceso al cráter del volcán depende del horario del parque nacional",
-    "startTimes": ["9:00 a.m.", "2:00 p.m."],
-    "location": { "latitude": 11.9738, "longitude": -86.0958 },
-    "isCreativeCircuit": true,
-    "organizer": "Alcaldía de Masaya",
-    "comments": [
-      {
-        "author": "Fernando J.",
-        "rating": 5,
-        "timeAgo": "Hace una semana",
-        "text": "Ver el lago de lava desde el borde del cráter fue impresionante. El mercado de artesanías también vale mucho la pena."
-      }
-    ]
-  },
-  {
-    "id": "esteli-murales-tabaco",
-    "shortTitle": "Estelí Creativa",
-    "title": "Estelí, murales y tradición tabacalera",
-    "subtitle": "Arte urbano, historia y el aroma del tabaco",
-    "category": "Ciudad",
-    "city": "Estelí",
-    "rating": 4.6,
-    "reviewsCount": 33,
-    "stopIds": [
-      "esteli-galeria-heroes",
-      "esteli-catedral",
-      "esteli-tabacalera",
-      "esteli-mirador-tisey"
-    ],
-    "travelMode": "vehicle",
-    "duration": "3 h 35 min",
-    "durationShort": "4 h aprox.",
-    "badges": 2,
-    "difficulty": "Fácil",
-    "priceAdult": 300,
-    "priceChild": 150,
-    "description": "Un recorrido preestablecido por la Alcaldía de Estelí por sus murales, una tabacalera artesanal y el mirador de la reserva Tisey",
-    "images": [
-      "https://picsum.photos/seed/esteli-1/900/600",
-      "https://picsum.photos/seed/esteli-2/900/600",
-      "https://picsum.photos/seed/esteli-3/900/600"
-    ],
-    "recommendations": "Lleva una chaqueta ligera para el mirador y calzado cómodo para caminar",
-    "meetingPoint": "Parque Central de Estelí, frente a la Catedral",
-    "includes": "Guía certificado, entrada a la Galería de Héroes y Mártires y recorrido en una tabacalera",
-    "badgesNote": "Este recorrido contiene un total de 2 insignias coleccionables, más 3 insignias extra de \"Circuitos creativos\" y una medalla de Estelí al completarlo",
-    "notes": "El mirador Tisey queda a las afueras de la ciudad; el recorrido incluye el transporte",
-    "startTimes": ["9:00 a.m.", "1:00 p.m."],
-    "location": { "latitude": 13.0906, "longitude": -86.3538 },
-    "isCreativeCircuit": true,
-    "organizer": "Alcaldía de Estelí",
-    "comments": [
-      {
-        "author": "Patricia G.",
-        "rating": 5,
-        "timeAgo": "Hace dos semanas",
-        "text": "Los murales cuentan una historia que no conocía. La tabacalera fue una sorpresa, muy bien explicado el proceso."
-      }
-    ]
+    "subtitle": "Del grano a la taza",
+    "title": "Ruta del caf\u00e9 en las Segovias",
+    "travelMode": "vehicle"
   }
 ]

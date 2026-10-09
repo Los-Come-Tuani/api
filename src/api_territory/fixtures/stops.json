@@ -1,565 +1,2713 @@
 [
   {
-    "id": "granada-catedral",
-    "name": "Catedral de Granada",
+    "address": "",
+    "category": "Historia",
+    "city": "Estel\u00ed",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 13.092928,
+      "longitude": -86.356988
+    },
+    "description": "La alcald\u00eda de Estel\u00ed, otro de los espacios hist\u00f3ricos del circuito; sus murales son parte del muralismo esteliano.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "esteli-alcaldia",
+    "images": [
+      "https://picsum.photos/seed/esteli-alcaldia-1/900/600",
+      "https://picsum.photos/seed/esteli-alcaldia-2/900/600"
+    ],
+    "name": "Casa del Gobierno Local",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Estel\u00ed",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 13.09176,
+      "longitude": -86.355986
+    },
+    "description": "Casa de cultura y sitio de conexi\u00f3n art\u00edstica de la ciudad, con su mural.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "esteli-casa-cultura-leonel-rugama",
+    "images": [
+      "https://picsum.photos/seed/esteli-casa-cultura-leonel-rugama-1/900/600",
+      "https://picsum.photos/seed/esteli-casa-cultura-leonel-rugama-2/900/600"
+    ],
+    "name": "Casa de Cultura Leonel Rugama",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Estel\u00ed",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 13.09292,
+      "longitude": -86.355343
+    },
+    "description": "La catedral de Estel\u00ed, referencia hist\u00f3rica de la ciudad.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "esteli-catedral",
+    "images": [
+      "https://picsum.photos/seed/esteli-catedral-1/900/600",
+      "https://picsum.photos/seed/esteli-catedral-2/900/600"
+    ],
+    "name": "Catedral Nuestra Se\u00f1ora del Rosario",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Estel\u00ed",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 13.09289,
+      "longitude": -86.356288
+    },
+    "description": "Inicio del circuito: murales, una escultura a la Madre Nicarag\u00fcense y una gorda en piedra marmolina que representa al Diamante de las Segovias.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "esteli-parque-central",
+    "images": [
+      "https://picsum.photos/seed/esteli-parque-central-1/900/600",
+      "https://picsum.photos/seed/esteli-parque-central-2/900/600"
+    ],
+    "name": "Parque Central de Estel\u00ed",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "De la iglesia San Francisco, 1 cuadra al oeste",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": "5:00 p.m.",
+    "coordinates": {
+      "latitude": 12.434889,
+      "longitude": -86.882866
+    },
+    "description": "Casa colonial, conocida antes como Las Cuatro Esquinas, donde Rub\u00e9n Dar\u00edo vivi\u00f3 desde sus primeras semanas hasta los 14 a\u00f1os. El museo abri\u00f3 en 1964 y conserva mobiliario, manuscritos, primeras ediciones y su traje diplom\u00e1tico; su archivo integra el Registro Regional Memoria del Mundo de la UNESCO desde 2004.",
+    "duration": "45 min",
+    "hasBadge": true,
+    "id": "leon-casa-museo-archivo-ruben-dario",
+    "images": [
+      "https://picsum.photos/seed/leon-casa-museo-archivo-ruben-dario-1/900/600",
+      "https://picsum.photos/seed/leon-casa-museo-archivo-ruben-dario-2/900/600"
+    ],
+    "name": "Casa Museo Archivo Rub\u00e9n Dar\u00edo",
+    "opensAt": "8:00 a.m.",
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Cierra los lunes y de 12:00 a 2:00 p.m.; el domingo abre de 8:00 a.m. a 4:00 p.m."
+  },
+  {
+    "address": "Frente a la Plaza-Parque Juan Jos\u00e9 Quezada",
+    "category": "Historia",
+    "city": "Le\u00f3n",
+    "closesAt": "4:30 p.m.",
+    "coordinates": {
+      "latitude": 12.434982,
+      "longitude": -86.878102
+    },
+    "description": "Catedral construida entre 1747 y comienzos del siglo XIX, en transici\u00f3n del barroco tard\u00edo al neoclasicismo, Patrimonio Mundial de la UNESCO desde 2011. En su interior reposan los restos de Rub\u00e9n Dar\u00edo, custodiados por un le\u00f3n de m\u00e1rmol blanco sobre una lira.",
+    "duration": "45 min",
+    "hasBadge": true,
+    "id": "leon-catedral-tumba-ruben-dario",
+    "images": [
+      "https://picsum.photos/seed/leon-catedral-tumba-ruben-dario-1/900/600",
+      "https://picsum.photos/seed/leon-catedral-tumba-ruben-dario-2/900/600"
+    ],
+    "name": "Bas\u00edlica Catedral de Le\u00f3n y tumba de Rub\u00e9n Dar\u00edo",
+    "opensAt": "8:30 a.m.",
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Cierra de 12:00 a 2:00 p.m.; el domingo abre de 8:30 a.m. a 12:30 p.m."
+  },
+  {
+    "address": "Del Colegio Bautista, 1/2 cuadra al este",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.436972,
+      "longitude": -86.881572
+    },
+    "description": "Centro cultural con biblioteca municipal, sal\u00f3n de rob\u00f3tica y tecnolog\u00eda, aulas, quiosco y jardines. Propone una lectura contempor\u00e1nea del legado de Dar\u00edo centrada en el aprendizaje comunitario.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "leon-centro-cultural-ruben-dario",
+    "images": [
+      "https://picsum.photos/seed/leon-centro-cultural-ruben-dario-1/900/600",
+      "https://picsum.photos/seed/leon-centro-cultural-ruben-dario-2/900/600"
+    ],
+    "name": "Centro Cultural Rub\u00e9n Dar\u00edo",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Abre seg\u00fan la programaci\u00f3n del centro."
+  },
+  {
+    "address": "Fachada principal del Mercado Central, 1 cuadra al sur",
+    "category": "Historia",
+    "city": "Le\u00f3n",
+    "closesAt": "6:00 p.m.",
+    "coordinates": {
+      "latitude": 12.434188,
+      "longitude": -86.877313
+    },
+    "description": "Inmueble de 1814 que fue el banco Bola de Oro y, entre 1900 y 1926, la Casa de Salud del doctor Luis H. Debayle, amigo de infancia de Dar\u00edo, considerada la primera cl\u00ednica privada de Centroam\u00e9rica. Hoy alberga una escuela de artes.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "leon-escuela-bellas-artes",
+    "images": [
+      "https://picsum.photos/seed/leon-escuela-bellas-artes-1/900/600",
+      "https://picsum.photos/seed/leon-escuela-bellas-artes-2/900/600"
+    ],
+    "name": "Escuela de Bellas Artes Mariana Sans\u00f3n Arg\u00fcello",
+    "opensAt": "8:00 a.m.",
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Abre de lunes a viernes y cierra de 12:00 a 2:00 p.m."
+  },
+  {
+    "address": "Atrio del Santuario Diocesano San Francisco de As\u00eds",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.435135,
+      "longitude": -86.881757
+    },
+    "description": "Obra de bronce y m\u00e1rmol inspirada en el poema \u00abLos motivos del lobo\u00bb, instalada en 2017 por la escultora Maruca C\u00e9sar de G\u00f3mez. El poema completo est\u00e1 incorporado en su base.",
+    "duration": "10 min",
+    "hasBadge": false,
+    "id": "leon-monumento-motivos-del-lobo",
+    "images": [
+      "https://picsum.photos/seed/leon-monumento-motivos-del-lobo-1/900/600",
+      "https://picsum.photos/seed/leon-monumento-motivos-del-lobo-2/900/600"
+    ],
+    "name": "Monumento Los Motivos del Lobo",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Empalme de la carretera Le\u00f3n-Managua",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.417813,
+      "longitude": -86.869438
+    },
+    "description": "Oficialmente \u00abParque de la Cultura y Dignidad: Centenario Rub\u00e9n Dar\u00edo\u00bb, se construy\u00f3 en 2016 por el centenario de la muerte del poeta, con recorridos radiales, jardines, fuentes y un gran p\u00f3rtico con su retrato. Marca el inicio del Paseo de los Leones y cierra el circuito.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "leon-parque-centenario-ruben-dario",
+    "images": [
+      "https://picsum.photos/seed/leon-parque-centenario-ruben-dario-1/900/600",
+      "https://picsum.photos/seed/leon-parque-centenario-ruben-dario-2/900/600"
+    ],
+    "name": "Parque Centenario Rub\u00e9n Dar\u00edo",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Esquina suroeste de la Alcald\u00eda, 1 cuadra al oeste",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.434865,
+      "longitude": -86.880359
+    },
+    "description": "Parque dedicado a la tradici\u00f3n literaria leonesa, presidido por una estatua de Rub\u00e9n Dar\u00edo. Lo rodean los bustos de Alfonso Cort\u00e9s, Azar\u00edas H. Pallais, Salom\u00f3n de la Selva y Antenor Sandino Hern\u00e1ndez, con versos en sus bases.",
+    "duration": "15 min",
+    "hasBadge": true,
+    "id": "leon-parque-de-los-poetas",
+    "images": [
+      "https://picsum.photos/seed/leon-parque-de-los-poetas-1/900/600",
+      "https://picsum.photos/seed/leon-parque-de-los-poetas-2/900/600"
+    ],
+    "name": "Parque de los Poetas",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Aqu\u00ed se hicieron los lanzamientos del circuito en 2022 y en 2026."
+  },
+  {
+    "address": "Empalme Le\u00f3n-Managua, aprox. 500 m al este",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.422563,
+      "longitude": -86.872938
+    },
+    "description": "Plazoleta del Paseo de los Leones, a la entrada de Le\u00f3n, presidida por una escultura monumental de Rub\u00e9n Dar\u00edo del escultor S\u00f3crates Mart\u00ednez. Fue inaugurada el 29 de octubre de 2020.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "leon-plazoleta-ruben-dario",
+    "images": [
+      "https://picsum.photos/seed/leon-plazoleta-ruben-dario-1/900/600",
+      "https://picsum.photos/seed/leon-plazoleta-ruben-dario-2/900/600"
+    ],
+    "name": "Plazoleta Rub\u00e9n Dar\u00edo",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Queda a unos 22 minutos a pie de la Escuela de Bellas Artes; tambi\u00e9n se puede llegar en taxi."
+  },
+  {
+    "address": "2 cuadras al sur del Parque de los Poetas",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": "5:00 p.m.",
+    "coordinates": {
+      "latitude": 12.433709,
+      "longitude": -86.880664
+    },
+    "description": "Primer edificio construido para teatro en Nicaragua: su primera piedra se coloc\u00f3 en febrero de 1884, d\u00eda en que el joven Dar\u00edo ley\u00f3 su poema \u00abEl arte\u00bb, y abri\u00f3 en 1885. Tras un incendio en 1956, se reinaugur\u00f3 el 7 de mayo de 1997.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "leon-teatro-jose-de-la-cruz-mena",
+    "images": [
+      "https://picsum.photos/seed/leon-teatro-jose-de-la-cruz-mena-1/900/600",
+      "https://picsum.photos/seed/leon-teatro-jose-de-la-cruz-mena-2/900/600"
+    ],
+    "name": "Teatro Municipal Jos\u00e9 de la Cruz Mena",
+    "opensAt": "8:00 a.m.",
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Abre de lunes a viernes y cierra de 12:00 a 2:00 p.m."
+  },
+  {
+    "address": "Edificio central de la UNAN-Le\u00f3n, contiguo a la iglesia La Merced",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "closesAt": "6:00 p.m.",
+    "coordinates": {
+      "latitude": 12.43683,
+      "longitude": -86.879029
+    },
+    "description": "Exposici\u00f3n permanente de 14 vallas sobre la vida y obra de Rub\u00e9n Dar\u00edo en el jard\u00edn interior del edificio central de la UNAN-Le\u00f3n. Se inaugur\u00f3 el 8 de enero de 2013 y re\u00fane retratos, documentos, cronolog\u00eda y episodios de sus viajes.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "leon-vallas-unan-leon",
+    "images": [
+      "https://picsum.photos/seed/leon-vallas-unan-leon-1/900/600",
+      "https://picsum.photos/seed/leon-vallas-unan-leon-2/900/600"
+    ],
+    "name": "Vallas informativas de la UNAN-Le\u00f3n",
+    "opensAt": "8:00 a.m.",
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Abre de lunes a viernes y cierra de 12:00 a 2:00 p.m."
+  },
+  {
+    "address": "Casco urbano de Nagarote (c\u00f3digo plus 7C6P+F44)",
+    "category": "Naturaleza",
+    "city": "Nagarote",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.261145,
+      "longitude": -86.564671
+    },
+    "description": "Mirador conocido como la \u00abVentana Natural de Nagarote\u00bb, con vista al casco urbano, al lago Xolotl\u00e1n y a la cordillera de los Maribios. En d\u00edas despejados se distinguen los volcanes Momotombito, Momotombo, El Hoyo, Cerro Negro, Santa Clara y Telica.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "nagarote-mirador-la-concordia",
+    "images": [
+      "https://picsum.photos/seed/nagarote-mirador-la-concordia-1/900/600",
+      "https://picsum.photos/seed/nagarote-mirador-la-concordia-2/900/600"
+    ],
+    "name": "Mirador La Concordia",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Los mejores momentos para fotografiar son el amanecer y el atardecer."
+  },
+  {
+    "address": "Junto a la carretera NIC-28 (Carretera Nueva a Le\u00f3n), Nagarote",
+    "category": "Gastronom\u00eda",
+    "city": "Nagarote",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.271557,
+      "longitude": -86.563257
+    },
+    "description": "Conjunto que cierra el circuito con el Monumento a Santiago y el Baile de los Diablitos, la Plaza General Sandino, el Portal \u00abCuna del Quesillo\u00bb, la Plaza Gastron\u00f3mica Nagrandana, el Parque de Ferias y el Parque Infantil. La Plaza Gastron\u00f3mica se inaugur\u00f3 el 29 de noviembre de 2025.",
+    "duration": "45 min",
+    "hasBadge": false,
+    "id": "nagarote-parador-turistico-nagrandano",
+    "images": [
+      "https://picsum.photos/seed/nagarote-parador-turistico-nagrandano-1/900/600",
+      "https://picsum.photos/seed/nagarote-parador-turistico-nagrandano-2/900/600"
+    ],
+    "name": "Parador Tur\u00edstico Nagrandano",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "En la Plaza Gastron\u00f3mica hay quesillo, nacatamal, vigor\u00f3n y bebidas como tiste, chicha y cacao."
+  },
+  {
+    "address": "Centro urbano de Nagarote, frente a la Parroquia Santiago Ap\u00f3stol",
+    "category": "Historia",
+    "city": "Nagarote",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.264794,
+      "longitude": -86.563085
+    },
+    "description": "Coraz\u00f3n social y cultural de la ciudad y punto de partida del circuito. En \u00e9l est\u00e1n la Fuente J\u00edcaras de los Deseos, el Monumento a las Madres, el Monumento a las Artesanas del Quesillo y el mausoleo del comandante Silvio Mayorga Delgado.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "nagarote-parque-central",
+    "images": [
+      "https://picsum.photos/seed/nagarote-parque-central-1/900/600",
+      "https://picsum.photos/seed/nagarote-parque-central-2/900/600"
+    ],
+    "name": "Parque Central de Nagarote",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Aqu\u00ed est\u00e1 el c\u00f3digo QR del circuito; a pocos pasos se vende quesillo."
+  },
+  {
+    "address": "Barrio Gen\u00edzaro, Nagarote",
+    "category": "Naturaleza",
+    "city": "Nagarote",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.267155,
+      "longitude": -86.564675
+    },
+    "description": "\u00c1rbol de gen\u00edzaro de m\u00e1s de 500 a\u00f1os, declarado Monumento Nacional el 19 de marzo de 1964, bajo cuya sombra funcionaba un tiangue ind\u00edgena. Junto a \u00e9l, el museo exhibe artesan\u00edas hechas con sus ramas ca\u00eddas y piezas arqueol\u00f3gicas de la zona.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "nagarote-parque-museo-el-xenizaro",
+    "images": [
+      "https://picsum.photos/seed/nagarote-parque-museo-el-xenizaro-1/900/600",
+      "https://picsum.photos/seed/nagarote-parque-museo-el-xenizaro-2/900/600"
+    ],
+    "name": "Parque y Museo El Xen\u00edzaro",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Tiene cafeter\u00eda."
+  },
+  {
+    "address": "Frente al Parque Central de Nagarote",
+    "category": "Historia",
+    "city": "Nagarote",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.264867,
+      "longitude": -86.562531
+    },
+    "description": "Parroquia fundada en 1650 como Santiago de La Concepci\u00f3n de La Villa de Nagarote y declarada Monumento Hist\u00f3rico Nacional el 14 de diciembre de 1955. Resguarda la imagen del patrono Santiago y piezas de arte sacro.",
+    "duration": "15 min",
+    "hasBadge": true,
+    "id": "nagarote-parroquia-santiago",
+    "images": [
+      "https://picsum.photos/seed/nagarote-parroquia-santiago-1/900/600",
+      "https://picsum.photos/seed/nagarote-parroquia-santiago-2/900/600"
+    ],
+    "name": "Parroquia Santiago Ap\u00f3stol",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Aventura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.155552,
+      "longitude": -86.272725
+    },
+    "description": "El Anfiteatro Tom\u00e1s Borge es un importante espacio cultural al aire libre ubicado en el casco hist\u00f3rico de Managua, dise\u00f1ado para el disfrute de las familias nicarag\u00fcenses y la promoci\u00f3n del arte en todas sus expresiones.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-anfiteatro-toms-borge",
+    "images": [
+      "https://picsum.photos/seed/managua-anfiteatro-toms-borge-1/900/600",
+      "https://picsum.photos/seed/managua-anfiteatro-toms-borge-2/900/600"
+    ],
+    "name": "Anfiteatro Tom\u00e1s Borge",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.14778,
+      "longitude": -86.274088
+    },
+    "description": "Es un peque\u00f1o pulm\u00f3n ecol\u00f3gico y un santuario forestal urbano de referencia cient\u00edfica, educativa y ambiental en el coraz\u00f3n de la capital.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-arboretum-nacional",
+    "images": [
+      "https://picsum.photos/seed/managua-arboretum-nacional-1/900/600",
+      "https://picsum.photos/seed/managua-arboretum-nacional-2/900/600"
+    ],
+    "name": "Arboretum Nacional",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Bolonia, DDF la \u00d3ptica Nicarag\u00fcense, 2 cuadras al este, 170 metros al sur",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.137631,
+      "longitude": -86.278661
+    },
+    "description": "La Casa de Cultura y Creatividad Otto de la Rocha, lleva el nombre de nuestro querido \u201cArtesano del Arte\u201d quien nos ha dejado un inmenso legado cultural a los nicarag\u00fcenses.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-casa-de-cultura-y-creatividad-otto-de-la-rocha",
+    "images": [
+      "https://picsum.photos/seed/managua-casa-de-cultura-y-creatividad-otto-de-la-rocha-1/900/600",
+      "https://picsum.photos/seed/managua-casa-de-cultura-y-creatividad-otto-de-la-rocha-2/900/600"
+    ],
+    "name": "Casa de Cultura y Creatividad Otto de la Rocha",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Costado Norte de la antigua Catedral de Managua y Plaza la F\u00e9.",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.1572,
+      "longitude": -86.272017
+    },
+    "description": "La Casa de los Pueblos, tambi\u00e9n llamada Casa Presidencial o Casa Naranja y conocida popularmente como Casa Mam\u00f3n, fue la residencia y sede de la presidencia de Nicaragua entre los a\u00f1os 1999-2007. Fue construida para ser la Sede oficial del Gobierno de la Rep\u00fablica de Nicaragua.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-casa-de-los-pueblos",
+    "images": [
+      "https://picsum.photos/seed/managua-casa-de-los-pueblos-1/900/600",
+      "https://picsum.photos/seed/managua-casa-de-los-pueblos-2/900/600"
+    ],
+    "name": "Casa de los Pueblos",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.159817,
+      "longitude": -86.272595
+    },
+    "description": "Evoca la sede hist\u00f3rica de San Rafael del Norte. Su valor arquitect\u00f3nico de monta\u00f1a resguarda el testimonio de la gesta patri\u00f3tica de los hombres y mujeres que defendieron con dignidad el suelo patrio.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-casa-rplica-edsn-blanca-arauz",
+    "images": [
+      "https://picsum.photos/seed/managua-casa-rplica-edsn-blanca-arauz-1/900/600",
+      "https://picsum.photos/seed/managua-casa-rplica-edsn-blanca-arauz-2/900/600"
+    ],
+    "name": "Casa R\u00e9plica E.D.S.N. Blanca Arauz",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.1573,
+      "longitude": -86.266419
+    },
+    "description": "Recrea el hist\u00f3rico escenario original ubicado en Tipitapa. Su estructura de adobe y madera posee un inestimable valor patrimonial, proyectando la valent\u00eda y la primera gran victoria de la soberan\u00eda nacional frente al filibusterismo.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-casa-rplica-museo-hacienda-san-jacinto",
+    "images": [
+      "https://picsum.photos/seed/managua-casa-rplica-museo-hacienda-san-jacinto-1/900/600",
+      "https://picsum.photos/seed/managua-casa-rplica-museo-hacienda-san-jacinto-2/900/600"
+    ],
+    "name": "Casa R\u00e9plica - Museo Hacienda San Jacinto",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.159959,
+      "longitude": -86.272215
+    },
+    "description": "Fiel reproducci\u00f3n de la casa de Le\u00f3n, que custodia un invaluable patrimonio bibliogr\u00e1fico e hist\u00f3rico con mobiliario, vestimenta y escritos originales del panida, destacando su genialidad literaria universal.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-casa-rplica-museo-rubn-daro",
+    "images": [
+      "https://picsum.photos/seed/managua-casa-rplica-museo-rubn-daro-1/900/600",
+      "https://picsum.photos/seed/managua-casa-rplica-museo-rubn-daro-2/900/600"
+    ],
+    "name": "Casa R\u00e9plica - Museo Rub\u00e9n Dar\u00edo",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Plaza de la Revoluci\u00f3n, a un costado del Palacio Nacional.",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.15629,
+      "longitude": -86.271486
+    },
+    "description": "La hist\u00f3rica Antigua Catedral de Managua, tambi\u00e9n conocida como Catedral de Santiago, es uno de los s\u00edmbolos m\u00e1s representativos de la capital nicarag\u00fcense.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-catedral-santiago-de-los-caballeros-de-managua",
+    "images": [
+      "https://picsum.photos/seed/managua-catedral-santiago-de-los-caballeros-de-managua-1/900/600",
+      "https://picsum.photos/seed/managua-catedral-santiago-de-los-caballeros-de-managua-2/900/600"
+    ],
+    "name": "Catedral Santiago de los Caballeros de Managua",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Parque Candelaria, 300 mts al este",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.155366,
+      "longitude": -86.264655
+    },
+    "description": "La Colonia Dambach es un hist\u00f3rico complejo habitacional ubicado en el kil\u00f3metro 1 de la Carretera Norte en Managua .",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-centro-cultural-colonia-dambach",
+    "images": [
+      "https://picsum.photos/seed/managua-centro-cultural-colonia-dambach-1/900/600",
+      "https://picsum.photos/seed/managua-centro-cultural-colonia-dambach-2/900/600"
+    ],
+    "name": "Centro Cultural Colonia Dambach",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Contiguo al Puerto Salvador Allende",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.161107,
+      "longitude": -86.274661
+    },
+    "description": "Es un espacio art\u00edstico y cultural inaugurado en diciembre de 2023 en la Plaza de la Revoluci\u00f3n, Managua. Fue creado para promover el arte, la creatividad y la cultura nicarag\u00fcense, rindiendo homenaje al reconocido compositor nacional Tino L\u00f3pez Guerra, conocido como el \u201cRey del Corrido Nicarag\u00fcense\u201d.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-centro-cultural-tino-lpez-guerra",
+    "images": [
+      "https://picsum.photos/seed/managua-centro-cultural-tino-lpez-guerra-1/900/600",
+      "https://picsum.photos/seed/managua-centro-cultural-tino-lpez-guerra-2/900/600"
+    ],
+    "name": "Centro Cultural Tino L\u00f3pez Guerra",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.155126,
+      "longitude": -86.27307
+    },
+    "description": "La Cinemateca Nacional de Nicaragua es la instituci\u00f3n encargada de preservar, investigar y difundir el patrimonio audiovisual del pa\u00eds.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-cinemateca-nacional",
+    "images": [
+      "https://picsum.photos/seed/managua-cinemateca-nacional-1/900/600",
+      "https://picsum.photos/seed/managua-cinemateca-nacional-2/900/600"
+    ],
+    "name": "Cinemateca Nacional",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Frente al Parque Central, Managua.",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.156829,
+      "longitude": -86.273706
+    },
+    "description": "Ubicado sobre la Avenida Bol\u00edvar, frente al Parque Central de Managua y muy cerca del Teatro Nacional Rub\u00e9n Dar\u00edo, el tiangue Comidas Criollas se ha convertido en uno de esos rincones donde todav\u00eda se siente el sabor aut\u00e9ntico de Nicaragua.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-comidas-criollas",
+    "images": [
+      "https://picsum.photos/seed/managua-comidas-criollas-1/900/600",
+      "https://picsum.photos/seed/managua-comidas-criollas-2/900/600"
+    ],
+    "name": "Comidas Criollas",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.155763,
+      "longitude": -86.272658
+    },
+    "description": "La Crioller\u00eda Este acogedor kiosco, ubicado en el centro hist\u00f3rico contiguo al Palacio Nacional, es el rinc\u00f3n ideal para disfrutar de la aut\u00e9ntica gastronom\u00eda nicarag\u00fcense.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-kioscos-la-criollera-y-la-chivera",
+    "images": [
+      "https://picsum.photos/seed/managua-kioscos-la-criollera-y-la-chivera-1/900/600",
+      "https://picsum.photos/seed/managua-kioscos-la-criollera-y-la-chivera-2/900/600"
+    ],
+    "name": "Kioscos La Crioller\u00eda y La Chiver\u00eda",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Rotonda Hugo Ch\u00e1vez, 1 cuadra al norte, Managua.",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.148268,
+      "longitude": -86.274827
+    },
+    "description": "Ubicada sobre la Avenida de Bol\u00edvar a Ch\u00e1vez, La Casona Caf\u00e9 y Restaurante es un espacio que combina gastronom\u00eda, cultura y creatividad en un ambiente dise\u00f1ado para el disfrute de las familias nicarag\u00fcenses y visitantes.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-la-casona",
+    "images": [
+      "https://picsum.photos/seed/managua-la-casona-1/900/600",
+      "https://picsum.photos/seed/managua-la-casona-2/900/600"
+    ],
+    "name": "La Casona",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Teatro Nacional Rub\u00e9n Dario, media cuadra al sur, Managua.",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.157542,
+      "longitude": -86.273647
+    },
+    "description": "Comider\u00eda \u00a1La Chumila! es un espacio gastron\u00f3mico en Managua que rescata la cocina y tradici\u00f3n nicarag\u00fcense con un concepto de buffet y fritanga. Es un din\u00e1mico espacio gastron\u00f3mico que rescata y promueve la cocina y las ricas tradiciones culinarias de Nicaragua bajo un concepto muy popular y accesible.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-la-chumila",
+    "images": [
+      "https://picsum.photos/seed/managua-la-chumila-1/900/600",
+      "https://picsum.photos/seed/managua-la-chumila-2/900/600"
+    ],
+    "name": "La Chumila",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "De los semaforos de la Asamblea Nacional 1c Al Oeste",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.150676,
+      "longitude": -86.275509
+    },
+    "description": "Es un entra\u00f1able espacio recreativo, cultural y gastron\u00f3mico dise\u00f1ado especialmente para el disfrute de la ni\u00f1ez y las familias nicarag\u00fcenses. Su concepto es un homenaje y rescate hist\u00f3rico de la m\u00edtica e ic\u00f3nica sorbeter\u00eda que existi\u00f3 en la Vieja Managua antes del terremoto de 1972.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "managua-la-hormiga-de-oro",
+    "images": [
+      "https://picsum.photos/seed/managua-la-hormiga-de-oro-1/900/600",
+      "https://picsum.photos/seed/managua-la-hormiga-de-oro-2/900/600"
+    ],
+    "name": "La Hormiga de Oro",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.148136,
+      "longitude": -86.27436
+    },
+    "description": "Ubicado en el Arboretum Nacional, La Refresquer\u00eda es un destino gastron\u00f3mico familiar en Managua especializado en bebidas tradicionales nicarag\u00fcenses. Destaca por utilizar frutas frescas e ingredientes naturales.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-la-refresquera-en-el-arboretum",
+    "images": [
+      "https://picsum.photos/seed/managua-la-refresquera-en-el-arboretum-1/900/600",
+      "https://picsum.photos/seed/managua-la-refresquera-en-el-arboretum-2/900/600"
+    ],
+    "name": "La Refresquer\u00eda (en el Arboretum)",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.137617,
+      "longitude": -86.313371
+    },
+    "description": "La Laguna de Asososca es uno de los tesoros naturales m\u00e1s importantes de Managua.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-laguna-de-asososca",
+    "images": [
+      "https://picsum.photos/seed/managua-laguna-de-asososca-1/900/600",
+      "https://picsum.photos/seed/managua-laguna-de-asososca-2/900/600"
+    ],
+    "name": "Laguna de Asososca",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.141649,
+      "longitude": -86.272564
+    },
+    "description": "La Laguna de Tiscapa, se ubica en el centro de la ciudad de Managua, a escasos 2 kil\u00f3metros de la costa del Lago de Managua o Xolotl\u00e1n. Comprende la Loma de Tiscapa y la laguna, una laguna de origen volc\u00e1nico formada hace m\u00e1s de 10000 a\u00f1os.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-laguna-de-tiscapa",
+    "images": [
+      "https://picsum.photos/seed/managua-laguna-de-tiscapa-1/900/600",
+      "https://picsum.photos/seed/managua-laguna-de-tiscapa-2/900/600"
+    ],
+    "name": "Laguna de Tiscapa",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Ave. Bol\u00edvar a Ch\u00e1vez, contiguo a donde fue Servigob",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.148796,
+      "longitude": -86.274142
+    },
+    "description": "Es un lugar con tem\u00e1tica colonial, colorido, donde existen diferentes espacios tanto gastron\u00f3micos como de recreaci\u00f3n para el disfrute de las familias, existen negocios como helader\u00eda, las micheladas, la fritanga, cafeter\u00eda, pizza, hamburguesas entre otros productos que oferta el espacio.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-las-cuatro-esquinas",
+    "images": [
+      "https://picsum.photos/seed/managua-las-cuatro-esquinas-1/900/600",
+      "https://picsum.photos/seed/managua-las-cuatro-esquinas-2/900/600"
+    ],
+    "name": "Las Cuatro Esquinas",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.158544,
+      "longitude": -86.26988
+    },
+    "description": "En los \u00faltimos a\u00f1os, Managua se ha consolidado como un destino tur\u00edstico vibrante, donde el Paseo Xolotl\u00e1n destaca como un espacio emblem\u00e1tico que celebra la historia y la creatividad nicarag\u00fcense. Como parte de su segunda etapa, este paseo alberga una impresionante r\u00e9plica a escala de la Vieja Managua .",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-maquetas-de-representacin-de-la-vieja-managua",
+    "images": [
+      "https://picsum.photos/seed/managua-maquetas-de-representacin-de-la-vieja-managua-1/900/600",
+      "https://picsum.photos/seed/managua-maquetas-de-representacin-de-la-vieja-managua-2/900/600"
+    ],
+    "name": "Maquetas de Representaci\u00f3n de la Vieja Managua",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Loma de Tiscapa, ubicada en el centro de Managua, a 2 km de la costa del lago de Managua",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.141649,
+      "longitude": -86.272564
+    },
+    "description": "El Mirador De Tiscapa es una joya oculta en Managua que ofrece m\u00e1s que solo una vista esc\u00e9nica. Mientras que muchos viajeros pueden ver la capital como simplemente una escala, este parque hist\u00f3rico te invita a profundizar en su rica historia.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-mirador-loma-de-tiscapa",
+    "images": [
+      "https://picsum.photos/seed/managua-mirador-loma-de-tiscapa-1/900/600",
+      "https://picsum.photos/seed/managua-mirador-loma-de-tiscapa-2/900/600"
+    ],
+    "name": "Mirador Loma de Tiscapa",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "De Telcor 1c al norte, 1/2c al este.",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.156682,
+      "longitude": -86.274331
+    },
+    "description": "Sitio de la Ruta Hist\u00f3rica Patrimonial del Circuito Creativo Xolotl\u00e1n.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-museo-de-arte-contemporneo-julio-cortzar",
+    "images": [
+      "https://picsum.photos/seed/managua-museo-de-arte-contemporneo-julio-cortzar-1/900/600",
+      "https://picsum.photos/seed/managua-museo-de-arte-contemporneo-julio-cortzar-2/900/600"
+    ],
+    "name": "Museo de Arte Contempor\u00e1neo Julio Cort\u00e1zar",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.140204,
+      "longitude": -86.238068
+    },
+    "description": "La Casa Museo Leonel Rugama es un espacio de memoria hist\u00f3rica y cultura ubicado en el sitio exacto donde el joven poeta, seminarista y combatiente guerrillero nicarag\u00fcense pas\u00f3 a la inmortalidad el 15 de enero de 1970.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-museo-leonel-rugama",
+    "images": [
+      "https://picsum.photos/seed/managua-museo-leonel-rugama-1/900/600",
+      "https://picsum.photos/seed/managua-museo-leonel-rugama-2/900/600"
+    ],
+    "name": "Museo Leonel Rugama",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "\u00d3ptica Nicarag\u00fcense 2 cuadras arriba (Este), 150 metros al Sur. Bolonia, Managua",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.137922,
+      "longitude": -86.279039
+    },
+    "description": "Ubicado en el barrio Bolonia, en Managua, el Museo Lolita Soriano es un vibrante espacio cultural e hist\u00f3rico dedicado a rendir homenaje al legado de la profesora Lolita Soriano y su esposo, Don Juli\u00e1n Guerrero, ambos reconocidos como destacados educadores, historiadores y pioneros de la promoci\u00f3n cultural en Nicaragua.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-museo-lolita-soriano",
+    "images": [
+      "https://picsum.photos/seed/managua-museo-lolita-soriano-1/900/600",
+      "https://picsum.photos/seed/managua-museo-lolita-soriano-2/900/600"
+    ],
+    "name": "Museo Lolita Soriano",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Plaza de la Revoluci\u00f3n, Managua",
+    "category": "Cultura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.155558,
+      "longitude": -86.272183
+    },
+    "description": "El Palacio Nacional de Nicaragua es una Instituci\u00f3n p\u00fablica de car\u00e1cter educativo, que tiene como objetivo y finalidad adquirir, rescatar, preservar, estudiar y divulgar el patrimonio cultural y natural de Nicaragua.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-palacio-nacional-de-la-cultura",
+    "images": [
+      "https://picsum.photos/seed/managua-palacio-nacional-de-la-cultura-1/900/600",
+      "https://picsum.photos/seed/managua-palacio-nacional-de-la-cultura-2/900/600"
+    ],
+    "name": "Palacio Nacional de la Cultura",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Residencial Los Robles, sobre la pista Miguel Obando y Bravo",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.12546,
+      "longitude": -86.260287
+    },
+    "description": "Conocido popularmente como Parque Japon\u00e9s, el Parque Amistad Jap\u00f3n-Nicaragua es un espacio recreativo y cultural que simboliza los lazos de amistad y cooperaci\u00f3n entre ambos pa\u00edses.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-parque-amistad-japn-nicaragua",
+    "images": [
+      "https://picsum.photos/seed/managua-parque-amistad-japn-nicaragua-1/900/600",
+      "https://picsum.photos/seed/managua-parque-amistad-japn-nicaragua-2/900/600"
+    ],
+    "name": "Parque Amistad Jap\u00f3n Nicaragua",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Avenida a Bol\u00edvar, contiguo al Palacio Nacional",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.15641,
+      "longitude": -86.27297
+    },
+    "description": "El Parque Central inici\u00f3 su construcci\u00f3n en 1898 con planos encargados al Arquitecto Monsieur Louis Lairac, en estilo Neocl\u00e1sico europeo.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-parque-central",
+    "images": [
+      "https://picsum.photos/seed/managua-parque-central-1/900/600",
+      "https://picsum.photos/seed/managua-parque-central-2/900/600"
+    ],
+    "name": "Parque Central",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Parque Villa Fontana, sobre la Pista Jean Paul Genie, contiguo a la Parroquia Jes\u00fas de la Divina Misericordia y en las cercan\u00edas de la UNAN-",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.103581,
+      "longitude": -86.268035
+    },
+    "description": "Ubicado en Villa Fontana, el Parque Natural Divina Misericordia es un espacio recreativo muy atractivo en la capital, para el encuentro familiar y el disfrute de la naturaleza.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-parque-divina-misericordia",
+    "images": [
+      "https://picsum.photos/seed/managua-parque-divina-misericordia-1/900/600",
+      "https://picsum.photos/seed/managua-parque-divina-misericordia-2/900/600"
+    ],
+    "name": "Parque Divina Misericordia",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Avenida de Bol\u00edvar a Ch\u00e1vez, Dupla Sur, Managua",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.150582,
+      "longitude": -86.274765
+    },
+    "description": "El Parque de los H\u00e9roes de la Dignidad Nacional es un espacio p\u00fablico y conmemorativo ubicado en la Avenida de Bol\u00edvar a Ch\u00e1vez, en Managua. Inaugurado para honrar la soberan\u00eda de Nicaragua, destaca por sus 15 estelas que exhiben im\u00e1genes y rinden homenaje a destacados defensores de la patria.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-parque-hroes-de-la-dignidad-nacional",
+    "images": [
+      "https://picsum.photos/seed/managua-parque-hroes-de-la-dignidad-nacional-1/900/600",
+      "https://picsum.photos/seed/managua-parque-hroes-de-la-dignidad-nacional-2/900/600"
+    ],
+    "name": "Parque H\u00e9roes de la Dignidad Nacional",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Aventura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.152341,
+      "longitude": -86.271084
+    },
+    "description": "Ubicado de forma estrat\u00e9gica en el antiguo centro de la capital, el Parque Hist\u00f3rico y Recreativo Luis Alfonso Vel\u00e1squez Flores se erige no solo como el complejo de esparcimiento m\u00e1s grande de Nicaragua, sino como un verdadero pulm\u00f3n verde indispensable para la vida urbana de Managua.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-parque-luis-alfonso-velsquez-flores",
+    "images": [
+      "https://picsum.photos/seed/managua-parque-luis-alfonso-velsquez-flores-1/900/600",
+      "https://picsum.photos/seed/managua-parque-luis-alfonso-velsquez-flores-2/900/600"
+    ],
+    "name": "Parque Luis Alfonso Vel\u00e1squez Flores",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Entre el Paseo Xolotl\u00e1n y el Puerto Salvador Allende",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.160458,
+      "longitude": -86.27367
+    },
+    "description": "Es un espacio recreativo y tur\u00edstico ubicado entre el Paseo Xolotl\u00e1n y el Puerto Salvador Allende, en la zona costera de Managua.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-paseo-de-los-estudiantes",
+    "images": [
+      "https://picsum.photos/seed/managua-paseo-de-los-estudiantes-1/900/600",
+      "https://picsum.photos/seed/managua-paseo-de-los-estudiantes-2/900/600"
+    ],
+    "name": "Paseo de los Estudiantes",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Contiguo a la Plaza de la Revoluci\u00f3n",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.159185,
+      "longitude": -86.271325
+    },
+    "description": "Es uno de los principales espacios tur\u00edsticos, recreativos y culturales de Managua, ubicado a orillas del Lago Xolotl\u00e1n. Fue inaugurado oficialmente el 30 de julio de 2014 como parte del proyecto de revitalizaci\u00f3n del malec\u00f3n capitalino y la recuperaci\u00f3n de la zona costera de la ciudad.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-paseo-xolotln",
+    "images": [
+      "https://picsum.photos/seed/managua-paseo-xolotln-1/900/600",
+      "https://picsum.photos/seed/managua-paseo-xolotln-2/900/600"
+    ],
+    "name": "Paseo Xolotl\u00e1n",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Avenida de Bolivar a Chav\u00e9z. Contiguo al Polideportivo Alexis Arg\u00fcello",
+    "category": "Aventura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.151803,
+      "longitude": -86.274548
+    },
+    "description": "El Complejo de Piscinas Michelle Richardson es una infraestructura deportiva de nivel ol\u00edmpico ubicada en el centro de Managua.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-piscinas-michelle-richardson",
+    "images": [
+      "https://picsum.photos/seed/managua-piscinas-michelle-richardson-1/900/600",
+      "https://picsum.photos/seed/managua-piscinas-michelle-richardson-2/900/600"
+    ],
+    "name": "Piscinas Michelle Richardson",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Ubicada en el Centro Hist\u00f3rico de Managua, en la Avenida de Bol\u00edvar",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.156363,
+      "longitude": -86.27221
+    },
+    "description": "La Plaza de la Revoluci\u00f3n, ubicada en el coraz\u00f3n hist\u00f3rico de Managua, es uno de los espacios m\u00e1s emblem\u00e1ticos y representativos de la historia pol\u00edtica, cultural y social de Nicaragua.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-plaza-de-la-revolucin",
+    "images": [
+      "https://picsum.photos/seed/managua-plaza-de-la-revolucin-1/900/600",
+      "https://picsum.photos/seed/managua-plaza-de-la-revolucin-2/900/600"
+    ],
+    "name": "Plaza de la Revoluci\u00f3n",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Aventura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.154962,
+      "longitude": -86.272073
+    },
+    "description": "La Plaza de la Soberan\u00eda es un moderno y vistoso espacio p\u00fablico peatonal ubicado en el coraz\u00f3n del centro hist\u00f3rico de Managua.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-plaza-soberana",
+    "images": [
+      "https://picsum.photos/seed/managua-plaza-soberana-1/900/600",
+      "https://picsum.photos/seed/managua-plaza-soberana-2/900/600"
+    ],
+    "name": "Plaza Soberan\u00eda",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Aventura",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.153331,
+      "longitude": -86.275209
+    },
+    "description": "El Polideportivo Alexis Arg\u00fcello es un complejo deportivo y cultural de \u00faltima generaci\u00f3n situado en el centro hist\u00f3rico de Managua. Su nombre rinde homenaje al legendario tricampe\u00f3n mundial de boxeo y exalcalde de la capital, Alexis Arg\u00fcello.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-polideportivo-alexis-argello",
+    "images": [
+      "https://picsum.photos/seed/managua-polideportivo-alexis-argello-1/900/600",
+      "https://picsum.photos/seed/managua-polideportivo-alexis-argello-2/900/600"
+    ],
+    "name": "Polideportivo Alexis Arg\u00fcello",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Contiguo al lago Xolotl\u00e1n",
+    "category": "Naturaleza",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.162432,
+      "longitude": -86.275499
+    },
+    "description": "Es uno de los principales complejos tur\u00edsticos, recreativos y culturales de Managua, ubicado a orillas del Lago Xolotl\u00e1n, en el malec\u00f3n capitalino. Fue inaugurado el 26 de junio de 2008 con el objetivo de revitalizar la zona costera de Managua y promover el turismo familiar, cultural y gastron\u00f3mico en la ciudad.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "managua-puerto-salvador-allende",
+    "images": [
+      "https://picsum.photos/seed/managua-puerto-salvador-allende-1/900/600",
+      "https://picsum.photos/seed/managua-puerto-salvador-allende-2/900/600"
+    ],
+    "name": "Puerto Salvador Allende",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Frente al Paseo Xolotlan",
+    "category": "Historia",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.158319,
+      "longitude": -86.272755
+    },
+    "description": "Teatro Nacional Rub\u00e9n Dar\u00edo es catalogado como el mejor teatro para las artes esc\u00e9nicas y con la sala m\u00e1s importante en ac\u00fastica a nivel de Latinoam\u00e9rica, adem\u00e1s de ser reconocido como el templo de la cultura en un homenaje a nuestro poeta Universal.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "managua-teatro-nacional-rubn-daro",
+    "images": [
+      "https://picsum.photos/seed/managua-teatro-nacional-rubn-daro-1/900/600",
+      "https://picsum.photos/seed/managua-teatro-nacional-rubn-daro-2/900/600"
+    ],
+    "name": "Teatro Nacional Rub\u00e9n Dar\u00edo",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.146252,
+      "longitude": -86.274268
+    },
+    "description": "El Tiangue Hugo Ch\u00e1vez Fr\u00edas es uno de los espacios gastron\u00f3micos, comerciales y culturales m\u00e1s representativos de Managua.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-tiangue-hugo-chvez",
+    "images": [
+      "https://picsum.photos/seed/managua-tiangue-hugo-chvez-1/900/600",
+      "https://picsum.photos/seed/managua-tiangue-hugo-chvez-2/900/600"
+    ],
+    "name": "Tiangue Hugo Ch\u00e1vez",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.157847,
+      "longitude": -86.273551
+    },
+    "description": "Es otro de los espacios tradicionales y gastron\u00f3micos que dinamizan la identidad local en el coraz\u00f3n de la capital. Dise\u00f1ado con una arquitectura abierta y techada que evoca los mercados comunitarios tradicionales, este tiangue est\u00e1 concebido para apoyar la econom\u00eda familiar y el emprendimiento local.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-tiangue-la-fe",
+    "images": [
+      "https://picsum.photos/seed/managua-tiangue-la-fe-1/900/600",
+      "https://picsum.photos/seed/managua-tiangue-la-fe-2/900/600"
+    ],
+    "name": "Tiangue La Fe",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.148856,
+      "longitude": -86.274703
+    },
+    "description": "Es un vistoso y acogedor espacio de gastronom\u00eda y comercio tradicional que forma parte del circuito de tiangues de la capital. Su dise\u00f1o r\u00fastico y techado rinde homenaje a una de las expresiones culturales y religiosas m\u00e1s arraigadas de la identidad nicarag\u00fcense: la fiesta de \"La Griter\u00eda\" o La Pur\u00edsima.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "managua-tiangue-la-pursima",
+    "images": [
+      "https://picsum.photos/seed/managua-tiangue-la-pursima-1/900/600",
+      "https://picsum.photos/seed/managua-tiangue-la-pursima-2/900/600"
+    ],
+    "name": "Tiangue La Pur\u00edsima",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Costado sur de la Antigua Estaci\u00f3n del Ferrocarril, Avenida El Progreso, Masaya",
+    "category": "Gastronom\u00eda",
+    "city": "Masaya",
+    "closesAt": "3:30 p.m.",
+    "coordinates": {
+      "latitude": 11.98115,
+      "longitude": -86.095204
+    },
+    "description": "Restaurante de comida t\u00edpica conocido por su baho y por los bu\u00f1uelos calientes, representativos de la cocina popular nicarag\u00fcense.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "masaya-baho-vilma",
+    "images": [
+      "https://picsum.photos/seed/masaya-baho-vilma-1/900/600",
+      "https://picsum.photos/seed/masaya-baho-vilma-2/900/600"
+    ],
+    "name": "Baho Vilma",
+    "opensAt": "9:30 a.m.",
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Abre de lunes a domingo; pide los bu\u00f1uelos calientes."
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Masaya",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.973962,
+      "longitude": -86.099309
+    },
+    "description": "Barrio de talleres de hamacas y calzado; en el taller Hamacas CMK se vive la experiencia del hilado con las artesanas.",
+    "duration": "40 min",
+    "hasBadge": false,
+    "id": "masaya-barrio-san-juan",
+    "images": [
+      "https://picsum.photos/seed/masaya-barrio-san-juan-1/900/600",
+      "https://picsum.photos/seed/masaya-barrio-san-juan-2/900/600"
+    ],
+    "name": "Barrio e Iglesia de San Juan",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Costado oeste, frente a la Antigua Estaci\u00f3n del Ferrocarril, Masaya",
+    "category": "Cultura",
+    "city": "Masaya",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.9814,
+      "longitude": -86.097
+    },
+    "description": "Taller familiar de bordado a mano fundado en 1985, que fusiona tradici\u00f3n textil y dise\u00f1o contempor\u00e1neo. Se puede observar el proceso, conocer su historia y comprar vestidos, camisas y bolsos.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "masaya-bordados-marisol",
+    "images": [
+      "https://picsum.photos/seed/masaya-bordados-marisol-1/900/600",
+      "https://picsum.photos/seed/masaya-bordados-marisol-2/900/600"
+    ],
+    "name": "Bordados Marisol",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Contiguo al Malec\u00f3n de Masaya, barrio Bella Vista, Masaya",
+    "category": "Cultura",
+    "city": "Masaya",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.972641,
+      "longitude": -86.10404
+    },
+    "description": "Centro municipal inaugurado en 2016 donde se ense\u00f1an oficios artesanales tradicionales: barro, madera, m\u00e1scaras, mu\u00f1ecas de tela, jugueter\u00eda e instrumentos musicales. Cuenta con sala de exposici\u00f3n y venta.",
+    "duration": "25 min",
+    "hasBadge": true,
+    "id": "masaya-casa-de-las-artesanias",
+    "images": [
+      "https://picsum.photos/seed/masaya-casa-de-las-artesanias-1/900/600",
+      "https://picsum.photos/seed/masaya-casa-de-las-artesanias-2/900/600"
+    ],
+    "name": "Casa de las Artesan\u00edas",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Barrio Bella Vista, frente a la laguna de Masaya",
+    "category": "Naturaleza",
+    "city": "Masaya",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.97343,
+      "longitude": -86.104667
+    },
+    "description": "Mirador urbano con vista panor\u00e1mica a la laguna de Masaya y al volc\u00e1n Masaya, punto de encuentro tradicional de la ciudad. Tiene juegos infantiles y cancha multiusos.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "masaya-malecon",
+    "images": [
+      "https://picsum.photos/seed/masaya-malecon-1/900/600",
+      "https://picsum.photos/seed/masaya-malecon-2/900/600"
+    ],
+    "name": "Malec\u00f3n de Masaya",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Buen punto para fotografiar la laguna y el volc\u00e1n Masaya."
+  },
+  {
+    "address": "Dos cuadras al este del Parque Central, Masaya",
+    "category": "Cultura",
+    "city": "Masaya",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.973966,
+      "longitude": -86.093766
+    },
+    "description": "Antiguo mercado con arquitectura de fortaleza, hoy centro cultural y comercial con artesan\u00edas de Masaya y de todo el pa\u00eds. En su interior funciona el Museo del Folclore.",
+    "duration": "45 min",
+    "hasBadge": true,
+    "id": "masaya-mercado-de-artesanias",
+    "images": [
+      "https://picsum.photos/seed/masaya-mercado-de-artesanias-1/900/600",
+      "https://picsum.photos/seed/masaya-mercado-de-artesanias-2/900/600"
+    ],
+    "name": "Mercado de Artesan\u00edas (Museo del Folclore)",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Centro de Masaya, frente a la Parroquia Nuestra Se\u00f1ora de la Asunci\u00f3n",
+    "category": "Historia",
+    "city": "Masaya",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.973651,
+      "longitude": -86.096206
+    },
+    "description": "Espacio de encuentro tradicional con la fuente de Neptuno, el Templo de la M\u00fasica y monumentos a los H\u00e9roes y M\u00e1rtires, Rub\u00e9n Dar\u00edo, Sandino y Alejandro Vega Matus. Frente a \u00e9l se levanta la Parroquia Nuestra Se\u00f1ora de la Asunci\u00f3n.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "masaya-parque-central",
+    "images": [
+      "https://picsum.photos/seed/masaya-parque-central-1/900/600",
+      "https://picsum.photos/seed/masaya-parque-central-2/900/600"
+    ],
+    "name": "Parque Central de Masaya",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Antigua Estaci\u00f3n del Ferrocarril, barrio La Estaci\u00f3n, Masaya",
+    "category": "Historia",
+    "city": "Masaya",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.98131,
+      "longitude": -86.096431
+    },
+    "description": "Antigua estaci\u00f3n del ferrocarril de Masaya, que conserva la memoria del tren y de la visita de Rub\u00e9n Dar\u00edo. Hoy funciona como centro comunitario y art\u00edstico, con clases de marimba y danza abiertas a todas las edades.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "masaya-plaza-de-la-cultura",
+    "images": [
+      "https://picsum.photos/seed/masaya-plaza-de-la-cultura-1/900/600",
+      "https://picsum.photos/seed/masaya-plaza-de-la-cultura-2/900/600"
+    ],
+    "name": "Plaza de la Cultura (Antigua Estaci\u00f3n del Ferrocarril)",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.930834,
+      "longitude": -85.955871
+    },
+    "description": "Emprendimiento creativo de chocolate artesanal de la ruta Granada 500 a\u00f1os.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "granada-bate-bate-chocolate",
+    "images": [
+      "https://picsum.photos/seed/granada-bate-bate-chocolate-1/900/600",
+      "https://picsum.photos/seed/granada-bate-bate-chocolate-2/900/600"
+    ],
+    "name": "Bate Bate Chocolate",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.930127,
+      "longitude": -85.95285
+    },
+    "description": "Calle peatonal que une el Parque Central con el lago, con restaurantes y caf\u00e9s.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "granada-calle-calzada",
+    "images": [
+      "https://picsum.photos/seed/granada-calle-calzada-1/900/600",
+      "https://picsum.photos/seed/granada-calle-calzada-2/900/600"
+    ],
+    "name": "Calle La Calzada",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
     "category": "Historia",
     "city": "Granada",
-    "address": "Parque Central, Granada",
-    "opensAt": "7:00 a.m.",
-    "closesAt": "6:00 p.m.",
-    "duration": "30 min",
-    "rating": 4.8,
-    "reviewsCount": 210,
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.929825,
+      "longitude": -85.953234
+    },
+    "description": "La catedral frente al Parque Central, una de las im\u00e1genes m\u00e1s conocidas de Nicaragua.",
+    "duration": "25 min",
     "hasBadge": true,
-    "description": "La catedral amarilla que corona el Parque Central es la postal más conocida de Nicaragua. Su fachada neoclásica se levantó sobre las ruinas de los templos que la ciudad perdió en distintos incendios.",
-    "tip": "La mejor luz para fotos es entre 8 y 10 de la mañana",
+    "id": "granada-catedral",
     "images": [
-      "https://picsum.photos/seed/granada-catedral/900/600",
+      "https://picsum.photos/seed/granada-catedral-1/900/600",
       "https://picsum.photos/seed/granada-catedral-2/900/600"
     ],
-    "coordinates": { "latitude": 11.9299, "longitude": -85.9561 }
+    "name": "Catedral de Granada",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
   },
   {
-    "id": "granada-parque-central",
-    "name": "Parque Central",
-    "category": "Gastronomía",
-    "city": "Granada",
-    "address": "Frente a la Catedral, Granada",
-    "duration": "25 min",
-    "rating": 4.5,
-    "reviewsCount": 168,
-    "hasBadge": false,
-    "description": "El corazón social de la ciudad. Entre almendros y bancas se instalan las vendedoras de vigorón, el platillo granadino de yuca, chicharrón y ensalada de repollo.",
-    "tip": "Prueba el vigorón recién hecho y acompáñalo con un fresco de cacao",
-    "images": ["https://picsum.photos/seed/granada-parque/900/600"],
-    "coordinates": { "latitude": 11.9304, "longitude": -85.9564 }
-  },
-  {
-    "id": "granada-calle-calzada",
-    "name": "Calle La Calzada",
-    "category": "Cultura",
-    "city": "Granada",
-    "address": "Calle La Calzada, Granada",
-    "duration": "40 min",
-    "rating": 4.6,
-    "reviewsCount": 194,
-    "hasBadge": true,
-    "description": "La calle peatonal más viva de Granada: casas coloniales convertidas en cafés, música en vivo y artistas callejeros desde la tarde hasta la noche.",
-    "tip": "Recórrela al atardecer, cuando encienden las luces y salen los músicos",
-    "images": ["https://picsum.photos/seed/granada-calzada/900/600"],
-    "coordinates": { "latitude": 11.931, "longitude": -85.952 }
-  },
-  {
-    "id": "granada-convento-san-francisco",
-    "name": "Convento San Francisco",
+    "address": "",
     "category": "Historia",
     "city": "Granada",
-    "address": "Calle Cervantes, Granada",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "35 min",
-    "rating": 4.7,
-    "reviewsCount": 132,
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.921968,
+      "longitude": -85.967642
+    },
+    "description": "Declarado Patrimonio Hist\u00f3rico de la Naci\u00f3n en 2012; guarda mausoleos de expresidentes y de personajes de la vida pol\u00edtica y art\u00edstica de Nicaragua.",
+    "duration": "30 min",
     "hasBadge": false,
-    "description": "Uno de los conventos más antiguos de Centroamérica, hoy museo. Guarda la colección de estatuas precolombinas talladas en la isla Zapatera.",
-    "tip": "La sala de los ídolos de Zapatera es la parada imperdible del museo",
-    "images": ["https://picsum.photos/seed/granada-convento/900/600"],
-    "coordinates": { "latitude": 11.9325, "longitude": -85.9548 }
+    "id": "granada-cementerio",
+    "images": [
+      "https://picsum.photos/seed/granada-cementerio-1/900/600",
+      "https://picsum.photos/seed/granada-cementerio-2/900/600"
+    ],
+    "name": "Cementerio Municipal de Granada",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
   },
   {
-    "id": "granada-mercado",
-    "name": "Mercado Municipal",
-    "category": "Gastronomía",
+    "address": "",
+    "category": "Cultura",
     "city": "Granada",
-    "address": "Calle Atravesada, Granada",
-    "opensAt": "6:00 a.m.",
-    "closesAt": "6:00 p.m.",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.932172,
+      "longitude": -85.951988
+    },
+    "description": "El Centro Cultural Museo Convento San Francisco y su iglesia conventual, uno de los conjuntos m\u00e1s antiguos de la ciudad.",
+    "duration": "45 min",
+    "hasBadge": true,
+    "id": "granada-convento-san-francisco",
+    "images": [
+      "https://picsum.photos/seed/granada-convento-san-francisco-1/900/600",
+      "https://picsum.photos/seed/granada-convento-san-francisco-2/900/600"
+    ],
+    "name": "Convento e Iglesia de San Francisco",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Naturaleza",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.930101,
+      "longitude": -85.94305
+    },
+    "description": "Paseo hacia el Gran Lago con el monumento a Rub\u00e9n Dar\u00edo.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "granada-gran-sultana",
+    "images": [
+      "https://picsum.photos/seed/granada-gran-sultana-1/900/600",
+      "https://picsum.photos/seed/granada-gran-sultana-2/900/600"
+    ],
+    "name": "Paseo La Gran Sultana y monumento a Rub\u00e9n Dar\u00edo",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.930317,
+      "longitude": -85.947562
+    },
+    "description": "Iglesia al final de La Calzada; a su lado trabaja el Colectivo de Artesanos de Plaza Guadalupe.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "granada-iglesia-guadalupe",
+    "images": [
+      "https://picsum.photos/seed/granada-iglesia-guadalupe-1/900/600",
+      "https://picsum.photos/seed/granada-iglesia-guadalupe-2/900/600"
+    ],
+    "name": "Iglesia de Guadalupe",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.92944,
+      "longitude": -85.956964
+    },
+    "description": "Iglesia colonial sobre la Calle Real Xalteva; su campanario es un mirador del centro hist\u00f3rico.",
+    "duration": "25 min",
+    "hasBadge": true,
+    "id": "granada-la-merced",
+    "images": [
+      "https://picsum.photos/seed/granada-la-merced-1/900/600",
+      "https://picsum.photos/seed/granada-la-merced-2/900/600"
+    ],
+    "name": "Iglesia La Merced",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.928673,
+      "longitude": -85.965199
+    },
+    "description": "Fortaleza del siglo XVIII que hoy alberga el Museo de la Revoluci\u00f3n.",
+    "duration": "40 min",
+    "hasBadge": true,
+    "id": "granada-la-polvora",
+    "images": [
+      "https://picsum.photos/seed/granada-la-polvora-1/900/600",
+      "https://picsum.photos/seed/granada-la-polvora-2/900/600"
+    ],
+    "name": "Antigua Fortaleza La P\u00f3lvora y Museo de la Revoluci\u00f3n",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Naturaleza",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.929545,
+      "longitude": -85.941843
+    },
+    "description": "La costanera de Granada a orillas del Gran Lago de Nicaragua (Cocibolca).",
     "duration": "30 min",
+    "hasBadge": true,
+    "id": "granada-malecon",
+    "images": [
+      "https://picsum.photos/seed/granada-malecon-1/900/600",
+      "https://picsum.photos/seed/granada-malecon-2/900/600"
+    ],
+    "name": "Malec\u00f3n de Granada",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.928091,
+      "longitude": -85.963677
+    },
+    "description": "Capilla en el camino de la Calle Real hacia La P\u00f3lvora.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "granada-maria-auxiliadora",
+    "images": [
+      "https://picsum.photos/seed/granada-maria-auxiliadora-1/900/600",
+      "https://picsum.photos/seed/granada-maria-auxiliadora-2/900/600"
+    ],
+    "name": "Capilla Mar\u00eda Auxiliadora",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Calle Atravesada, Granada",
+    "category": "Gastronom\u00eda",
+    "city": "Granada",
+    "closesAt": "6:00 p.m.",
+    "coordinates": {
+      "latitude": 11.9288,
+      "longitude": -85.9575
+    },
+    "description": "El mercado donde se abastece la ciudad: especias, frutas de temporada, cacao molido y los puestos de comida corriente que usan las familias granadinas.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "granada-mercado",
+    "images": [
+      "https://picsum.photos/seed/granada-mercado/900/600"
+    ],
+    "name": "Mercado Municipal",
+    "opensAt": "6:00 a.m.",
     "rating": 4.3,
     "reviewsCount": 98,
-    "hasBadge": false,
-    "description": "El mercado donde se abastece la ciudad: especias, frutas de temporada, cacao molido y los puestos de comida corriente que usan las familias granadinas.",
-    "tip": "Lleva efectivo en billetes pequeños y ve temprano",
-    "images": ["https://picsum.photos/seed/granada-mercado/900/600"],
-    "coordinates": { "latitude": 11.9288, "longitude": -85.9575 }
+    "tip": "Lleva efectivo en billetes peque\u00f1os y ve temprano"
   },
   {
-    "id": "granada-muelle",
-    "name": "Muelle del Cocibolca",
+    "address": "Puerto de Granada, Lago Cocibolca",
     "category": "Naturaleza",
     "city": "Granada",
-    "address": "Puerto de Granada, Lago Cocibolca",
+    "coordinates": {
+      "latitude": 11.9265,
+      "longitude": -85.942
+    },
+    "description": "El punto donde Granada se asoma al Gran Lago. Desde el muelle salen las lanchas hacia Las Isletas, el archipi\u00e9lago que form\u00f3 la erupci\u00f3n del volc\u00e1n Mombacho.",
     "duration": "40 min",
+    "hasBadge": true,
+    "id": "granada-muelle",
+    "images": [
+      "https://picsum.photos/seed/granada-muelle/900/600"
+    ],
+    "name": "Muelle del Cocibolca",
     "rating": 4.4,
     "reviewsCount": 145,
-    "hasBadge": true,
-    "description": "El punto donde Granada se asoma al Gran Lago. Desde el muelle salen las lanchas hacia Las Isletas, el archipiélago que formó la erupción del volcán Mombacho.",
-    "tip": "El paseo en lancha por Las Isletas dura una hora y se paga aparte",
-    "images": ["https://picsum.photos/seed/granada-muelle/900/600"],
-    "coordinates": { "latitude": 11.9265, "longitude": -85.942 }
-  },
-
-  {
-    "id": "ometepe-ferry",
-    "name": "Travesía en ferry",
-    "category": "Aventura",
-    "city": "Rivas",
-    "address": "Puerto de San Jorge, Rivas",
-    "duration": "1 h",
-    "rating": 4.2,
-    "reviewsCount": 76,
-    "hasBadge": false,
-    "description": "El cruce del Lago Cocibolca hacia la isla. Durante la travesía los dos volcanes van creciendo en el horizonte hasta llenar toda la vista.",
-    "tip": "Viaja en la cubierta superior para ver los volcanes de frente",
-    "images": ["https://picsum.photos/seed/ometepe-ferry/900/600"],
-    "coordinates": { "latitude": 11.447, "longitude": -85.797 }
+    "tip": "El paseo en lancha por Las Isletas dura una hora y se paga aparte"
   },
   {
-    "id": "ometepe-moyogalpa",
-    "name": "Moyogalpa",
-    "category": "Cultura",
-    "city": "Rivas",
-    "address": "Moyogalpa, Isla de Ometepe",
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.931805,
+      "longitude": -85.955465
+    },
+    "description": "Museo dedicado al cacao y al chocolate, en la Mansi\u00f3n de Chocolate.",
     "duration": "30 min",
-    "rating": 4.1,
-    "reviewsCount": 54,
     "hasBadge": false,
-    "description": "El puerto de entrada a la isla, al pie del volcán Concepción. Calles de colores, talleres de artesanía en madera y el primer café isleño del recorrido.",
-    "tip": "Aquí se alquilan las motos y bicicletas para recorrer la isla",
-    "images": ["https://picsum.photos/seed/ometepe-moyogalpa/900/600"],
-    "coordinates": { "latitude": 11.539, "longitude": -85.696 }
+    "id": "granada-museo-chocolate",
+    "images": [
+      "https://picsum.photos/seed/granada-museo-chocolate-1/900/600",
+      "https://picsum.photos/seed/granada-museo-chocolate-2/900/600"
+    ],
+    "name": "Museo del Chocolate",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
   },
   {
-    "id": "ometepe-ojo-de-agua",
-    "name": "Ojo de Agua",
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.929116,
+      "longitude": -85.95391
+    },
+    "description": "Sede de la Alcald\u00eda de Granada, frente al Parque Central.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "granada-palacio-municipal",
+    "images": [
+      "https://picsum.photos/seed/granada-palacio-municipal-1/900/600",
+      "https://picsum.photos/seed/granada-palacio-municipal-2/900/600"
+    ],
+    "name": "Palacio Municipal de Granada",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.930036,
+      "longitude": -85.954025
+    },
+    "description": "Coraz\u00f3n del centro hist\u00f3rico de Granada y punto de partida de las dos rutas del circuito creativo \u00abTesoro Nacional y Capital del Turismo\u00bb, que se siguen con un c\u00f3digo QR.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "granada-parque-central",
+    "images": [
+      "https://picsum.photos/seed/granada-parque-central-1/900/600",
+      "https://picsum.photos/seed/granada-parque-central-2/900/600"
+    ],
+    "name": "Parque Central (Parque Col\u00f3n)",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.930838,
+      "longitude": -85.953562
+    },
+    "description": "Plaza junto al Parque Central, al norte de la catedral.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "granada-plaza-independencia",
+    "images": [
+      "https://picsum.photos/seed/granada-plaza-independencia-1/900/600",
+      "https://picsum.photos/seed/granada-plaza-independencia-2/900/600"
+    ],
+    "name": "Plaza de la Independencia",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.929236,
+      "longitude": -85.95601
+    },
+    "description": "Centro social con el Taller de Hamacas T\u00edo Antonio, el Caf\u00e9 de las Sonrisas y el Museo del Caf\u00e9.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "granada-tio-antonio",
+    "images": [
+      "https://picsum.photos/seed/granada-tio-antonio-1/900/600",
+      "https://picsum.photos/seed/granada-tio-antonio-2/900/600"
+    ],
+    "name": "Centro Social T\u00edo Antonio",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.931339,
+      "longitude": -85.953006
+    },
+    "description": "Centro cultural en la Plaza de los Leones, Patrimonio Nacional e Hist\u00f3rico Cultural.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "granada-tres-mundos",
+    "images": [
+      "https://picsum.photos/seed/granada-tres-mundos-1/900/600",
+      "https://picsum.photos/seed/granada-tres-mundos-2/900/600"
+    ],
+    "name": "Casa de los Tres Mundos",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Granada",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.928842,
+      "longitude": -85.960885
+    },
+    "description": "La iglesia y el parque de Xalteva, en el antiguo barrio ind\u00edgena de la ciudad.",
+    "duration": "25 min",
+    "hasBadge": false,
+    "id": "granada-xalteva",
+    "images": [
+      "https://picsum.photos/seed/granada-xalteva-1/900/600",
+      "https://picsum.photos/seed/granada-xalteva-2/900/600"
+    ],
+    "name": "Conjunto Urban\u00edstico de Xalteva",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Segunda entrada de San Juan de Oriente, 300 varas al oeste y 50 varas al sur",
+    "category": "Gastronom\u00eda",
+    "city": "San Juan de Oriente",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.905631,
+      "longitude": -86.069074
+    },
+    "description": "Emprendimiento familiar que rescata la preparaci\u00f3n artesanal de la chicha bruja, bebida de ma\u00edz fermentado. Ofrece degustaci\u00f3n, danzas de los Chinegros, murales y venta de productos.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "sjo-chicha-bruja-dona-lona",
+    "images": [
+      "https://picsum.photos/seed/sjo-chicha-bruja-dona-lona-1/900/600",
+      "https://picsum.photos/seed/sjo-chicha-bruja-dona-lona-2/900/600"
+    ],
+    "name": "Chicha Bruja Do\u00f1a Lo\u00f1a",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "La chicha bruja es una bebida fermentada; pru\u00e9bala con moderaci\u00f3n."
+  },
+  {
+    "address": "Al este de la entrada principal de San Juan de Oriente",
+    "category": "Naturaleza",
+    "city": "San Juan de Oriente",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.907953,
+      "longitude": -86.068124
+    },
+    "description": "Mirador de varias plantas inaugurado en noviembre de 2025, con vista a la Laguna de Apoyo y al volc\u00e1n Mombacho. De aqu\u00ed parte un sendero de 2.5 a 3.5 km hacia la laguna, con rocas talladas por artesanos locales con motivos precolombinos.",
+    "duration": "40 min",
+    "hasBadge": true,
+    "id": "sjo-mirador-sendero-el-caballito",
+    "images": [
+      "https://picsum.photos/seed/sjo-mirador-sendero-el-caballito-1/900/600",
+      "https://picsum.photos/seed/sjo-mirador-sendero-el-caballito-2/900/600"
+    ],
+    "name": "Mirador Sendero El Caballito",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Entrada C$10. Bajar el sendero a la laguna es exigente: lleva agua y calzado adecuado."
+  },
+  {
+    "address": "Calle principal de San Juan de Oriente, cerca de la iglesia cat\u00f3lica",
+    "category": "Cultura",
+    "city": "San Juan de Oriente",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.906034,
+      "longitude": -86.074079
+    },
+    "description": "Plaza de la calle principal con anfiteatro, tiendas de artesan\u00edas y murales pintados a mano por artesanos locales, como la Danza del Jaguar. Aqu\u00ed est\u00e1 el mupi con el mapa guiado del circuito.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "sjo-plaza-san-juan-de-los-platos",
+    "images": [
+      "https://picsum.photos/seed/sjo-plaza-san-juan-de-los-platos-1/900/600",
+      "https://picsum.photos/seed/sjo-plaza-san-juan-de-los-platos-2/900/600"
+    ],
+    "name": "Plaza San Juan de los Platos",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": "Empieza aqu\u00ed: el mupi de la plaza muestra el mapa del recorrido."
+  },
+  {
+    "address": "Costado sur de la Iglesia Cat\u00f3lica, San Juan de Oriente",
+    "category": "Cultura",
+    "city": "San Juan de Oriente",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 11.90525,
+      "longitude": -86.07416
+    },
+    "description": "Taller familiar del maestro Alfredo Espinoza, fundado en 1998 y especializado en cer\u00e1mica de inspiraci\u00f3n precolombina y moderna. Ofrece demostraciones y talleres vivenciales.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "sjo-taller-urraca",
+    "images": [
+      "https://picsum.photos/seed/sjo-taller-urraca-1/900/600",
+      "https://picsum.photos/seed/sjo-taller-urraca-2/900/600"
+    ],
+    "name": "Taller de Cer\u00e1mica La Urraca",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Juigalpa",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.106853,
+      "longitude": -85.365025
+    },
+    "description": "La casa de cultura de Juigalpa, espacio de formaci\u00f3n art\u00edstica.",
+    "duration": "25 min",
+    "hasBadge": false,
+    "id": "juigalpa-casa-cultura",
+    "images": [
+      "https://picsum.photos/seed/juigalpa-casa-cultura-1/900/600",
+      "https://picsum.photos/seed/juigalpa-casa-cultura-2/900/600"
+    ],
+    "name": "Casa de Cultura y Creatividad Gregorio Aguilar Barea",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Juigalpa",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.107786,
+      "longitude": -85.363204
+    },
+    "description": "Museo arqueol\u00f3gico con estatuaria precolombina de Chontales.",
+    "duration": "45 min",
+    "hasBadge": true,
+    "id": "juigalpa-museo-aguilar-barea",
+    "images": [
+      "https://picsum.photos/seed/juigalpa-museo-aguilar-barea-1/900/600",
+      "https://picsum.photos/seed/juigalpa-museo-aguilar-barea-2/900/600"
+    ],
+    "name": "Museo Gregorio Aguilar Barea",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Juigalpa",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.106096,
+      "longitude": -85.365218
+    },
+    "description": "El parque central de Juigalpa, con el nombre de la educadora chontale\u00f1a Josefa Toledo de Aguerri.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "juigalpa-parque-josefa-toledo",
+    "images": [
+      "https://picsum.photos/seed/juigalpa-parque-josefa-toledo-1/900/600",
+      "https://picsum.photos/seed/juigalpa-parque-josefa-toledo-2/900/600"
+    ],
+    "name": "Parque Josefa Toledo de Aguerri",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Naturaleza",
+    "city": "Juigalpa",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.099696,
+      "longitude": -85.359015
+    },
+    "description": "El zool\u00f3gico de Juigalpa, con el nombre del naturalista ingl\u00e9s Thomas Belt.",
+    "duration": "45 min",
+    "hasBadge": false,
+    "id": "juigalpa-zoologico-thomas-belt",
+    "images": [
+      "https://picsum.photos/seed/juigalpa-zoologico-thomas-belt-1/900/600",
+      "https://picsum.photos/seed/juigalpa-zoologico-thomas-belt-2/900/600"
+    ],
+    "name": "Zool\u00f3gico Thomas Belt",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "Finca cafetalera, Matagalpa",
+    "category": "Cultura",
+    "city": "Matagalpa",
+    "closesAt": "4:00 p.m.",
+    "coordinates": {
+      "latitude": 13.005,
+      "longitude": -85.916
+    },
+    "description": "Donde el grano reci\u00e9n cortado se despulpa, se fermenta y se lava. Es la etapa que define buena parte del sabor final de la taza.",
+    "duration": "40 min",
+    "hasBadge": false,
+    "id": "cafe-beneficio",
+    "images": [
+      "https://picsum.photos/seed/cafe-beneficio/900/600"
+    ],
+    "name": "Beneficio h\u00famedo",
+    "opensAt": "8:00 a.m.",
+    "rating": 4.5,
+    "reviewsCount": 62,
+    "tip": "Pregunta por la diferencia entre proceso lavado y honey"
+  },
+  {
+    "address": "Finca cafetalera, Matagalpa",
+    "category": "Gastronom\u00eda",
+    "city": "Matagalpa",
+    "closesAt": "4:00 p.m.",
+    "coordinates": {
+      "latitude": 13.0025,
+      "longitude": -85.9185
+    },
+    "description": "Mesa de cataci\u00f3n con cinco tazas de distintas alturas y procesos. Se aprende el protocolo del cupping: aroma, ruptura de costra, sorbo y notas.",
+    "duration": "50 min",
+    "hasBadge": true,
+    "id": "cafe-cata",
+    "images": [
+      "https://picsum.photos/seed/cafe-cata/900/600"
+    ],
+    "name": "Cata de caf\u00e9",
+    "opensAt": "8:00 a.m.",
+    "rating": 4.9,
+    "reviewsCount": 134,
+    "tip": "No desayunes fuerte antes, el paladar rinde mejor limpio"
+  },
+  {
+    "address": "El Tuma-La Dalia, Matagalpa",
+    "category": "Cultura",
+    "city": "Matagalpa",
+    "closesAt": "4:00 p.m.",
+    "coordinates": {
+      "latitude": 13.03,
+      "longitude": -85.74
+    },
+    "description": "Visita a la cooperativa de familias productoras: c\u00f3mo se organiza la cosecha, el comercio justo y el almuerzo casero preparado por la comunidad.",
+    "duration": "1 h",
+    "hasBadge": false,
+    "id": "cafe-comunidad",
+    "images": [
+      "https://picsum.photos/seed/cafe-comunidad/900/600"
+    ],
+    "name": "Comunidad cafetalera",
+    "opensAt": "8:00 a.m.",
+    "rating": 4.7,
+    "reviewsCount": 68,
+    "tip": "Las artesan\u00edas y el caf\u00e9 de la cooperativa se compran aqu\u00ed directo"
+  },
+  {
+    "address": "Sendero de la finca, Matagalpa",
+    "category": "Naturaleza",
+    "city": "Matagalpa",
+    "coordinates": {
+      "latitude": 13.011,
+      "longitude": -85.911
+    },
+    "description": "Punto alto sobre los cafetales con vista al valle de Matagalpa. Con suerte se ven quetzales y tucanes en el bosque de sombra.",
+    "duration": "35 min",
+    "hasBadge": false,
+    "id": "cafe-mirador",
+    "images": [
+      "https://picsum.photos/seed/cafe-mirador/900/600"
+    ],
+    "name": "Mirador de monta\u00f1a",
+    "rating": 4.6,
+    "reviewsCount": 79,
+    "tip": "La neblina cierra la vista despu\u00e9s de las tres de la tarde"
+  },
+  {
+    "address": "Finca cafetalera, Matagalpa",
+    "category": "Cultura",
+    "city": "Matagalpa",
+    "closesAt": "4:00 p.m.",
+    "coordinates": {
+      "latitude": 13.004,
+      "longitude": -85.917
+    },
+    "description": "Los patios y camas africanas donde el caf\u00e9 se seca al sol durante d\u00edas, removido a mano varias veces al d\u00eda para que pierda humedad parejo.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "cafe-secado",
+    "images": [
+      "https://picsum.photos/seed/cafe-secado/900/600"
+    ],
+    "name": "Patios de secado",
+    "opensAt": "8:00 a.m.",
+    "rating": 4.3,
+    "reviewsCount": 48,
+    "tip": "Al mediod\u00eda es cuando se ve el volteo del grano"
+  },
+  {
+    "address": "Km 140 carretera Matagalpa-Jinotega",
+    "category": "Naturaleza",
+    "city": "Matagalpa",
+    "closesAt": "5:00 p.m.",
+    "coordinates": {
+      "latitude": 13.009,
+      "longitude": -85.913
+    },
+    "description": "Finca cafetalera de monta\u00f1a fundada por colonos alemanes, hoy modelo de producci\u00f3n sostenible con bosque nuboso protegido dentro de sus tierras.",
+    "duration": "1 h",
+    "hasBadge": true,
+    "id": "cafe-selva-negra",
+    "images": [
+      "https://picsum.photos/seed/cafe-selva/900/600"
+    ],
+    "name": "Finca Selva Negra",
+    "opensAt": "7:00 a.m.",
+    "rating": 4.8,
+    "reviewsCount": 156,
+    "tip": "El clima de monta\u00f1a es fresco: lleva una chaqueta ligera"
+  },
+  {
+    "address": "Finca cafetalera, Matagalpa",
+    "category": "Gastronom\u00eda",
+    "city": "Matagalpa",
+    "closesAt": "4:00 p.m.",
+    "coordinates": {
+      "latitude": 13.003,
+      "longitude": -85.918
+    },
+    "description": "Aqu\u00ed el grano verde se convierte en caf\u00e9. Se explican los perfiles de tueste y cada visitante tuesta su propia muestra para llevarse.",
+    "duration": "45 min",
+    "hasBadge": true,
+    "id": "cafe-tueste",
+    "images": [
+      "https://picsum.photos/seed/cafe-tueste/900/600"
+    ],
+    "name": "Taller de tueste",
+    "opensAt": "8:00 a.m.",
+    "rating": 4.7,
+    "reviewsCount": 91,
+    "tip": "El caf\u00e9 que tuestes te lo llevas empacado, es parte del tour"
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Bluefields",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.013431,
+      "longitude": -83.762754
+    },
+    "description": "La iglesia cat\u00f3lica principal de Bluefields.",
+    "duration": "20 min",
+    "hasBadge": true,
+    "id": "bluefields-catedral",
+    "images": [
+      "https://picsum.photos/seed/bluefields-catedral-1/900/600",
+      "https://picsum.photos/seed/bluefields-catedral-2/900/600"
+    ],
+    "name": "Catedral Nuestra Se\u00f1ora del Rosario",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Cultura",
+    "city": "Bluefields",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.013388,
+      "longitude": -83.762506
+    },
+    "description": "Colegio con larga trayectoria educativa e hist\u00f3rica en la ciudad.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "bluefields-colegio-san-jose",
+    "images": [
+      "https://picsum.photos/seed/bluefields-colegio-san-jose-1/900/600",
+      "https://picsum.photos/seed/bluefields-colegio-san-jose-2/900/600"
+    ],
+    "name": "Colegio San Jos\u00e9",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Bluefields",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.01325,
+      "longitude": -83.763959
+    },
+    "description": "Sede del gobierno regional aut\u00f3nomo, s\u00edmbolo de la autonom\u00eda de la Costa Caribe.",
+    "duration": "15 min",
+    "hasBadge": false,
+    "id": "bluefields-consejo-regional",
+    "images": [
+      "https://picsum.photos/seed/bluefields-consejo-regional-1/900/600",
+      "https://picsum.photos/seed/bluefields-consejo-regional-2/900/600"
+    ],
+    "name": "Consejo Regional Aut\u00f3nomo de la Costa Caribe Sur",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Bluefields",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.012445,
+      "longitude": -83.760088
+    },
+    "description": "Templo de la Iglesia Morava, de fuerte arraigo en la Costa Caribe.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "bluefields-iglesia-morava",
+    "images": [
+      "https://picsum.photos/seed/bluefields-iglesia-morava-1/900/600",
+      "https://picsum.photos/seed/bluefields-iglesia-morava-2/900/600"
+    ],
+    "name": "Iglesia Morava Central",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Gastronom\u00eda",
+    "city": "Bluefields",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.011101,
+      "longitude": -83.759426
+    },
+    "description": "Mercado construido en 1952, con productos de la Costa Caribe Sur y un edificio de gastronom\u00eda variada.",
+    "duration": "30 min",
+    "hasBadge": true,
+    "id": "bluefields-mercado-municipal",
+    "images": [
+      "https://picsum.photos/seed/bluefields-mercado-municipal-1/900/600",
+      "https://picsum.photos/seed/bluefields-mercado-municipal-2/900/600"
+    ],
+    "name": "Mercado Municipal Teodoro Mart\u00ednez",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Bluefields",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.012715,
+      "longitude": -83.764177
+    },
+    "description": "Sede de la alcald\u00eda, con una galer\u00eda fotogr\u00e1fica.",
+    "duration": "20 min",
+    "hasBadge": false,
+    "id": "bluefields-palacio-municipal",
+    "images": [
+      "https://picsum.photos/seed/bluefields-palacio-municipal-1/900/600",
+      "https://picsum.photos/seed/bluefields-palacio-municipal-2/900/600"
+    ],
+    "name": "Palacio Municipal de Bluefields",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "",
+    "category": "Historia",
+    "city": "Bluefields",
+    "closesAt": null,
+    "coordinates": {
+      "latitude": 12.012991,
+      "longitude": -83.764956
+    },
+    "description": "Inicio del circuito, con un mupi informativo con c\u00f3digo QR y una zona selfie.",
+    "duration": "15 min",
+    "hasBadge": true,
+    "id": "bluefields-parque-reyes",
+    "images": [
+      "https://picsum.photos/seed/bluefields-parque-reyes-1/900/600",
+      "https://picsum.photos/seed/bluefields-parque-reyes-2/900/600"
+    ],
+    "name": "Parque Reyes",
+    "opensAt": null,
+    "rating": 0,
+    "reviewsCount": 0,
+    "tip": ""
+  },
+  {
+    "address": "San Jos\u00e9 del Sur, Isla de Ometepe",
     "category": "Naturaleza",
     "city": "Rivas",
-    "address": "Santa Cruz, Isla de Ometepe",
-    "opensAt": "7:00 a.m.",
     "closesAt": "5:00 p.m.",
-    "duration": "1 h 30 min",
-    "rating": 4.9,
-    "reviewsCount": 320,
+    "coordinates": {
+      "latitude": 11.472,
+      "longitude": -85.654
+    },
+    "description": "Laguna rodeada de bosque seco y reserva de monos congos, garzas y urracas. La leyenda dice que aqu\u00ed habita el Chico Largo, el due\u00f1o de la laguna.",
+    "duration": "50 min",
+    "hasBadge": false,
+    "id": "ometepe-charco-verde",
+    "images": [
+      "https://picsum.photos/seed/ometepe-charco/900/600"
+    ],
+    "name": "Charco Verde",
+    "opensAt": "7:00 a.m.",
+    "rating": 4.5,
+    "reviewsCount": 96,
+    "tip": "El sendero completo toma 40 minutos y hay monos casi siempre"
+  },
+  {
+    "address": "Puerto de San Jorge, Rivas",
+    "category": "Aventura",
+    "city": "Rivas",
+    "coordinates": {
+      "latitude": 11.447,
+      "longitude": -85.797
+    },
+    "description": "El cruce del Lago Cocibolca hacia la isla. Durante la traves\u00eda los dos volcanes van creciendo en el horizonte hasta llenar toda la vista.",
+    "duration": "1 h",
+    "hasBadge": false,
+    "id": "ometepe-ferry",
+    "images": [
+      "https://picsum.photos/seed/ometepe-ferry/900/600"
+    ],
+    "name": "Traves\u00eda en ferry",
+    "rating": 4.2,
+    "reviewsCount": 76,
+    "tip": "Viaja en la cubierta superior para ver los volcanes de frente"
+  },
+  {
+    "address": "Balg\u00fce, Isla de Ometepe",
+    "category": "Aventura",
+    "city": "Rivas",
+    "closesAt": "4:00 p.m.",
+    "coordinates": {
+      "latitude": 11.445,
+      "longitude": -85.515
+    },
+    "description": "Punto alto en la falda del volc\u00e1n Maderas con vista al istmo, al Concepci\u00f3n y al lago completo. El bosque nuboso empieza justo arriba de este mirador.",
+    "duration": "1 h",
     "hasBadge": true,
-    "description": "Manantial natural de agua filtrada por la roca volcánica. Dos pozas de agua cristalina rodeadas de árboles centenarios y una liana para lanzarse al agua.",
-    "tip": "Lleva traje de baño puesto y toalla, los vestidores son básicos",
+    "id": "ometepe-mirador-maderas",
+    "images": [
+      "https://picsum.photos/seed/ometepe-maderas/900/600"
+    ],
+    "name": "Mirador del Maderas",
+    "opensAt": "6:00 a.m.",
+    "rating": 4.8,
+    "reviewsCount": 88,
+    "tip": "La subida es de tierra y piedra: calzado de caminata obligatorio"
+  },
+  {
+    "address": "Moyogalpa, Isla de Ometepe",
+    "category": "Cultura",
+    "city": "Rivas",
+    "coordinates": {
+      "latitude": 11.539,
+      "longitude": -85.696
+    },
+    "description": "El puerto de entrada a la isla, al pie del volc\u00e1n Concepci\u00f3n. Calles de colores, talleres de artesan\u00eda en madera y el primer caf\u00e9 isle\u00f1o del recorrido.",
+    "duration": "30 min",
+    "hasBadge": false,
+    "id": "ometepe-moyogalpa",
+    "images": [
+      "https://picsum.photos/seed/ometepe-moyogalpa/900/600"
+    ],
+    "name": "Moyogalpa",
+    "rating": 4.1,
+    "reviewsCount": 54,
+    "tip": "Aqu\u00ed se alquilan las motos y bicicletas para recorrer la isla"
+  },
+  {
+    "address": "San Jos\u00e9 del Sur, Isla de Ometepe",
+    "category": "Historia",
+    "city": "Rivas",
+    "closesAt": "5:00 p.m.",
+    "coordinates": {
+      "latitude": 11.468,
+      "longitude": -85.648
+    },
+    "description": "Dos museos en uno: la colecci\u00f3n arqueol\u00f3gica precolombina m\u00e1s grande de la isla y un museo de la moneda nicarag\u00fcense desde la colonia hasta hoy.",
+    "duration": "40 min",
+    "hasBadge": false,
+    "id": "ometepe-museo-ceibo",
+    "images": [
+      "https://picsum.photos/seed/ometepe-ceibo/900/600"
+    ],
+    "name": "Museo El Ceibo",
+    "opensAt": "8:00 a.m.",
+    "rating": 4.4,
+    "reviewsCount": 63,
+    "tip": "La entrada cubre los dos museos, no te quedes s\u00f3lo con uno"
+  },
+  {
+    "address": "Santa Cruz, Isla de Ometepe",
+    "category": "Naturaleza",
+    "city": "Rivas",
+    "closesAt": "5:00 p.m.",
+    "coordinates": {
+      "latitude": 11.488,
+      "longitude": -85.556
+    },
+    "description": "Manantial natural de agua filtrada por la roca volc\u00e1nica. Dos pozas de agua cristalina rodeadas de \u00e1rboles centenarios y una liana para lanzarse al agua.",
+    "duration": "1 h 30 min",
+    "hasBadge": true,
+    "id": "ometepe-ojo-de-agua",
     "images": [
       "https://picsum.photos/seed/ometepe-ojo/900/600",
       "https://picsum.photos/seed/ometepe-ojo-2/900/600"
     ],
-    "coordinates": { "latitude": 11.488, "longitude": -85.556 }
+    "name": "Ojo de Agua",
+    "opensAt": "7:00 a.m.",
+    "rating": 4.9,
+    "reviewsCount": 320,
+    "tip": "Lleva traje de ba\u00f1o puesto y toalla, los vestidores son b\u00e1sicos"
   },
   {
-    "id": "ometepe-petroglifos",
-    "name": "Petroglifos de Altagracia",
+    "address": "Altagracia, Isla de Ometepe",
     "category": "Historia",
     "city": "Rivas",
-    "address": "Altagracia, Isla de Ometepe",
-    "opensAt": "8:00 a.m.",
     "closesAt": "5:00 p.m.",
+    "coordinates": {
+      "latitude": 11.565,
+      "longitude": -85.579
+    },
+    "description": "Piedras grabadas hace m\u00e1s de mil a\u00f1os por los pueblos que habitaron la isla. Espirales, monos y figuras humanas talladas en roca volc\u00e1nica.",
     "duration": "45 min",
+    "hasBadge": true,
+    "id": "ometepe-petroglifos",
+    "images": [
+      "https://picsum.photos/seed/ometepe-petro/900/600"
+    ],
+    "name": "Petroglifos de Altagracia",
+    "opensAt": "8:00 a.m.",
     "rating": 4.6,
     "reviewsCount": 112,
-    "hasBadge": true,
-    "description": "Piedras grabadas hace más de mil años por los pueblos que habitaron la isla. Espirales, monos y figuras humanas talladas en roca volcánica.",
-    "tip": "Pregúntale al guía por el significado de las espirales dobles",
-    "images": ["https://picsum.photos/seed/ometepe-petro/900/600"],
-    "coordinates": { "latitude": 11.565, "longitude": -85.579 }
+    "tip": "Preg\u00fantale al gu\u00eda por el significado de las espirales dobles"
   },
   {
-    "id": "ometepe-playa-santo-domingo",
-    "name": "Playa Santo Domingo",
+    "address": "Istmo de Isti\u00e1n, Isla de Ometepe",
     "category": "Naturaleza",
     "city": "Rivas",
-    "address": "Istmo de Istián, Isla de Ometepe",
+    "coordinates": {
+      "latitude": 11.479,
+      "longitude": -85.53
+    },
+    "description": "La playa de arena volc\u00e1nica que une los dos volcanes. El oleaje del lago la hace sentir mar abierto y es el mejor lugar para ver el atardecer.",
     "duration": "1 h",
+    "hasBadge": false,
+    "id": "ometepe-playa-santo-domingo",
+    "images": [
+      "https://picsum.photos/seed/ometepe-playa/900/600"
+    ],
+    "name": "Playa Santo Domingo",
     "rating": 4.7,
     "reviewsCount": 187,
-    "hasBadge": false,
-    "description": "La playa de arena volcánica que une los dos volcanes. El oleaje del lago la hace sentir mar abierto y es el mejor lugar para ver el atardecer.",
-    "tip": "El viento pega fuerte por la tarde: perfecto para kitesurf",
-    "images": ["https://picsum.photos/seed/ometepe-playa/900/600"],
-    "coordinates": { "latitude": 11.479, "longitude": -85.53 }
-  },
-  {
-    "id": "ometepe-charco-verde",
-    "name": "Charco Verde",
-    "category": "Naturaleza",
-    "city": "Rivas",
-    "address": "San José del Sur, Isla de Ometepe",
-    "opensAt": "7:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "50 min",
-    "rating": 4.5,
-    "reviewsCount": 96,
-    "hasBadge": false,
-    "description": "Laguna rodeada de bosque seco y reserva de monos congos, garzas y urracas. La leyenda dice que aquí habita el Chico Largo, el dueño de la laguna.",
-    "tip": "El sendero completo toma 40 minutos y hay monos casi siempre",
-    "images": ["https://picsum.photos/seed/ometepe-charco/900/600"],
-    "coordinates": { "latitude": 11.472, "longitude": -85.654 }
-  },
-  {
-    "id": "ometepe-museo-ceibo",
-    "name": "Museo El Ceibo",
-    "category": "Historia",
-    "city": "Rivas",
-    "address": "San José del Sur, Isla de Ometepe",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "40 min",
-    "rating": 4.4,
-    "reviewsCount": 63,
-    "hasBadge": false,
-    "description": "Dos museos en uno: la colección arqueológica precolombina más grande de la isla y un museo de la moneda nicaragüense desde la colonia hasta hoy.",
-    "tip": "La entrada cubre los dos museos, no te quedes sólo con uno",
-    "images": ["https://picsum.photos/seed/ometepe-ceibo/900/600"],
-    "coordinates": { "latitude": 11.468, "longitude": -85.648 }
-  },
-  {
-    "id": "ometepe-mirador-maderas",
-    "name": "Mirador del Maderas",
-    "category": "Aventura",
-    "city": "Rivas",
-    "address": "Balgüe, Isla de Ometepe",
-    "opensAt": "6:00 a.m.",
-    "closesAt": "4:00 p.m.",
-    "duration": "1 h",
-    "rating": 4.8,
-    "reviewsCount": 88,
-    "hasBadge": true,
-    "description": "Punto alto en la falda del volcán Maderas con vista al istmo, al Concepción y al lago completo. El bosque nuboso empieza justo arriba de este mirador.",
-    "tip": "La subida es de tierra y piedra: calzado de caminata obligatorio",
-    "images": ["https://picsum.photos/seed/ometepe-maderas/900/600"],
-    "coordinates": { "latitude": 11.445, "longitude": -85.515 }
-  },
-
-  {
-    "id": "leon-catedral",
-    "name": "Catedral de León",
-    "category": "Historia",
-    "city": "León",
-    "address": "Parque Central, León",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "6:00 p.m.",
-    "duration": "40 min",
-    "rating": 4.9,
-    "reviewsCount": 265,
-    "hasBadge": true,
-    "description": "La basílica más grande de Centroamérica y Patrimonio de la Humanidad. Bajo su nave descansa Rubén Darío, custodiado por el león de mármol.",
-    "tip": "La entrada al templo es gratuita; subir a los techos se paga aparte",
-    "images": ["https://picsum.photos/seed/leon-catedral/900/600"],
-    "coordinates": { "latitude": 12.4356, "longitude": -86.878 }
-  },
-  {
-    "id": "leon-techos",
-    "name": "Techos blancos de la Catedral",
-    "category": "Aventura",
-    "city": "León",
-    "address": "Catedral de León, León",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "30 min",
-    "rating": 4.9,
-    "reviewsCount": 241,
-    "hasBadge": true,
-    "description": "La azotea encalada de la catedral, con vista a la cadena volcánica de Los Maribios: el Momotombo, el Telica y el Cerro Negro en una sola panorámica.",
-    "tip": "Se sube descalzo y el blanco encandila: lleva lentes de sol",
-    "images": ["https://picsum.photos/seed/leon-techos/900/600"],
-    "coordinates": { "latitude": 12.4357, "longitude": -86.8782 }
-  },
-  {
-    "id": "leon-ruben-dario",
-    "name": "Museo Casa Rubén Darío",
-    "category": "Cultura",
-    "city": "León",
-    "address": "Calle Rubén Darío, León",
-    "opensAt": "9:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "35 min",
-    "rating": 4.5,
-    "reviewsCount": 121,
-    "hasBadge": false,
-    "description": "La casa donde creció el príncipe de las letras castellanas, con sus manuscritos, su biblioteca y los objetos personales del poeta.",
-    "tip": "Pide que te lean el poema que Darío escribió a los trece años",
-    "images": ["https://picsum.photos/seed/leon-dario/900/600"],
-    "coordinates": { "latitude": 12.434, "longitude": -86.882 }
-  },
-  {
-    "id": "leon-murales",
-    "name": "Murales del centro histórico",
-    "category": "Cultura",
-    "city": "León",
-    "address": "Centro histórico, León",
-    "duration": "30 min",
-    "rating": 4.4,
-    "reviewsCount": 87,
-    "hasBadge": false,
-    "description": "Un recorrido a pie por los murales que cuentan la historia reciente de la ciudad universitaria, pintados por colectivos de estudiantes y artistas locales.",
-    "tip": "Los murales más grandes están sobre la avenida central",
-    "images": ["https://picsum.photos/seed/leon-murales/900/600"],
-    "coordinates": { "latitude": 12.4348, "longitude": -86.8795 }
-  },
-  {
-    "id": "leon-mercado",
-    "name": "Mercado La Terminal",
-    "category": "Gastronomía",
-    "city": "León",
-    "address": "La Terminal, León",
-    "duration": "25 min",
-    "rating": 4.2,
-    "reviewsCount": 74,
-    "hasBadge": false,
-    "description": "Aquí se prueba la comida leonesa de verdad: nacatamal, quesillo con cebolla encurtida y el fresco de tiste que se toma en jícara.",
-    "tip": "El quesillo de la esquina norte es el favorito de los locales",
-    "images": ["https://picsum.photos/seed/leon-mercado/900/600"],
-    "coordinates": { "latitude": 12.431, "longitude": -86.876 }
-  },
-
-  {
-    "id": "cafe-selva-negra",
-    "name": "Finca Selva Negra",
-    "category": "Naturaleza",
-    "city": "Matagalpa",
-    "address": "Km 140 carretera Matagalpa-Jinotega",
-    "opensAt": "7:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "1 h",
-    "rating": 4.8,
-    "reviewsCount": 156,
-    "hasBadge": true,
-    "description": "Finca cafetalera de montaña fundada por colonos alemanes, hoy modelo de producción sostenible con bosque nuboso protegido dentro de sus tierras.",
-    "tip": "El clima de montaña es fresco: lleva una chaqueta ligera",
-    "images": ["https://picsum.photos/seed/cafe-selva/900/600"],
-    "coordinates": { "latitude": 13.009, "longitude": -85.913 }
-  },
-  {
-    "id": "cafe-beneficio",
-    "name": "Beneficio húmedo",
-    "category": "Cultura",
-    "city": "Matagalpa",
-    "address": "Finca cafetalera, Matagalpa",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "4:00 p.m.",
-    "duration": "40 min",
-    "rating": 4.5,
-    "reviewsCount": 62,
-    "hasBadge": false,
-    "description": "Donde el grano recién cortado se despulpa, se fermenta y se lava. Es la etapa que define buena parte del sabor final de la taza.",
-    "tip": "Pregunta por la diferencia entre proceso lavado y honey",
-    "images": ["https://picsum.photos/seed/cafe-beneficio/900/600"],
-    "coordinates": { "latitude": 13.005, "longitude": -85.916 }
-  },
-  {
-    "id": "cafe-secado",
-    "name": "Patios de secado",
-    "category": "Cultura",
-    "city": "Matagalpa",
-    "address": "Finca cafetalera, Matagalpa",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "4:00 p.m.",
-    "duration": "30 min",
-    "rating": 4.3,
-    "reviewsCount": 48,
-    "hasBadge": false,
-    "description": "Los patios y camas africanas donde el café se seca al sol durante días, removido a mano varias veces al día para que pierda humedad parejo.",
-    "tip": "Al mediodía es cuando se ve el volteo del grano",
-    "images": ["https://picsum.photos/seed/cafe-secado/900/600"],
-    "coordinates": { "latitude": 13.004, "longitude": -85.917 }
-  },
-  {
-    "id": "cafe-tueste",
-    "name": "Taller de tueste",
-    "category": "Gastronomía",
-    "city": "Matagalpa",
-    "address": "Finca cafetalera, Matagalpa",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "4:00 p.m.",
-    "duration": "45 min",
-    "rating": 4.7,
-    "reviewsCount": 91,
-    "hasBadge": true,
-    "description": "Aquí el grano verde se convierte en café. Se explican los perfiles de tueste y cada visitante tuesta su propia muestra para llevarse.",
-    "tip": "El café que tuestes te lo llevas empacado, es parte del tour",
-    "images": ["https://picsum.photos/seed/cafe-tueste/900/600"],
-    "coordinates": { "latitude": 13.003, "longitude": -85.918 }
-  },
-  {
-    "id": "cafe-cata",
-    "name": "Cata de café",
-    "category": "Gastronomía",
-    "city": "Matagalpa",
-    "address": "Finca cafetalera, Matagalpa",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "4:00 p.m.",
-    "duration": "50 min",
-    "rating": 4.9,
-    "reviewsCount": 134,
-    "hasBadge": true,
-    "description": "Mesa de catación con cinco tazas de distintas alturas y procesos. Se aprende el protocolo del cupping: aroma, ruptura de costra, sorbo y notas.",
-    "tip": "No desayunes fuerte antes, el paladar rinde mejor limpio",
-    "images": ["https://picsum.photos/seed/cafe-cata/900/600"],
-    "coordinates": { "latitude": 13.0025, "longitude": -85.9185 }
-  },
-  {
-    "id": "cafe-mirador",
-    "name": "Mirador de montaña",
-    "category": "Naturaleza",
-    "city": "Matagalpa",
-    "address": "Sendero de la finca, Matagalpa",
-    "duration": "35 min",
-    "rating": 4.6,
-    "reviewsCount": 79,
-    "hasBadge": false,
-    "description": "Punto alto sobre los cafetales con vista al valle de Matagalpa. Con suerte se ven quetzales y tucanes en el bosque de sombra.",
-    "tip": "La neblina cierra la vista después de las tres de la tarde",
-    "images": ["https://picsum.photos/seed/cafe-mirador/900/600"],
-    "coordinates": { "latitude": 13.011, "longitude": -85.911 }
-  },
-  {
-    "id": "cafe-comunidad",
-    "name": "Comunidad cafetalera",
-    "category": "Cultura",
-    "city": "Matagalpa",
-    "address": "El Tuma-La Dalia, Matagalpa",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "4:00 p.m.",
-    "duration": "1 h",
-    "rating": 4.7,
-    "reviewsCount": 68,
-    "hasBadge": false,
-    "description": "Visita a la cooperativa de familias productoras: cómo se organiza la cosecha, el comercio justo y el almuerzo casero preparado por la comunidad.",
-    "tip": "Las artesanías y el café de la cooperativa se compran aquí directo",
-    "images": ["https://picsum.photos/seed/cafe-comunidad/900/600"],
-    "coordinates": { "latitude": 13.03, "longitude": -85.74 }
-  },
-  {
-    "id": "masaya-mercado-artesanias",
-    "name": "Mercado Nacional de Artesanías",
-    "category": "Cultura",
-    "city": "Masaya",
-    "address": "Mercado Viejo, Masaya",
-    "opensAt": "9:00 a.m.",
-    "closesAt": "6:00 p.m.",
-    "duration": "40 min",
-    "rating": 4.6,
-    "reviewsCount": 88,
-    "hasBadge": true,
-    "description": "El antiguo mercado municipal, restaurado como fortaleza de piedra, reúne a artesanos de todo el país: hamacas, cerámica de San Juan de Oriente y madera tallada.",
-    "tip": "Regatear es parte de la costumbre, con buen humor",
-    "images": ["https://picsum.photos/seed/masaya-mercado/900/600"],
-    "coordinates": { "latitude": 11.9737, "longitude": -86.0947 }
-  },
-  {
-    "id": "masaya-parque-central",
-    "name": "Parque Central y Catedral de San Jerónimo",
-    "category": "Historia",
-    "city": "Masaya",
-    "address": "Parque Central, Masaya",
-    "duration": "30 min",
-    "rating": 4.5,
-    "reviewsCount": 54,
-    "hasBadge": false,
-    "description": "La iglesia patronal de Masaya, escenario de la festividad de San Jerónimo, una de las más largas de Nicaragua con procesiones y bailes tradicionales.",
-    "tip": "Si coincide con una procesión, guarda distancia y disfruta la música",
-    "images": ["https://picsum.photos/seed/masaya-parque/900/600"],
-    "coordinates": { "latitude": 11.9738, "longitude": -86.0958 }
-  },
-  {
-    "id": "masaya-volcan",
-    "name": "Mirador del Volcán Masaya",
-    "category": "Naturaleza",
-    "city": "Masaya",
-    "address": "Parque Nacional Volcán Masaya",
-    "opensAt": "9:00 a.m.",
-    "closesAt": "8:00 p.m.",
-    "duration": "45 min",
-    "rating": 4.8,
-    "reviewsCount": 132,
-    "hasBadge": true,
-    "description": "Uno de los pocos volcanes del mundo donde se puede ver el lago de lava activo desde el borde del cráter, entre fumarolas de azufre.",
-    "tip": "De noche a veces se ve el resplandor de la lava; consulta el horario del parque",
-    "images": ["https://picsum.photos/seed/masaya-volcan/900/600"],
-    "coordinates": { "latitude": 11.9854, "longitude": -86.161 }
-  },
-  {
-    "id": "masaya-monimbo",
-    "name": "Barrio Monimbó",
-    "category": "Cultura",
-    "city": "Masaya",
-    "address": "Monimbó, Masaya",
-    "duration": "35 min",
-    "rating": 4.6,
-    "reviewsCount": 47,
-    "hasBadge": false,
-    "description": "Cuna del folclore nicaragüense y de la insurrección de 1978: talleres de cuero, pirotecnia y las máscaras de los bailes de Torovenado.",
-    "tip": "Pregunta por los talleres abiertos al público para ver a los artesanos trabajar",
-    "images": ["https://picsum.photos/seed/masaya-monimbo/900/600"],
-    "coordinates": { "latitude": 11.967, "longitude": -86.093 }
-  },
-  {
-    "id": "esteli-galeria-heroes",
-    "name": "Galería de Héroes y Mártires",
-    "category": "Cultura",
-    "city": "Estelí",
-    "address": "Costado de la Catedral, Estelí",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "30 min",
-    "rating": 4.7,
-    "reviewsCount": 39,
-    "hasBadge": true,
-    "description": "Un muro cubierto de retratos y murales que recuerda a quienes cayeron en la insurrección: el corazón de la memoria histórica esteliana.",
-    "tip": "Los guías locales suelen conocer historias personales de las familias",
-    "images": ["https://picsum.photos/seed/esteli-galeria/900/600"],
-    "coordinates": { "latitude": 13.0921, "longitude": -86.3536 }
-  },
-  {
-    "id": "esteli-catedral",
-    "name": "Catedral de Estelí y Parque Central",
-    "category": "Historia",
-    "city": "Estelí",
-    "address": "Parque Central, Estelí",
-    "duration": "25 min",
-    "rating": 4.4,
-    "reviewsCount": 31,
-    "hasBadge": false,
-    "description": "Punto de partida de \"la ciudad de los muchachos\": el parque central rodeado del comercio y la vida diaria esteliana.",
-    "tip": "Es un buen punto de encuentro antes o después del recorrido",
-    "images": ["https://picsum.photos/seed/esteli-catedral/900/600"],
-    "coordinates": { "latitude": 13.0906, "longitude": -86.3538 }
-  },
-  {
-    "id": "esteli-tabacalera",
-    "name": "Recorrido por una tabacalera artesanal",
-    "category": "Cultura",
-    "city": "Estelí",
-    "address": "Zona industrial, Estelí",
-    "opensAt": "8:00 a.m.",
-    "closesAt": "4:00 p.m.",
-    "duration": "50 min",
-    "rating": 4.8,
-    "reviewsCount": 62,
-    "hasBadge": true,
-    "description": "Estelí produce algunos de los mejores puros del mundo. El recorrido muestra el proceso completo, desde la selección de la hoja hasta el torcido a mano.",
-    "tip": "Se puede comprar directo de fábrica a mejor precio que en las tiendas",
-    "images": ["https://picsum.photos/seed/esteli-tabacalera/900/600"],
-    "coordinates": { "latitude": 13.087, "longitude": -86.355 }
-  },
-  {
-    "id": "esteli-mirador-tisey",
-    "name": "Mirador Tisey",
-    "category": "Naturaleza",
-    "city": "Estelí",
-    "address": "Reserva Natural Tisey-Estanzuela",
-    "opensAt": "7:00 a.m.",
-    "closesAt": "5:00 p.m.",
-    "duration": "1 h",
-    "rating": 4.7,
-    "reviewsCount": 28,
-    "hasBadge": false,
-    "description": "Bosque de pinos y vista panorámica sobre el valle de Estelí, en una reserva conocida por sus quesos artesanales y senderos frescos.",
-    "tip": "Lleva chaqueta ligera: la zona es más fría que el centro de la ciudad",
-    "images": ["https://picsum.photos/seed/esteli-tisey/900/600"],
-    "coordinates": { "latitude": 13.0, "longitude": -86.38 }
+    "tip": "El viento pega fuerte por la tarde: perfecto para kitesurf"
   }
 ]

@@ -1,0 +1,444 @@
+[
+  {
+    "address": "Salida desde la Plaza Magdalena, Monimb\u00f3; recorrido por las principales calles de Masaya",
+    "category": "Tradici\u00f3n",
+    "city": "Masaya",
+    "coordinates": {
+      "latitude": 11.965201,
+      "longitude": -86.09569
+    },
+    "description": "Procesi\u00f3n nocturna en la que cientos de personas disfrazadas de personajes de mitos y leyendas nicarag\u00fcenses recorren las calles de Masaya con m\u00e1scaras, candiles y m\u00fasica de chicheros. Sale del barrio ind\u00edgena de Monimb\u00f3 y forma parte de las fiestas tradicionales de Masaya. La noche anterior se celebra la Vela del Candil.",
+    "endDate": "2026-10-23",
+    "endTime": "23:30",
+    "entryPrice": 0,
+    "featured": true,
+    "id": "masaya-noche-aguizotes-2026",
+    "images": [
+      "https://picsum.photos/seed/masaya-noche-aguizotes-2026-1/900/600"
+    ],
+    "name": "Noche de Ag\u00fcizotes",
+    "organizer": "Alcald\u00eda de Masaya",
+    "organizerKind": "municipality",
+    "startDate": "2026-10-23",
+    "startTime": "20:00",
+    "venue": "Plaza e Iglesia Santa Mar\u00eda Magdalena, Monimb\u00f3"
+  },
+  {
+    "address": "Plaza Magdalena, Monimb\u00f3; recorrido por Monimb\u00f3, San Miguel, El Calvario y el centro de Masaya",
+    "category": "Tradici\u00f3n",
+    "city": "Masaya",
+    "coordinates": {
+      "latitude": 11.965201,
+      "longitude": -86.09569
+    },
+    "description": "Desfile sat\u00edrico y teatro callejero de la comunidad ind\u00edgena de Monimb\u00f3, encabezado por el Cabeza de Toro y el Venado, con disfrazados que representan con humor hechos y personajes de la vida nacional. El recorrido sale de la Plaza Magdalena, pasa por Monimb\u00f3, San Miguel, El Calvario y el centro de Masaya, y regresa a la plaza al final de la tarde.",
+    "endDate": "2026-10-25",
+    "endTime": "17:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "masaya-torovenado-monimbo-2026",
+    "images": [
+      "https://picsum.photos/seed/masaya-torovenado-monimbo-2026-1/900/600"
+    ],
+    "name": "Torovenado del Pueblo de Monimb\u00f3",
+    "organizer": "Alcald\u00eda de Masaya",
+    "organizerKind": "municipality",
+    "startDate": "2026-10-25",
+    "startTime": "10:00",
+    "venue": "Plaza e Iglesia Santa Mar\u00eda Magdalena, Monimb\u00f3"
+  },
+  {
+    "address": "Recorrido por las principales calles de Masaya",
+    "category": "Tradici\u00f3n",
+    "city": "Masaya",
+    "coordinates": {
+      "latitude": 11.973651,
+      "longitude": -86.096206
+    },
+    "description": "Procesi\u00f3n folcl\u00f3rica y sat\u00edrica que la familia Toribio organiza en memoria de Carmen Toribio y que en 2026 cumple 137 a\u00f1os. La jornada inicia con una diana a las 6 de la ma\u00f1ana; a las 11 sale el desfile de disfrazados por las calles de Masaya y a las 6 de la tarde es la entrada triunfal con premiaci\u00f3n de los cuadros.",
+    "endDate": "2026-11-15",
+    "endTime": "18:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "masaya-torovenado-el-malinche-2026",
+    "images": [
+      "https://picsum.photos/seed/masaya-torovenado-el-malinche-2026-1/900/600"
+    ],
+    "name": "Torovenado El Malinche",
+    "organizer": "Alcald\u00eda de Masaya",
+    "organizerKind": "municipality",
+    "startDate": "2026-11-15",
+    "startTime": "11:00",
+    "venue": "Calles de Masaya (referencia: Parque Central)"
+  },
+  {
+    "address": "Plaza de la Cultura, Masaya",
+    "category": "Cultura",
+    "city": "Masaya",
+    "coordinates": {
+      "latitude": 11.98131,
+      "longitude": -86.096431
+    },
+    "description": "Festival de cierre de la temporada de Bailes de Negras de Masaya, con la presentaci\u00f3n y premiaci\u00f3n de los grupos m\u00e1s destacados de la edici\u00f3n 2026. Forma parte del plan de fiestas tradicionales y culturales de la Alcald\u00eda de Masaya, que incluye recorridos de estos bailes los domingos de noviembre.",
+    "endDate": "2026-12-04",
+    "endTime": "22:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "masaya-festival-bailes-de-negras-2026",
+    "images": [
+      "https://picsum.photos/seed/masaya-festival-bailes-de-negras-2026-1/900/600"
+    ],
+    "name": "Festival y premiaci\u00f3n de los Bailes de Negras",
+    "organizer": "Alcald\u00eda de Masaya",
+    "organizerKind": "municipality",
+    "startDate": "2026-12-04",
+    "startTime": "18:00",
+    "venue": "Plaza de la Cultura de Masaya"
+  },
+  {
+    "address": "Frente a la Catedral de Le\u00f3n, centro hist\u00f3rico",
+    "category": "Cultura",
+    "city": "Le\u00f3n",
+    "coordinates": {
+      "latitude": 12.434869,
+      "longitude": -86.878958
+    },
+    "description": "Festival de INTUR que celebra la cultura de la Costa Caribe con feria gastron\u00f3mica, artesan\u00edas, comparsas, m\u00fasica y danza de sus pueblos ind\u00edgenas y afrodescendientes. Despu\u00e9s de su edici\u00f3n de 2025 en Rivas, en 2026 se realiza durante dos d\u00edas en la Plaza Parque Juan Jos\u00e9 Quezada de Le\u00f3n.",
+    "endDate": "2026-11-08",
+    "endTime": "21:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "leon-festival-arte-cultura-caribena-2026",
+    "images": [
+      "https://picsum.photos/seed/leon-festival-arte-cultura-caribena-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Festival de Arte y Cultura Caribe\u00f1a",
+    "organizer": "Instituto Nicarag\u00fcense de Turismo (INTUR)",
+    "organizerKind": "institution",
+    "startDate": "2026-11-07",
+    "startTime": "10:00",
+    "venue": "Plaza Parque Juan Jos\u00e9 Quezada"
+  },
+  {
+    "address": "De la Plaza de Sutiaba a la Plaza Parque Juan Jos\u00e9 Quezada, Le\u00f3n",
+    "category": "Tradici\u00f3n",
+    "city": "Le\u00f3n",
+    "coordinates": {
+      "latitude": 12.433583,
+      "longitude": -86.895734
+    },
+    "description": "Desfile nocturno de comparsas, carrozas y personajes de la tradici\u00f3n leonesa como la carreta nagua, el padre sin cabeza y el cadejo. Lo organizan la Alcald\u00eda de Le\u00f3n e INTUR; recorre de la Plaza de Sutiaba al centro de la ciudad, donde un jurado premia trajes, carrozas y comparsas.",
+    "endDate": "2026-11-27",
+    "endTime": "22:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "leon-carnaval-mitos-leyendas-2026",
+    "images": [
+      "https://picsum.photos/seed/leon-carnaval-mitos-leyendas-2026-1/900/600"
+    ],
+    "name": "Carnaval de Mitos, Leyendas, Personajes y Tradiciones Leonesas",
+    "organizer": "Alcald\u00eda de Le\u00f3n",
+    "organizerKind": "municipality",
+    "startDate": "2026-11-27",
+    "startTime": "17:00",
+    "venue": "Plaza de Sutiaba (salida)"
+  },
+  {
+    "address": "Atrio de la Catedral de Le\u00f3n y calles del centro hist\u00f3rico",
+    "category": "Tradici\u00f3n",
+    "city": "Le\u00f3n",
+    "coordinates": {
+      "latitude": 12.434982,
+      "longitude": -86.878102
+    },
+    "description": "Le\u00f3n es la cuna de la Griter\u00eda en honor a la Inmaculada Concepci\u00f3n de Mar\u00eda, celebrada en su forma actual desde 1857. A las 6 de la tarde se da el grito \u00ab\u00bfQui\u00e9n causa tanta alegr\u00eda?\u00bb en el atrio de la Catedral y luego las familias recorren los altares de las casas cantando y recibiendo la tradicional gorra.",
+    "endDate": "2026-12-07",
+    "endTime": "22:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "leon-griteria-2026",
+    "images": [
+      "https://picsum.photos/seed/leon-griteria-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "La Griter\u00eda en Le\u00f3n",
+    "organizer": "Di\u00f3cesis de Le\u00f3n",
+    "organizerKind": "institution",
+    "startDate": "2026-12-07",
+    "startTime": "18:00",
+    "venue": "Catedral de Le\u00f3n"
+  },
+  {
+    "address": "Plaza Parque Juan Jos\u00e9 Quezada, frente a la Catedral de Le\u00f3n",
+    "category": "Tradici\u00f3n",
+    "city": "Le\u00f3n",
+    "coordinates": {
+      "latitude": 12.434869,
+      "longitude": -86.878958
+    },
+    "description": "Concurso de comparsas de gigantona y enano cabez\u00f3n, acompa\u00f1adas de tamboreros y copleros, una tradici\u00f3n leonesa de origen colonial. La Alcald\u00eda de Le\u00f3n lo convoca el d\u00eda despu\u00e9s de la Griter\u00eda en la plaza frente a la Catedral.",
+    "endDate": "2026-12-08",
+    "endTime": "19:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "leon-concurso-gigantonas-2026",
+    "images": [
+      "https://picsum.photos/seed/leon-concurso-gigantonas-2026-1/900/600"
+    ],
+    "name": "Concurso Tradicional de Gigantonas",
+    "organizer": "Alcald\u00eda de Le\u00f3n",
+    "organizerKind": "municipality",
+    "startDate": "2026-12-08",
+    "startTime": "15:00",
+    "venue": "Plaza Parque Juan Jos\u00e9 Quezada"
+  },
+  {
+    "address": "Calles del barrio ind\u00edgena de Sutiaba, cerca de la Iglesia de San Juan Bautista, Le\u00f3n",
+    "category": "Tradici\u00f3n",
+    "city": "Le\u00f3n",
+    "coordinates": {
+      "latitude": 12.433604,
+      "longitude": -86.89491
+    },
+    "description": "El Viernes Santo, artesanos del barrio ind\u00edgena de Sutiaba elaboran alfombras de aserr\u00edn te\u00f1ido, arena y flores con escenas de la pasi\u00f3n de Cristo a lo largo de m\u00e1s de diez cuadras. La actividad la organizan INTUR y la Alcald\u00eda de Le\u00f3n y culmina con la premiaci\u00f3n de las mejores alfombras.",
+    "endDate": "2027-03-26",
+    "endTime": "17:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "leon-alfombras-pasionarias-2027",
+    "images": [
+      "https://picsum.photos/seed/leon-alfombras-pasionarias-2027-1/900/600"
+    ],
+    "name": "Alfombras pasionarias de Sutiaba",
+    "organizer": "Alcald\u00eda de Le\u00f3n",
+    "organizerKind": "municipality",
+    "startDate": "2027-03-26",
+    "startTime": "09:00",
+    "venue": "Calle de las alfombras, barrio de Sutiaba"
+  },
+  {
+    "address": "Plaza de la Independencia, centro hist\u00f3rico de Granada",
+    "category": "M\u00fasica",
+    "city": "Granada",
+    "coordinates": {
+      "latitude": 11.930787,
+      "longitude": -85.953573
+    },
+    "description": "Encuentro de m\u00fasica campesina nicarag\u00fcense en la Plaza de la Independencia, en el centro hist\u00f3rico de Granada. Forma parte de las actividades de la estrategia Diciembre en Nicaragua 2026 de INTUR.",
+    "endDate": "2026-11-07",
+    "endTime": "21:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "granada-festival-musica-campesina-2026",
+    "images": [
+      "https://picsum.photos/seed/granada-festival-musica-campesina-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Festival de M\u00fasica Campesina",
+    "organizer": "Instituto Nicarag\u00fcense de Turismo (INTUR)",
+    "organizerKind": "institution",
+    "startDate": "2026-11-07",
+    "startTime": "16:00",
+    "venue": "Plaza de la Independencia"
+  },
+  {
+    "address": "Plaza de la Independencia, centro hist\u00f3rico de Granada",
+    "category": "Cultura",
+    "city": "Granada",
+    "coordinates": {
+      "latitude": 11.930787,
+      "longitude": -85.953573
+    },
+    "description": "Gala de danzas y expresiones folcl\u00f3ricas nicarag\u00fcenses en la Plaza de la Independencia de Granada. Es una de las actividades de la estrategia Diciembre en Nicaragua 2026 de INTUR.",
+    "endDate": "2026-11-14",
+    "endTime": "21:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "granada-gala-folklorica-2026",
+    "images": [
+      "https://picsum.photos/seed/granada-gala-folklorica-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Gala Folkl\u00f3rico Cultural",
+    "organizer": "Instituto Nicarag\u00fcense de Turismo (INTUR)",
+    "organizerKind": "institution",
+    "startDate": "2026-11-14",
+    "startTime": "17:00",
+    "venue": "Plaza de la Independencia"
+  },
+  {
+    "address": "Sector Gobierno, Distrito I, Managua",
+    "category": "Feria",
+    "city": "Managua",
+    "coordinates": {
+      "latitude": 12.149072,
+      "longitude": -86.272402
+    },
+    "description": "Plataforma nacional de moda y dise\u00f1o que celebra su 15.\u00aa edici\u00f3n con el lema \u00abLegado, Evoluci\u00f3n, Futuro\u00bb. Habr\u00e1 pasarelas de m\u00e1s de 70 dise\u00f1adores nacionales y extranjeros, adem\u00e1s de una expo feria de emprendimientos creativos y un espacio de gastronom\u00eda nacional. Consulta el precio de entrada con quien lo organiza.",
+    "endDate": "2026-10-25",
+    "endTime": "22:00",
+    "entryPrice": 0,
+    "featured": true,
+    "id": "managua-nicaragua-disena-2026",
+    "images": [
+      "https://picsum.photos/seed/managua-nicaragua-disena-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Nicaragua Dise\u00f1a, 15.\u00aa edici\u00f3n",
+    "organizer": "Nicaragua Dise\u00f1a",
+    "organizerKind": "institution",
+    "startDate": "2026-10-23",
+    "startTime": "14:00",
+    "venue": "Centro de Convenciones Olof Palme"
+  },
+  {
+    "address": "Sector Gobierno, Distrito I, Managua",
+    "category": "Gastronom\u00eda",
+    "city": "Managua",
+    "coordinates": {
+      "latitude": 12.149072,
+      "longitude": -86.272402
+    },
+    "description": "Festival de INTUR con muestras gastron\u00f3micas y culturales de Nicaragua y de otros pa\u00edses, dentro de la temporada decembrina. En 2025 su edici\u00f3n navide\u00f1a reuni\u00f3 a 39 pa\u00edses en el mismo centro de convenciones. Consulta el precio de entrada con quien lo organiza.",
+    "endDate": "2026-12-06",
+    "endTime": "20:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "managua-festival-gastronomico-internacional-2026",
+    "images": [
+      "https://picsum.photos/seed/managua-festival-gastronomico-internacional-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Festival Gastron\u00f3mico Internacional",
+    "organizer": "Instituto Nicarag\u00fcense de Turismo (INTUR)",
+    "organizerKind": "institution",
+    "startDate": "2026-12-05",
+    "startTime": "10:00",
+    "venue": "Centro de Convenciones Olof Palme"
+  },
+  {
+    "address": "Avenida de Bol\u00edvar a Ch\u00e1vez, Managua",
+    "category": "Tradici\u00f3n",
+    "city": "Managua",
+    "coordinates": {
+      "latitude": 12.147101,
+      "longitude": -86.274664
+    },
+    "description": "La Alcald\u00eda de Managua y las instituciones del Estado instalan cada a\u00f1o decenas de altares a la Pur\u00edsima a lo largo de la Avenida de Bol\u00edvar a Ch\u00e1vez, abiertos a las familias durante diciembre. La noche del 7 de diciembre se celebra la Griter\u00eda con cantos marianos y reparto de gorra.",
+    "endDate": "2026-12-07",
+    "endTime": "22:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "managua-griteria-bolivar-chavez-2026",
+    "images": [
+      "https://picsum.photos/seed/managua-griteria-bolivar-chavez-2026-1/900/600"
+    ],
+    "name": "La Griter\u00eda en la Avenida de Bol\u00edvar a Ch\u00e1vez",
+    "organizer": "Alcald\u00eda de Managua",
+    "organizerKind": "municipality",
+    "startDate": "2026-12-07",
+    "startTime": "18:00",
+    "venue": "Avenida de Bol\u00edvar a Ch\u00e1vez"
+  },
+  {
+    "address": "Avenida central y Parque Central, frente a la Catedral de Estel\u00ed",
+    "category": "Cultura",
+    "city": "Estel\u00ed",
+    "coordinates": {
+      "latitude": 13.093066,
+      "longitude": -86.35594
+    },
+    "description": "Gala cultural incluida en el plan Diciembre en Nicaragua 2026 de INTUR para el 8 de diciembre, fecha del aniversario de la ciudad de Estel\u00ed. En a\u00f1os anteriores el aniversario se celebr\u00f3 con un desfile por la avenida central y presentaciones art\u00edsticas en el Parque Central.",
+    "endDate": "2026-12-08",
+    "endTime": "21:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "esteli-gala-identidad-tradiciones-2026",
+    "images": [
+      "https://picsum.photos/seed/esteli-gala-identidad-tradiciones-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Gala cultural Identidad y tradiciones de mi Pueblo",
+    "organizer": "Instituto Nicarag\u00fcense de Turismo (INTUR)",
+    "organizerKind": "institution",
+    "startDate": "2026-12-08",
+    "startTime": "16:00",
+    "venue": "Parque Central de Estel\u00ed"
+  },
+  {
+    "address": "Plaza Sandino, Nagarote, Le\u00f3n",
+    "category": "Gastronom\u00eda",
+    "city": "Nagarote",
+    "coordinates": {
+      "latitude": 12.264794,
+      "longitude": -86.563085
+    },
+    "description": "Festival gastron\u00f3mico dedicado al quesillo en Nagarote, ciudad conocida como \u00abcuna del quesillo\u00bb, donde cientos de artesanas mantienen viva esta tradici\u00f3n. Est\u00e1 incluido en el plan Diciembre en Nicaragua 2026 de INTUR.",
+    "endDate": "2026-12-12",
+    "endTime": "20:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "nagarote-festival-nacional-quesillo-2026",
+    "images": [
+      "https://picsum.photos/seed/nagarote-festival-nacional-quesillo-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Festival Nacional del Quesillo",
+    "organizer": "Instituto Nicarag\u00fcense de Turismo (INTUR)",
+    "organizerKind": "institution",
+    "startDate": "2026-12-12",
+    "startTime": "15:00",
+    "venue": "Plaza Sandino"
+  },
+  {
+    "address": "Parque Reyes, frente a la Alcald\u00eda de Bluefields",
+    "category": "Cultura",
+    "city": "Bluefields",
+    "coordinates": {
+      "latitude": 12.012991,
+      "longitude": -83.764956
+    },
+    "description": "Cierre de las actividades del Mes de la Autonom\u00eda, que en 2026 conmemoran los 39 a\u00f1os de la Ley 28, Estatuto de Autonom\u00eda de las Regiones de la Costa Caribe. Incluye un desfile por las principales calles de Bluefields, un acto cultural en el Parque Reyes y una sesi\u00f3n solemne del Consejo Regional.",
+    "endDate": "2026-10-30",
+    "endTime": "13:00",
+    "entryPrice": 0,
+    "featured": true,
+    "id": "bluefields-cierre-mes-autonomia-2026",
+    "images": [
+      "https://picsum.photos/seed/bluefields-cierre-mes-autonomia-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Cierre del Mes de la Autonom\u00eda",
+    "organizer": "Consejo Regional Aut\u00f3nomo de la Costa Caribe Sur",
+    "organizerKind": "institution",
+    "startDate": "2026-10-30",
+    "startTime": "08:00",
+    "venue": "Parque Reyes (Parque Central de Bluefields)"
+  },
+  {
+    "address": "King Street, Punto Hansack, Bluefields",
+    "category": "Tradici\u00f3n",
+    "city": "Bluefields",
+    "coordinates": {
+      "latitude": 12.00914,
+      "longitude": -83.759721
+    },
+    "description": "Griter\u00eda en honor a la Virgen Mar\u00eda organizada por INTUR en su delegaci\u00f3n de Bluefields, como parte de la estrategia Diciembre en Nicaragua 2026. Se celebra un d\u00eda antes de la Griter\u00eda nacional del 7 de diciembre.",
+    "endDate": "2026-12-06",
+    "endTime": "21:00",
+    "entryPrice": 0,
+    "featured": false,
+    "id": "bluefields-griteria-intur-2026",
+    "images": [
+      "https://picsum.photos/seed/bluefields-griteria-intur-2026-1/900/600"
+    ],
+    "institutionType": "fundacion",
+    "name": "Griter\u00eda a la Virgen Mar\u00eda",
+    "organizer": "Instituto Nicarag\u00fcense de Turismo (INTUR)",
+    "organizerKind": "institution",
+    "startDate": "2026-12-06",
+    "startTime": "18:00",
+    "venue": "Delegaci\u00f3n de INTUR en Bluefields"
+  }
+]

@@ -334,10 +334,35 @@ y completar un recorrido llega con F7.
 
 ## Contenido de ejemplo
 
-`python src/manage.py seedcontent` carga los lugares y circuitos que la app traía en sus
-JSON de ejemplo (`src/api_territory/fixtures/`), activa sus ciudades y crea las alcaldías
-verificadas que organizan los creativos. Es para desarrollo y demo: con `DEPLOY=True` pide
-`--force`. Los de Rivas (Ometepe) se saltan: Rivas no es una de las diez Ciudades Creativas.
+`python src/manage.py seedcontent` carga el contenido de `src/api_territory/fixtures/`:
+
+- `team.json`: los superusuarios del equipo de K'Plan, sin contraseña: entran al portal con
+  Google (sin proveedor de correo no hay forma de recuperar una). Si la cuenta ya existía y
+  no era superusuario, pierde su contraseña, su segundo factor y sus sesiones antes de
+  subir: en un API de pruebas el alta acepta cualquier código, así que pudo crearla otra
+  persona.
+- `stops.json` y `circuits.json`: lugares y circuitos. Los creativos son los circuitos
+  creativos reales que publicaron las alcaldías de la Red Nacional de Ciudades Creativas,
+  con sus paradas y las coordenadas de OpenStreetMap (las fotos son de ejemplo); los
+  privados son de ejemplo. Activa sus ciudades y crea las alcaldías verificadas que
+  organizan los creativos.
+- `events.json`: eventos reales de la agenda de esas ciudades, a nombre de su alcaldía o de
+  la institución que los programa (se crea verificada).
+- `providers.json`: guías y traductores ficticios ya aprobados, sin contraseña con la que
+  entrar. Cada guía publica salidas en los circuitos de su ciudad (en una ciudad sin guías,
+  el de todo el país) a unos 3, 6, 10 y 13 días de la carga, corridas uno o dos días según
+  el circuito para que los guías compartidos no choquen.
+- `businesses.json`: comercios ficticios verificados, con campañas de cupones.
+
+Es para desarrollo y demo: con `DEPLOY=True` pide `--force`. Cargar otra vez no repite
+nada, ni cambia lo que ya existe; solo agrega las salidas que falten desde ese día. Los de
+Rivas (Ometepe) se saltan: Rivas no es una de las diez Ciudades Creativas.
+
+Al desplegar, el `preDeployCommand` de `railway.json` corre `seedcontent --on-deploy`
+después de `migrate`. Solo carga cuando `RAILWAY_GIT_BRANCH`, que pone Railway, está en
+`SEED_CONTENT_BRANCHES` (por defecto `develop-a`, la de `develop-api`); en `staging` y
+`production` no hace nada. Un error no detiene el despliegue: queda en el log del
+pre-deploy y, como todo va en una transacción, no deja nada a medias.
 
 ## Dónde se aparta del modelo
 
