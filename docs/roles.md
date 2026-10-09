@@ -53,6 +53,7 @@ Los identificadores son los mismos que usa el portal (`src/data/models/access.ts
 | Contenido           | `content.moderate`                                                   |
 | Facturación         | `billing.view`, `billing.manage`                                     |
 | Equipo y usuarios   | `users.view`, `users.manage`, `staff.manage`                         |
+| Sitio web           | `demos.view`, `demos.manage`, `releases.view`, `releases.manage`     |
 
 **Quien puede más, puede ver.** `manage`, `review` y `decide` incluyen el `view` de su
 módulo: un rol con `guides.decide` trae también `guides.view` en la sesión. El rol

@@ -8,6 +8,7 @@ import api_auth.api
 import api_catalogs.api
 import api_finance.api
 import api_itineraries.api
+import api_landing.api
 import api_messaging.api
 import api_moderation.api
 import api_notifications.api
@@ -37,6 +38,7 @@ router: Final[Router] = Router(
         *api_catalogs.api.router.urls,
         *api_finance.api.router.urls,
         *api_itineraries.api.router.urls,
+        *api_landing.api.router.urls,
         *api_messaging.api.router.urls,
         *api_moderation.api.router.urls,
         *api_notifications.api.router.urls,

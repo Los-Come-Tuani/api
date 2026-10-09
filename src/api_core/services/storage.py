@@ -52,7 +52,10 @@ class Storage(Protocol):
 
     def stat(self, key: str) -> StoredObject | None: ...
 
-    def presign_download(self, key: str, *, expires_in: int) -> str: ...
+    # con `filename`, el navegador lo descarga con ese nombre en vez de abrirlo
+    def presign_download(
+        self, key: str, *, expires_in: int, filename: str | None = None
+    ) -> str: ...
 
     def delete(self, key: str) -> None: ...
 
@@ -131,12 +134,19 @@ class S3Storage:
             size=int(head.get("ContentLength", 0)),
         )
 
-    def presign_download(self, key: str, *, expires_in: int) -> str:
+    def presign_download(
+        self, key: str, *, expires_in: int, filename: str | None = None
+    ) -> str:
+        params: dict[str, str] = {"Bucket": self.bucket, "Key": key}
+
+        if filename is not None:
+            params["ResponseContentDisposition"] = f'attachment; filename="{filename}"'
+
         return str(
             self.client.generate_presigned_url(
                 "get_object",
                 ExpiresIn=expires_in,
-                Params={"Bucket": self.bucket, "Key": key},
+                Params=params,
             )
         )
 
@@ -155,7 +165,13 @@ class DisabledStorage:
     def stat(self, key: str) -> StoredObject | None:  # ruff: ignore[unused-method-argument, no-self-use]
         raise ServiceUnavailableError(detail=NOT_CONFIGURED_DETAIL)
 
-    def presign_download(self, key: str, *, expires_in: int) -> str:  # ruff: ignore[unused-method-argument, no-self-use]
+    def presign_download(  # ruff: ignore[no-self-use]
+        self,
+        key: str,  # ruff: ignore[unused-method-argument]
+        *,
+        expires_in: int,  # ruff: ignore[unused-method-argument]
+        filename: str | None = None,  # ruff: ignore[unused-method-argument]
+    ) -> str:
         raise ServiceUnavailableError(detail=NOT_CONFIGURED_DETAIL)
 
     def delete(self, key: str) -> None:  # ruff: ignore[unused-method-argument, no-self-use]
@@ -198,8 +214,12 @@ class MemoryStorage:
     def stat(self, key: str) -> StoredObject | None:
         return self.objects.get(key)
 
-    def presign_download(self, key: str, *, expires_in: int) -> str:  # ruff: ignore[no-self-use]
-        return f"https://storage.example/bucket/{key}?expires={expires_in}"
+    def presign_download(  # ruff: ignore[no-self-use]
+        self, key: str, *, expires_in: int, filename: str | None = None
+    ) -> str:
+        url: str = f"https://storage.example/bucket/{key}?expires={expires_in}"
+
+        return url if filename is None else f"{url}&filename={filename}"
 
     def delete(self, key: str) -> None:
         self.objects.pop(key, None)

@@ -2,8 +2,9 @@ from typing import TYPE_CHECKING, Final
 
 from asgiref.sync import sync_to_async
 from django.contrib.auth.models import Permission
+from django.db.models import Q
 
-from api_auth.catalog import ALL_IDS, expand_implied
+from api_auth.catalog import ALL_IDS, IMPLIED_BY, expand_implied
 from api_auth.enums import AccountRoles, GroupKinds, Surfaces
 from api_auth.models import ApiGroupProfile, ApiUser
 from api_exceptions.errors import ForbiddenError
@@ -12,6 +13,7 @@ from .two_factor import has_two_factor
 
 if TYPE_CHECKING:
     from collections.abc import Mapping, Sequence
+    from uuid import UUID
 
     from api_utils.types import UsableHttpRequest
 
@@ -95,6 +97,26 @@ def functional_permissions_sync(user: ApiUser) -> frozenset[str]:
     ).values_list("codename", flat=True)
 
     return expand_implied(set(granted))
+
+
+# - quiénes tienen hoy ese permiso (por un rol, o por ser superusuario): a quién avisar
+def holders_of_sync(permission: str) -> list[UUID]:
+    stronger: frozenset[str] = IMPLIED_BY.get(permission, frozenset())
+
+    return list(
+        ApiUser.objects
+        .filter(is_active=True)
+        .filter(
+            Q(is_superuser=True)
+            | Q(
+                groups__permissions__codename__in={permission, *stronger},
+                groups__permissions__content_type__app_label="apiauth",
+                groups__permissions__content_type__model="apigroupprofile",
+            )
+        )
+        .distinct()
+        .values_list("pk", flat=True)
+    )
 
 
 async def functional_permissions(user: ApiUser) -> frozenset[str]:

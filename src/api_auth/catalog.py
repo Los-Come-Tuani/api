@@ -19,6 +19,8 @@ class FunctionalPermissions(TextChoices):
     CIRCUITS_MANAGE = "circuits.manage"
     CIRCUITS_VIEW = "circuits.view"
     CONTENT_MODERATE = "content.moderate"
+    DEMOS_MANAGE = "demos.manage"
+    DEMOS_VIEW = "demos.view"
     GUIDES_DECIDE = "guides.decide"
     GUIDES_REVIEW = "guides.review"
     GUIDES_VIEW = "guides.view"
@@ -27,6 +29,8 @@ class FunctionalPermissions(TextChoices):
     ORGANIZATIONS_VIEW = "organizations.view"
     PLACES_MANAGE = "places.manage"
     PLACES_VIEW = "places.view"
+    RELEASES_MANAGE = "releases.manage"
+    RELEASES_VIEW = "releases.view"
     STAFF_MANAGE = "staff.manage"
     USERS_MANAGE = "users.manage"
     USERS_VIEW = "users.view"
@@ -149,6 +153,32 @@ CATALOG: Final[Sequence[PermissionInfo]] = (
         "Cobros y tarifas",
         "Ve los cobros y cambia las tarifas de K'Plan.",
     ),
+    PermissionInfo(
+        P.DEMOS_VIEW,
+        "Sitio web",
+        "Ver solicitudes de demo",
+        "Ve quién pidió una demostración desde la landing, sin poder atenderla.",
+    ),
+    PermissionInfo(
+        P.DEMOS_MANAGE,
+        "Sitio web",
+        "Atender solicitudes de demo",
+        "Cambia el estado de las solicitudes de demo, anota el seguimiento y recibe "
+        "el aviso de cada una nueva.",
+    ),
+    PermissionInfo(
+        P.RELEASES_VIEW,
+        "Sitio web",
+        "Ver versiones de la app",
+        "Ve los instaladores de la app y cuál se descarga desde la landing.",
+    ),
+    PermissionInfo(
+        P.RELEASES_MANAGE,
+        "Sitio web",
+        "Publicar versiones de la app",
+        "Sube los instaladores (APK, DMG, EXE), los publica en la landing y los "
+        "retira.",
+    ),
 )
 
 ALL_IDS: Final[frozenset[str]] = frozenset(info.id for info in CATALOG)
@@ -158,9 +188,11 @@ ALL_IDS: Final[frozenset[str]] = frozenset(info.id for info in CATALOG)
 IMPLIED_BY: Final[Mapping[str, frozenset[str]]] = {
     P.BILLING_VIEW: frozenset({P.BILLING_MANAGE}),
     P.CIRCUITS_VIEW: frozenset({P.CIRCUITS_MANAGE}),
+    P.DEMOS_VIEW: frozenset({P.DEMOS_MANAGE}),
     P.GUIDES_VIEW: frozenset({P.GUIDES_REVIEW, P.GUIDES_DECIDE}),
     P.ORGANIZATIONS_VIEW: frozenset({P.ORGANIZATIONS_REVIEW, P.ORGANIZATIONS_MANAGE}),
     P.PLACES_VIEW: frozenset({P.PLACES_MANAGE}),
+    P.RELEASES_VIEW: frozenset({P.RELEASES_MANAGE}),
     P.USERS_VIEW: frozenset({P.USERS_MANAGE}),
 }
 
