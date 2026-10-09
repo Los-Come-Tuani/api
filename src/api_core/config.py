@@ -75,6 +75,9 @@ LEGACY_DEPLOY_ORIGINS: Final[tuple[str, ...]] = (
     "https://staging-api.kplan.dev",
     "https://portal.kplan.dev",
     "https://staging-portal.kplan.dev",
+    # la landing manda las solicitudes de demo desde el navegador
+    "https://kplan.dev",
+    "https://www.kplan.dev",
 )
 
 LOCAL_HOSTNAMES: Final[frozenset[str]] = frozenset({"localhost", "127.0.0.1"})

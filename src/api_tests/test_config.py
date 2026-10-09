@@ -37,6 +37,7 @@ def test_deploy_without_overrides_keeps_legacy_values() -> None:
 
     assert config.allowed_hosts == LEGACY_DEPLOY_HOSTS
     assert config.cors_allowed_origins == LEGACY_DEPLOY_ORIGINS
+    assert "https://kplan.dev" in config.cors_allowed_origins
     assert "10.0.2.2" not in config.allowed_hosts
 
 

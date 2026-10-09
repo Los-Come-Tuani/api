@@ -178,7 +178,9 @@ Una versión:
 
 - **CORS del API**: el dominio de la landing tiene que estar en `CORS_ALLOWED_ORIGINS`
   (y en `CSRF_TRUSTED_ORIGINS` si esa variable está definida) para que el navegador deje
-  mandar el formulario.
+  mandar el formulario. Sin esas variables, los valores por defecto del despliegue ya
+  traen `https://kplan.dev` y `https://www.kplan.dev`. La landing en local (`npm run dev`)
+  no lo necesita: habla con el API por el proxy de Vite.
 - No hace falta el bucket: las versiones son links.
 - Los permisos se siembran al migrar; el rol Administrador los recibe solo. Para otro rol
   del equipo se marcan en el portal ("Roles y permisos").
