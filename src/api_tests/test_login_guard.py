@@ -166,6 +166,35 @@ def test_every_attempt_is_recorded_with_the_identifier_as_typed(
     assert succeeded.ip_address == "127.0.0.1"
 
 
+@pytest.mark.parametrize(
+    ("forwarded", "expected"),
+    [
+        ("203.0.113.5", "203.0.113.5"),
+        # Azure App Service agrega el puerto del cliente
+        ("203.0.113.5:54321", "203.0.113.5"),
+        ("198.51.100.7, 203.0.113.5:54321", "203.0.113.5"),
+        ("[2001:db8::5]:443", "2001:db8::5"),
+        ("2001:db8::5", "2001:db8::5"),
+        # lo que no es una IP no llega a la base: queda la del socket
+        ("no-es-una-ip", "127.0.0.1"),
+    ],
+)
+def test_the_attempt_keeps_only_the_client_ip_from_the_proxy(
+    client: DMRClient,
+    user: ApiUser,
+    forwarded: str,
+    expected: str,
+) -> None:
+    response = client.post(
+        "/auth/mobile/login/",
+        {"email": str(user.email), "password": "incorrecta"},
+        HTTP_X_FORWARDED_FOR=forwarded,
+    )
+
+    assert response.status_code == HTTPStatus.UNAUTHORIZED, response.content
+    assert ApiLoginAttempt.objects.get().ip_address == expected
+
+
 def test_attempts_cannot_be_rewritten(client: DMRClient, user: ApiUser) -> None:
     client.post("/auth/mobile/login/", credentials(user))
 
