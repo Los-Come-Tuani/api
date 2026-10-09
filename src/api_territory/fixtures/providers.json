@@ -582,5 +582,27 @@
     "services": [
       "guia"
     ]
+  },
+  {
+    "birthDate": "2000-01-01",
+    "city": "Managua",
+    "email": "sunbeam-managua@events.hackclub.com",
+    "firstName": "Sunbeam",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Managua",
+    "phone": "8888-0206",
+    "presentation": "Gu\u00eda de Managua: el malec\u00f3n del Xolotl\u00e1n, la Loma de Tiscapa y la Ruta Cultural de la ciudad.",
+    "services": [
+      "guia"
+    ]
   }
 ]
