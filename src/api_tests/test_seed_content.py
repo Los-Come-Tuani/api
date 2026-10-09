@@ -9,10 +9,13 @@ from django.core.management.base import CommandError
 from django.utils.timezone import now
 
 from api_agenda.models import Event
-from api_auth.models import ApiUser, ApiUserTotpDevice
+from api_auth.models import ApiUser, ApiUserGroups, ApiUserTotpDevice
+from api_catalogs.models import ServiceType
 from api_core.config import CONFIG
-from api_profiles.models import ProviderProfile
+from api_profiles.enums import ProviderStates
+from api_profiles.models import ProviderProfile, ProviderService, ProviderStatus
 from api_rewards.models import CouponCampaign
+from api_roles.models import RoleAssignment
 from api_services.models import GuidedDeparture
 from api_territory.apps import seed_content
 from api_territory.management.commands import seedcontent
@@ -29,6 +32,8 @@ if TYPE_CHECKING:
 pytestmark = pytest.mark.django_db
 
 TEAM_EMAIL = "kplan.nic@gmail.com"
+BUSINESS_EMAIL = "alice1003army@gmail.com"
+GUIDE_EMAIL = "sunbeam-managua@events.hackclub.com"
 
 ########################################################################################
 
@@ -104,6 +109,60 @@ def test_an_existing_account_is_promoted_without_what_its_creator_set(
     assert not squatter.has_usable_password()
     assert squatter.sessions_revoked_at is not None
     assert not ApiUserTotpDevice.objects.filter(api_user=squatter).exists()
+
+
+def test_an_existing_account_runs_its_business_and_keeps_its_password(
+    make_user: Callable[..., ApiUser],
+) -> None:
+    owner = make_user(email=BUSINESS_EMAIL)
+
+    seed()
+    seed()
+    owner.refresh_from_db()
+
+    assignments = RoleAssignment.objects.filter(
+        revoked_at__isnull=True, role__name="Negocio", user=owner
+    )
+
+    assert owner.has_usable_password()
+    assert [str(item.business.name) for item in assignments] == ["Café Cocibolca"]
+
+
+def test_an_existing_account_becomes_a_guide_and_keeps_its_password(
+    client: DMRClient,
+    make_user: Callable[..., ApiUser],
+) -> None:
+    guide = make_user(email=GUIDE_EMAIL)
+
+    seed()
+    guide.refresh_from_db()
+
+    listed = body(client.get("/guide/?page_size=100"))["results"]
+
+    assert guide.has_usable_password()
+    assert ApiUserGroups.objects.filter(api_user=guide, group__name="Guía").exists()
+    assert str(guide.pk) in {row["user_id"] for row in listed}
+
+
+def test_an_application_sent_from_the_app_is_approved(
+    make_user: Callable[..., ApiUser],
+) -> None:
+    guide = make_user(email=GUIDE_EMAIL)
+    profile = ProviderProfile.objects.create(
+        phone="8888-0000",
+        status=ProviderStatus.objects.get(code=ProviderStates.IN_REVIEW),
+        user=guide,
+    )
+    ProviderService.objects.create(
+        provider=profile, service=ServiceType.objects.get(code="guia")
+    )
+
+    seed()
+    profile.refresh_from_db()
+
+    assert profile.approved_at is not None
+    assert str(profile.status.code) == ProviderStates.ACTIVE
+    assert ApiUserGroups.objects.filter(api_user=guide, group__name="Guía").exists()
 
 
 def test_loading_again_does_not_repeat_anything() -> None:

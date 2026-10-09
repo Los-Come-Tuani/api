@@ -35,6 +35,8 @@ from api_profiles.models import (
 )
 from api_rewards.models import CampaignStatus, CouponCampaign
 from api_rewards.services.badges import sync_badge
+from api_roles.models import RoleAssignment
+from api_roles.services import grant_role_sync
 from api_services.models import GuidedDeparture
 from api_territory.models import (
     Circuit,
@@ -209,6 +211,47 @@ def create_provider(
     return provider
 
 
+# Una postulación que la cuenta ya había mandado desde la app queda aprobada tal como
+# la mandó.
+def approve_provider(provider: ProviderProfile) -> None:
+    found: Any = provider
+    services: set[str] = set(
+        ProviderService.objects.filter(provider=provider).values_list(
+            "service__code", flat=True
+        )
+    )
+
+    found.status = ProviderStatus.objects.get(code=ProviderStates.ACTIVE)
+    found.approved_at = now()
+    found.save(update_fields=["approved_at", "status"])
+
+    role: str = "Guía" if SERVICE_GUIDE in services else "Traductor"
+    ApiUserGroups.objects.get_or_create(
+        api_user=found.user, group=Group.objects.get(name=role)
+    )
+
+
+# Quien opera un comercio de ejemplo (`owner`). Una cuenta que ya existía conserva su
+# contraseña; si no existía, se crea sin una y entra con Google.
+def grant_business(business: Business, row: dict[str, Any], team: ApiUser) -> None:
+    user: ApiUser | None = ApiUser.objects.filter(email=row["email"]).first()
+
+    if user is None:
+        user = ApiUser.objects.create_user(
+            email=row["email"],
+            first_name=row["firstName"],
+            last_name=row["lastName"],
+            verified_at=now(),
+        )
+
+    role: Group = Group.objects.get(name="Negocio")
+
+    if not RoleAssignment.objects.filter(
+        business=business, revoked_at__isnull=True, role=role, user=user
+    ).exists():
+        grant_role_sync(granted_by=team, role=role, scope_object=business, user=user)
+
+
 ########################################################################################
 
 
@@ -276,27 +319,29 @@ class Command(BaseCommand):
         }
 
         with atomic():
-            self.load_team()
+            team = self.load_team()
             points = self.load_points(cities, pillars)
             circuits = self.load_circuits(cities, points)
             self.load_events(cities)
             guides = self.load_providers(cities)
             self.load_departures(circuits, guides)
-            self.load_businesses(cities)
+            self.load_businesses(cities, team)
 
     ####################################################################################
     # Equipo
 
     # Los superusuarios del equipo de K'Plan. Sin contraseña: entran al portal con
     # Google (sin proveedor de correo no hay forma de recuperar una).
-    def load_team(self) -> None:
+    # Devuelve el primero, que figura como quien da los roles de la carga.
+    def load_team(self) -> ApiUser:
         rows: list[dict[str, Any]] = read("team.json")
+        team: list[ApiUser] = []
 
         for row in rows:
             user: ApiUser | None = ApiUser.objects.filter(email=row["email"]).first()
 
             if user is None:
-                ApiUser.objects.create_superuser(
+                user = ApiUser.objects.create_superuser(
                     email=row["email"],
                     first_name=row["firstName"],
                     last_name=row["lastName"],
@@ -305,7 +350,11 @@ class Command(BaseCommand):
             elif not user.is_superuser:
                 promote(user)
 
+            team.append(user)
+
         self.stdout.write(f"Superusuarios del equipo: {len(rows)}")
+
+        return team[0]
 
     ####################################################################################
     # Lugares y circuitos
@@ -529,6 +578,8 @@ class Command(BaseCommand):
                     continue
 
                 provider = create_provider(row, user, city)
+            elif provider.approved_at is None:
+                approve_provider(provider)
 
             count += 1
 
@@ -589,7 +640,7 @@ class Command(BaseCommand):
     ####################################################################################
     # Comercios y cupones
 
-    def load_businesses(self, cities: dict[str, City]) -> None:
+    def load_businesses(self, cities: dict[str, City], team: ApiUser) -> None:
         active: CampaignStatus = CampaignStatus.objects.get(code="activa")
         benefits: dict[str, BenefitType] = {
             str(benefit.code): benefit for benefit in BenefitType.objects.all()
@@ -618,6 +669,9 @@ class Command(BaseCommand):
                     ruc=row["ruc"],
                 )
                 Business.objects.filter(pk=business.pk).update(verified_at=now())
+
+            if row.get("owner"):
+                grant_business(business, row["owner"], team)
 
             for campaign in row["campaigns"]:
                 benefit: BenefitType = benefits[campaign["benefitType"]]
