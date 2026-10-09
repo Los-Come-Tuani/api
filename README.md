@@ -164,8 +164,10 @@ Notas importantes:
   separadas por comas. Vacías, el API acepta `localhost`, `127.0.0.1`, `10.0.2.2`
   (el emulador de Android) y los orígenes `http://localhost:3000` y
   `http://localhost:5173` (el portal). En producción se definen como variables del
-  servicio (Railway), nunca en el repositorio; los orígenes deben ser `https` y
-  sin `/` final, y `ALLOWED_HOSTS` no admite `*` con `DEPLOY=True`.
+  servicio (el App Service de Azure, o Railway para `develop-a`; ver
+  [Despliegue en Azure](#despliegue-en-azure)), nunca en el repositorio; los
+  orígenes deben ser `https` y sin `/` final, y `ALLOWED_HOSTS` no admite `*` con
+  `DEPLOY=True`.
 - Use `localhost` y no `127.0.0.1` al abrir el portal y el API: son del mismo
   sitio solo si comparten el nombre de host, y sin eso las cookies de sesión no
   viajan.
@@ -317,12 +319,133 @@ just
   proxy o firewall de su red está bloqueando el `User-Agent` de `apt`. Pruebe
   desde otra red o VPN.
 
+## Despliegue en Azure
+
+El API publicado en Azure es siempre el código de la rama `production` de este
+repositorio, que es la rama por defecto en GitHub. Nadie copia código a Azure a
+mano: cada `push` a `production` lo construye y lo despliega el workflow
+[`.github/workflows/azure.yml`](.github/workflows/azure.yml).
+
+| Rama         | Dónde corre                                | Dominio                         |
+| ------------ | ------------------------------------------ | ------------------------------- |
+| `production` | Azure App Service `kplan` (Canada Central) | `https://azure-api.kplan.dev`   |
+| `develop-a`  | Railway                                    | `https://develop-api.kplan.dev` |
+
+El portal (`https://portal.kplan.dev`), la landing (`https://kplan.dev`) y los
+builds de release de la app móvil usan el API de Azure.
+
+### Cómo llega un cambio a Azure
+
+Los cambios se trabajan en `develop-a` (directamente o en una rama que se
+fusiona en ella) y pasan a Azure al fusionar `develop-a` en `production`:
+
+```bash
+git switch production
+git pull --ff-only
+git merge --no-ff develop-a -m "merge: develop-a en production"
+git push origin production
+```
+
+Con ese `push`, el workflow:
+
+1. Construye la imagen del `dockerfile` con la etapa `runtime-azure`.
+1. La publica en Docker Hub como [`jpzunigadev/kplan-api`][kplan-image], con
+   dos etiquetas: `latest` y el SHA completo del commit.
+1. Le indica al App Service `kplan` que corra la imagen etiquetada con ese SHA
+   (`azure/webapps-deploy`). Azure nunca usa `latest`: cada despliegue queda
+   atado a un commit exacto de `production`.
+
+Al arrancar, el contenedor (`scripts/start.sh`) aplica las migraciones
+pendientes, levanta Nginx en el puerto `8080` (`deploy/azure/nginx.conf`) y deja
+el API (Granian) en `127.0.0.1:8000`, detrás de Nginx. App Service termina el
+HTTPS y reenvía el tráfico al `8080`. Como `ALLOWED_HOSTS` incluye
+`azure-api.kplan.dev`, cada `migrate` carga además el contenido de ejemplo, que
+solo agrega lo que falte.
+
+### Configuración
+
+Secretos del repositorio en GitHub (Settings → Secrets and variables →
+Actions):
+
+- `DOCKERHUB_USERNAME` y `DOCKERHUB_TOKEN`: la cuenta de Docker Hub que publica
+  la imagen.
+- `AZUREAPPSERVICE_PUBLISHPROFILE_4AE80A6822C44E7EB53A50603913BF05`: el perfil
+  de publicación del App Service `kplan` (se descarga desde la página del App
+  Service en el portal de Azure).
+
+Variables de entorno del App Service `kplan` (contenedor Linux), en el portal de
+Azure:
+
+- `WEBSITES_PORT=8080`, el puerto de Nginx.
+- `DEPLOY=True` y `DEBUG=False`.
+- `DATABASE_URL` (PostgreSQL), `REDIS_URL` y `REDIS_SECRET_KEY`. Con un Redis
+  administrado con TLS (`rediss://`), como el de Azure, la clave puede tener 32
+  caracteres; sin TLS se piden 64.
+- `SECRET_KEY` y `JWT_SECRET_KEY` (de 64 a 256 caracteres) y
+  `TOTP_ENCRYPTION_KEYS` (`just fernet-key`).
+- `ALLOWED_HOSTS` con `azure-api.kplan.dev`, y `CORS_ALLOWED_ORIGINS` con
+  `https://portal.kplan.dev`, `https://kplan.dev` y `https://www.kplan.dev`
+  (`CSRF_TRUSTED_ORIGINS` toma esos mismos si no se define).
+- Opcionales: `EMAIL_*` (sin ellas los correos se descartan),
+  `GOOGLE_OAUTH_CLIENT_IDS`, `STORAGE_*` (ver `docs/archivos.md`) y `FCM_*`.
+
+Los valores viven solo en GitHub y en Azure, nunca en el repositorio. Cambiar
+una variable reinicia el App Service con la misma imagen: el código que corre no
+cambia.
+
+### Comprobar que Azure corre lo mismo que `production`
+
+1. Anote el SHA del último commit de `production` en GitHub:
+
+   ```bash
+   git ls-remote https://github.com/Los-Come-Tuani/api refs/heads/production
+   ```
+
+1. En GitHub, Actions → "deploy to azure web app - kplan": la última ejecución
+   tiene que ser de ese commit y estar en verde.
+1. La imagen que corre el App Service tiene que llevar ese SHA como etiqueta.
+   En el portal de Azure se ve en App Service `kplan` → Centro de
+   implementación; con la CLI de Azure:
+
+   ```bash
+   az webapp config show --name kplan --resource-group <grupo-de-recursos> \
+     --query linuxFxVersion --output tsv
+   # DOCKER|docker.io/jpzunigadev/kplan-api:<SHA>
+   ```
+
+   La misma etiqueta aparece en las [etiquetas de la imagen][kplan-image-tags]
+   en Docker Hub.
+
+1. El API responde:
+
+   ```bash
+   curl https://azure-api.kplan.dev/health/
+   # {"status":"success","components":{"cache":"ok","database":"ok","storage":"ok"}}
+   ```
+
+Mientras el workflow corre (unos minutos después del `push`), Azure sigue con el
+commit anterior.
+
+### Reglas para que no se separen
+
+- No se despliega por otro camino (ZIP, FTP, `az webapp deploy`, archivos
+  editados desde Kudu o el portal de Azure) ni se cambia a mano la imagen del
+  App Service: Azure quedaría corriendo algo que no está en `production`.
+- Para deshacer un cambio publicado se hace `git revert` en `production` y se
+  empuja; el workflow despliega ese commit nuevo. No se apunta el App Service a
+  una etiqueta vieja.
+- Para volver a desplegar sin cambios (por ejemplo, si una ejecución falló por
+  algo externo), se relanza el workflow desde Actions → "Run workflow" sobre
+  `production`.
+
 [django-badge]: https://img.shields.io/badge/django-white?style=for-the-badge&color=gray&logoColor=white&logo=django
 [django-docs]: https://docs.djangoproject.com/en/
 [docker]: https://docs.docker.com/get-started/get-docker/
 [git]: https://git-scm.com/install/
 [jq]: https://jqlang.org/download/
 [just]: https://github.com/casey/just
+[kplan-image]: https://hub.docker.com/r/jpzunigadev/kplan-api
+[kplan-image-tags]: https://hub.docker.com/r/jpzunigadev/kplan-api/tags
 [openapi-badge]: https://img.shields.io/badge/openapi-white?style=for-the-badge&color=gray&logoColor=white&logo=openapiinitiative
 [openapi-docs]: https://www.openapis.org/
 [postgres-badge]: https://img.shields.io/badge/postgresql-white?style=for-the-badge&color=gray&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzOTQuNSA0MDgiPjxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Ik0zODMuMiAyNTIuNWMtNTAuMyAxMC40LTUzLjgtNi42LTUzLjgtNi42QzM4Mi42IDE2NyA0MDQuOCA2NyAzODUuNiA0Mi42IDMzMy4zLTI0LjIgMjQyLjggNy40IDI0MS4zIDguMmgtLjVxLTE0LjgtMy0zMy41LTMuNGMtMjIuOC0uNC00MCA2LTUzLjEgMTUuOSAwIDAtMTYxLjUtNjYuNS0xNTQgODMuNkMyIDEzNi4zIDQ2IDM0NiA5OC44IDI4Mi42YzE5LjMtMjMuMiAzNy45LTQyLjcgMzcuOS00Mi43YTQ5IDQ5IDAgMCAwIDMxLjkgOC4xbC45LS44Yy0uMyAzLS4xIDUuNy40IDktMTMuNiAxNS4yLTkuNiAxNy45LTM2LjggMjMuNS0yNy40IDUuNi0xMS4zIDE1LjctLjggMTguMyAxMi44IDMuMiA0Mi40IDcuOCA2Mi4zLTIwLjJsLS44IDMuMmM1LjMgNC4zIDkgMjcuNyA4LjQgNDktLjYgMjEuMi0xIDM1LjggMy4yIDQ3LjJzOC40IDM3IDQ0IDI5LjRjMjkuOC02LjQgNDUuMy0yMyA0Ny40LTUwLjUgMS42LTE5LjYgNS0xNi43IDUuMi0zNC4zbDIuOC04LjNjMy4yLTI2LjYuNS0zNS4yIDE4LjktMzEuMmw0LjQuNGMxMy42LjYgMzEuMi0yLjIgNDEuNi03IDIyLjQtMTAuNCAzNS42LTI3LjcgMTMuNi0yMy4yIi8+PC9zdmc+Cg==
