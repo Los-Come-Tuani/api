@@ -139,10 +139,10 @@ Mientras una esté en proceso, el portal impide iniciar otra.
 
 ## Todo saldo es explicable movimiento por movimiento
 
-| Operación               | `monto`   | `origen()`         |
-| ----------------------- | :-------: | ------------------ |
-| Liquidar una comisión   | positivo  | `Comision`         |
-| Pagar un retiro         | negativo  | `SolicitudRetiro`  |
+| Operación             | `monto`  | `origen()`        |
+| --------------------- | :------: | ----------------- |
+| Liquidar una comisión | positivo | `Comision`        |
+| Pagar un retiro       | negativo | `SolicitudRetiro` |
 
 `MovimientoSaldo` es la segunda instancia del patrón `Movimiento`, idéntica en
 forma a `MovimientoInsignia`: solo inserción, con signo y con referencia al hecho

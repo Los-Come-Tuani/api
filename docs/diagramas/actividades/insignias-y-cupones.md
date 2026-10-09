@@ -101,9 +101,9 @@ flowchart TB
 
 | Partición | Pasos | Qué le corresponde                                              |
 | --------- | :---: | --------------------------------------------------------------- |
-| Turista   |   4   | Conceder ubicación, caminar, canjear y presentar el código       |
-| `k'plan`  |  12   | Evaluar geocercas, acreditar, descontar, emitir y validar        |
-| Comercio  |   5   | Financiar la campaña y resolver la validación frente al cliente  |
+| Turista   |   4   | Conceder ubicación, caminar, canjear y presentar el código      |
+| `k'plan`  |  12   | Evaluar geocercas, acreditar, descontar, emitir y validar       |
+| Comercio  |   5   | Financiar la campaña y resolver la validación frente al cliente |
 
 Los cuatro pasos punteados —comparar posiciones, medir la distancia, comprobar
 las veinticuatro horas y acreditar— los ejecuta el proceso programado contra la

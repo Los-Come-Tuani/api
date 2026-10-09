@@ -94,24 +94,24 @@ flowchart LR
 
 ## Qué exige cada caso de uso
 
-| Caso de uso                     | Quién lo inicia         | Precondición                                        | Requisito           |
-| ------------------------------- | ----------------------- | --------------------------------------------------- | ------------------- |
-| Cargar credenciales             | Guía, traductor         | PDF legible de hasta 10 MB con emisión y vencimiento | [RF-S-13][rf-s-13]  |
-| Renovar una credencial          | Guía, traductor         | Nueva fecha de vencimiento posterior a hoy           | [RF-P-04][rf-p-04]  |
-| Registrar la organización       | Alcaldía, comercio, institución | Documento que acredita representación o existencia legal | [RF-B-05][rf-b-05] |
-| Encolar el expediente           | —                       | Documento cargado y válido                           | [RF-B-01][rf-b-01]  |
-| Atender la cola                 | Moderador               | Cola ordenada por antigüedad de envío                | [RF-B-01][rf-b-01]  |
-| Abrir el documento en el visor  | Moderador               | Expediente tomado                                    | [RF-B-02][rf-b-02]  |
-| Aprobar o rechazar con motivo   | Moderador               | El motivo es obligatorio al rechazar                 | [RF-B-04][rf-b-04]  |
-| Suspender por credencial vencida | Proceso programado     | Vencimiento alcanzado sin renovación aprobada        | [RF-P-05][rf-p-05]  |
-| Reportar una conducta           | Turista, prestador      | Categoría del reporte declarada                      | [RF-B-06][rf-b-06]  |
-| Impugnar una reseña             | Guía, traductor         | Reseña recibida; no se notifica al autor              | [RF-S-25][rf-s-25]  |
-| Abrir el caso de moderación     | —                       | Reporte o impugnación con su material de respaldo    | [RF-S-25][rf-s-25]  |
-| Atender el tablero de reportes  | Supervisor              | Caso abierto con su material de respaldo             | [RF-B-06][rf-b-06]  |
-| Suspender temporalmente         | Supervisor              | Infracción leve verificada; motivo interno obligatorio | [RF-B-07][rf-b-07] |
-| Expulsar de forma permanente    | Supervisor              | Confirmación adicional y razón detallada             | [RF-B-08][rf-b-08]  |
-| Cancelar servicios comprometidos | Supervisor             | Servicios futuros acordados por el expulsado         | [RF-B-09][rf-b-09]  |
-| Consultar el historial          | Supervisor              | Ninguna                                              | [RF-B-10][rf-b-10]  |
+| Caso de uso                      | Quién lo inicia                 | Precondición                                             | Requisito          |
+| -------------------------------- | ------------------------------- | -------------------------------------------------------- | ------------------ |
+| Cargar credenciales              | Guía, traductor                 | PDF legible de hasta 10 MB con emisión y vencimiento     | [RF-S-13][rf-s-13] |
+| Renovar una credencial           | Guía, traductor                 | Nueva fecha de vencimiento posterior a hoy               | [RF-P-04][rf-p-04] |
+| Registrar la organización        | Alcaldía, comercio, institución | Documento que acredita representación o existencia legal | [RF-B-05][rf-b-05] |
+| Encolar el expediente            | —                               | Documento cargado y válido                               | [RF-B-01][rf-b-01] |
+| Atender la cola                  | Moderador                       | Cola ordenada por antigüedad de envío                    | [RF-B-01][rf-b-01] |
+| Abrir el documento en el visor   | Moderador                       | Expediente tomado                                        | [RF-B-02][rf-b-02] |
+| Aprobar o rechazar con motivo    | Moderador                       | El motivo es obligatorio al rechazar                     | [RF-B-04][rf-b-04] |
+| Suspender por credencial vencida | Proceso programado              | Vencimiento alcanzado sin renovación aprobada            | [RF-P-05][rf-p-05] |
+| Reportar una conducta            | Turista, prestador              | Categoría del reporte declarada                          | [RF-B-06][rf-b-06] |
+| Impugnar una reseña              | Guía, traductor                 | Reseña recibida; no se notifica al autor                 | [RF-S-25][rf-s-25] |
+| Abrir el caso de moderación      | —                               | Reporte o impugnación con su material de respaldo        | [RF-S-25][rf-s-25] |
+| Atender el tablero de reportes   | Supervisor                      | Caso abierto con su material de respaldo                 | [RF-B-06][rf-b-06] |
+| Suspender temporalmente          | Supervisor                      | Infracción leve verificada; motivo interno obligatorio   | [RF-B-07][rf-b-07] |
+| Expulsar de forma permanente     | Supervisor                      | Confirmación adicional y razón detallada                 | [RF-B-08][rf-b-08] |
+| Cancelar servicios comprometidos | Supervisor                      | Servicios futuros acordados por el expulsado             | [RF-B-09][rf-b-09] |
+| Consultar el historial           | Supervisor                      | Ninguna                                                  | [RF-B-10][rf-b-10] |
 
 ## Lo que las flechas dicen y no se ve a simple vista
 

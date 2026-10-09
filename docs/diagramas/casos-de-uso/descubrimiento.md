@@ -92,25 +92,25 @@ flowchart LR
 
 ## Qué exige cada caso de uso
 
-| Caso de uso                  | Quién lo inicia          | Precondición                                     | Requisito           |
-| ---------------------------- | ------------------------ | ------------------------------------------------ | ------------------- |
-| Crear puntos de interés      | Operador de alcaldía     | Organización aprobada; coordenadas en Nicaragua  | [RF-A-02][rf-a-02]  |
-| Publicar circuito oficial    | Operador de alcaldía     | Al menos dos paradas geolocalizadas               | [RF-A-02][rf-a-02]  |
-| Editar el circuito           | Operador de alcaldía     | El circuito es de su propia ciudad                | [RF-A-05][rf-a-05]  |
-| Suspender la visibilidad     | Operador de alcaldía     | Circuito publicado                                | [RF-A-08][rf-a-08]  |
-| Mantener la ficha            | Operador de comercio     | Comercio verificado; coordenadas en Nicaragua     | [RF-C-03][rf-c-03]  |
-| Programar un evento          | Operador de institución  | Institución aprobada; fechas futuras y coherentes | [RF-I-01][rf-i-01]  |
-| Cancelar un evento           | Operador de institución  | Evento no finalizado                              | [RF-I-05][rf-i-05]  |
-| Explorar el mapa             | Turista                  | Ciudad seleccionada                               | [RF-T-01][rf-t-01]  |
-| Filtrar por pilar cultural   | Turista                  | Mapa abierto                                      | [RF-T-29][rf-t-29]  |
-| Seguir un circuito oficial   | Turista                  | Circuito visible                                  | [RF-T-28][rf-t-28]  |
-| Ajustar en una copia propia  | Turista                  | La copia conserva al menos dos paradas            | [RF-T-07][rf-t-07]  |
-| Combinar rutas               | Turista                  | Dos o más rutas propias, de cualquier ciudad      | [RF-T-08][rf-t-08]  |
-| Crear una ruta desde cero    | Turista                  | Al menos dos paradas geolocalizadas               | [RF-T-09][rf-t-09]  |
-| Guardar la ruta              | Turista                  | Ruta válida                                       | [RF-T-10][rf-t-10]  |
-| Gestionar la colección       | Turista                  | Renombrar exige tres caracteres; eliminar exige que no haya servicio vigente | [RF-T-13][rf-t-13] |
-| Acreditar la visita          | Turista, proceso         | Permiso de ubicación y distancia menor a 50 m     | [RF-S-15][rf-s-15]  |
-| Retirar del mapa lo vencido  | Proceso programado       | Fecha de finalización superada                    | [RF-I-02][rf-i-02]  |
+| Caso de uso                 | Quién lo inicia         | Precondición                                                                 | Requisito          |
+| --------------------------- | ----------------------- | ---------------------------------------------------------------------------- | ------------------ |
+| Crear puntos de interés     | Operador de alcaldía    | Organización aprobada; coordenadas en Nicaragua                              | [RF-A-02][rf-a-02] |
+| Publicar circuito oficial   | Operador de alcaldía    | Al menos dos paradas geolocalizadas                                          | [RF-A-02][rf-a-02] |
+| Editar el circuito          | Operador de alcaldía    | El circuito es de su propia ciudad                                           | [RF-A-05][rf-a-05] |
+| Suspender la visibilidad    | Operador de alcaldía    | Circuito publicado                                                           | [RF-A-08][rf-a-08] |
+| Mantener la ficha           | Operador de comercio    | Comercio verificado; coordenadas en Nicaragua                                | [RF-C-03][rf-c-03] |
+| Programar un evento         | Operador de institución | Institución aprobada; fechas futuras y coherentes                            | [RF-I-01][rf-i-01] |
+| Cancelar un evento          | Operador de institución | Evento no finalizado                                                         | [RF-I-05][rf-i-05] |
+| Explorar el mapa            | Turista                 | Ciudad seleccionada                                                          | [RF-T-01][rf-t-01] |
+| Filtrar por pilar cultural  | Turista                 | Mapa abierto                                                                 | [RF-T-29][rf-t-29] |
+| Seguir un circuito oficial  | Turista                 | Circuito visible                                                             | [RF-T-28][rf-t-28] |
+| Ajustar en una copia propia | Turista                 | La copia conserva al menos dos paradas                                       | [RF-T-07][rf-t-07] |
+| Combinar rutas              | Turista                 | Dos o más rutas propias, de cualquier ciudad                                 | [RF-T-08][rf-t-08] |
+| Crear una ruta desde cero   | Turista                 | Al menos dos paradas geolocalizadas                                          | [RF-T-09][rf-t-09] |
+| Guardar la ruta             | Turista                 | Ruta válida                                                                  | [RF-T-10][rf-t-10] |
+| Gestionar la colección      | Turista                 | Renombrar exige tres caracteres; eliminar exige que no haya servicio vigente | [RF-T-13][rf-t-13] |
+| Acreditar la visita         | Turista, proceso        | Permiso de ubicación y distancia menor a 50 m                                | [RF-S-15][rf-s-15] |
+| Retirar del mapa lo vencido | Proceso programado      | Fecha de finalización superada                                               | [RF-I-02][rf-i-02] |
 
 ## Lo que las flechas dicen y no se ve a simple vista
 

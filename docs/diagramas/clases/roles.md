@@ -122,15 +122,15 @@ olvide, y basta una omisión para que Granada reescriba el circuito de León
 
 ## Los siete roles y su ámbito
 
-| Rol                   | `ambito_requerido` | Qué habilita                                    |
-| --------------------- | ------------------ | ----------------------------------------------- |
-| `Turista`             | ninguno            | Explorar, planificar, contratar y canjear       |
-| `Prestador`           | ninguno            | Publicar recorridos, postularse y cobrar        |
-| `OperadorAlcaldia`    | `Alcaldia`         | Publicar y editar los circuitos de su ciudad    |
-| `OperadorComercio`    | `Comercio`         | Editar la ficha, emitir campañas, validar cupones |
-| `OperadorInstitucion` | `InstitucionCultural` | Programar y cancelar eventos                 |
-| `Moderador`           | ninguno            | Resolver la cola de verificación                |
-| `Supervisor`          | ninguno            | Sancionar usuarios y resolver reportes          |
+| Rol                   | `ambito_requerido`    | Qué habilita                                      |
+| --------------------- | --------------------- | ------------------------------------------------- |
+| `Turista`             | ninguno               | Explorar, planificar, contratar y canjear         |
+| `Prestador`           | ninguno               | Publicar recorridos, postularse y cobrar          |
+| `OperadorAlcaldia`    | `Alcaldia`            | Publicar y editar los circuitos de su ciudad      |
+| `OperadorComercio`    | `Comercio`            | Editar la ficha, emitir campañas, validar cupones |
+| `OperadorInstitucion` | `InstitucionCultural` | Programar y cancelar eventos                      |
+| `Moderador`           | ninguno               | Resolver la cola de verificación                  |
+| `Supervisor`          | ninguno               | Sancionar usuarios y resolver reportes            |
 
 `ambito_requerido` no es decorativo: `exige_ambito()` lo lee y rechaza una
 asignación de `OperadorComercio` sin comercio. Es la comprobación que impide

@@ -73,7 +73,35 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     JWT_SECRET_KEY: LongSecret
     SECRET_KEY: LongSecret
 
-    REDIS_SECRET_KEY: OptionalSecret = SecretStr(secret_value="")
+    REDIS_SECRET_KEY: Annotated[
+        SecretStr,
+        StringConstraints(max_length=MAX_SECRET_LENGTH),
+    ] = SecretStr("")
+
+    ###################################################################################
+
+    ALLOWED_HOSTS: str = ""
+    FRONTEND_ORIGINS: str = ""
+    PG_SSL_MODE: Literal[
+        "disable",
+        "allow",
+        "prefer",
+        "require",
+        "verify-ca",
+        "verify-full",
+    ] = "prefer"
+
+    @cached_property
+    def allowed_hosts(self) -> tuple[str, ...]:
+        return tuple(h for raw in self.ALLOWED_HOSTS.split(",") if (h := raw.strip()))
+
+    @cached_property
+    def frontend_origins(self) -> tuple[str, ...]:
+        return tuple(
+            o for raw in self.FRONTEND_ORIGINS.split(",") if (o := raw.strip())
+        )
+
+    ###################################################################################
 
     @model_validator(mode="after")
     def check_cookie_policy(self) -> Self:
@@ -155,6 +183,7 @@ class ApiConfig(BaseSettings, PermissiveDTO):
                 "client_encoding": "utf-8",
                 "isolation_level": IsolationLevel.READ_COMMITTED,
                 "pool": True,
+                "sslmode": self.PG_SSL_MODE,
             },
             "USER": unquote(
                 errors="strict",
@@ -172,7 +201,10 @@ class ApiConfig(BaseSettings, PermissiveDTO):
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": unquote(
                 errors="strict",
-                string=f"redis://{self.REDIS_URL.host}:{self.REDIS_URL.port or 6379}",
+                string=(
+                    f"{self.REDIS_URL.scheme}://"
+                    f"{self.REDIS_URL.host}:{self.REDIS_URL.port or 6379}"
+                ),
             ),
         }
 

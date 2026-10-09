@@ -21,24 +21,24 @@ validación.
 
 ## Los tres flujos
 
-| Diagrama                                            | Particiones | Decisiones | Empieza en                        | Termina en                       |
-| --------------------------------------------------- | :---------: | :--------: | --------------------------------- | -------------------------------- |
-| [Contratación](contratacion.md)                     |      4      |     3      | El turista publica su solicitud   | La reserva cerrada y el pago liberado |
-| [Acreditación del prestador](acreditacion.md)       |      3      |     3      | El prestador crea su cuenta       | El prestador visible y contratable |
-| [De la visita al mostrador](insignias-y-cupones.md) |      3      |     5      | El dispositivo reporta su posición | El cupón consumido en el local   |
+| Diagrama                                            | Particiones | Decisiones | Empieza en                         | Termina en                            |
+| --------------------------------------------------- | :---------: | :--------: | ---------------------------------- | ------------------------------------- |
+| [Contratación](contratacion.md)                     |      4      |     3      | El turista publica su solicitud    | La reserva cerrada y el pago liberado |
+| [Acreditación del prestador](acreditacion.md)       |      3      |     3      | El prestador crea su cuenta        | El prestador visible y contratable    |
+| [De la visita al mostrador](insignias-y-cupones.md) |      3      |     5      | El dispositivo reporta su posición | El cupón consumido en el local        |
 
 ---
 
 ## Cómo se lee un diagrama
 
-| Símbolo                | Significa                                                  |
-| ---------------------- | ---------------------------------------------------------- |
-| Círculo `inicio`       | Dónde arranca el flujo                                     |
-| Círculo doble `fin`    | Dónde termina                                              |
-| Caja                   | Una actividad: un paso con un responsable                  |
-| Rombo                  | Una decisión: cada salida lleva su guarda                  |
-| Caja de borde punteado | Un paso que ejecuta el proceso programado, sin que nadie lo pida |
-| Recuadro que las agrupa | Una partición: de quién es la responsabilidad de esos pasos |
+| Símbolo                 | Significa                                                        |
+| ----------------------- | ---------------------------------------------------------------- |
+| Círculo `inicio`        | Dónde arranca el flujo                                           |
+| Círculo doble `fin`     | Dónde termina                                                    |
+| Caja                    | Una actividad: un paso con un responsable                        |
+| Rombo                   | Una decisión: cada salida lleva su guarda                        |
+| Caja de borde punteado  | Un paso que ejecuta el proceso programado, sin que nadie lo pida |
+| Recuadro que las agrupa | Una partición: de quién es la responsabilidad de esos pasos      |
 
 Las particiones son el eje del diagrama. Un paso dentro de la partición
 `k'plan` no lo ejecuta ninguna persona: lo hace el sistema como consecuencia de

@@ -117,10 +117,10 @@ El precio de la decisión es que `Usuario` aparece tres veces en el diagrama:
 emite, recibe y presenta impugnaciones. Es el costo de tener la dirección
 explícita, y es más barato que mantener dos ciclos de vida sincronizados.
 
-| Quién recibe | `es_publica()` | Quién la ve                                 |
-| ------------ | :------------: | ------------------------------------------- |
-| Prestador    |    **sí**      | Cualquiera que explore su perfil            |
-| Turista      |      no        | Solo prestadores a los que él les escribe   |
+| Quién recibe | `es_publica()` | Quién la ve                               |
+| ------------ | :------------: | ----------------------------------------- |
+| Prestador    |     **sí**     | Cualquiera que explore su perfil          |
+| Turista      |       no       | Solo prestadores a los que él les escribe |
 
 !!! warning "Un umbral sin definir"
 

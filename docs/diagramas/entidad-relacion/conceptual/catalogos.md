@@ -50,7 +50,7 @@ partida y el requerimiento que lo fija.
 | Retiro mínimo acumulado                 | 20 USD      | [RF-P-18][rf-p-18] |
 | Días entre la baja y el borrado         | 30          | [RF-S-11][rf-s-11] |
 | Capacidad máxima de un recorrido        | 50 personas | [RF-P-08][rf-p-08] |
-| Comisión de la plataforma               | sin definir | n/a                  |
+| Comisión de la plataforma               | sin definir | n/a                |
 
 ## Lo que no es una lista
 
