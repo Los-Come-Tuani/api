@@ -92,11 +92,20 @@ En la app móvil, el cuerpo es:
 - La respuesta es la misma del inicio de sesión: `200` con la sesión, o `202` con el
   reto si la cuenta tiene 2FA.
 
-En el portal el cuerpo lleva solo `{ "id_token": "<JWT de Google>" }`. Google no crea
-cuentas desde ahí: el negocio, la alcaldía o la institución primero completa su
-postulación, y el equipo primero acepta su invitación. Después Google puede enlazar esa
-cuenta existente, activa y con correo verificado. Una cuenta de la app o un correo que
-todavía no tiene cuenta de portal recibe `403`. El segundo factor sigue aplicándose.
+En el portal el cuerpo lleva `{ "id_token": "<JWT de Google>" }` o, en su lugar,
+`{ "access_token": "<token de acceso de Google>" }`: el del selector de cuentas
+(`prompt=select_account`), que siempre deja elegir otra cuenta. El API lo valida con el
+`tokeninfo` de Google: tiene que estar vigente, haberse emitido para uno de los
+`GOOGLE_OAUTH_CLIENT_IDS` (`aud`; si no, el token que otra app obtuvo de esa persona
+serviría aquí) y traer el correo verificado (`401` si no; `5xx` si Google no responde).
+Se manda uno de los dos (`400` con `body.id_token` si no), y la app no puede usar el de
+acceso (`400`).
+
+Google no crea cuentas desde el portal: el negocio, la alcaldía o la institución primero
+completa su postulación, y el equipo primero acepta su invitación. Después Google puede
+enlazar esa cuenta existente, activa y con correo verificado. Una cuenta de la app o un
+correo que todavía no tiene cuenta de portal recibe `403`. El segundo factor sigue
+aplicándose.
 
 ## 4. App (Flutter)
 
@@ -125,9 +134,12 @@ Client ID se compilan en la app con `--dart-define-from-file` (`env/dev.json`...
 
 ## 5. Portal
 
-El portal usa Google Identity Services con el Client ID Web. El botón oficial entrega
-`credential`, que se manda como `id_token` a `POST /auth/web/google/`. La variable pública
-del build es:
+El portal usa Google Identity Services con el Client ID Web: su cliente de tokens
+(`google.accounts.oauth2.initTokenClient`) con `prompt: 'select_account'`, que abre el
+selector de cuentas de Google en cada clic, y manda el `access_token` a
+`POST /auth/web/google/`. No usa el botón de identidad: después de elegir una cuenta,
+ese botón queda como "Continuar como …" y no deja cambiarla. La variable pública del
+build es:
 
 ```bash
 VITE_GOOGLE_CLIENT_ID="123456789-abc.apps.googleusercontent.com"

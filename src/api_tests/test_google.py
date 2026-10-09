@@ -1,6 +1,8 @@
+from email.message import Message
 from http import HTTPStatus
 from time import time
 from typing import TYPE_CHECKING
+from urllib.error import HTTPError, URLError
 
 import jwt
 import pytest
@@ -402,3 +404,182 @@ def test_the_audience_may_be_any_of_the_configured_client_ids(
     response = sign_in(client, **profile_data())
 
     assert response.status_code == HTTPStatus.OK  # ty: ignore[unresolved-attribute]
+
+
+########################################################################################
+# El selector de cuentas del portal: un token de acceso en lugar del de identidad
+
+ACCESS_TOKEN = "ya29.token-de-acceso-de-prueba"
+
+
+def tokeninfo_claims(**claims: object) -> dict:
+    return {
+        "aud": CLIENT_ID,
+        "azp": CLIENT_ID,
+        "email": EMAIL,
+        "email_verified": "true",
+        "expires_in": "3599",
+        "scope": "openid https://www.googleapis.com/auth/userinfo.email",
+        "sub": "110169484474386276334",
+        **claims,
+    }
+
+
+def answer_tokeninfo(
+    monkeypatch: pytest.MonkeyPatch,
+    claims: dict | None = None,
+    error: Exception | None = None,
+) -> list[str]:
+    asked: list[str] = []
+
+    def tokeninfo(token: str) -> dict:
+        asked.append(token)
+        if error is not None:
+            raise error
+        return claims or tokeninfo_claims()
+
+    monkeypatch.setattr(google, "tokeninfo", tokeninfo)
+
+    return asked
+
+
+def web_sign_in_with_access(client: DMRClient, **payload: object) -> object:
+    csrf = client.get("/auth/csrf/").headers["x-csrftoken"]
+    return client.post(
+        "/auth/web/google/",
+        payload or {"access_token": ACCESS_TOKEN},
+        headers={"X-CSRFToken": csrf},
+    )
+
+
+def test_the_portal_signs_in_with_the_account_chooser_token(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    user = portal_user(make_user)
+    asked = answer_tokeninfo(monkeypatch)
+
+    response = web_sign_in_with_access(csrf_client)
+
+    assert response.status_code == HTTPStatus.OK, response.content  # ty: ignore[unresolved-attribute]
+    assert body(response)["user"]["email"] == EMAIL  # ty: ignore[invalid-argument-type]
+    assert asked == [ACCESS_TOKEN]
+    assert ApiExternalIdentity.objects.get(user=user).subject == "110169484474386276334"
+
+
+@pytest.mark.parametrize(
+    "claims",
+    [
+        tokeninfo_claims(aud="otra-app.apps.googleusercontent.com"),
+        tokeninfo_claims(expires_in="0"),
+        tokeninfo_claims(sub=""),
+    ],
+    ids=["otra-app", "vencido", "sin-cuenta"],
+)
+def test_an_access_token_that_is_not_ours_or_alive_is_rejected(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+    monkeypatch: pytest.MonkeyPatch,
+    claims: dict,
+) -> None:
+    portal_user(make_user)
+    answer_tokeninfo(monkeypatch, claims)
+
+    response = web_sign_in_with_access(csrf_client)
+
+    assert response.status_code == HTTPStatus.UNAUTHORIZED  # ty: ignore[unresolved-attribute]
+    assert not ApiExternalIdentity.objects.exists()
+
+
+def test_google_refusing_the_access_token_is_an_invalid_token(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    portal_user(make_user)
+    refused = HTTPError(
+        google.GOOGLE_TOKENINFO_URL, 400, "Bad Request", Message(), None
+    )
+    answer_tokeninfo(monkeypatch, error=refused)
+
+    response = web_sign_in_with_access(csrf_client)
+
+    assert response.status_code == HTTPStatus.UNAUTHORIZED  # ty: ignore[unresolved-attribute]
+    assert body(response)["detail"] == google.INVALID_TOKEN_DETAIL  # ty: ignore[invalid-argument-type]
+
+
+def test_google_unreachable_is_not_blamed_on_the_person(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    portal_user(make_user)
+    answer_tokeninfo(monkeypatch, error=URLError("sin red"))
+
+    response = web_sign_in_with_access(csrf_client)
+
+    assert response.status_code >= HTTPStatus.INTERNAL_SERVER_ERROR  # ty: ignore[unresolved-attribute]
+    assert body(response)["detail"] == google.UNREACHABLE_DETAIL  # ty: ignore[invalid-argument-type]
+
+
+def test_an_access_token_with_an_unverified_email_is_rejected(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    portal_user(make_user)
+    answer_tokeninfo(monkeypatch, tokeninfo_claims(email_verified="false"))
+
+    response = web_sign_in_with_access(csrf_client)
+
+    assert response.status_code == HTTPStatus.UNAUTHORIZED  # ty: ignore[unresolved-attribute]
+    assert body(response)["detail"] == google.UNVERIFIED_DETAIL  # ty: ignore[invalid-argument-type]
+
+
+def test_the_access_token_does_not_create_accounts_from_the_portal(
+    csrf_client: DMRClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    answer_tokeninfo(monkeypatch)
+
+    response = web_sign_in_with_access(csrf_client)
+
+    assert response.status_code == HTTPStatus.FORBIDDEN  # ty: ignore[unresolved-attribute]
+    assert not ApiUser.objects.filter(email=EMAIL).exists()
+
+
+def test_the_app_cannot_sign_in_with_an_access_token(
+    client: DMRClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    asked = answer_tokeninfo(monkeypatch)
+
+    response = client.post(
+        "/auth/mobile/google/",
+        {"access_token": ACCESS_TOKEN, **profile_data()},
+    )
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert asked == []
+
+
+@pytest.mark.parametrize("payload", ["los-dos", "ninguno"])
+def test_exactly_one_google_token_is_sent(
+    csrf_client: DMRClient,
+    make_user: Callable[..., ApiUser],
+    monkeypatch: pytest.MonkeyPatch,
+    payload: str,
+) -> None:
+    portal_user(make_user)
+    answer_tokeninfo(monkeypatch)
+    sent = (
+        {"access_token": ACCESS_TOKEN, "id_token": google_token()}
+        if payload == "los-dos"
+        else {"birth_date": ADULT}
+    )
+
+    response = web_sign_in_with_access(csrf_client, **sent)
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST  # ty: ignore[unresolved-attribute]
+    assert "id_token" in str(body(response)["field_errors"])  # ty: ignore[invalid-argument-type]

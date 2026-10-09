@@ -1,6 +1,11 @@
+import json
+
 from dataclasses import dataclass
 from functools import cache
 from typing import TYPE_CHECKING
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
+from urllib.request import urlopen
 
 import jwt
 
@@ -43,10 +48,19 @@ GOOGLE_ISSUERS: Final[frozenset[str]] = frozenset({
 # - las llaves públicas con las que Google firma sus tokens de identidad
 GOOGLE_JWKS_URL: Final[str] = "https://www.googleapis.com/oauth2/v3/certs"
 
+# - dice para qué cliente y para qué cuenta emitió Google un token de acceso
+GOOGLE_TOKENINFO_URL: Final[str] = "https://oauth2.googleapis.com/tokeninfo"
+
+GOOGLE_TIMEOUT_SECONDS: Final[int] = 5
+
 # - tolerancia al desfase de reloj entre Google y este servidor
 CLOCK_LEEWAY_SECONDS: Final[int] = 10
 
 DISABLED_DETAIL: Final[str] = "El inicio de sesión con Google no está habilitado."
+UNREACHABLE_DETAIL: Final[str] = (
+    "No se pudo validar con Google. Intenta de nuevo en un momento."
+)
+TOKEN_FIELD_DETAIL: Final[str] = "Manda el token de identidad o el de acceso de Google."  # ruff: ignore[hardcoded-password-string]
 INVALID_TOKEN_DETAIL: Final[str] = "El token de Google no es válido."  # ruff: ignore[hardcoded-password-string]
 UNVERIFIED_DETAIL: Final[str] = "Google no ha verificado el correo de esta cuenta."
 WRONG_SURFACE_DETAIL: Final[str] = (
@@ -111,9 +125,7 @@ def verify_token_sync(token: str) -> GoogleProfile:
         )
     except PyJWKClientConnectionError as c:
         # el problema es de Google o de la red, no de quien inicia sesión
-        raise ApiError(
-            detail="No se pudo validar con Google. Intenta de nuevo en un momento.",
-        ) from c
+        raise ApiError(detail=UNREACHABLE_DETAIL) from c
     except PyJWTError as e:
         raise UnauthorizedError(detail=INVALID_TOKEN_DETAIL) from e
 
@@ -131,6 +143,54 @@ def verify_token_sync(token: str) -> GoogleProfile:
         email=email,
         first_name=first_name,
         last_name=last_name,
+        subject=str(claims["sub"]),
+    )
+
+
+def tokeninfo(token: str) -> dict:
+    query: str = urlencode({"access_token": token})
+
+    with urlopen(  # ruff: ignore[suspicious-url-open-usage]
+        f"{GOOGLE_TOKENINFO_URL}?{query}",
+        timeout=GOOGLE_TIMEOUT_SECONDS,
+    ) as response:
+        return json.load(response)
+
+
+@sensitive_variables()
+def verify_access_token_sync(token: str) -> GoogleProfile:
+    # El token de acceso no está firmado para nosotros como el de identidad: Google dice
+    # a qué cliente se lo dio. Sin revisar `aud`, el token que otra app obtuvo de esa
+    # persona serviría para entrar aquí.
+    try:
+        claims: dict = tokeninfo(token)
+    except HTTPError as e:
+        # Google responde 400 a un token vencido, revocado o inventado
+        raise UnauthorizedError(detail=INVALID_TOKEN_DETAIL) from e
+    except (URLError, TimeoutError, ValueError) as e:
+        raise ApiError(detail=UNREACHABLE_DETAIL) from e
+
+    if claims.get("aud") not in CONFIG.GOOGLE_OAUTH_CLIENT_IDS or not claims.get("sub"):
+        raise UnauthorizedError(detail=INVALID_TOKEN_DETAIL)
+
+    try:
+        expires_in = int(claims.get("expires_in") or 0)
+    except ValueError:
+        expires_in = 0
+
+    if expires_in <= 0:
+        raise UnauthorizedError(detail=INVALID_TOKEN_DETAIL)
+
+    email: str = str(claims.get("email") or "").strip().lower()
+
+    if not email or str(claims.get("email_verified")).lower() != "true":
+        raise UnauthorizedError(detail=UNVERIFIED_DETAIL)
+
+    # el token de acceso no trae el nombre: en el portal Google no crea cuentas
+    return GoogleProfile(
+        email=email,
+        first_name="",
+        last_name="",
         subject=str(claims["sub"]),
     )
 
@@ -255,11 +315,31 @@ def resolve_account_sync(
 
 
 @sensitive_variables()
+def profile_from(data: GooglePost, surface: str) -> GoogleProfile:
+    # uno de los dos tokens, y el de acceso solo desde el portal, que no crea cuentas
+    one_token: bool = (data.id_token is None) != (data.access_token is None)
+    access_from_app: bool = (
+        data.access_token is not None and surface != Surfaces.WEB.value
+    )
+
+    if not one_token or access_from_app:
+        raise BadRequestError(
+            field_errors={"id_token": TOKEN_FIELD_DETAIL},
+            type=BadRequestErrorTypes.FAILED_VALIDATION,
+        ).scoped(RequestScopes.BODY)
+
+    if data.access_token is not None:
+        return verify_access_token_sync(data.access_token)
+
+    return verify_token_sync(str(data.id_token))
+
+
+@sensitive_variables()
 async def sign_in_with_google(data: GooglePost, surface: str) -> ApiUser:
     if not CONFIG.GOOGLE_OAUTH_CLIENT_IDS:
         raise NotFoundError(detail=DISABLED_DETAIL)
 
-    profile: GoogleProfile = await sync_to_async(verify_token_sync)(data.id_token)
+    profile: GoogleProfile = await sync_to_async(profile_from)(data, surface)
 
     user: ApiUser = await sync_to_async(resolve_account_sync)(profile, data, surface)
 
