@@ -127,11 +127,13 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     DEPLOY: bool = False
     SKIP_SEEDERS: bool = False
 
-    # - el contenido de ejemplo (`seedcontent --on-deploy`) se carga al desplegar solo
-    #   estas ramas. `RAILWAY_GIT_BRANCH` la pone Railway cuando el despliegue viene de
-    #   GitHub; fuera de Railway queda vacía y no se carga nada.
+    # - el contenido de ejemplo (`seedcontent --on-deploy`, al final de cada `migrate`
+    #   con `DEPLOY=True`) solo se carga en develop-api: cuando Railway despliega una de
+    #   estas ramas (`RAILWAY_GIT_BRANCH` la pone Railway si el despliegue viene de
+    #   GitHub) o cuando `ALLOWED_HOSTS` incluye uno de estos dominios.
     RAILWAY_GIT_BRANCH: str = ""
     SEED_CONTENT_BRANCHES: CsvList = ("develop-a",)
+    SEED_CONTENT_HOSTS: CsvList = ("develop-api.kplan.dev",)
 
     JWT_ALGORITHM: Literal["HS256", "HS384", "HS512"] = "HS256"
 

@@ -231,8 +231,8 @@ class Command(BaseCommand):
             "--on-deploy",
             action="store_true",
             help=(
-                "Al desplegar: carga solo en las ramas de SEED_CONTENT_BRANCHES, y un "
-                "error no detiene el despliegue."
+                "Al desplegar: carga solo en develop-api (SEED_CONTENT_BRANCHES o "
+                "SEED_CONTENT_HOSTS), y un error no detiene el despliegue."
             ),
         )
 
@@ -251,10 +251,13 @@ class Command(BaseCommand):
 
     def on_deploy(self) -> None:
         branch: str = CONFIG.RAILWAY_GIT_BRANCH
+        hosts: set[str] = set(CONFIG.ALLOWED_HOSTS) & set(CONFIG.SEED_CONTENT_HOSTS)
 
-        if branch not in CONFIG.SEED_CONTENT_BRANCHES:
+        if branch not in CONFIG.SEED_CONTENT_BRANCHES and not hosts:
             self.stdout.write(
-                f"La rama {branch or '(sin rama)'} no carga contenido de ejemplo."
+                "No se carga contenido de ejemplo: la rama es "
+                f"{branch or '(sin rama)'} y ALLOWED_HOSTS no incluye ningún dominio "
+                "de SEED_CONTENT_HOSTS."
             )
             return
 

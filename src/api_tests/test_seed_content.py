@@ -14,6 +14,7 @@ from api_core.config import CONFIG
 from api_profiles.models import ProviderProfile
 from api_rewards.models import CouponCampaign
 from api_services.models import GuidedDeparture
+from api_territory.apps import seed_content
 from api_territory.management.commands import seedcontent
 from api_territory.models import Circuit, PointOfInterest
 from api_tests.helpers import body
@@ -130,7 +131,7 @@ def test_a_deploy_of_another_branch_loads_nothing(
 
     output = seed("--on-deploy")
 
-    assert "no carga contenido de ejemplo" in output
+    assert "No se carga contenido de ejemplo" in output
     assert not Circuit.objects.exists()
 
 
@@ -141,6 +142,33 @@ def test_a_deploy_of_develop_loads_the_content(monkeypatch: pytest.MonkeyPatch) 
 
     assert Circuit.objects.exists()
     assert GuidedDeparture.objects.exists()
+
+
+def test_the_develop_domain_loads_it_without_the_branch(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    deploying(monkeypatch, "")
+    monkeypatch.setitem(CONFIG.__dict__, "ALLOWED_HOSTS", ("develop-api.kplan.dev",))
+
+    seed("--on-deploy")
+
+    assert Circuit.objects.exists()
+
+
+def test_migrating_a_deploy_ends_with_the_content(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    deploying(monkeypatch, "develop-a")
+
+    seed_content()
+
+    assert Circuit.objects.exists()
+
+
+def test_migrating_outside_a_deploy_loads_nothing() -> None:
+    seed_content()
+
+    assert not Circuit.objects.exists()
 
 
 def test_a_failure_while_deploying_does_not_stop_the_deploy(
