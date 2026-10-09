@@ -360,12 +360,13 @@ Rivas (Ometepe) se saltan: Rivas no es una de las diez Ciudades Creativas.
 
 Al desplegar, `migrate` termina corriendo `seedcontent --on-deploy` (con `DEPLOY=True`,
 después de que todas las apps sembraron sus catálogos), así que no depende del comando
-previo que tenga configurado Railway. Solo carga en `develop-api`: cuando
-`RAILWAY_GIT_BRANCH`, que pone Railway, está en `SEED_CONTENT_BRANCHES` (por defecto
-`develop-a`) o cuando `ALLOWED_HOSTS` incluye un dominio de `SEED_CONTENT_HOSTS` (por
-defecto `develop-api.kplan.dev`). En los demás despliegues escribe en el log por qué no
-cargó. Un error no detiene el despliegue: queda en el log del pre-deploy y, como todo va
-en una transacción, no deja nada a medias.
+previo que tenga configurado Railway. Solo carga en `develop-api` y en el API de Azure:
+cuando `RAILWAY_GIT_BRANCH`, que pone Railway, está en `SEED_CONTENT_BRANCHES` (por
+defecto `develop-a`) o cuando `ALLOWED_HOSTS` incluye un dominio de `SEED_CONTENT_HOSTS`
+(por defecto `develop-api.kplan.dev` y `azure-api.kplan.dev`; en Azure, `migrate` corre
+al arrancar el contenedor). En los demás despliegues escribe en el log por qué no cargó.
+Un error no detiene el despliegue: queda en el log del pre-deploy y, como todo va en una
+transacción, no deja nada a medias.
 
 ## Dónde se aparta del modelo
 
