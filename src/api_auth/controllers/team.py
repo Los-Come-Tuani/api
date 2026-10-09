@@ -31,6 +31,7 @@ from api_auth.services.team import (
     get_role_sync,
     invite_staff,
     list_roles_sync,
+    remove_from_team_sync,
     send_password_reset_to,
     set_role_sync,
     set_status_sync,
@@ -156,7 +157,20 @@ class UserStatusController(BaseController[CustomPydanticFastSerializer]):
         )
 
 
+class StaffRemoveController(BaseController[CustomPydanticFastSerializer]):
+    # saca a una persona del equipo: pierde su rol del equipo, no la cuenta
+    @modify(status_code=HTTPStatus.OK)
+    async def post(self, parsed_body: Body[UserReferencePost]) -> StaffMemberGet:
+        await ensure_permission(self.request.user, P.STAFF_MANAGE)
+
+        return await sync_to_async(remove_from_team_sync)(
+            actor=self.request.user,
+            user_id=parsed_body.user_id,
+        )
+
+
 class UserRoleController(BaseController[CustomPydanticFastSerializer]):
+    # cambia el rol del equipo de una persona, o mete al equipo una cuenta que ya existe
     @modify(status_code=HTTPStatus.OK)
     async def post(self, parsed_body: Body[UserRolePost]) -> StaffMemberGet:
         await ensure_permission(self.request.user, P.STAFF_MANAGE)

@@ -108,7 +108,8 @@ Todo bajo `/auth/`. El permiso es el que pide cada ruta; `403` si falta.
 | `GET staff-member/`                    | `staff.manage` o `users.view`   | El equipo: cada persona con su rol del equipo (y los superusuarios, con `role: null`), por nombre |
 | `POST staff-invite/`                   | `staff.manage`                  | Invita a alguien al equipo (`201`)                                                                |
 | `POST staff-accept/`                   | Pública (sin sesión)            | La persona invitada elige su contraseña (`204`)                                                   |
-| `POST user-role/`                      | `staff.manage`                  | Cambia el rol de una persona del equipo                                                           |
+| `POST user-role/`                      | `staff.manage`                  | Cambia el rol de una persona del equipo, o mete al equipo una cuenta que ya existe                |
+| `POST staff-remove/`                   | `staff.manage`                  | Saca a una persona del equipo: pierde su rol del equipo, no la cuenta                             |
 | `POST user-status/`                    | `users.manage`                  | Suspende o reactiva una cuenta                                                                    |
 | `POST user-password-reset/`            | `users.manage`                  | Manda a la persona un código para crear otra contraseña                                           |
 | `GET account/`                         | `users.view` o `staff.manage`   | El directorio de cuentas ("Todos los usuarios"), paginado                                         |
@@ -177,6 +178,26 @@ Reglas que protegen al equipo:
   (`/auth/user/{id}/permissions/`, y sus enlaces) es solo de un superusuario (`403`).
 - Una persona del equipo tiene un solo rol del equipo; sus grupos de otra clase no se
   tocan.
+
+### Dar un rol a una cuenta que ya existe
+
+`POST /auth/user-role/` `{ "role_id", "user_id" }` cambia el rol de quien ya está en el
+equipo y también mete al equipo una cuenta que ya existe (alguien que se registró en la
+app, por ejemplo). Responde `200` con la persona, como `staff-member/`.
+
+- Entra una cuenta **activa** (`409` si no) que **no es de una organización ni de un
+  guía o traductor** (`409`, con un `detail` que lo dice): el papel del equipo tiene más
+  rango y dejaría de ver sus pantallas. Cuenta como organización quien tiene un rol de
+  operador o una asignación vigente sobre un negocio, una alcaldía o una institución;
+  como prestador, quien tiene perfil de guía o traductor, aunque siga en revisión. A esas
+  personas se las invita con otro correo.
+- Un turista conserva su grupo de turista: entra al portal con su rol del equipo y sigue
+  pudiendo entrar a la app con su contraseña.
+
+`POST /auth/staff-remove/` `{ "user_id" }` le quita el rol del equipo y deja sus otros
+grupos y la cuenta. Responde `200` con la persona (`role: null`). Nadie se saca a sí
+mismo (`403`), un superusuario solo lo saca otro (`403`), quien no es del equipo da
+`400` y la última persona activa con el rol Administrador no sale (`409`).
 
 ### Invitación
 

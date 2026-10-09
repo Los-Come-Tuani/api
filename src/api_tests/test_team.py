@@ -2,7 +2,7 @@ from datetime import timedelta
 from http import HTTPStatus
 from time import sleep
 from typing import TYPE_CHECKING, NamedTuple
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pytest
 
@@ -15,7 +15,14 @@ from api_auth.enums import AccountRoles, ApiUserStatus, GroupKinds
 from api_auth.models import ApiUser, ApiUserGroups
 from api_auth.seeder import execute
 from api_auth.services import verification
-from api_auth.services.team import LAST_ADMIN_DETAIL, SYSTEM_ROLE_DETAIL
+from api_auth.services.team import (
+    INACTIVE_DETAIL,
+    LAST_ADMIN_DETAIL,
+    NOT_IN_TEAM_DETAIL,
+    ORGANIZATION_DETAIL,
+    PROVIDER_DETAIL,
+    SYSTEM_ROLE_DETAIL,
+)
 from api_core.config import CONFIG
 from api_tests.helpers import (
     PASSWORD,
@@ -25,6 +32,7 @@ from api_tests.helpers import (
     extract_code,
     web_login,
 )
+from api_tests.services_helpers import make_guide
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -103,6 +111,12 @@ MATRIX: Final[
         "post",
         "/auth/user-role/",
         lambda ids: {"role_id": ids.role, "user_id": ids.target},
+        frozenset({"staff"}),
+    ),
+    (
+        "post",
+        "/auth/staff-remove/",
+        lambda ids: {"user_id": ids.target},
         frozenset({"staff"}),
     ),
     (
@@ -1036,18 +1050,95 @@ def test_nobody_changes_their_own_role(
     assert response.status_code == HTTPStatus.FORBIDDEN, response.content
 
 
-def test_a_person_outside_the_team_has_no_team_role_to_change(
+def test_a_tourist_joins_the_team_and_keeps_their_tourist_role(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_role: Callable[..., Group],
+    make_user: Callable[..., ApiUser],
+) -> None:
+    tourist = make_user(email="turista@example.com")
+    public = make_role("Pública", kind=GroupKinds.PUBLIC, role=AccountRoles.TURISTA)
+    link(tourist, public)
+    team = make_role("Atención", "guides.view")
+
+    response = set_role(client, tourist, team)
+
+    assert response.status_code == HTTPStatus.OK, response.content
+    assert body(response)["role"] == {"id": team.pk, "name": "Atención"}
+    assert set(roles_of(tourist)) == {public.pk, team.pk}
+
+
+def test_an_account_without_a_role_joins_the_team(
     client: DMRClient,
     manager: ApiUser,  # ruff: ignore[unused-function-argument]
     make_role: Callable[..., Group],
     make_user: Callable[..., ApiUser],
 ) -> None:
     outsider = make_user(email="afuera@example.com")
+    team = make_role("Atención")
 
-    response = set_role(client, outsider, make_role("Otro"))
+    response = set_role(client, outsider, team)
 
-    assert response.status_code == HTTPStatus.BAD_REQUEST, response.content
-    assert not ApiUserGroups.objects.filter(api_user=outsider).exists()
+    assert response.status_code == HTTPStatus.OK, response.content
+    assert roles_of(outsider) == [team.pk]
+
+
+def test_an_organization_account_does_not_join_the_team(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_role: Callable[..., Group],
+    make_user: Callable[..., ApiUser],
+) -> None:
+    owner = make_user(email="negocio@example.com")
+    operator = make_role(
+        "Negocios", kind=GroupKinds.OPERATOR, role=AccountRoles.NEGOCIO
+    )
+    link(owner, operator)
+
+    response = set_role(client, owner, make_role("Atención"))
+
+    assert response.status_code == HTTPStatus.CONFLICT, response.content
+    assert body(response)["detail"] == ORGANIZATION_DETAIL
+    assert roles_of(owner) == [operator.pk]
+
+
+def test_a_guide_does_not_join_the_team_even_while_in_review(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_role: Callable[..., Group],
+    make_user: Callable[..., ApiUser],
+) -> None:
+    guide = make_user(email="guia@example.com")
+    make_guide(guide)
+    team = make_role("Atención")
+
+    approved = set_role(client, guide, team)
+
+    # en revisión todavía no tiene el grupo, pero sí su perfil de prestador
+    ApiUserGroups.objects.filter(api_user=guide).delete()
+    in_review = set_role(client, guide, team)
+
+    for response in (approved, in_review):
+        assert response.status_code == HTTPStatus.CONFLICT, response.content
+        assert body(response)["detail"] == PROVIDER_DETAIL
+    assert not ApiUserGroups.objects.filter(api_user=guide, group=team).exists()
+
+
+def test_only_an_active_account_joins_the_team(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_role: Callable[..., Group],
+    make_user: Callable[..., ApiUser],
+) -> None:
+    suspended = make_user(
+        email="suspendida@example.com", status=ApiUserStatus.SUSPENDED
+    )
+
+    response = set_role(client, suspended, make_role("Atención"))
+
+    assert response.status_code == HTTPStatus.CONFLICT, response.content
+    assert body(response)["detail"] == INACTIVE_DETAIL
+    assert not ApiUserGroups.objects.filter(api_user=suspended).exists()
 
 
 def test_the_new_role_must_be_a_team_role(
@@ -1099,6 +1190,91 @@ def test_anyone_can_be_promoted_to_super_admin_only_by_who_manages_the_team(
 
     assert response.status_code == HTTPStatus.OK, response.content
     assert body(response)["role"]["name"] == "Administrador"
+
+
+########################################################################################
+# Sacar a alguien del equipo
+
+
+def remove(client: DMRClient, user: ApiUser) -> HttpResponse:
+    return client.post("/auth/staff-remove/", {"user_id": str(user.pk)})
+
+
+def test_leaving_the_team_takes_only_the_team_role(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_member: Callable[..., ApiUser],
+    make_role: Callable[..., Group],
+) -> None:
+    member = make_member("miembro@example.com", "guides.view")
+    public = make_role("Pública", kind=GroupKinds.PUBLIC, role=AccountRoles.TURISTA)
+    link(member, public)
+
+    response = remove(client, member)
+
+    assert response.status_code == HTTPStatus.OK, response.content
+    assert body(response)["role"] is None
+    assert roles_of(member) == [public.pk]
+    assert member.pk not in {
+        UUID(person["id"]) for person in body(client.get("/auth/staff-member/"))
+    }
+
+
+def test_nobody_takes_themselves_out_of_the_team(
+    client: DMRClient,
+    manager: ApiUser,
+) -> None:
+    response = remove(client, manager)
+
+    assert response.status_code == HTTPStatus.FORBIDDEN, response.content
+    assert roles_of(manager) != []
+
+
+def test_someone_outside_the_team_has_nothing_to_leave(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_user: Callable[..., ApiUser],
+) -> None:
+    response = remove(client, make_user(email="afuera@example.com"))
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST, response.content
+    assert body(response)["detail"] == NOT_IN_TEAM_DETAIL
+
+
+def test_the_last_super_admin_cannot_leave_the_team(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_user: Callable[..., ApiUser],
+) -> None:
+    execute()
+    admins = Group.objects.get(name="Administrador")
+    root = make_user(email="root@example.com")
+    link(root, admins)
+
+    blocked = remove(client, root)
+
+    assert blocked.status_code == HTTPStatus.CONFLICT, blocked.content
+    assert body(blocked)["detail"] == LAST_ADMIN_DETAIL
+
+    link(make_user(email="segunda@example.com"), admins)
+
+    assert remove(client, root).status_code == HTTPStatus.OK
+
+
+def test_a_superuser_only_leaves_the_team_by_another_superuser(
+    client: DMRClient,
+    manager: ApiUser,  # ruff: ignore[unused-function-argument]
+    make_role: Callable[..., Group],
+    make_user: Callable[..., ApiUser],
+) -> None:
+    root = make_user(email="root@example.com", is_staff=True, is_superuser=True)
+    team = make_role("Atención")
+    link(root, team)
+
+    response = remove(client, root)
+
+    assert response.status_code == HTTPStatus.FORBIDDEN, response.content
+    assert roles_of(root) == [team.pk]
 
 
 ########################################################################################

@@ -34,6 +34,8 @@ from api_exceptions.errors import (
     ForbiddenError,
     NotFoundError,
 )
+from api_profiles.models import ProviderProfile
+from api_roles.models import RoleAssignment
 
 from .account import change_status_sync, ensure_strong_password, invalid_code_error
 from .mail import send_invitation_code, send_password_reset_code
@@ -63,6 +65,20 @@ SYSTEM_ROLE_DETAIL: Final[str] = "Los roles de sistema no se pueden editar ni bo
 
 LAST_ADMIN_DETAIL: Final[str] = (
     "Tiene que quedar al menos una persona activa con el rol Super admin."
+)
+
+NOT_IN_TEAM_DETAIL: Final[str] = "Esa persona no es del equipo de K'Plan."
+
+INACTIVE_DETAIL: Final[str] = "Solo una cuenta activa entra al equipo."
+
+ORGANIZATION_DETAIL: Final[str] = (
+    "Esa cuenta es de una organización: con un rol del equipo dejaría de ver sus "
+    "pantallas. Invita a la persona al equipo con otro correo."
+)
+
+PROVIDER_DETAIL: Final[str] = (
+    "Esa cuenta es de un guía o traductor: con un rol del equipo dejaría de ver sus "
+    "pantallas. Invita a la persona al equipo con otro correo."
 )
 
 ########################################################################################
@@ -497,6 +513,51 @@ def set_status_sync(*, actor: ApiUser, status: str, user_id: UUID) -> StaffMembe
     return member_payload(target)
 
 
+def in_team(user: ApiUser) -> bool:
+    return ApiUserGroups.objects.filter(
+        api_user=user,
+        group__profile__kind=GroupKinds.STAFF,
+    ).exists()
+
+
+def ensure_can_join_team(user: ApiUser) -> None:
+    # una cuenta que ya existe entra al equipo si está activa y no es de una
+    # organización ni de un guía o traductor: el papel del equipo tiene más rango y
+    # dejaría de ver sus propias pantallas
+    if user.status != ApiUserStatus.ACTIVE:
+        raise ConflictError(detail=INACTIVE_DETAIL)
+
+    operator: bool = (
+        ApiUserGroups.objects.filter(
+            api_user=user,
+            group__profile__kind=GroupKinds.OPERATOR,
+        ).exists()
+        or RoleAssignment.objects.filter(
+            Q(business__isnull=False)
+            | Q(institution__isnull=False)
+            | Q(municipality__isnull=False),
+            revoked_at__isnull=True,
+            user=user,
+        ).exists()
+    )
+
+    if operator:
+        raise ConflictError(detail=ORGANIZATION_DETAIL)
+
+    provider: bool = ProviderProfile.objects.filter(user=user).exists() or (
+        ApiUserGroups.objects.filter(
+            api_user=user,
+            group__profile__role__in=[
+                AccountRoles.GUIA.value,
+                AccountRoles.TRADUCTOR.value,
+            ],
+        ).exists()
+    )
+
+    if provider:
+        raise ConflictError(detail=PROVIDER_DETAIL)
+
+
 def set_role_sync(*, actor: ApiUser, role_id: int, user_id: UUID) -> StaffMemberGet:
     target: ApiUser = user_or_404(user_id)
     profile: ApiGroupProfile = staff_profile_or_404(role_id)
@@ -507,21 +568,39 @@ def set_role_sync(*, actor: ApiUser, role_id: int, user_id: UUID) -> StaffMember
     if target.is_superuser and not actor.is_superuser:
         raise ForbiddenError(detail="Esa cuenta solo la administra un superusuario.")
 
-    in_team: bool = ApiUserGroups.objects.filter(
-        api_user=target,
-        group__profile__kind=GroupKinds.STAFF,
-    ).exists()
-
-    if not in_team:
-        raise BadRequestError(
-            detail="Esa persona no es del equipo de K'Plan.",
-            type=BadRequestErrorTypes.FAILED_VALIDATION,
-        )
+    if not in_team(target):
+        ensure_can_join_team(target)
 
     if group_of(profile).name != ApiUserTypes.ADMIN:
         ensure_not_last_admin(target)
 
     assign_staff_role(target, profile)
+
+    return member_payload(target)
+
+
+def remove_from_team_sync(*, actor: ApiUser, user_id: UUID) -> StaffMemberGet:
+    target: ApiUser = user_or_404(user_id)
+
+    if target.pk == actor.pk:
+        raise ForbiddenError(detail="No puedes sacarte a ti del equipo.")
+
+    if target.is_superuser and not actor.is_superuser:
+        raise ForbiddenError(detail="Esa cuenta solo la administra un superusuario.")
+
+    if not in_team(target):
+        raise BadRequestError(
+            detail=NOT_IN_TEAM_DETAIL,
+            type=BadRequestErrorTypes.FAILED_VALIDATION,
+        )
+
+    ensure_not_last_admin(target)
+
+    # sus grupos de otro tipo (el de turista, por ejemplo) se quedan
+    ApiUserGroups.objects.filter(
+        api_user=target,
+        group__profile__kind=GroupKinds.STAFF,
+    ).delete()
 
     return member_payload(target)
 
