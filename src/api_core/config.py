@@ -234,7 +234,7 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     JWT_SECRET_KEY: LongSecret
     SECRET_KEY: LongSecret
 
-    REDIS_SECRET_KEY: OptionalSecret = SecretStr(secret_value="")
+    REDIS_SECRET_KEY: SecretStr
 
     # - listas separadas por comas. Vacías = valores de desarrollo; en producción se
     #   definen como variables del servicio, nunca en el repositorio.
