@@ -43,6 +43,13 @@ def hash_code(purpose: str, destination: str, code: str) -> str:
     ).hexdigest()
 
 
+def signup_code_reaches_people() -> bool:
+    # Desplegado sin proveedor de correo, el API descarta los correos: el código de alta
+    # nunca llega y el alta (registro y postulaciones) no lo pide. En desarrollo sale
+    # por consola.
+    return bool(CONFIG.EMAIL_HOST) or not CONFIG.DEPLOY
+
+
 def accepts_any_code(purpose: VerificationPurposes) -> bool:
     # nunca para recuperar una contraseña ni aceptar una invitación: eso abriría
     # cuentas que ya existen, no solo crearía una nueva; y con un proveedor de correo
@@ -108,6 +115,11 @@ def check_code_sync(
     destination: str,
     purpose: VerificationPurposes,
 ) -> bool:
+    # solo el alta: recuperar una contraseña o aceptar una invitación abre una cuenta
+    # que ya existe y siempre pide el código real
+    if purpose == VerificationPurposes.EMAIL and not signup_code_reaches_people():
+        return True
+
     with atomic():
         row: ApiVerificationCode | None = (
             ApiVerificationCode.objects

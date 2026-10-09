@@ -43,7 +43,8 @@ def registration(code: str, **overrides: object) -> dict:
 def ask_for_a_code(client: DMRClient, email: str = EMAIL) -> str:
     response = client.post("/auth/register-code/", {"email": email})
 
-    assert response.status_code == HTTPStatus.NO_CONTENT, response.content
+    assert response.status_code == HTTPStatus.OK, response.content
+    assert body(response) == {"code_required": True}
     assert len(mail.outbox) == 1
 
     return extract_code(mail.outbox[0])
@@ -72,7 +73,7 @@ def test_asking_for_a_code_is_silent_about_registered_emails(
     response = client.post("/auth/register-code/", {"email": EMAIL})
 
     # misma respuesta que con un correo nuevo, pero no se manda nada
-    assert response.status_code == HTTPStatus.NO_CONTENT
+    assert response.status_code == HTTPStatus.OK
     assert mail.outbox == []
 
 
@@ -83,7 +84,7 @@ def test_a_second_request_inside_the_cooldown_does_not_send_another_email(
 
     again = client.post("/auth/register-code/", {"email": EMAIL})
 
-    assert again.status_code == HTTPStatus.NO_CONTENT
+    assert again.status_code == HTTPStatus.OK
     assert len(mail.outbox) == 1
 
 
@@ -204,6 +205,83 @@ def test_any_signup_code_has_no_effect_once_email_is_configured(
     other = "000000" if code != "000000" else "111111"
 
     response = client.post("/auth/register-verify/", {"code": other, "email": EMAIL})
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+
+
+########################################################################################
+# Desplegado sin correo: el código nunca llegaría, así que el alta no lo pide
+
+
+@pytest.fixture
+def deployed_without_email(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setitem(CONFIG.__dict__, "DEPLOY", value=True)
+    monkeypatch.setitem(CONFIG.__dict__, "EMAIL_HOST", "")
+
+
+@pytest.mark.usefixtures("deployed_without_email")
+def test_a_deployed_api_without_email_says_the_code_is_not_needed(
+    client: DMRClient,
+) -> None:
+    asked = client.post("/auth/register-code/", {"email": EMAIL})
+    verify = client.post("/auth/register-verify/", {"code": "000000", "email": EMAIL})
+    created = client.post("/auth/register/", registration("000000"))
+
+    assert asked.status_code == HTTPStatus.OK, asked.content
+    assert body(asked) == {"code_required": False}
+    assert verify.status_code == HTTPStatus.NO_CONTENT, verify.content
+    assert created.status_code == HTTPStatus.CREATED, created.content
+    assert ApiUser.objects.get(email=EMAIL).verified_at is not None
+
+
+def test_the_signup_says_up_front_whether_it_asks_for_the_code(
+    client: DMRClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with_email = client.get("/auth/register-code/")
+    monkeypatch.setitem(CONFIG.__dict__, "DEPLOY", value=True)
+    without_email = client.get("/auth/register-code/")
+
+    assert body(with_email) == {"code_required": True}
+    assert body(without_email) == {"code_required": False}
+    assert not ApiVerificationCode.objects.exists()
+
+
+@pytest.mark.usefixtures("deployed_without_email")
+def test_without_email_the_signup_does_not_wait_for_a_code(client: DMRClient) -> None:
+    # ni pedido ni a tiempo: el formulario puede tardar más que lo que vive un código
+    response = client.post("/auth/register/", registration("000000"))
+
+    assert response.status_code == HTTPStatus.CREATED, response.content
+
+
+def test_with_email_the_signup_code_is_still_required(
+    client: DMRClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setitem(CONFIG.__dict__, "DEPLOY", value=True)
+    monkeypatch.setitem(CONFIG.__dict__, "EMAIL_HOST", "smtp.example.com")
+    code = ask_for_a_code(client)
+    other = "000000" if code != "000000" else "111111"
+
+    response = client.post("/auth/register/", registration(other))
+
+    assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert not ApiUser.objects.filter(email=EMAIL).exists()
+
+
+@pytest.mark.usefixtures("deployed_without_email")
+def test_without_email_a_password_reset_still_needs_the_real_code(
+    client: DMRClient,
+    make_user: Callable[..., ApiUser],
+) -> None:
+    make_user(email=EMAIL)
+    client.post("/auth/password-forgot/", {"email": EMAIL})
+
+    response = client.post(
+        "/auth/password-reset/",
+        {"code": "000000", "email": EMAIL, "password": "Otra-Clave-2026"},
+    )
 
     assert response.status_code == HTTPStatus.BAD_REQUEST
 

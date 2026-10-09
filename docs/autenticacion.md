@@ -62,9 +62,12 @@ Configuración completa en [Inicio de sesión con Google](google.md).
 
 ## Registro (app)
 
-1. `POST /auth/register-code/` con `{ "email" }` → `204`. Manda un código de seis
-   dígitos al correo (vence en 15 minutos; no se reenvía antes de 60 segundos). Responde
-   igual si el correo ya tiene cuenta, pero en ese caso no manda nada.
+1. `POST /auth/register-code/` con `{ "email" }` → `200` con `{ "code_required" }`.
+   Manda un código de seis dígitos al correo (vence en 15 minutos; no se reenvía antes
+   de 60 segundos). Responde igual si el correo ya tiene cuenta, pero en ese caso no
+   manda nada. Con `code_required: false` (ver abajo) la app y el portal se saltan el
+   paso del código. `GET /auth/register-code/` responde lo mismo sin pedir nada, para
+   saberlo antes (el portal oculta el campo del código).
 2. `POST /auth/register-verify/` con `{ "email", "code" }` → `204` si el código sirve.
    No lo gasta: es para que la app avance en el formulario. Cinco códigos equivocados
    lo invalidan.
@@ -77,12 +80,18 @@ Reglas: contraseña de al menos ocho caracteres con una mayúscula y un número,
 `birth_date` en formato `YYYY-MM-DD` y mayor de 18 años, `nationality` con el código de
 país de dos letras (`NI`, `US`). Una contraseña débil no gasta el código.
 
-En un API de pruebas sin proveedor de correo (`EMAIL_HOST` vacío y `DEPLOY=True`) el
-código nunca llega. Con `VERIFICATION_ACCEPT_ANY_SIGNUP_CODE=True`, cualquier código de
-seis dígitos sirve para el alta (este registro y las postulaciones de prestadores y
-organizaciones), pero hay que pedirlo con el paso 1 y sigue venciendo y gastándose. La
-recuperación de contraseña y las invitaciones siguen exigiendo el código real. Con
-`EMAIL_HOST` definido la variable no tiene efecto. Nunca va en producción.
+En un API desplegado sin proveedor de correo (`EMAIL_HOST` vacío y `DEPLOY=True`, como
+develop-api) el código nunca llega, así que el alta no lo pide: `register-code` responde
+`code_required: false` y el registro, `register-verify` y las postulaciones de
+prestadores y organizaciones aceptan cualquier código de seis dígitos (la app y el
+portal mandan `000000`), sin que haga falta pedirlo ni que siga vigente. La cuenta nace
+verificada igual. La recuperación de contraseña y las invitaciones siguen exigiendo el
+código real: abren cuentas que ya existen. En cuanto se define `EMAIL_HOST`, el código
+vuelve a ser obligatorio.
+
+En desarrollo (`DEPLOY=False`) el código sale por consola y se pide. Con
+`VERIFICATION_ACCEPT_ANY_SIGNUP_CODE=True` cualquier código de seis dígitos sirve, pero
+hay que pedirlo con el paso 1 y sigue venciendo y gastándose.
 
 ## Contraseña
 

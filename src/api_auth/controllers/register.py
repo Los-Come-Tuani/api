@@ -5,6 +5,7 @@ from dmr import Body, modify
 
 from api_auth.enums import VerificationPurposes
 from api_auth.schemas.account import (
+    RegisterCodeGet,
     RegisterCodePost,
     RegisterPost,
     RegisterVerifyPost,
@@ -16,7 +17,7 @@ from api_auth.services.account import (
     request_registration_code,
 )
 from api_auth.services.session_user import build_session_user
-from api_auth.services.verification import check_code
+from api_auth.services.verification import check_code, signup_code_reaches_people
 from api_core.controllers.serializers import CustomPydanticFastSerializer
 
 from .base import AuthController
@@ -25,10 +26,17 @@ from .base import AuthController
 
 
 class RegisterCodeController(AuthController[CustomPydanticFastSerializer]):
-    @modify(status_code=HTTPStatus.NO_CONTENT)
-    async def post(self, parsed_body: Body[RegisterCodePost]) -> None:  # ruff: ignore[no-self-use]
+    # si el alta pide el código, antes de pedirlo: el portal oculta ese campo si no
+    @modify(status_code=HTTPStatus.OK)
+    async def get(self) -> RegisterCodeGet:  # ruff: ignore[no-self-use]
+        return RegisterCodeGet(code_required=signup_code_reaches_people())
+
+    @modify(status_code=HTTPStatus.OK)
+    async def post(self, parsed_body: Body[RegisterCodePost]) -> RegisterCodeGet:  # ruff: ignore[no-self-use]
         # responde igual exista o no la cuenta, para no revelar quién está registrado
         await request_registration_code(parsed_body.email)
+
+        return RegisterCodeGet(code_required=signup_code_reaches_people())
 
 
 class RegisterVerifyController(AuthController[CustomPydanticFastSerializer]):

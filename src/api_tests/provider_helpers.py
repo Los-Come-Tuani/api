@@ -84,7 +84,7 @@ def code_for(client: DMRClient, email: str = EMAIL) -> str:
     mail.outbox.clear()
     response = client.post("/auth/register-code/", {"email": email})
 
-    assert response.status_code == HTTPStatus.NO_CONTENT, response.content
+    assert response.status_code == HTTPStatus.OK, response.content
 
     return extract_code(mail.outbox[-1])
 

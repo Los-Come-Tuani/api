@@ -59,7 +59,7 @@ def code_for(client: DMRClient, email: str = EMAIL) -> str:
     mail.outbox.clear()
     response = client.post("/auth/register-code/", {"email": email})
 
-    assert response.status_code == HTTPStatus.NO_CONTENT, response.content
+    assert response.status_code == HTTPStatus.OK, response.content
 
     return extract_code(mail.outbox[-1])
 
@@ -288,7 +288,7 @@ def test_an_email_that_already_has_an_account_gets_no_code_and_cannot_apply(
     response = post(csrf_client, "business", business_payload("123456"))
 
     # se responde igual que si no existiera (no se revela quién tiene cuenta)
-    assert asked.status_code == HTTPStatus.NO_CONTENT
+    assert asked.status_code == HTTPStatus.OK
     assert mail.outbox == []
     assert response.status_code == HTTPStatus.BAD_REQUEST
     assert not Business.objects.exists()

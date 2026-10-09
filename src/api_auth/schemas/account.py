@@ -76,6 +76,12 @@ class RegisterCodePost(DTO):
     email: Email
 
 
+class RegisterCodeGet(DTO):
+    # `False` en un API desplegado sin correo: el código nunca llega y el alta no lo
+    # pide; la app y el portal se saltan ese paso
+    code_required: bool
+
+
 class RegisterVerifyPost(RegisterCodePost):
     code: OneTimeCode
 
