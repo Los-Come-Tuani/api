@@ -1,0 +1,21 @@
+title = "kplan-api"
+
+[extend]
+  useDefault = true
+
+# Claves de desarrollo local que se versionan a propósito (`.env.example`,
+# `compose.yml`, CI, README) y contraseñas inventadas de las pruebas
+# (`src/api_tests`). Se ignoran por su contenido y no por archivo, de modo que un
+# secreto real pegado en esos mismos archivos siga detectándose.
+[[allowlists]]
+  description = "Credenciales de desarrollo local y contraseñas de prueba"
+  stopwords   = ["kplanapi", "superuser-data", "SECRET!!!", "Otra-Clave-2026"]
+
+# Las dependencias de las migraciones (`("apiterritory", "0002_lugares_circuitos")`)
+# parecen una clave para la regla genérica: el nombre de la app empieza con `api`.
+[[allowlists]]
+  description = "Nombres de migraciones de Django"
+  regexTarget = "line"
+  regexes     = [
+    '''^\s*\(\s*["']api[a-z]+["']\s*,\s*["']\d{4}_[a-z0-9_]+["']\s*\),?\s*$'''
+  ]

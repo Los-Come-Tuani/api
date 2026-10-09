@@ -18,8 +18,17 @@
 .coverage
 .editorconfig
 .env
+.env.*
 .envrc
 .gitignore
+
+# Llaves y credenciales: jamás deben terminar dentro de una imagen.
+**/*.key
+**/*.p12
+**/*.pem
+**/*.pfx
+**/client_secret*.json
+**/*service-account*.json
 
 .coveragerc.toml
 .env.example

@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING
 
 from api_exceptions.errors import ForbiddenError
 
+from .roles import has_any_permission
+
 if TYPE_CHECKING:
     from collections.abc import Sequence
     from typing import Final
@@ -16,6 +18,10 @@ T_ADD_PERM: Final[str] = "{app}.add_{model}"
 T_CHANGE_PERM: Final[str] = "{app}.change_{model}"
 T_DELETE_PERM: Final[str] = "{app}.delete_{model}"
 T_VIEW_PERM: Final[str] = "{app}.view_{model}"
+
+SUPERUSER_ONLY_DETAIL: Final[str] = (
+    "Los permisos se asignan por rol. Solo un superusuario puede dar permisos sueltos."
+)
 
 DEFAULT_PERMISSIONS: Final[dict[HTTPMethod, Sequence[str]]] = {
     HTTPMethod.GET: (T_VIEW_PERM,),
@@ -38,6 +44,17 @@ async def ensure_model_permissions(
         return
 
     if request.user.is_active and request.user.is_superuser:
+        return
+
+    if request.method in getattr(controller, "superuser_only", ()):
+        raise ForbiddenError(detail=SUPERUSER_ONLY_DETAIL)
+
+    # un permiso funcional (de un rol del equipo) basta, sin los permisos del modelo
+    functional: Sequence[str] = getattr(controller, "functional_permissions", {}).get(
+        request.method, ()
+    )
+
+    if functional and await has_any_permission(request.user, *functional):
         return
 
     perms: dict[str, Sequence[str]] = getattr(

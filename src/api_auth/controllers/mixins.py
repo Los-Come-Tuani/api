@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from http import HTTPMethod
 from typing import ClassVar
 
+from api_auth.catalog import FunctionalPermissions
 from api_auth.models import ApiUser
 from api_auth.models.through import ApiUserGroups, ApiUserPermissions
 from api_auth.services.permissions import (
@@ -16,7 +17,14 @@ from api_utils.db import model_permission
 ########################################################################################
 
 
-class ApiUserRelationsMixin:
+class ApiUserFunctionalMixin:
+    # ver a las personas lo da `users.view` (o `users.manage`), sin los del modelo
+    functional_permissions: ClassVar[dict[HTTPMethod, Sequence[str]]] = {
+        HTTPMethod.GET: (FunctionalPermissions.USERS_VIEW,),
+    }
+
+
+class ApiUserRelationsMixin(ApiUserFunctionalMixin):
     permissions: ClassVar[dict[HTTPMethod, Sequence[str]]] = DEFAULT_PERMISSIONS | {
         HTTPMethod.GET: (
             T_VIEW_PERM,
@@ -72,9 +80,19 @@ class ApiUserPermissionsMixin:
         ),
     }
 
+    # los permisos se dan por rol: los sueltos solo los asigna un superusuario
+    superuser_only: ClassVar[frozenset[HTTPMethod]] = frozenset({
+        HTTPMethod.PATCH,
+        HTTPMethod.PUT,
+    })
+
 
 ########################################################################################
 
 
 class ApiUserPermissionsLinkMixin(ApiUserGroupsLinkMixin):
-    pass
+    # igual que arriba: dar o quitar un permiso suelto es cosa de un superusuario
+    superuser_only: ClassVar[frozenset[HTTPMethod]] = frozenset({
+        HTTPMethod.DELETE,
+        HTTPMethod.PUT,
+    })

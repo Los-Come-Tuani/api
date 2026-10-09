@@ -5,13 +5,18 @@ x-api-build: &api-build
   dockerfile: dockerfile
 
 x-api-env: &api-env
+  ALLOWED_HOSTS: ${ALLOWED_HOSTS:-}
+  CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-}
+  CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS:-}
   DATABASE_URL: postgresql://kplanapi:kplanapi@postgres:5432/kplanapi
   DEPLOY: ${DEPLOY:-False}
+  GOOGLE_OAUTH_CLIENT_IDS: ${GOOGLE_OAUTH_CLIENT_IDS:-}
   JWT_SECRET_KEY: ${JWT_SECRET_KEY:?}
   REDIS_SECRET_KEY: kplanapi
   REDIS_URL: redis://redis:6379
   SECRET_KEY: ${SECRET_KEY:?}
   SKIP_SEEDERS: ${SKIP_SEEDERS:-False}
+  TOTP_ENCRYPTION_KEYS: ${TOTP_ENCRYPTION_KEYS:-}
 
 x-api-healthcheck: &api-healthcheck
   interval: 5s
@@ -36,8 +41,9 @@ services:
       test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U kplanapi -d kplanapi"]
       timeout: 5s
     image: postgres:18
+    # solo loopback: la clave de desarrollo es débil y no debe quedar expuesta en la LAN
     ports:
-      - "5432:5432"
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql
 
@@ -49,8 +55,9 @@ services:
       test: ["CMD", "redis-cli", "-a", "kplanapi", "ping"]
       timeout: 5s
     image: redis:8
+    # solo loopback, igual que postgres
     ports:
-      - "6379:6379"
+      - "127.0.0.1:6379:6379"
 
   migrate:
     build:

@@ -1,9 +1,8 @@
 from datetime import datetime
-from typing import Annotated, Literal
+from typing import Annotated
 
 from pydantic import AfterValidator, PositiveInt, StringConstraints
 
-from api_auth.enums import ApiUserTypes
 from api_auth.filtersets.user import ApiUserFilterSet
 from api_auth.models import ApiUser
 from api_core.schemas.factories import (
@@ -13,17 +12,14 @@ from api_core.schemas.factories import (
 )
 from api_core.schemas.filters import PaginatedFilterQuery, UnpaginatedFilterQuery
 from api_core.schemas.get import DTO, BaseGet
-from api_core.schemas.validators import empty_or_email
 
 from .group import GroupInlineGet
 from .permission import PermissionGet
-from .types import Password, Username
+from .types import Email, Password, UserStatus, Username
 
 ########################################################################################
 
-type ApiClientGroups = Literal[ApiUserTypes.CLIENT]
-
-type ApiUserPost = ApiClientPost | ApiStaffPost
+type ApiUserPost = ApiStaffPost
 
 ########################################################################################
 
@@ -33,8 +29,9 @@ class ApiUserInlineGet(BaseGet):
     is_active: bool
     first_name: str
     last_name: str
-    username: str
+    username: str | None
     email: str
+    status: UserStatus
 
 
 ########################################################################################
@@ -64,14 +61,13 @@ class ApiUserGet(ApiUserGroupsGet, ApiUserPermissionsGet, ApiUserInlineGet):
 class ApiUserBaseWrite(DTO):
     first_name: Annotated[str, StringConstraints(max_length=100)] = ""
     last_name: Annotated[str, StringConstraints(max_length=100)] = ""
-    email: Annotated[
-        str,
-        AfterValidator(func=empty_or_email),
-        AfterValidator(func=ApiUser.objects.normalize_email),
-        StringConstraints(max_length=254),
-    ] = ""
 
-    username: Annotated[Username, AfterValidator(func=ApiUser.normalize_username)]
+    # el correo es el identificador de acceso: siempre en minúsculas y obligatorio
+    email: Email
+
+    username: (
+        Annotated[Username, AfterValidator(func=ApiUser.normalize_username)] | None
+    ) = None
 
 
 ########################################################################################
@@ -86,7 +82,9 @@ class ApiUserBasePost(ApiUserBaseWrite):
 
 
 class ApiUserWrite(ApiUserBaseWrite):
-    is_active: bool = True
+    # `is_active` ya no se escribe aquí: lo fija el estado de la cuenta, y para cambiar
+    # el estado hay que usar `api_auth.services.account.change_status`
+    pass
 
 
 ########################################################################################
@@ -101,13 +99,6 @@ class ApiUserGroupsWrite(DTO):
 
 class ApiUserPermissionsWrite(DTO):
     permissions: tuple[PositiveInt, ...] | None = None
-
-
-########################################################################################
-
-
-class ApiClientPost(ApiUserBasePost):
-    group: ApiClientGroups
 
 
 ########################################################################################

@@ -1,0 +1,121 @@
+[
+  {
+    "address": "Calle La Calzada, media cuadra al lago",
+    "businessType": "cafeteria",
+    "campaigns": [
+      {
+        "benefitAmount": 10,
+        "benefitType": "descuento_porcentaje",
+        "costBadges": 3,
+        "description": "Descuento en cualquier bebida de la carta.",
+        "expiresOn": "2027-03-31",
+        "image": "https://picsum.photos/seed/cupon-cafe-cocibolca/900/600",
+        "stock": 100,
+        "terms": "Campa\u00f1a de ejemplo del entorno de pruebas. Un cup\u00f3n por visita.",
+        "title": "10% en tu caf\u00e9"
+      },
+      {
+        "benefitType": "producto_gratis",
+        "costBadges": 5,
+        "description": "Un postre de la casa al pedir un plato fuerte.",
+        "expiresOn": "2027-03-31",
+        "image": "https://picsum.photos/seed/cupon-postre-cocibolca/900/600",
+        "stock": 50,
+        "terms": "Campa\u00f1a de ejemplo del entorno de pruebas. De lunes a viernes.",
+        "title": "Postre gratis con tu almuerzo"
+      }
+    ],
+    "city": "Granada",
+    "coordinates": {
+      "latitude": 11.93035,
+      "longitude": -85.9529
+    },
+    "name": "Caf\u00e9 Cocibolca",
+    "phone": "2552-0101",
+    "ruc": "J0310000000101"
+  },
+  {
+    "address": "Del Parque Central, dos cuadras al norte",
+    "businessType": "panaderia",
+    "campaigns": [
+      {
+        "benefitAmount": 50,
+        "benefitType": "descuento_monto",
+        "costBadges": 4,
+        "description": "En compras desde C$ 200.",
+        "expiresOn": "2027-03-31",
+        "image": "https://picsum.photos/seed/cupon-panaderia-laurel/900/600",
+        "stock": 80,
+        "terms": "Campa\u00f1a de ejemplo del entorno de pruebas.",
+        "title": "C$ 50 de descuento"
+      }
+    ],
+    "city": "Le\u00f3n",
+    "coordinates": {
+      "latitude": 12.4372,
+      "longitude": -86.8794
+    },
+    "name": "Panader\u00eda El Laurel",
+    "phone": "2311-0102",
+    "ruc": "J0310000000102"
+  },
+  {
+    "address": "Barrio Monimb\u00f3, de la iglesia San Sebasti\u00e1n, una cuadra al sur",
+    "businessType": "artesania",
+    "campaigns": [
+      {
+        "benefitAmount": 15,
+        "benefitType": "descuento_porcentaje",
+        "costBadges": 6,
+        "description": "Descuento en hamacas y sillas tejidas en el taller.",
+        "expiresOn": "2027-03-31",
+        "image": "https://picsum.photos/seed/cupon-hamacas-monimbo/900/600",
+        "stock": 40,
+        "terms": "Campa\u00f1a de ejemplo del entorno de pruebas.",
+        "title": "15% en hamacas"
+      },
+      {
+        "benefitType": "regalo",
+        "costBadges": 2,
+        "description": "Un llavero hecho en el taller, en cualquier compra.",
+        "expiresOn": "2027-03-31",
+        "image": "https://picsum.photos/seed/cupon-llavero-monimbo/900/600",
+        "stock": 120,
+        "terms": "Campa\u00f1a de ejemplo del entorno de pruebas.",
+        "title": "Llavero tejido de regalo"
+      }
+    ],
+    "city": "Masaya",
+    "coordinates": {
+      "latitude": 11.9668,
+      "longitude": -86.0915
+    },
+    "name": "Taller de Hamacas Monimb\u00f3",
+    "phone": "2522-0103",
+    "ruc": "J0310000000103"
+  },
+  {
+    "address": "Costado sur del Paseo Xolotl\u00e1n",
+    "businessType": "restaurante",
+    "campaigns": [
+      {
+        "benefitType": "producto_gratis",
+        "costBadges": 3,
+        "description": "Un refresco natural al pedir un plato t\u00edpico.",
+        "expiresOn": "2027-03-31",
+        "image": "https://picsum.photos/seed/cupon-fritanga-xolotlan/900/600",
+        "stock": 100,
+        "terms": "Campa\u00f1a de ejemplo del entorno de pruebas.",
+        "title": "Refresco natural gratis"
+      }
+    ],
+    "city": "Managua",
+    "coordinates": {
+      "latitude": 12.1545,
+      "longitude": -86.2728
+    },
+    "name": "Fritanga Xolotl\u00e1n",
+    "phone": "2222-0104",
+    "ruc": "J0310000000104"
+  }
+]

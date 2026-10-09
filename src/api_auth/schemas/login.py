@@ -1,7 +1,7 @@
 from api_core.schemas.base import DTO
 
-from .types import Password, Username
-from .user import ApiUserInlineGet
+from .session import SessionUserGet
+from .types import Password, TypedEmail
 
 ########################################################################################
 
@@ -11,7 +11,8 @@ type LoginPost = MobileLoginPost | WebLoginPost
 
 
 class LoginInput(DTO):
-    username: Username
+    # sin normalizar: el servicio la normaliza para buscar y registra la original
+    email: TypedEmail
     password: Password
 
 
@@ -28,7 +29,7 @@ class MobileLoginPost(LoginInput):
 class MobileLoginResponse(DTO):
     access: str
     refresh: str
-    user: ApiUserInlineGet
+    user: SessionUserGet
 
 
 ########################################################################################
@@ -42,4 +43,4 @@ class WebLoginPost(LoginInput):
 
 
 class WebLoginResponse(DTO):
-    user: ApiUserInlineGet
+    user: SessionUserGet

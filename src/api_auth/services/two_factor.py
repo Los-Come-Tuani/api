@@ -11,6 +11,7 @@ from api_core.config import CONFIG
 from api_exceptions.enums import BadRequestErrorTypes, RequestScopes
 from api_exceptions.errors import BadRequestError, ConflictError, ThrottleExceededError
 
+from .crypto import decrypt_secret, encrypt_secret
 from .totp import (
     build_provisioning_uri,
     build_recovery_codes,
@@ -144,7 +145,7 @@ def spend_second_factor(device_id: UUID, code: str) -> bool:
 
         step: int | None = match_totp(
             code,
-            device.secret,  # ty: ignore[invalid-argument-type]
+            decrypt_secret(device.secret),
             device.last_step,  # ty: ignore[invalid-argument-type]
         )
 
@@ -215,13 +216,15 @@ async def start_enrollment(user: ApiUser) -> TotpEnrollment:
             "failures": 0,
             "last_step": 0,
             "locked_until": None,
-            "secret": secret,
+            # en la base solo se guarda cifrado; el claro se entrega una vez al usuario
+            "secret": encrypt_secret(secret),
         },
     )
 
     return TotpEnrollment(
         secret=secret,
-        uri=build_provisioning_uri(secret, user.username),  # ty: ignore[invalid-argument-type]
+        # la cuenta del autenticador se identifica con el correo
+        uri=build_provisioning_uri(secret, user.email),  # ty: ignore[invalid-argument-type]
     )
 
 

@@ -25,7 +25,10 @@ class PrivateAuthController[Serializer: BaseSerializer](
     StrictThrottlingMixin,
     BaseController[Serializer],
 ):
-    pass
+    # Quien tiene un rol que exige el segundo factor y todavía no lo activó solo puede
+    # usar lo que sirve para activarlo (y lo mínimo de la cuenta): esos controladores
+    # lo declaran con `True`. Ver `api_auth.services.roles.ensure_two_factor_enrolled`.
+    allows_pending_two_factor: ClassVar[bool] = False
 
 
 ########################################################################################

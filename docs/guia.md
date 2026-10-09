@@ -16,6 +16,17 @@ Debe tener estas herramientas previamente instaladas para configurar el proyecto
 1. [`git`][git]
 1. [`just`][just]
 1. [`uv`][uv-install]
+   - Versión `0.12.1` o superior (la que usan el CI y el `dockerfile`). Una
+     versión anterior puede no conocer el Python fijado en `.python-version`.
+1. [`prettier`][prettier]
+   - Lo usa `just fmt`, y con él `just full-fix`, `just mk-migrations`,
+     `just pre-commit` y el hook de `prek` que instala `just init-local`.
+
+Opcional: [`jq`][jq], solo para las recetas `local-*` y `remote-*` (que además
+usan `curl`).
+
+Las recetas de `just` usan `bash`. En Windows use Git Bash (se instala junto
+con `git`) o WSL2.
 
 No necesita instalar PostgreSQL ni Redis: ambos se levantan
 como contenedores definidos en `compose.yml`.
@@ -38,7 +49,7 @@ just init-local
 Esta receta hace todo el trabajo pesado:
 
 1. Genera el archivo `.env` a partir de `.env.example`.
-1. Solicita interactivamente username y contraseña del
+1. Solicita interactivamente el correo y la contraseña del
    superuser local, y los escribe en el `.env`.
 1. Instala las dependencias con `uv sync --frozen`.
 1. Instala los hooks de `prek`.
@@ -81,6 +92,11 @@ SECRET_KEY="SECRET!!!"
 
 REDIS_SECRET_KEY="kplanapi"
 
+# Listas separadas por comas. Vacías = valores de desarrollo.
+ALLOWED_HOSTS=""
+CORS_ALLOWED_ORIGINS=""
+CSRF_TRUSTED_ORIGINS=""
+
 GRANIAN_HOST="127.0.0.1"
 GRANIAN_INTERFACE="asginl"
 GRANIAN_LOG_ACCESS_ENABLED="1"
@@ -90,20 +106,44 @@ GRANIAN_WORKERS="1"
 GRANIAN_WORKING_DIR="src"
 GRANIAN_WS="0"
 
-DJANGO_SUPERUSER_PASSWORD="superuser-data"
-DJANGO_SUPERUSER_USERNAME="superuser-data"
+DJANGO_SUPERUSER_EMAIL="admin@example.com"
+DJANGO_SUPERUSER_PASSWORD="Superuser-Data-2026"
 ```
 
 Notas importantes:
 
 - Las credenciales de `DATABASE_URL` y `REDIS_URL` ya coinciden con las de
   los contenedores. No hay que crear bases de datos ni usuarios manualmente:
-  el contenedor de PostgreSQL crea la base `kplan-api` en su primer arranque.
-- `DJANGO_SUPERUSER_USERNAME` y `DJANGO_SUPERUSER_PASSWORD` deben estar definidas
-  para poder usar `just mk-admin`, que crea el superuser sin interacción.
+  el contenedor de PostgreSQL crea la base `kplanapi` en su primer arranque.
+- Si el puerto `5432` de su máquina ya está ocupado (por ejemplo, por un
+  PostgreSQL instalado localmente), agregue `POSTGRES_PORT="5433"` al `.env`
+  (o el puerto libre que prefiera) y use ese mismo puerto en `DATABASE_URL`.
+  Solo cambia el puerto publicado en su máquina: dentro de Docker el API sigue
+  conectándose a `postgres:5432`.
+- `DJANGO_SUPERUSER_EMAIL` y `DJANGO_SUPERUSER_PASSWORD` deben estar definidas
+  para poder usar `just mk-admin`, que crea el superuser sin interacción. Todas las
+  cuentas, el superuser incluido, inician sesión con el correo.
+- Los correos (códigos de verificación y de recuperación de contraseña) salen por
+  la consola del API mientras no se defina `EMAIL_HOST`; con `DEPLOY=True` y sin
+  `EMAIL_HOST` se descartan, para que ningún código quede en los logs. En
+  producción define `EMAIL_HOST`, `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD` y
+  `DEFAULT_FROM_EMAIL` en el servicio.
 - `JWT_SECRET_KEY` y `SECRET_KEY` son obligatorias también para los
   perfiles de Docker (`compose.yml` las declara como
   requeridas con `${VAR:?}`).
+- `TOTP_ENCRYPTION_KEYS` son las llaves Fernet con las que se cifra en la base el
+  secreto del 2FA. Vacía, en desarrollo se deriva de `SECRET_KEY`; con
+  `DEPLOY=True` es obligatoria (genere una con `just fernet-key`). Para rotarlas,
+  anteponga la llave nueva, corra `just dj-man rotatetotpkeys` y retire la vieja.
+- `ALLOWED_HOSTS`, `CORS_ALLOWED_ORIGINS` y `CSRF_TRUSTED_ORIGINS` son listas
+  separadas por comas. Vacías, el API acepta `localhost`, `127.0.0.1`, `10.0.2.2`
+  (el emulador de Android) y los orígenes `http://localhost:3000` y
+  `http://localhost:5173` (el portal). En producción se definen como variables del
+  servicio (Railway), nunca en el repositorio; los orígenes deben ser `https` y
+  sin `/` final, y `ALLOWED_HOSTS` no admite `*` con `DEPLOY=True`.
+- Use `localhost` y no `127.0.0.1` al abrir el portal y el API: son del mismo
+  sitio solo si comparten el nombre de host, y sin eso las cookies de sesión no
+  viajan.
 
 Si quiere regenerar solo una llave:
 
@@ -192,6 +232,12 @@ just build prod
 
 En ambos perfiles el API se expone en `http://127.0.0.1:8080`.
 
+> **Windows:** el perfil `dev` monta `./src` como _bind mount_, y en Docker
+> Desktop para Windows eso vuelve muy lento el arranque del API (minutos), por
+> lo que `just up` puede terminar con el contenedor `unhealthy` aunque luego se
+> recupere. En Windows prefiera el modo local, el perfil `prod`, o clone el
+> repositorio dentro del sistema de archivos de WSL2.
+
 ## Comandos útiles
 
 ```bash
@@ -208,11 +254,19 @@ just mk-migrations
 just full-check
 just full-fix
 
-# system checks de django:
-just validate --deploy --fail-level WARNING
+# system checks de django, como en el CI (con el `DEBUG="True"` del `.env`
+# local, `--deploy` siempre advierte sobre HSTS, cookies y `DEBUG`):
+DEBUG=False just validate --deploy --fail-level WARNING
 
-# correr las pruebas:
+# correr las pruebas (incluye las de contrato con schemathesis, que recorren
+# todas las rutas del OpenAPI con una sesión de superusuario):
 just test
+
+# generar una llave Fernet para TOTP_ENCRYPTION_KEYS:
+just fernet-key
+
+# volver a cifrar los secretos del 2FA con la llave primaria (tras rotar llaves):
+just dj-man rotatetotpkeys
 
 # todo lo anterior:
 just pre-commit
@@ -223,3 +277,17 @@ Para ver todas las recetas disponibles:
 ```bash
 just
 ```
+
+## Problemas comunes
+
+- `uv` falla con `Failed to inspect Python interpreter from search path` y
+  nombra `WindowsApps\python3.exe` (Windows): es el alias de Python de la
+  Microsoft Store, activo pero sin Python instalado. Desactive los alias de
+  ejecución de aplicaciones de `python.exe` y `python3.exe` en la configuración
+  de Windows, o defina `UV_PYTHON` con la ruta de su Python.
+- `uv` falla con `No interpreter found for Python 3.14.6`: su `uv` es anterior a
+  esa versión de Python. Actualícelo (`uv self update`, o el método con el que
+  lo instaló).
+- `just build` o `just up` fallan en `apt-get update` con `403 Forbidden`: algún
+  proxy o firewall de su red está bloqueando el `User-Agent` de `apt`. Pruebe
+  desde otra red o VPN.

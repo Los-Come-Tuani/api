@@ -3,7 +3,7 @@ set quiet
 
 ########################################################################################
 
-just_dir := justfile_directory() + "/"
+just_dir := replace(justfile_directory(), '\', '/') + "/"
 
 ########################################################################################
 
@@ -11,7 +11,7 @@ django_host := env("DJANGO_HOST", "127.0.0.1")
 django_pass := env("DJANGO_SUPERUSER_PASSWORD", "")
 django_port := env("DJANGO_PORT", "8080")
 django_remote := env("DJANGO_REMOTE", "")
-django_user := env("DJANGO_SUPERUSER_USERNAME", "")
+django_user := env("DJANGO_SUPERUSER_EMAIL", "")
 
 ########################################################################################
 
@@ -124,9 +124,9 @@ build profile="dev": check-docker
     #!/usr/bin/env bash
     set -euo pipefail
 
-    SERVICE="api-{{ profile }}"
+    SERVICE="kplanapi-{{ profile }}"
 
-    docker compose --profile {{ profile }} build  }}
+    docker compose --profile {{ profile }} build "$SERVICE"
 
 [group("docker")]
 services: check-docker
@@ -142,7 +142,7 @@ up profile="dev": check-docker
     #!/usr/bin/env bash
     set -euo pipefail
 
-    SERVICE="api-{{ profile }}"
+    SERVICE="kplanapi-{{ profile }}"
 
     docker compose --profile {{ profile }} build "$SERVICE"
     docker compose --profile {{ profile }} run --rm migrate
@@ -157,6 +157,10 @@ dj-man *args="":
 [group("django")]
 dj-repl *args="":
     @just run-frozen {{ quote(manage_py) }} shell {{ args }}
+
+[group("django")]
+fernet-key:
+    @just run-frozen python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 
 [group("django")]
 init-env:
@@ -192,7 +196,7 @@ init-local: init-env
     set -euo pipefail
 
     PASS_VAR="DJANGO_SUPERUSER_PASSWORD"
-    USER_VAR="DJANGO_SUPERUSER_USERNAME"
+    USER_VAR="DJANGO_SUPERUSER_EMAIL"
 
     read -srp "$PASS_VAR=" PASS_ANS
     echo
@@ -206,7 +210,7 @@ init-local: init-env
     echo
 
     if [[ -z "$USER_ANS" ]]; then
-      echo "Debe ingresar un usuario para el superuser local." >&2
+      echo "Debe ingresar un correo para el superuser local." >&2
       exit 1
     fi
 
@@ -300,7 +304,7 @@ get-token target:
 
     CT="Content-Type: application/json"
 
-    JSON=$(jq -nc --arg u {{ quote(django_user) }} --arg p {{ quote(django_pass) }} '{username: $u, password: $p}')
+    JSON=$(jq -nc --arg u {{ quote(django_user) }} --arg p {{ quote(django_pass) }} '{email: $u, password: $p}')
 
     RESPONSE=$(curl -s -X "POST" "$LOGIN" -H "$CT" -d "$JSON")
 

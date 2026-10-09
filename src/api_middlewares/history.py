@@ -43,8 +43,8 @@ def build_user_context(request: UsableHttpRequest) -> None:
     context(
         user={
             "id": str(request.user.pk),
-            "username": request.user.username,
-            **({"email": request.user.email} if request.user.email else {}),
+            "email": request.user.email,
+            **({"username": request.user.username} if request.user.username else {}),
         },
     )
 

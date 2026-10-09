@@ -1,5 +1,7 @@
+from pydantic import ConfigDict
+
 from api_auth.schemas.types import JwtToken
-from api_core.schemas.base import DTO, PermissiveDTO
+from api_core.schemas.base import DTO
 
 ########################################################################################
 
@@ -27,5 +29,9 @@ class MobileRefreshResponse(DTO):
 ########################################################################################
 
 
-class WebRefreshPost(PermissiveDTO, RefreshInput):
+class WebRefreshPost(RefreshInput):
+    # el navegador siempre manda también la cookie CSRF (y otras ajenas a esta acción);
+    # con `extra="forbid"` el refresco web nunca funcionaría en un navegador real
+    model_config = ConfigDict(extra="ignore")
+
     refresh: JwtToken | None = None

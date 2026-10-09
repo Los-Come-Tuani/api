@@ -1,5 +1,12 @@
 from typing import TYPE_CHECKING
 
+from .role import ApiGroupProfile
+from .security import (
+    ApiExternalIdentity,
+    ApiLoginAttempt,
+    ApiLoginLock,
+    ApiVerificationCode,
+)
 from .through import ApiUserGroups, ApiUserPermissions
 from .two_factor import ApiUserRecoveryCode, ApiUserTotpDevice
 from .user import ApiUser
@@ -10,9 +17,14 @@ if TYPE_CHECKING:
 ########################################################################################
 
 __all__: Sequence[str] = (
+    "ApiExternalIdentity",
+    "ApiGroupProfile",
+    "ApiLoginAttempt",
+    "ApiLoginLock",
     "ApiUser",
     "ApiUserGroups",
     "ApiUserPermissions",
     "ApiUserRecoveryCode",
     "ApiUserTotpDevice",
+    "ApiVerificationCode",
 )

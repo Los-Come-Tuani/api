@@ -1,0 +1,308 @@
+[
+  {
+    "birthDate": "1990-04-12",
+    "city": "Granada",
+    "email": "mariajose.rocha@example.com",
+    "firstName": "Mar\u00eda Jos\u00e9",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Rocha",
+    "phone": "8888-0101",
+    "presentation": "Gu\u00eda de Granada. Recorre el centro hist\u00f3rico, sus iglesias y casonas coloniales, y termina siempre frente al lago.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1985-09-30",
+    "city": "Granada",
+    "email": "ernesto.jarquin@example.com",
+    "firstName": "Ernesto",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      },
+      {
+        "code": "fr",
+        "level": "intermedio"
+      }
+    ],
+    "lastName": "Jarqu\u00edn",
+    "phone": "8888-0102",
+    "presentation": "Gu\u00eda y narrador de historias granadinas: de los piratas del siglo XVII a los emprendimientos del Paseo del Vigor\u00f3n.",
+    "services": [
+      "guia",
+      "traductor"
+    ]
+  },
+  {
+    "birthDate": "1993-01-22",
+    "city": "Managua",
+    "email": "karla.lopez@example.com",
+    "firstName": "Karla Vanessa",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "L\u00f3pez",
+    "phone": "8888-0201",
+    "presentation": "Gu\u00eda de Managua. Conoce la Managua vieja, la Loma de Tiscapa y el malec\u00f3n del Xolotl\u00e1n.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1988-06-05",
+    "carriesTourists": true,
+    "city": "Managua",
+    "email": "luis.martinez@example.com",
+    "firstName": "Luis Enrique",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "pt",
+        "level": "intermedio"
+      }
+    ],
+    "lastName": "Mart\u00ednez",
+    "phone": "8888-0202",
+    "presentation": "Gu\u00eda en veh\u00edculo por las rutas de Managua; lleva a sus grupos de un sitio a otro de la capital.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1991-11-18",
+    "city": "Le\u00f3n",
+    "email": "ana.gutierrez@example.com",
+    "firstName": "Ana Luc\u00eda",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Guti\u00e9rrez",
+    "phone": "8888-0301",
+    "presentation": "Gu\u00eda de Le\u00f3n: la Catedral, los museos y las casas de los poetas de la ciudad.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1982-03-09",
+    "city": "Masaya",
+    "email": "jose.espinoza@example.com",
+    "firstName": "Jos\u00e9 Ram\u00f3n",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "intermedio"
+      }
+    ],
+    "lastName": "Espinoza",
+    "phone": "8888-0401",
+    "presentation": "Gu\u00eda de Masaya y Monimb\u00f3. Visita con sus grupos los talleres de hamacas, calzado y artesan\u00eda en madera.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1995-07-27",
+    "city": "Estel\u00ed",
+    "email": "valeria.obando@example.com",
+    "firstName": "Valeria",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Obando",
+    "phone": "8888-0501",
+    "presentation": "Gu\u00eda de Estel\u00ed: murales, galer\u00edas y la tradici\u00f3n tabacalera del norte.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1989-05-01",
+    "city": "Bluefields",
+    "email": "hazel.downs@example.com",
+    "firstName": "Hazel",
+    "languages": [
+      {
+        "code": "es",
+        "level": "avanzado"
+      },
+      {
+        "code": "en",
+        "level": "nativo"
+      }
+    ],
+    "lastName": "Downs",
+    "phone": "8888-0601",
+    "presentation": "Gu\u00eda de Bluefields. Muestra la cultura creole y el Palo de Mayo, en espa\u00f1ol y en ingl\u00e9s.",
+    "services": [
+      "guia",
+      "traductor"
+    ]
+  },
+  {
+    "birthDate": "1986-12-02",
+    "city": "Juigalpa",
+    "email": "roberto.duarte@example.com",
+    "firstName": "Roberto Carlos",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "intermedio"
+      }
+    ],
+    "lastName": "Duarte",
+    "phone": "8888-0801",
+    "presentation": "Gu\u00eda de Juigalpa: la estatuaria precolombina de Chontales, el museo y los parques de la ciudad.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1994-03-17",
+    "city": "San Juan de Oriente",
+    "email": "ingrid.tapia@example.com",
+    "firstName": "Ingrid",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Tapia",
+    "phone": "8888-0901",
+    "presentation": "Gu\u00eda de San Juan de Oriente. Acompa\u00f1a a sus grupos por los talleres de cer\u00e1mica y hasta el mirador de la Laguna de Apoyo.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1984-10-14",
+    "carriesTourists": true,
+    "city": null,
+    "email": "martha.chavarria@example.com",
+    "firstName": "Martha Lorena",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      },
+      {
+        "code": "it",
+        "level": "intermedio"
+      }
+    ],
+    "lastName": "Chavarr\u00eda",
+    "phone": "8888-0701",
+    "presentation": "Gu\u00eda de todo el pa\u00eds, en veh\u00edculo. Lleva grupos entre las Ciudades Creativas y a las que todav\u00eda no tienen gu\u00edas propios.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1992-02-03",
+    "city": "Granada",
+    "email": "fatima.urbina@example.com",
+    "firstName": "F\u00e1tima",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      },
+      {
+        "code": "de",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Urbina",
+    "phone": "8888-0103",
+    "presentation": "Traductora de ingl\u00e9s y alem\u00e1n para grupos y visitas guiadas.",
+    "services": [
+      "traductor"
+    ]
+  },
+  {
+    "birthDate": "1987-08-21",
+    "city": null,
+    "email": "daniel.rivas@example.com",
+    "firstName": "Daniel",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      },
+      {
+        "code": "fr",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Rivas",
+    "phone": "8888-0702",
+    "presentation": "Traductor de ingl\u00e9s y franc\u00e9s; acompa\u00f1a a gu\u00edas de cualquier ciudad.",
+    "services": [
+      "traductor"
+    ]
+  }
+]

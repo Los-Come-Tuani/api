@@ -1,4 +1,6 @@
-from api_core.schemas.base import DTO, PermissiveDTO
+from pydantic import ConfigDict
+
+from api_core.schemas.base import DTO
 
 from .types import JwtToken
 
@@ -24,5 +26,6 @@ class MobileLogoutPost(LogoutInput):
 ########################################################################################
 
 
-class WebLogoutPost(PermissiveDTO, LogoutInput):
-    pass
+class WebLogoutPost(LogoutInput):
+    # ver `WebRefreshPost`: el navegador manda también la cookie CSRF
+    model_config = ConfigDict(extra="ignore")

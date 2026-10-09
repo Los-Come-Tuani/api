@@ -186,6 +186,19 @@
       ],
     },
     "guia.md",
+    "autenticacion.md",
+    "roles.md",
+    "google.md",
+    "organizaciones.md",
+    "prestadores.md",
+    "territorio.md",
+    "agenda-y-recompensas.md",
+    "servicios.md",
+    "finanzas.md",
+    "avisos.md",
+    "landing.md",
+    "archivos.md",
+    "hoja-de-ruta.md",
   ]
 
   [[project.extra.social]]
