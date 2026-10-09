@@ -304,5 +304,283 @@
     "services": [
       "traductor"
     ]
+  },
+  {
+    "birthDate": "1991-08-14",
+    "city": "Managua",
+    "email": "carlos.mendoza@example.com",
+    "firstName": "Carlos",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Mendoza",
+    "phone": "8888-0203",
+    "presentation": "Gu\u00eda del Xolotl\u00e1n: el malec\u00f3n, el Puerto Salvador Allende y la Loma de Tiscapa, con historias de la vieja Managua.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1994-02-25",
+    "city": "Managua",
+    "email": "sofia.perez@example.com",
+    "firstName": "Sof\u00eda",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      },
+      {
+        "code": "fr",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "P\u00e9rez",
+    "phone": "8888-0204",
+    "presentation": "Gu\u00eda y traductora en Managua. Recorre la Ruta Cultural y la Gastron\u00f3mica en espa\u00f1ol, ingl\u00e9s o franc\u00e9s.",
+    "services": [
+      "guia",
+      "traductor"
+    ]
+  },
+  {
+    "birthDate": "1989-11-03",
+    "carriesTourists": true,
+    "city": "Managua",
+    "email": "andrea.castillo@example.com",
+    "firstName": "Andrea",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Castillo",
+    "phone": "8888-0205",
+    "presentation": "Lleva grupos peque\u00f1os en su microb\u00fas por la Ruta Natural y la de Recreaci\u00f3n, de la Laguna de Tiscapa al lago.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1987-05-19",
+    "city": "Le\u00f3n",
+    "email": "julio.membreno@example.com",
+    "firstName": "Julio",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Membre\u00f1o",
+    "phone": "8888-0302",
+    "presentation": "Gu\u00eda del Le\u00f3n dariano: la Catedral, la Casa Museo Rub\u00e9n Dar\u00edo y los murales de la ciudad universitaria.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1996-09-08",
+    "city": "Le\u00f3n",
+    "email": "gabriela.somarriba@example.com",
+    "firstName": "Gabriela",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      },
+      {
+        "code": "pt",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Somarriba",
+    "phone": "8888-0303",
+    "presentation": "Historiadora del arte. Cuenta Le\u00f3n a trav\u00e9s de sus iglesias coloniales, la poes\u00eda y la gastronom\u00eda de mercado.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1983-12-11",
+    "city": "Masaya",
+    "email": "fernando.tellez@example.com",
+    "firstName": "Fernando",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "T\u00e9llez",
+    "phone": "8888-0402",
+    "presentation": "Nacido en Monimb\u00f3. Gu\u00eda de artesan\u00eda y folclor: talleres, el Mercado de Artesan\u00edas y las fiestas de San Jer\u00f3nimo.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1992-06-30",
+    "city": "Estel\u00ed",
+    "email": "ruth.zeledon@example.com",
+    "firstName": "Ruth",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Zeled\u00f3n",
+    "phone": "8888-0502",
+    "presentation": "Gu\u00eda de Estel\u00ed: murales, talleres de talabarter\u00eda y la historia del tabaco en el norte del pa\u00eds.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1990-01-27",
+    "city": "Bluefields",
+    "email": "kevin.hodgson@example.com",
+    "firstName": "Kevin",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Hodgson",
+    "phone": "8888-0602",
+    "presentation": "Gu\u00eda del Caribe Sur. El Paseo de la Autonom\u00eda, el Palo de Mayo y la cocina creole, en espa\u00f1ol o ingl\u00e9s.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1988-04-04",
+    "city": "Juigalpa",
+    "email": "mayra.sequeira@example.com",
+    "firstName": "Mayra",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Sequeira",
+    "phone": "8888-0802",
+    "presentation": "Gu\u00eda de Chontales: el Museo Gregorio Aguilar Barea y sus estatuas precolombinas, y la tradici\u00f3n ganadera.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1993-10-22",
+    "city": "San Juan de Oriente",
+    "email": "pedro.potosme@example.com",
+    "firstName": "Pedro",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Potosme",
+    "phone": "8888-0902",
+    "presentation": "Alfarero e hijo de alfareros. Abre los talleres de cer\u00e1mica de San Juan de Oriente y ense\u00f1a a trabajar el barro.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1995-03-13",
+    "city": "Nagarote",
+    "email": "silvia.lacayo@example.com",
+    "firstName": "Silvia",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Lacayo",
+    "phone": "8888-1001",
+    "presentation": "Gu\u00eda de Nagarote: el Gen\u00edzaro centenario, la iglesia de Santiago y los quesillos de la carretera.",
+    "services": [
+      "guia"
+    ]
+  },
+  {
+    "birthDate": "1986-07-07",
+    "city": "Granada",
+    "email": "diego.arana@example.com",
+    "firstName": "Diego",
+    "languages": [
+      {
+        "code": "es",
+        "level": "nativo"
+      },
+      {
+        "code": "en",
+        "level": "avanzado"
+      },
+      {
+        "code": "it",
+        "level": "avanzado"
+      }
+    ],
+    "lastName": "Arana",
+    "phone": "8888-0104",
+    "presentation": "Gu\u00eda de Granada en italiano, ingl\u00e9s y espa\u00f1ol: la Calzada, las isletas y el Convento San Francisco.",
+    "services": [
+      "guia"
+    ]
   }
 ]

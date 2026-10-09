@@ -231,8 +231,9 @@ class Command(BaseCommand):
             "--on-deploy",
             action="store_true",
             help=(
-                "Al desplegar: carga solo en develop-api (SEED_CONTENT_BRANCHES o "
-                "SEED_CONTENT_HOSTS), y un error no detiene el despliegue."
+                "Al desplegar: carga solo en develop-api y en Azure "
+                "(SEED_CONTENT_BRANCHES o SEED_CONTENT_HOSTS), y un error no detiene "
+                "el despliegue."
             ),
         )
 

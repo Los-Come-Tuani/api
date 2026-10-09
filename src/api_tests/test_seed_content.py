@@ -155,6 +155,16 @@ def test_the_develop_domain_loads_it_without_the_branch(
     assert Circuit.objects.exists()
 
 
+def test_the_azure_domain_loads_it_too(monkeypatch: pytest.MonkeyPatch) -> None:
+    deploying(monkeypatch, "")
+    monkeypatch.setitem(CONFIG.__dict__, "ALLOWED_HOSTS", ("azure-api.kplan.dev",))
+
+    seed("--on-deploy")
+
+    assert Circuit.objects.filter(kind="creative").count() >= 2
+    assert ApiUser.objects.get(email=TEAM_EMAIL).is_superuser
+
+
 def test_migrating_a_deploy_ends_with_the_content(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
