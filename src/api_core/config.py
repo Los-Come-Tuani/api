@@ -73,10 +73,7 @@ class ApiConfig(BaseSettings, PermissiveDTO):
     JWT_SECRET_KEY: LongSecret
     SECRET_KEY: LongSecret
 
-    REDIS_SECRET_KEY: Annotated[
-        SecretStr,
-        StringConstraints(max_length=MAX_SECRET_LENGTH),
-    ] = SecretStr("")
+    REDIS_SECRET_KEY: SecretStr
 
     ###################################################################################
 
@@ -129,20 +126,6 @@ class ApiConfig(BaseSettings, PermissiveDTO):
             raise ValueError("`DATABASE_URL` no define una contraseña.")
 
         return self
-
-    # @model_validator(mode="after")
-    # def check_redis_secret_key(self) -> Self:
-    #     if (
-    #         self.DEPLOY
-    #         and len(self.REDIS_SECRET_KEY.get_secret_value()) < MIN_SECRET_LENGTH
-    #     ):
-    #         raise ValueError(
-    #             "`REDIS_SECRET_KEY` es obligatorio; "
-    #             f"debe tener al menos {MIN_SECRET_LENGTH} "
-    #             "caracteres cuando `DEPLOY=True`.",
-    #         )
-
-    #     return self
 
     @cached_property
     def cookie_samesite(self) -> Literal["Lax", "None"]:
