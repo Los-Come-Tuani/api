@@ -31,13 +31,13 @@ jobs:
         with:
           context: .
           file: dockerfile
-          target: runtime-prod
+          target: runtime-azure
           push: true
           tags: |
             ${{ env.IMAGE }}:latest
             ${{ env.IMAGE }}:${{ github.sha }}
-          cache-from: type=gha,scope=kplanapi-prod
-          cache-to: type=gha,mode=max,scope=kplanapi-prod
+          cache-from: type=gha,scope=kplanapi-azure
+          cache-to: type=gha,mode=max,scope=kplanapi-azure
 
       - name: deploy to azure
         uses: azure/webapps-deploy@v3

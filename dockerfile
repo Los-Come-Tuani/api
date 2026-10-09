@@ -72,6 +72,24 @@ CMD ["granian", "api_core.asgi:application", "--access-log", "--reload"]
 
 ########################################################################################
 
+# - Azure App Service: Nginx delante del API (deploy/azure/nginx.conf, scripts/start.sh).
+#   Va antes de `runtime-prod` porque Railway construye la última etapa.
+FROM runtime-base AS runtime-azure
+
+RUN apt-get update && \
+    apt-get install --no-install-recommends --yes nginx && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY deploy/azure/nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=deps-prod /opt/venv /opt/venv
+
+USER kplan
+
+CMD ["/app/scripts/start.sh"]
+
+########################################################################################
+
 FROM runtime-base AS runtime-prod
 
 COPY --from=deps-prod /opt/venv /opt/venv
